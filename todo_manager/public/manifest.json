@@ -29,7 +29,8 @@
           "synchronizationMode": "None",
           "operationMode": "Server",
           "autoExpandSelect": true,
-          "updateGroupId": "$auto"
+          "groupId": "$direct",
+          "updateGroupId": "$direct"
         }
       }
     },

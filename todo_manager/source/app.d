@@ -5,6 +5,7 @@ import domain;
 import adapters.memory_repo;
 import adapters.web;
 import adapters.odata_dto;
+import std.process : environment;
 
 @safe:
 // REST API Interface für vibe.d RestInterfaceHTTP
@@ -62,7 +63,7 @@ void main() {
     auto router = new URLRouter;
 
     router.any("*", &handleCORS);
-    
+
     // Metadata & Collection
     router.get("/odata/v4/TaskService/$metadata", &controller.getMetadata);
     router.get("/odata/v4/TaskService/Tasks", &controller.getTasks);
@@ -83,8 +84,10 @@ void main() {
     router.get("*", serveStaticFiles("public/"));
 
     auto settings = new HTTPServerSettings;
-    settings.port = 8080;
-    settings.bindAddresses = ["::1", "127.0.0.1"]; // für IPv6 + IPv4
+    
+    ushort port = environment.get("PORT", "8080").to!ushort;
+    settings.port = port;
+    settings.bindAddresses = ["0.0.0.0"];
 
     listenHTTP(settings, router);
     runApplication();

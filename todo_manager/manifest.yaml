@@ -1,0 +1,9 @@
+---
+applications:
+- name: todo-app
+  memory: 128M
+  disk_quota: 256M
+  buildpack: binary_buildpack
+  command: ./start.sh
+  env:
+    VIBE_ENV: production
