@@ -1,0 +1,59 @@
+<mvc:View
+    controllerName="todo.app.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    
+    <App id="todoApp">
+        <Page title="Meine Aufgaben">
+            <content>
+                <!-- Eingabebereich für Titel & Beschreibung -->
+                <VBox class="sapUiSmallMargin">
+                    <HBox alignItems="Center" class="sapUiTinyMarginBottom">
+                        <Input 
+                            id="taskTitleInput" 
+                            placeholder="Neue Aufgabe eingeben..." 
+                            submit=".onAddTask"
+                            width="300px" 
+                            class="sapUiSmallMarginEnd" />
+                        <Button 
+                            text="Hinzufügen" 
+                            press=".onAddTask" 
+                            type="Emphasized" />
+                    </HBox>
+                    <Input 
+                        id="taskDescriptionInput" 
+                        placeholder="Beschreibung (optional)..." 
+                        submit=".onAddTask"
+                        width="300px" />
+                </VBox>
+
+                <!-- Aufgabenliste -->
+                <List id="taskList" items="{/Tasks}">
+                    <items>
+                        <CustomListItem>
+                            <HBox alignItems="Center" class="sapUiSmallMarginContent">
+                                <CheckBox 
+                                    selected="{isCompleted}" 
+                                    select=".onToggleCompleted" 
+                                    class="sapUiSmallMarginEnd" />
+                                <VBox>
+                                    <Text 
+                                        text="{title}" 
+                                        wrapping="true"
+                                        class="{= ${isCompleted} ? 'todoCompletedText' : 'sapUiTinyMarginBottom' }" />
+                                    
+                                    <!-- Beschreibung (wird nur gerendert, wenn vorhanden) -->
+                                    <Text 
+                                        text="{description}" 
+                                        wrapping="true"
+                                        visible="{= !!${description} }"
+                                        class="{= ${isCompleted} ? 'todoCompletedText sapUiSmallMarginBottom' : 'sapUiTinyMarginBottom' }" />
+                                </VBox>
+                            </HBox>
+                        </CustomListItem>
+                    </items>
+                </List>
+            </content>
+        </Page>
+    </App>
+</mvc:View>

@@ -1,0 +1,8 @@
+{
+    "name": "todo-manager",
+    "description": "Fiori Todo App in Dlang mit Hexagonaler Architektur",
+    "dependencies": {
+        "vibe-d": "~>0.10.2",
+        "uim-framework": "~>26.8.3"
+    }
+}

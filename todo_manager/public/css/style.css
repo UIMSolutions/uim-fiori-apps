@@ -1,0 +1,5 @@
+/* Ausgegraut und durchgestrichen für erledigte Aufgaben */
+.todoCompletedText {
+    opacity: 0.5;
+    text-decoration: line-through;
+}
