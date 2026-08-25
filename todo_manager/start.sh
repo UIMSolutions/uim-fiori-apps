@@ -1,3 +1,3 @@
 #!/bin/sh
-chmod +x ./todo-app
-./todo-app
+chmod +x ./todo-manager
+./todo-manager

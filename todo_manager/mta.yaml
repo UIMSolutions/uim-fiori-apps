@@ -1,0 +1,21 @@
+_schema-version: '3.2'
+ID: todo-manager
+version: 2.0.0
+
+modules:
+  - name: todo-manager
+    type: binary
+    path: .
+    parameters:
+      buildpack: binary_buildpack
+      command: sh start.sh
+    requires:
+      - name: uim_xsuaa
+
+resources:
+  - name: uim_xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json

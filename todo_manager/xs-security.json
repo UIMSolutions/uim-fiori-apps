@@ -1,0 +1,20 @@
+{
+  "xsappname": "todo-manager",
+  "tenant-mode": "dedicated",
+  "description": "Security configuration for Todo Manager",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.User",
+      "description": "Standard App User"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "TodoUserRole",
+      "description": "User role for Todo Manager",
+      "scope-references": [
+        "$XSAPPNAME.User"
+      ]
+    }
+  ]
+}
