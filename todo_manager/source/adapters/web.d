@@ -7,6 +7,7 @@ import std.algorithm : filter;
 import std.array : array;
 import std.regex : regex, matchFirst;
 import uim.framework;
+import helpers;
 
 @safe:
 class ODataTaskController {
@@ -15,14 +16,6 @@ class ODataTaskController {
 
     this(TaskService service) {
         this.service = service;
-    }
-
-    // Hilfsmethode: Garantiert, dass OData-Header bei JEDER Antwort gesetzt sind
-    private void writeODataJson(T)(HTTPServerResponse res, T data, HTTPStatus status = HTTPStatus
-            .ok) {
-        res.headers["OData-Version"] = "4.0";
-        res.headers["Content-Type"] = "application/json;odata.metadata=minimal;charset=utf-8";
-        res.writeJsonBody(data, status);
     }
 
     // GET /odata/v4/TaskService/Tasks

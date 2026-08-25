@@ -1,0 +1,26 @@
+<mvc:View
+    controllerName="projects.app.controller.Detail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page title="{project>/name}">
+        <ObjectHeader title="{project>/name}" intro="{project>/description}" />
+        <Table items="{project>/todos}" headerText="Aufgaben">
+            <columns>
+                <Column><Text text="ID" /></Column>
+                <Column><Text text="Aufgabe" /></Column>
+                <Column><Text text="Status" /></Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{project>id}" />
+                        <Text text="{project>title}" />
+                        <ObjectStatus 
+                            text="{= ${project>completed} ? 'Erledigt' : 'Offen' }" 
+                            state="{= ${project>completed} ? 'Success' : 'Warning' }" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Page>
+</mvc:View>

@@ -1,0 +1,14 @@
+<mvc:View
+    controllerName="projects.app.controller.Master"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page title="Projekte">
+        <List items="{/projects}" id="projectList" selectionChange="onSelect" mode="SingleSelectMaster">
+            <StandardListItem
+                title="{name}"
+                description="{description}"
+                type="Navigation"
+                press="onSelect" />
+        </List>
+    </Page>
+</mvc:View>

@@ -6,6 +6,8 @@ import adapters.memory_repo;
 import adapters.web;
 import adapters.odata_dto;
 import std.process : environment;
+import uim.framework;
+import helpers;
 
 @safe:
 // REST API Interface für vibe.d RestInterfaceHTTP
@@ -43,6 +45,8 @@ class TaskAPIImpl : TaskAPI {
 }
 
 void handleCORS(HTTPServerRequest req, HTTPServerResponse res) {
+    writeln("Handling CORS for request: ", req.method, " ", req.requestURL);
+
     res.headers["Access-Control-Allow-Origin"] = "*";
     res.headers["Access-Control-Allow-Methods"] = "GET, POST, PATCH, DELETE, OPTIONS";
     res.headers["Access-Control-Allow-Headers"] = "Content-Type, OData-Version, X-CSRF-Token";
@@ -55,6 +59,24 @@ void handleCORS(HTTPServerRequest req, HTTPServerResponse res) {
     }
 }
 
+void checkAuth(HTTPServerRequest req, HTTPServerResponse res) {
+    writeln("Checking Authorization for request: ", req.method, " ", req.requestURL);
+
+    auto authHeader = req.headers.get("Authorization", "");
+    
+    if (!authHeader.startsWith("Bearer ")) {
+        res.statusCode = HTTPStatus.unauthorized;
+        writeODataJson(res, ["error": "Missing or invalid Authorization header"], HTTPStatus.unauthorized);
+        return;
+    }
+    
+    string token = authHeader[7 .. $];
+    // Optional: JWT-Token verifizieren (z. B. via Public Key von XSUAA)
+    // res.headers["X-CSRF-Token"] = "Fetch"; // Beispiel: CSRF-Token setzen
+    // res.headers["OData-Version"] = "4.0"; // OData-Version setzen
+    // res.writeBody(""); // Weiterleitung an den nächsten Handler 
+}
+
 void main() {
     auto repo = new InMemoryTaskRepository();
     auto service = new TaskService(repo);
@@ -63,6 +85,8 @@ void main() {
     auto router = new URLRouter;
 
     router.any("*", &handleCORS);
+    // Middleware in vibe.d einbinden:
+    // router.any("/odata/*", &checkAuth);
 
     // Metadata & Collection
     router.get("/odata/v4/TaskService/$metadata", &controller.getMetadata);
@@ -86,7 +110,7 @@ void main() {
     auto settings = new HTTPServerSettings;
     
     ushort port = environment.get("PORT", "8080").to!ushort;
-    settings.port = port;
+    settings.port = environment.get("PORT", "8080").to!ushort;
     settings.bindAddresses = ["0.0.0.0"];
 
     listenHTTP(settings, router);
