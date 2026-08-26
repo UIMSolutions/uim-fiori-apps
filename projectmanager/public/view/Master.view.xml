@@ -3,7 +3,16 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
     <Page title="Projekte">
-        <List items="{/projects}" id="projectList" selectionChange="onSelect" mode="SingleSelectMaster">
+        <subHeader>
+            <Toolbar>
+                <Button text="Neues Projekt" press="onOpenAddProjectDialog" icon="sap-icon://add" />
+            </Toolbar>
+        </subHeader>
+        <List items="{path: '/projects', templateShareable: false}" 
+              id="projectList" 
+              selectionChange="onSelect" 
+              mode="Delete" 
+              delete="onDeleteProject">
             <StandardListItem
                 title="{name}"
                 description="{description}"

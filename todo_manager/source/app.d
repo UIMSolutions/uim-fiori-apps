@@ -44,38 +44,7 @@ class TaskAPIImpl : TaskAPI {
     }
 }
 
-void handleCORS(HTTPServerRequest req, HTTPServerResponse res) {
-    writeln("Handling CORS for request: ", req.method, " ", req.requestURL);
 
-    res.headers["Access-Control-Allow-Origin"] = "*";
-    res.headers["Access-Control-Allow-Methods"] = "GET, POST, PATCH, DELETE, OPTIONS";
-    res.headers["Access-Control-Allow-Headers"] = "Content-Type, OData-Version, X-CSRF-Token";
-    
-    // Wenn es ein OPTIONS Preflight-Request ist, sofort beenden
-    if (req.method == HTTPMethod.OPTIONS) {
-        res.statusCode = HTTPStatus.ok;
-        res.writeBody("");
-        return;
-    }
-}
-
-void checkAuth(HTTPServerRequest req, HTTPServerResponse res) {
-    writeln("Checking Authorization for request: ", req.method, " ", req.requestURL);
-
-    auto authHeader = req.headers.get("Authorization", "");
-    
-    if (!authHeader.startsWith("Bearer ")) {
-        res.statusCode = HTTPStatus.unauthorized;
-        writeODataJson(res, ["error": "Missing or invalid Authorization header"], HTTPStatus.unauthorized);
-        return;
-    }
-    
-    string token = authHeader[7 .. $];
-    // Optional: JWT-Token verifizieren (z. B. via Public Key von XSUAA)
-    // res.headers["X-CSRF-Token"] = "Fetch"; // Beispiel: CSRF-Token setzen
-    // res.headers["OData-Version"] = "4.0"; // OData-Version setzen
-    // res.writeBody(""); // Weiterleitung an den nächsten Handler 
-}
 
 void main() {
     auto repo = new InMemoryTaskRepository();

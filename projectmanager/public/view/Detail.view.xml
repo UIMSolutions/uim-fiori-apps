@@ -3,24 +3,35 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
     <Page title="{project>/name}">
-        <ObjectHeader title="{project>/name}" intro="{project>/description}" />
-        <Table items="{project>/todos}" headerText="Aufgaben">
-            <columns>
-                <Column><Text text="ID" /></Column>
-                <Column><Text text="Aufgabe" /></Column>
-                <Column><Text text="Status" /></Column>
-            </columns>
-            <items>
-                <ColumnListItem>
-                    <cells>
-                        <Text text="{project>id}" />
-                        <Text text="{project>title}" />
-                        <ObjectStatus 
-                            text="{= ${project>completed} ? 'Erledigt' : 'Offen' }" 
-                            state="{= ${project>completed} ? 'Success' : 'Warning' }" />
-                    </cells>
-                </ColumnListItem>
-            </items>
-        </Table>
+        <content>
+            <ObjectHeader title="{project>/name}" intro="{project>/description}" />
+            <Table items="{path: 'project>/todos', templateShareable: false}" headerText="Aufgaben (Todos)">
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <Title text="Aufgaben" />
+                        <ToolbarSpacer />
+                        <Button text="Neues Todo" press="onOpenAddTodoDialog" icon="sap-icon://add" />
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column><Text text="ID" /></Column>
+                    <Column><Text text="Aufgabe" /></Column>
+                    <Column><Text text="Status" /></Column>
+                    <Column width="5em"><Text text="Aktion" /></Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="{project>id}" />
+                            <Text text="{project>title}" />
+                            <ObjectStatus 
+                                text="{= ${project>completed} ? 'Erledigt' : 'Offen' }" 
+                                state="{= ${project>completed} ? 'Success' : 'Warning' }" />
+                            <Button icon="sap-icon://delete" type="Reject" press="onDeleteTodo" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
     </Page>
 </mvc:View>

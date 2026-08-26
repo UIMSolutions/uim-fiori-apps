@@ -16,12 +16,14 @@ dependency "vibe-d" version="~>0.10.3"
 
 // Internal Dependencies
 dependency ":fiori" version="*"
+dependency ":projectmanager" version="*"
 
 // Source files
 sourceFiles "./source/package.d"
 
 // Subpackages
 subPackage "fiori"
+subPackage "projectmanager"
 
 buildRequirements "allowWarnings" "silenceDeprecations"
 buildOptions "ignoreDeprecations" "debugInfo"

@@ -1,6 +1,6 @@
-name "projectmanager"
-description "Base library SAP projectmanager Apps"
-homepage "https://www.....de/uim/projectmanager"
+name "todomanager"
+description "Base library SAP todomanager Apps"
+homepage "https://www.....de/uim/todomanager"
 authors "Ozan Nurettin Süel"
 copyright "Copyright © 2018 - 2026, ONS"
 license "Apache-2.0"
@@ -9,7 +9,7 @@ dependency "uim-framework" version="~>26.8.3"
 dependency "uim-fioriapps:fiori" path=".."
 
 targetType "executable"
-targetName "uim-projectmanager"
+targetName "uim-todomanager"
 targetPath "build"
 
 configuration "default" {
