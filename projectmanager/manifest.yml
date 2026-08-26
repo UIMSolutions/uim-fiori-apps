@@ -1,0 +1,12 @@
+---
+applications:
+  - name: projectmanager
+    buildpacks:
+      - binary_buildpack
+    command: ./projectmanager
+    memory: 128M
+    disk_quota: 256M
+    instances: 1
+    env:
+      DATA_DIR: /tmp
+      NO_PROXY: localhost,127.0.0.1

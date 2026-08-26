@@ -32,7 +32,8 @@ version (unittest) {
         projectUI5Controller.addRoutes(router);
 
         // Route for homepage and static SAPUI5 frontend files.
-        router.get("/", serveStaticFile("public/index.html"));
+        router.get("/", serveStaticFile("webapp/index.html"));
+        router.get("*", serveStaticFiles("webapp/"));
         router.get("*", serveStaticFiles("public/"));
         
         ushort port = environment.get("PORT", "8080").to!ushort;

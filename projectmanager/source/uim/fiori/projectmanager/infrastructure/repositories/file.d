@@ -13,8 +13,17 @@ class FileProjectRepository {
     private string _filePath;
     private Project[int] _projects;
 
-    this(string filePath = "data/projects.json") {
+    this(string filePath = "/tmp/projects.json") {
         _filePath = filePath;
+
+        import std.path : dirName;
+        import std.file : mkdirRecurse, exists;
+
+        string dir = dirName(_filePath);
+        if (dir.length > 0 && !exists(dir)) {
+            mkdirRecurse(dir);
+        }
+
         load();
     }
 

@@ -1,0 +1,60 @@
+<mvc:View
+    controllerName="projects.app.controller.Detail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page title="{Name}">
+        <customHeader>
+            <OverflowToolbar>
+                <Title text="{Name}" />
+                <ToolbarSpacer />
+                <Button 
+                    icon="sap-icon://edit" 
+                    text="Bearbeiten" 
+                    press="onOpenEditProjectDialog" />
+            </OverflowToolbar>
+        </customHeader>
+        <content>
+            <ObjectHeader title="{Name}" intro="{Description}" />
+            
+            <!-- Relatives Binding auf die Navigation Property 'Todos' -->
+            <Table id="todoTable" items="{Todos}" headerText="Aufgaben (Todos)">
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <Title text="Aufgaben" />
+                        <ToolbarSpacer />
+                        <Button icon="sap-icon://add" text="Neue Aufgabe" press="onOpenAddTodoDialog" />
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column><Text text="ID" /></Column>
+                    <Column><Text text="Aufgabe" /></Column>
+                    <Column><Text text="Status" /></Column>
+                    <Column width="8em"><Text text="Aktionen" /></Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="{Id}" />
+                            <Text text="{Title}" />
+                            <ObjectStatus 
+                                text="{
+                                    path: 'Completed',
+                                    formatter: '.formatTodoStatusText'
+                                }" 
+                                state="{
+                                    path: 'Completed',
+                                    formatter: '.formatTodoStatusState'
+                                }" />
+                            <HBox renderType="Bare"
+                                justifyContent="Start"
+                                alignItems="Center">
+                                <Button icon="sap-icon://edit" tooltip="Aufgabe bearbeiten" press="onOpenEditTodoDialog" />
+                                <Button icon="sap-icon://delete" type="Reject" tooltip="Aufgabe löschen" press="onDeleteTodo" />
+                            </HBox>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

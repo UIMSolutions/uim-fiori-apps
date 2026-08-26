@@ -1,0 +1,12 @@
+<mvc:View
+    controllerName="projects.app.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true">
+    
+    <!-- ID von 'splitApp' auf 'app' geändert -->
+    <!-- Keinerlei feste XMLViews im Body, der Router fügt sie dynamisch ein -->
+    <SplitApp id="app">
+    </SplitApp>
+    
+</mvc:View>
