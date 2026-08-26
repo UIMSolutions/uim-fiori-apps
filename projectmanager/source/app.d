@@ -13,6 +13,9 @@ version (unittest) {
         auto projectUsecase = new ProjectUseCase(projectRepository, todoRepository);
 
         auto projectController = new ProjectHttpController(projectUsecase);
+        // auto todoController = new TodoHttpController(todoRepository);
+
+        auto projectUI5Controller = new ProjectUI5Controller(projectUsecase);
 
         // Seed data for local development.
         projectUsecase.createProject("Website Redesign", "Relaunch der Firmenwebsite", [
@@ -25,10 +28,12 @@ version (unittest) {
 
         auto router = new URLRouter;
         router.any("*", &handleCORS);
+        router.any("/odata/v4/*", &setODataHeaders);
 
         // REST API Routes
         // API Routen
         projectController.addRoutes(router);
+        projectUI5Controller.addRoutes(router);
 
         // Route for homepage and static SAPUI5 frontend files.
         router.get("/", serveStaticFile("public/index.html"));

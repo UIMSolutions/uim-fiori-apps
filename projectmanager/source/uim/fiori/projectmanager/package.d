@@ -3,6 +3,7 @@ module uim.fiori.projectmanager;
 public:
     import uim.framework;
 
+    import uim.fiori;
     import uim.fiori.projectmanager.application;
     import uim.fiori.projectmanager.domain;
     import uim.fiori.projectmanager.helpers;

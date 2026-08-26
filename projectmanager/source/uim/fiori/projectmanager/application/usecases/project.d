@@ -28,8 +28,9 @@ class ProjectUseCase {
 
     bool updateProject(int id, string name, string description, Todo[] todos) {
         auto project = projectRepository.findById(id);
-        if (project == Project.init) return false;
-        
+        if (project == Project.init)
+            return false;
+
         project.name = name;
         project.description = description;
         project.todos = todos;
@@ -39,10 +40,64 @@ class ProjectUseCase {
 
     bool deleteProject(int id) {
         auto project = projectRepository.findById(id);
-        if (project == Project.init) return false;
+        if (project == Project.init)
+            return false;
 
         projectRepository.remove(project);
         return true;
+    }
+
+    Todo[] listTodos() {
+        auto projects = projectRepository.findAll();
+        Todo[] allTodos;
+        foreach (project; projects) {
+            allTodos ~= project.todos;
+        }
+        return allTodos;
+    }
+
+    Todo[] listTodos(int projectId) {
+        auto project = projectRepository.findById(projectId);
+        if (project == Project.init) {
+            throw new Exception("Project not found");
+        }
+        return project.todos;
+    }
+
+    Todo getTodo(int todoId) {
+        foreach (project; projectRepository.findAll()) {
+            foreach (todo; project.todos) {
+                if (todo.id == todoId) {
+                    return todo;
+                }
+            }
+        }
+        return Todo.init;
+    }
+
+    void updateTodo(Todo updatedTodo) {
+        foreach (project; projectRepository.findAll()) {
+            foreach (i, ref todo; project.todos) {
+                if (todo.id == updatedTodo.id) {
+                    project.todos[i] = updatedTodo;
+                    projectRepository.update(project);
+                    return;
+                }
+            }
+        }
+    }
+
+    bool deleteTodo(int todoId) {
+        foreach (project; projectRepository.findAll()) {
+            foreach (i, ref todo; project.todos) {
+                if (todo.id == todoId) {
+                    project.todos.remove(i);
+                    projectRepository.update(project);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
 
@@ -61,16 +116,17 @@ unittest {
 
     // Get project
     auto project = usecase.getProject(1);
-    assert(project.name == "Project 1");    
+    assert(project.name == "Project 1");
 
     // Update project
-    bool updated = usecase.updateProject(1, "Updated Project 1", "Updated Description 1", []);
+    bool updated = usecase.updateProject(1, "Updated Project 1", "Updated Description 1", [
+        ]);
     assert(updated);
     project = usecase.getProject(1);
-    assert(project.name == "Updated Project 1");    
+    assert(project.name == "Updated Project 1");
 
     // Delete project
     bool deleted = usecase.deleteProject(1);
     assert(deleted);
     assert(!projectRepo.existsById(1));
-}   
+}

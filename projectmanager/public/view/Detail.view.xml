@@ -2,10 +2,10 @@
     controllerName="projects.app.controller.Detail"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
-    <Page title="{project>/name}">
+    <Page title="{project>/Name}">
         <content>
-            <ObjectHeader title="{project>/name}" intro="{project>/description}" />
-            <Table items="{path: 'project>/todos', templateShareable: false}" headerText="Aufgaben (Todos)">
+            <ObjectHeader title="{project>/Name}" intro="{project>/Description}" />
+            <Table items="{path: 'project>/Todos', templateShareable: false}" headerText="Aufgaben (Todos)">
                 <headerToolbar>
                     <OverflowToolbar>
                         <Title text="Aufgaben" />
@@ -22,11 +22,11 @@
                 <items>
                     <ColumnListItem>
                         <cells>
-                            <Text text="{project>id}" />
-                            <Text text="{project>title}" />
+                            <Text text="{project>Id}" />
+                            <Text text="{project>Title}" />
                             <ObjectStatus 
-                                text="{= ${project>completed} ? 'Erledigt' : 'Offen' }" 
-                                state="{= ${project>completed} ? 'Success' : 'Warning' }" />
+                                text="{= ${project>Completed} ? 'Erledigt' : 'Offen' }" 
+                                state="{= ${project>Completed} ? 'Success' : 'Warning' }" />
                             <Button icon="sap-icon://delete" type="Reject" press="onDeleteTodo" />
                         </cells>
                     </ColumnListItem>

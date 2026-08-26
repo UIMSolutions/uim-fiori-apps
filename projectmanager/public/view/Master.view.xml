@@ -8,16 +8,17 @@
                 <Button text="Neues Projekt" press="onOpenAddProjectDialog" icon="sap-icon://add" />
             </Toolbar>
         </subHeader>
-        <List items="{path: '/projects', templateShareable: false}" 
-              id="projectList" 
-              selectionChange="onSelect" 
+        <List id="projectList"
+              items="{/Projects}" 
               mode="Delete" 
               delete="onDeleteProject">
-            <StandardListItem
-                title="{name}"
-                description="{description}"
-                type="Navigation"
-                press="onSelect" />
+            <items>
+                <StandardListItem
+                    title="{Name}"
+                    description="{Description}"
+                    type="Navigation"
+                    press="onSelect" />
+            </items>
         </List>
     </Page>
 </mvc:View>

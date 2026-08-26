@@ -43,3 +43,10 @@ void checkAuth(HTTPServerRequest req, HTTPServerResponse res) {
     // res.headers["OData-Version"] = "4.0"; // OData-Version setzen
     // res.writeBody(""); // Weiterleitung an den nächsten Handler 
 }
+
+void setODataHeaders(HTTPServerRequest req, HTTPServerResponse res) {
+    res.headers["OData-Version"] = "4.0";
+    // Optional: CORS-Header falls Fiori über einen anderen Port/Origin läuft
+    res.headers["Access-Control-Allow-Origin"] = "*";
+    res.headers["Access-Control-Allow-Headers"] = "Content-Type, OData-Version, OData-MaxVersion";
+}

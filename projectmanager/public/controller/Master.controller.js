@@ -1,51 +1,61 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast",
     "sap/m/Dialog",
     "sap/m/Button",
     "sap/m/Input",
     "sap/m/Label",
     "sap/m/VBox"
-], function (Controller, JSONModel, MessageToast, Dialog, Button, Input, Label, VBox) {
+], function (Controller, MessageToast, Dialog, Button, Input, Label, VBox) {
     "use strict";
 
     return Controller.extend("projects.app.controller.Master", {
         onInit: function () {
-            this._loadProjects();
+            var oList = this.byId("projectList");
+            if (oList) {
+                oList.bindItems({
+                    path: "/Projects",
+                    template: new sap.m.StandardListItem({
+                        title: "{Name}",
+                        description: "{Description}"
+                    })
+                });
+            }
         },
-
-        _loadProjects: function () {
-            var oModel = new JSONModel();
-            oModel.loadData("/api/projects");
-            this.getView().setModel(oModel, "projects");
-        },
-
         onSelect: function (oEvent) {
             var oItem = oEvent.getParameter("listItem") || oEvent.getSource();
-            var sPath = oItem.getBindingContext("projects").getPath();
-            var oSelectedProject = this.getView().getModel("projects").getProperty(sPath);
+            var oBindingContext = oItem.getBindingContext();
+            
+            if (!oBindingContext) {
+                return;
+            }
 
-            this.getOwnerComponent().getModel("detail").setData(oSelectedProject);
+            var sPath = oBindingContext.getPath();
+            
+            // Kopplung an Detail-View
+            var oSplitApp = this.getOwnerComponent().getRootControl().byId("splitApp");
+            if (oSplitApp && oSplitApp.getDetailPages().length > 0) {
+                var oDetailView = oSplitApp.getDetailPages()[0];
+                oDetailView.bindElement({
+                    path: sPath
+                });
+            }
         },
 
         onDeleteProject: function (oEvent) {
             var oItem = oEvent.getParameter("listItem");
-            var oContext = oItem.getBindingContext("projects");
-            var oProject = oContext.getObject();
+            var oContext = oItem ? oItem.getBindingContext() : null;
+            
+            if (!oContext) {
+                return;
+            }
 
-            fetch("/api/projects/" + oProject.id, {
-                method: "DELETE"
-            }).then(function (res) {
-                if (res.ok) {
-                    MessageToast.show("Projekt gelöscht");
-                    this._loadProjects();
-                    // Detail-Ansicht leeren, falls das gelöschte Projekt offen war
-                    this.getOwnerComponent().getModel("detail").setData({});
-                } else {
-                    MessageToast.show("Fehler beim Löschen");
-                }
-            }.bind(this));
+            // OData v4: Löschen direkt auf dem Context
+            oContext.delete().then(function () {
+                MessageToast.show("Projekt gelöscht");
+            }).catch(function (oError) {
+                MessageToast.show("Fehler beim Löschen: " + oError.message);
+            });
         },
 
         onOpenAddProjectDialog: function () {
@@ -57,38 +67,49 @@ sap.ui.define([
                 title: "Neues Projekt anlegen",
                 content: new VBox({
                     items: [
-                        new Label({ text: "Name:" }),
-                        oNameInput,
-                        new Label({ text: "Beschreibung:" }),
-                        oDescInput
+                        new Label({ text: "Name:" }), oNameInput,
+                        new Label({ text: "Beschreibung:" }), oDescInput
                     ]
                 }),
                 beginButton: new Button({
                     text: "Erstellen",
                     press: function () {
-                        var oData = {
-                            name: oNameInput.getValue(),
-                            description: oDescInput.getValue()
-                        };
+                        // Empfohlen: Nutzung des bestehenden Listen-Bindings der UI-Liste
+                        var oList = that.getView().byId("projectList");
+                        var oListBinding = oList ? oList.getBinding("items") : null;
 
-                        fetch("/api/projects", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify(oData)
-                        }).then(function (res) {
-                            if (res.ok) {
-                                MessageToast.show("Projekt erstellt");
-                                that._loadProjects();
-                                oDialog.close();
+                        // Fallback: Direkt über das OData v4 Model, falls Liste nicht gefunden wird
+                        if (!oListBinding) {
+                            var oModel = that.getOwnerComponent().getModel();
+                            if (oModel) {
+                                oListBinding = oModel.bindList("/Projects");
                             }
+                        }
+
+                        if (!oListBinding) {
+                            MessageToast.show("Fehler: OData-Modell oder Listen-Binding nicht vorhanden.");
+                            return;
+                        }
+
+                        // Entität erzeugen
+                        oListBinding.create({
+                            Name: oNameInput.getValue(),
+                            Description: oDescInput.getValue()
                         });
+
+                        MessageToast.show("Projekt angelegt");
+                        oDialog.close();
                     }
                 }),
                 endButton: new Button({
                     text: "Abbrechen",
-                    press: function () { oDialog.close(); }
+                    press: function () { 
+                        oDialog.close(); 
+                    }
                 }),
-                afterClose: function () { oDialog.destroy(); }
+                afterClose: function () { 
+                    oDialog.destroy(); 
+                }
             });
 
             this.getView().addDependent(oDialog);

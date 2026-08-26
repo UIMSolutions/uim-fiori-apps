@@ -2,7 +2,17 @@
   "_version": "1.12.0",
   "sap.app": {
     "id": "projects.app",
-    "type": "application"
+    "type": "application",
+    "title": "Projekte App",
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
   },
   "sap.ui5": {
     "rootView": {
@@ -11,11 +21,15 @@
       "async": true,
       "id": "app"
     },
-    "dependencies": {
-      "minUI5Version": "1.100.0",
-      "libs": {
-        "sap.m": {},
-        "sap.ui.core": {}
+    "models": {
+      "": {
+        "dataSource": "mainService",
+        "type": "sap.ui.model.odata.v4.ODataModel",
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "groupId": "$direct"
+        }
       }
     }
   }
