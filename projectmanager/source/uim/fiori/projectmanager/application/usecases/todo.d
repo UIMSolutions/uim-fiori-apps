@@ -5,10 +5,10 @@ import uim.fiori.projectmanager;
 @safe:
 
 class TodoUseCase {
-    private ProjectRepository projectRepository;
+    private FileProjectRepository projectRepository;
     private TodoRepository todoRepository;
 
-    this(ProjectRepository projectRepository, TodoRepository todoRepository) {
+    this(FileProjectRepository projectRepository, TodoRepository todoRepository) {
         this.projectRepository = projectRepository;
         this.todoRepository = todoRepository;
     }
@@ -40,7 +40,7 @@ class TodoUseCase {
 }
 
 unittest {
-    auto projectRepo = new ProjectRepository();
+    auto projectRepo = new FileProjectRepository();
     auto todoRepo = new TodoRepository();
     auto usecase = new TodoUseCase(projectRepo, todoRepo);
 

@@ -5,10 +5,10 @@ import uim.fiori.projectmanager;
 @safe:
 
 class ProjectUseCase {
-    private ProjectRepository projectRepository;
+    private FileProjectRepository projectRepository;
     private TodoRepository todoRepository;
 
-    this(ProjectRepository projectRepository, TodoRepository todoRepository) {
+    this(FileProjectRepository projectRepository, TodoRepository todoRepository) {
         this.projectRepository = projectRepository;
         this.todoRepository = todoRepository;
     }
@@ -27,25 +27,25 @@ class ProjectUseCase {
         return project;
     }
 
-    bool updateProject(int id, string name, string description, Todo[] todos) {
+    Project updateProject(int id, string name, string description, Todo[] todos) {
         auto project = projectRepository.findById(id);
         if (project == Project.init)
-            return false;
+            return Project.init;
 
         project.name = name;
         project.description = description;
         project.todos = todos;
         projectRepository.update(project);
-        return true;
+        return project;
     }
 
-    bool deleteProject(int id) {
+    Project deleteProject(int id) {
         auto project = projectRepository.findById(id);
         if (project == Project.init)
-            return false;
+            return Project.init;
 
         projectRepository.remove(project);
-        return true;
+        return project;
     }
 
     Todo[] listTodos() {
@@ -115,7 +115,7 @@ class ProjectUseCase {
 }
 
 unittest {
-    auto projectRepo = new ProjectRepository();
+    auto projectRepo = new FileProjectRepository();
     auto todoRepo = new TodoRepository();
     auto usecase = new ProjectUseCase(projectRepo, todoRepo);
 

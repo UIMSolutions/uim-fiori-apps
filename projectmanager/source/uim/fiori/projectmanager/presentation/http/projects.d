@@ -80,10 +80,9 @@ class ProjectHttpController {
         writeln("Deleting project...");
 
         int id = req.params["id"].to!int;
-        bool found = false;
-        found = usecase.deleteProject(id);
+        Project project = usecase.deleteProject(id);
 
-        if (found) {
+        if (project != Project.init) {
             res.statusCode = HTTPStatus.ok;
             res.writeJsonBody(["status": "success"]);
         } else {

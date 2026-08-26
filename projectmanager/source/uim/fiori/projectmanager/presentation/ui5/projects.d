@@ -24,7 +24,7 @@ class ProjectUI5Controller {
         router.get("/odata/v4/Projects*", &getProjects);
         router.post("/odata/v4/Projects*", &createProject);
 
-        router.patch("/odata/v4/Projects\\(:id\\)", &updateProject);
+        router.patch("/odata/v4/Projects*", &updateProject);
         router.delete_("/odata/v4/Projects*", &deleteProject);
 
         router.get("/odata/v4/Todos*", &listTodos);
@@ -90,7 +90,9 @@ class ProjectUI5Controller {
         writeln("Path info: ", req.requestPath.toString());
 
         if (req.requestPath.toString() == "/odata/v4/Projects") {
-            Json[] result;
+            writeln("Fetching all projects without specific ID");
+
+            Json result = Json.emptyArray;
             foreach (p; usecase.listProjects()) {
                 result ~= Json.emptyObject
                     .set("Id", p.id)
@@ -101,9 +103,11 @@ class ProjectUI5Controller {
                             .set("Title", t.title)
                             .set("Completed", Json(t.completed))).array.toJson);
             }
+
+            writeln("Resulting JSON for all projects: ", result);
             res.writeODataJson(Json.emptyObject
                     .set("@odata.context", "/odata/v4/$metadata#Projects")
-                    .set("value", result.toJson));
+                    .set("value", result));
             return;
         }
 
@@ -264,24 +268,44 @@ class ProjectUI5Controller {
     }
 
     void updateProject(HTTPServerRequest req, HTTPServerResponse res) {
-        writeln("Updating project with ID: ", req.params["id"], " and request body: ", req
-                .json);
-        int id = req.params["id"].to!int;
-        auto json = req.json;
-        auto project = usecase.getProject(
-            id);
-        if (project != Project.init) {
-            project.name = json.getString("Name", json.getString("name", project
-                    .name));
-            project.description = json.getString("Description", json.getString("description", project
-                    .description));
-            usecase.updateProject(id, project.name, project
-                    .description, project.todos);
-            res.writeODataJson(project);
-        } else {
+        writeln("Updating project and request body: ", req.json);
+
+        if (!req.path.contains("(")) {
+            res.statusCode = HTTPStatus.badRequest;
+            res.writeODataJson(Json.emptyObject.set("error", "Invalid request"));
+            return;
+        }
+
+        auto parts = req.path.split("/");
+        Project project;
+        foreach (part; parts) {
+            if (part.startsWith("Projects(")) {
+                auto idStr = part[9 .. $ - 1]; // Extract ID from "Projects(ID)"
+                int projectId = idStr.to!int;
+                project = usecase.getProject(projectId);
+                if (project == Project.init) {
+                    res.statusCode = HTTPStatus.notFound;
+                    res.writeODataJson(Json.emptyObject.set("error", "Project not found"));
+                    return;
+                }
+            }
+        }
+
+        if (project == Project.init) {
             res.statusCode = HTTPStatus.notFound;
             res.writeODataJson(Json.emptyObject.set("error", "Project not found"));
         }
+
+        auto json = req.json;
+        writeln("Updating project with ID: ", project.id, " and request body: ", json);
+
+        project.name = json.getString("Name", json.getString("name", project.name));
+        project.description = json.getString("Description", json.getString("description", project
+                .description));
+        project = usecase.updateProject(project.id, project.name, project
+                .description, project.todos);
+        res.statusCode = HTTPStatus.ok;
+        res.writeODataJson(project);
     }
 
     void deleteProject(HTTPServerRequest req, HTTPServerResponse res) {
@@ -321,8 +345,8 @@ class ProjectUI5Controller {
         }
 
         if (todo == Todo.init && project != Project.init) {
-            bool deleted = usecase.deleteProject(project.id);
-            if (deleted) {
+            auto deletedProject = usecase.deleteProject(project.id);
+            if (deletedProject != Project.init) {
                 res.statusCode = HTTPStatus.noContent;
                 res.writeODataJson(Json(null));
             } else {

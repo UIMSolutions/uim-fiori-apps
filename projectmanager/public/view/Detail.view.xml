@@ -3,11 +3,21 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
     <Page title="{Name}">
+        <customHeader>
+            <OverflowToolbar>
+                <Title text="{Name}" />
+                <ToolbarSpacer />
+                <Button 
+                    icon="sap-icon://edit" 
+                    text="Bearbeiten" 
+                    press="onOpenEditProjectDialog" />
+            </OverflowToolbar>
+        </customHeader>
         <content>
             <ObjectHeader title="{Name}" intro="{Description}" />
             
             <!-- Relatives Binding auf die Navigation Property 'Todos' -->
-            <Table items="{Todos}" headerText="Aufgaben (Todos)">
+            <Table id="todoTable" items="{Todos}" headerText="Aufgaben (Todos)">
                 <headerToolbar>
                     <OverflowToolbar>
                         <Title text="Aufgaben" />

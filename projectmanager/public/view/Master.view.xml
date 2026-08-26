@@ -8,16 +8,13 @@
                 <Button text="Neues Projekt" press="onOpenAddProjectDialog" icon="sap-icon://add" />
             </Toolbar>
         </subHeader>
-        <List id="projectList"
-              items="{/Projects}" 
-              mode="Delete" 
-              delete="onDeleteProject">
+        <List id="projectList" items="{/Projects}">
             <items>
-                <StandardListItem
-                    title="{Name}"
-                    description="{Description}"
-                    type="Navigation"
-                    press="onSelect" />
+                <StandardListItem 
+                    title="{Name}" 
+                    description="{Description}" 
+                    type="Navigation" 
+                    press="onItemPress" />
             </items>
         </List>
     </Page>

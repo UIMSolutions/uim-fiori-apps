@@ -12,7 +12,9 @@ sap.ui.define([
     return Controller.extend("projects.app.controller.Master", {
         onInit: function () {
             console.log("onInit getriggert!");
-
+            
+            // Event an den EventBus senden
+            sap.ui.getCore().getEventBus().publish("ProjectChannel", "ProjectUpdated");
             // var oList = this.byId("projectList");
             // if (oList) {
             //     oList.bindItems({
@@ -180,6 +182,17 @@ sap.ui.define([
 
             this.getView().addDependent(oDialog);
             oDialog.open();
+        },
+
+        _onProjectUpdated: function () {
+            // Holt die Liste und frischt deren OData-Binding explizit auf
+            var oList = this.byId("projectList"); // ID deiner sap.m.List in Master.view.xml
+            if (oList) {
+                var oBinding = oList.getBinding("items");
+                if (oBinding) {
+                    oBinding.refresh(); // Erzwingt einen frischen GET-Request für /Projects
+                }
+            }
         }
     });
 });

@@ -1,10 +1,10 @@
-module uim.fiori.projectmanager.infrastructure.repositories.projects;
+module uim.fiori.projectmanager.infrastructure.repositories.memory;
 
 import uim.fiori.projectmanager;
 
 @safe:
 
-class ProjectRepository {
+class MemoryProjectRepository {
     Project[int] _projects;
 
     bool existsById(int id) {
@@ -36,7 +36,7 @@ class ProjectRepository {
 }
 
 unittest {
-    auto projectRepo = new ProjectRepository();
+    auto projectRepo = new MemoryProjectRepository();
     auto todoRepo = new TodoRepository();
 
     // Create a project

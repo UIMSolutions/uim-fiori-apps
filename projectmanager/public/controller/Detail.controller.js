@@ -34,18 +34,16 @@ sap.ui.define([
         _onObjectMatched: function (oEvent) {
             console.log("Detail:_onObjectMatched getriggert!");
 
-            var sProjectId = oEvent.getParameter("arguments").projectId;
-            
-            console.log("--> _onObjectMatched getriggert! ProjectID:", sProjectId);
-
-            if (!sProjectId) {
+            this.sProjectId = oEvent.getParameter("arguments").projectId;
+            if (!this.sProjectId) {
                 console.error("sProjectId ist undefined!");
                 return;
             }
+            console.log("--> _onObjectMatched getriggert! ProjectID:", this.sProjectId);
 
             // Direktes Re-Binding ohne unbindElement()
             this.getView().bindElement({
-                path: "/Projects(" + sProjectId + ")",
+                path: "/Projects(" + this.sProjectId + ")",
                 parameters: {
                     $expand: "Todos"
                 }
@@ -166,6 +164,75 @@ sap.ui.define([
             }).catch(function (oError) {
                 MessageToast.show("Fehler beim Löschen: " + oError.message);
             });
+        },
+
+        onOpenEditProjectDialog: function () {
+            var oView = this.getView();
+            var oContext = oView.getBindingContext();
+
+            // Falls die View noch nicht gebunden ist, abbrechen
+            if (!oContext) {
+                MessageToast.show("Kein Projekt ausgewählt");
+                return;
+            }
+
+            var oNameInput = new Input({ value: "{Name}" });
+            var oDescInput = new Input({ value: "{Description}" });
+
+            var oDialog = new Dialog({
+                title: "Projekt bearbeiten",
+                content: new VBox({
+                    items: [
+                        new Label({ text: "Name:" }),
+                        oNameInput,
+                        new Label({ text: "Beschreibung:" }),
+                        oDescInput
+                    ]
+                }),
+                beginButton: new Button({
+                    text: "Speichern",
+                    type: "Emphasized",
+                    press: function () {
+                        var sNewName = oNameInput.getValue();
+                        var sNewDesc = oDescInput.getValue();
+
+                        // 1. Werte explizit im OData v4 Context setzen -> schickt PATCH an Vibe.d
+                        oContext.setProperty("Name", sNewName);
+                        oContext.setProperty("Description", sNewDesc);
+
+                        // 2. Äußerem Modell sagen, dass sich Daten geändert haben (triggert Re-Fetch der Master-Liste)
+                        var oModel = oView.getModel();
+                        if (oModel) {
+                            oModel.refresh();
+                        }
+
+                        MessageToast.show("Projekt aktualisiert");
+                        oDialog.close();
+                    }
+                }),
+                endButton: new Button({
+                    text: "Abbrechen",
+                    press: function () {
+                        // Fragt beim OData v4 Model ein Update für die geänderten Pfade an
+                        oContext.requestSideEffects([
+                            { $PropertyPath: "Name" },
+                            { $PropertyPath: "Description" }
+                        ]);
+
+                        MessageToast.show("Projekt aktualisiert");
+                        oDialog.close();
+                    }
+                }),
+                afterClose: function () {
+                    oDialog.destroy();
+                }
+            });
+
+            // ZWINGEND ERFORDERLICH: Binde den Dialog an den Projekt-Kontext der View
+            oDialog.setBindingContext(oContext);
+            oView.addDependent(oDialog);
+            oDialog.open();
         }
+
     });
 });
