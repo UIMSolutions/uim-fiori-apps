@@ -16,7 +16,8 @@ class ProjectRepository {
     }
 
     Project findById(int projectId) {
-        return _projects[projectId];
+        writeln("findById: ", projectId);
+        return (existsById(projectId)) ? _projects[projectId] : Project.init;
     }
 
     void save(Project project) {

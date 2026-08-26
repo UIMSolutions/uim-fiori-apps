@@ -19,11 +19,11 @@ version (unittest) {
 
         // Seed data for local development.
         projectUsecase.createProject("Website Redesign", "Relaunch der Firmenwebsite", [
-                Todo(101, "Wireframes erstellen", true),
-                Todo(102, "vibe.d REST API bauen", false)
+                Todo(nextTodoId++, "Wireframes erstellen", true),
+                Todo(nextTodoId++, "vibe.d REST API bauen", false)
             ]);
         projectUsecase.createProject("Fiori App", "Entwicklung der Master-Detail App", [
-                Todo(201, "SAPUI5 Views anlegen", false)
+                Todo(nextTodoId++, "SAPUI5 Views anlegen", false)
             ]);
 
         auto router = new URLRouter;

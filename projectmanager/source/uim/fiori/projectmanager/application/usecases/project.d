@@ -21,9 +21,10 @@ class ProjectUseCase {
         return projectRepository.findById(id);
     }
 
-    void createProject(string name, string description, Todo[] todos) {
+    Project createProject(string name, string description, Todo[] todos) {
         auto project = Project(nextProjectId++, name, description, todos);
         projectRepository.save(project);
+        return project;
     }
 
     bool updateProject(int id, string name, string description, Todo[] todos) {
@@ -75,24 +76,36 @@ class ProjectUseCase {
         return Todo.init;
     }
 
-    void updateTodo(Todo updatedTodo) {
+    Todo createTodo(int projectId, string title, bool completed) {
+        auto project = projectRepository.findById(projectId);
+        if (project == Project.init) {
+            throw new Exception("Project not found");
+        }
+        auto todo = Todo(nextTodoId++, title, completed);
+        project.todos ~= todo;
+        projectRepository.update(project);
+        return todo;
+    }
+
+    Todo updateTodo(Todo updatedTodo) {
         foreach (project; projectRepository.findAll()) {
-            foreach (i, ref todo; project.todos) {
+            foreach (i, todo; project.todos) {
                 if (todo.id == updatedTodo.id) {
                     project.todos[i] = updatedTodo;
                     projectRepository.update(project);
-                    return;
+                    return updatedTodo;
                 }
             }
         }
+        return Todo.init;
     }
 
     bool deleteTodo(int todoId) {
         foreach (project; projectRepository.findAll()) {
-            foreach (i, ref todo; project.todos) {
+            foreach (i, todo; project.todos) {
                 if (todo.id == todoId) {
-                    project.todos.remove(i);
-                    projectRepository.update(project);
+                    project.todos = project.todos.filter!(t => t.id != todoId)().array;
+                    updateProject(project.id, project.name, project.description, project.todos);
                     return true;
                 }
             }

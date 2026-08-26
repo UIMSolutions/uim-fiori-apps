@@ -18,8 +18,7 @@
     "rootView": {
       "viewName": "projects.app.view.App",
       "type": "XML",
-      "async": true,
-      "id": "app"
+      "async": true
     },
     "models": {
       "": {
@@ -31,6 +30,39 @@
           "groupId": "$direct"
         }
       }
-    }
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "viewPath": "projects.app.view",
+        "controlId": "app",
+        "async": true
+      },
+      "routes": [
+        {
+          "name": "Master",
+          "pattern": "",
+          "target": ["TargetMaster", "TargetDetail"]
+        },
+        {
+          "name": "Detail",
+          "pattern": "Projects/{projectId}",
+          "target": ["TargetMaster", "TargetDetail"]
+        }
+      ],
+      "targets": {
+        "TargetMaster": {
+          "viewName": "Master",
+          "viewLevel": 1,
+          "controlAggregation": "masterPages"
+        },
+        "TargetDetail": {
+          "viewName": "Detail",
+          "viewLevel": 2,
+          "controlAggregation": "detailPages"
+        }
+      }
+    }  
   }
 }

@@ -2,32 +2,45 @@
     controllerName="projects.app.controller.Detail"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
-    <Page title="{project>/Name}">
+    <Page title="{Name}">
         <content>
-            <ObjectHeader title="{project>/Name}" intro="{project>/Description}" />
-            <Table items="{path: 'project>/Todos', templateShareable: false}" headerText="Aufgaben (Todos)">
+            <ObjectHeader title="{Name}" intro="{Description}" />
+            
+            <!-- Relatives Binding auf die Navigation Property 'Todos' -->
+            <Table items="{Todos}" headerText="Aufgaben (Todos)">
                 <headerToolbar>
                     <OverflowToolbar>
                         <Title text="Aufgaben" />
                         <ToolbarSpacer />
-                        <Button text="Neues Todo" press="onOpenAddTodoDialog" icon="sap-icon://add" />
+                        <Button icon="sap-icon://add" text="Neue Aufgabe" press="onOpenAddTodoDialog" />
                     </OverflowToolbar>
                 </headerToolbar>
                 <columns>
                     <Column><Text text="ID" /></Column>
                     <Column><Text text="Aufgabe" /></Column>
                     <Column><Text text="Status" /></Column>
-                    <Column width="5em"><Text text="Aktion" /></Column>
+                    <Column width="8em"><Text text="Aktionen" /></Column>
                 </columns>
                 <items>
                     <ColumnListItem>
                         <cells>
-                            <Text text="{project>Id}" />
-                            <Text text="{project>Title}" />
+                            <Text text="{Id}" />
+                            <Text text="{Title}" />
                             <ObjectStatus 
-                                text="{= ${project>Completed} ? 'Erledigt' : 'Offen' }" 
-                                state="{= ${project>Completed} ? 'Success' : 'Warning' }" />
-                            <Button icon="sap-icon://delete" type="Reject" press="onDeleteTodo" />
+                                text="{
+                                    path: 'Completed',
+                                    formatter: '.formatTodoStatusText'
+                                }" 
+                                state="{
+                                    path: 'Completed',
+                                    formatter: '.formatTodoStatusState'
+                                }" />
+                            <HBox renderType="Bare"
+                                justifyContent="Start"
+                                alignItems="Center">
+                                <Button icon="sap-icon://edit" tooltip="Aufgabe bearbeiten" press="onOpenEditTodoDialog" />
+                                <Button icon="sap-icon://delete" type="Reject" tooltip="Aufgabe löschen" press="onDeleteTodo" />
+                            </HBox>
                         </cells>
                     </ColumnListItem>
                 </items>
