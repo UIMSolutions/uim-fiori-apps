@@ -4,7 +4,7 @@ import uim.fiori.projectmanager;
 
 @safe:
 
-class MemoryProjectRepository {
+class MemoryProjectRepository : IProjectRepository{
     Project[int] _projects;
 
     bool existsById(int id) {

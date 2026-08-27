@@ -9,7 +9,7 @@ import vibe.data.json : parseJsonString, serializeToJson, deserializeJson, Json;
 
 @safe:
 
-class FileProjectRepository {
+class FileProjectRepository : IProjectRepository{
     private string _filePath;
     private Project[int] _projects;
 

@@ -7,13 +7,12 @@ import std.process : environment;
 version (unittest) {
 } else {
     void main() {
-
         // Pfad für die persistenten Daten bestimmen:
         // In CF bietet sich /tmp an, da das Hauptverzeichnis oft read-only ist.
-        string dataDir = environment.get("DATA_DIR", "/tmp");
-        string dbFilePath = buildPath(dataDir, "projects.json");
-
-        auto projectRepository = new FileProjectRepository(dbFilePath);
+        // string dataDir = environment.get("DATA_DIR", "/tmp");
+        // string dbFilePath = buildPath(dataDir, "projects.json");
+        // auto projectRepository = new FileProjectRepository(dbFilePath);
+        IProjectRepository projectRepository = new MemoryProjectRepository();
         auto todoRepository = new TodoRepository();
         auto projectUsecase = new ProjectUseCase(projectRepository, todoRepository);
 

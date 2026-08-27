@@ -12,6 +12,8 @@ targetType "executable"
 targetName "uim-projectmanager"
 targetPath "build"
 
+
+
 configuration "default" {
 	targetType "executable"
 }
