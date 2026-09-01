@@ -1,0 +1,92 @@
+{
+  "_version": "1.59.0",
+
+  "sap.app": {
+    "id": "sap.fiori.addressmanager",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "title": "Adressverwaltung (vibe.d OData v4)",
+    "description": "SAP Fiori Adressverwaltung auf vibe.d Basis",
+    "applicationVersion": {
+      "version": "1.0.0"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/api/v4/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+
+  "sap.ui5": {
+    "flexEnabled": false,
+    "rootView": {
+        "viewName": "sap.fiori.addressmanager.view.App",
+        "type": "XML",
+        "async": true,
+        "id": "appView"
+    },
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.ui.layout": {}
+      }
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "sap.fiori.addressmanager.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "updateGroupId": "$auto" 
+        }
+      }
+    },
+    "routing": {
+        "config": {
+            "routerClass": "sap.m.routing.Router",
+            "viewType": "XML",
+            "async": true,
+            "viewPath": "sap.fiori.addressmanager.view",
+            "controlId": "app",
+            "controlAggregation": "pages"
+        },
+        "routes": [
+            {
+                "name": "RouteMain",
+                "pattern": "",
+                "target": ["TargetMain"]
+            }
+        ],
+        "targets": {
+            "TargetMain": {
+                "viewName": "Main",
+                "viewId": "mainView"
+            }
+        }
+    }
+  }
+}

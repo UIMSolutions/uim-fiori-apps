@@ -1,0 +1,20 @@
+{
+  "xsappname": "address-manager",
+  "tenant-mode": "dedicated",
+  "description": "Security configuration for Address Manager",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.User",
+      "description": "User Scope"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "Token_Exchange",
+      "description": "Role for Address Manager Users",
+      "scope-references": [
+        "$XSAPPNAME.User"
+      ]
+    }
+  ]
+}

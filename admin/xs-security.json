@@ -1,0 +1,20 @@
+{
+  "xsappname": "admin-client",
+  "tenant-mode": "dedicated",
+  "description": "Security profile for Admin client",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.Admin",
+      "description": "Admin access"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "AdminUser",
+      "description": "Read and manage admin data",
+      "scope-references": [
+        "$XSAPPNAME.Admin"
+      ]
+    }
+  ]
+}

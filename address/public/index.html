@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="de" style="height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adressverwaltung (vibe.d OData v4)</title>
+
+    <!-- SAPUI5 Bootstrap (CDN) -->
+    <script
+        id="sap-ui-bootstrap"
+        src="https://ui5.sap.com/resources/sap-ui-core.js"
+        data-sap-ui-theme="sap_horizon"
+        data-sap-ui-resourceroots='{
+            "sap.fiori.addressmanager": "./"
+        }'
+        data-sap-ui-compatVersion="edge"
+        data-sap-ui-async="true"
+        data-sap-ui-oninit="module:sap/ui/core/ComponentSupport">
+    </script>
+    <style>
+        html, body, #content {
+            height: 100%;
+            margin: 0;
+        }
+    </style>
+</head>
+<body class="sapUiBody" id="content">
+    <!-- SAPUI5 Component Container -->
+    <div data-sap-ui-component 
+         data-name="sap.fiori.addressmanager" 
+         data-id="container" 
+         data-settings='{"id" : "addressmanager"}'
+         style="height: 100%;">
+    </div>
+</body>
+</html>

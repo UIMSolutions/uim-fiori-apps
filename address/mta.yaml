@@ -1,0 +1,19 @@
+_schema-version: '3.1'
+ID: address-manager
+version: 1.0.0
+description: Address Manager Dlang OData v4 on SAP BTP (ohne Docker)
+
+modules:
+  # 1. Dlang Backend Module (ohne Docker)
+  - name: address-manager-backend
+    type: custom                     # Cloud Foundry Standard-Modul
+    path: .                          # Pfad zum Wurzelverzeichnis
+    parameters:
+      memory: 512M
+      disk-quota: 512M
+      buildpack: binary_buildpack    # Nutzt das native CF Binary Buildpack
+      command: ./address_manager     # Startbefehl für deine Binärdatei
+    provides:
+      - name: backend-api
+        properties:
+          url: ${default-url}

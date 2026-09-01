@@ -1,0 +1,13 @@
+name "address_manager"
+description "A simple vibe.d server application."
+authors "Oz"
+copyright "Copyright © 2026, Oz"
+license "proprietary"
+dependency "vibe-d" version="~>0.10.3"
+subConfiguration "vibe-d:tls" "openssl-1.1"
+dependency "uim-fioriapps:fiori" path=".."
+targetType "executable"
+targetName "address_manager"
+
+// Build-Einstellungen
+buildRequirements "silenceDeprecations"

@@ -1,0 +1,11 @@
+<mvc:View
+    controllerName="sap.fiori.addressmanager.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m">
+    <App id="app">
+        <pages>
+            <!-- Der Router fügt Main.view.xml hier dynamisch ein -->
+        </pages>
+    </App>
+</mvc:View>

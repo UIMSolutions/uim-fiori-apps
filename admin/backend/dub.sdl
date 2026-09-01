@@ -1,0 +1,11 @@
+name "admin_backend"
+description "vibe.d OData-like backend for admin client"
+
+targetType "executable"
+targetName "admin_backend"
+
+authors "Oz"
+license "proprietary"
+
+dependency "vibe-d" version="~>0.10.3"
+versions "VibeNoSSL"

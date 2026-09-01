@@ -1,0 +1,6 @@
+backend/.dub/
+backend/.cache/
+backend/admin_backend
+frontend/node_modules/
+frontend/dist/
+mta_archives/

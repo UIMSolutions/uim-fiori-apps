@@ -22,12 +22,8 @@ docs/
 
 # Code coverage
 *.lst
-todo_manager/mta_archives/todo-manager_2.0.0.mtar
-projectmanager/projectmanager
-todo_manager/mta_archives/todo-manager_1.0.0.mtar
-todo_manager/mta-op-510630d1-9fd0-11f1-bc9a-eeee0a8d23d3/todo-manager_backend.log
-todo_manager/mta-op-510630d1-9fd0-11f1-bc9a-eeee0a8d23d3/todo_approuter.log
-todo_manager/mta-op-510630d1-9fd0-11f1-bc9a-eeee0a8d23d3/OPERATION.log
+*.mtar
+*.log
 uim-fioriapps-test-library
 projectmanager/build/projectmanager-test-tests
 projectmanager/build/uim-projectmanager

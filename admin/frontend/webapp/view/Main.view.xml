@@ -1,0 +1,82 @@
+<mvc:View
+  controllerName="admin.client.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:layout="sap.ui.layout"
+  xmlns:form="sap.ui.layout.form"
+  xmlns:core="sap.ui.core">
+
+  <App>
+    <Page title="Admin User Management" class="sapUiContentPadding">
+      <content>
+        <VBox fitContainer="true" busy="{/busy}">
+          <Toolbar>
+            <Title text="Users" level="H3" />
+            <ToolbarSpacer />
+            <Button text="Create" type="Emphasized" press=".onCreate" />
+            <Button text="Save" press=".onSave" />
+            <Button text="Delete" type="Negative" press=".onDelete" />
+            <Button icon="sap-icon://refresh" press=".onRefresh" />
+          </Toolbar>
+
+          <layout:Grid defaultSpan="L8 M8 S12" hSpacing="1" vSpacing="1">
+            <VBox>
+              <Table
+                mode="SingleSelectMaster"
+                items="{/users}"
+                selectionChange=".onSelectUser"
+                growing="true"
+                growingScrollToLoad="true">
+                <columns>
+                  <Column><Text text="Username" /></Column>
+                  <Column><Text text="Email" /></Column>
+                  <Column><Text text="Role" /></Column>
+                  <Column><Text text="Active" /></Column>
+                </columns>
+                <items>
+                  <ColumnListItem>
+                    <cells>
+                      <Text text="{username}" />
+                      <Text text="{email}" />
+                      <Text text="{role}" />
+                      <ObjectStatus text="{= ${active} ? 'Yes' : 'No' }" state="{= ${active} ? 'Success' : 'Error' }" />
+                    </cells>
+                  </ColumnListItem>
+                </items>
+              </Table>
+            </VBox>
+
+            <VBox class="sapUiSmallMarginBegin">
+              <Title text="Details" level="H4" />
+              <form:SimpleForm editable="true" layout="ResponsiveGridLayout">
+                <Label text="ID" />
+                <Input value="{/selectedUser/id}" editable="false" />
+
+                <Label text="Username" />
+                <Input value="{/selectedUser/username}" />
+
+                <Label text="Email" />
+                <Input value="{/selectedUser/email}" type="Email" />
+
+                <Label text="Role" />
+                <Select selectedKey="{/selectedUser/role}">
+                  <items>
+                    <core:Item key="Admin" text="Admin" />
+                    <core:Item key="Manager" text="Manager" />
+                    <core:Item key="Viewer" text="Viewer" />
+                  </items>
+                </Select>
+
+                <Label text="Active" />
+                <Switch state="{/selectedUser/active}" />
+
+                <Label text="Created At" />
+                <Input value="{/selectedUser/createdAt}" editable="false" />
+              </form:SimpleForm>
+            </VBox>
+          </layout:Grid>
+        </VBox>
+      </content>
+    </Page>
+  </App>
+</mvc:View>

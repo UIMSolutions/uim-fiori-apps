@@ -1,0 +1,45 @@
+_schema-version: '3.1'
+ID: address-manager
+version: 1.0.0
+description: Address Manager with SAP Approuter and Dlang Backend
+
+modules:
+  # 1. Backend-Modul: Stellt die Schnittstelle bereit
+  - name: address-manager-backend
+    type: custom
+    path: .
+    parameters:
+      buildpack: binary_buildpack
+      command: ./address_manager
+      memory: 256M
+      disk-quota: 512M
+    provides:
+      - name: backend-api
+        properties:
+          url: '${default-url}' # Stellt die dynamische CF-URL für den Approuter bereit
+    requires:
+      - name: address-manager-xsuaa
+
+  # 2. Approuter-Modul: Konsumiert die Schnittstelle
+  - name: address-manager-approuter
+    type: approuter.nodejs
+    path: approuter
+    parameters:
+      memory: 128M
+    requires:
+      - name: address-manager-xsuaa
+      - name: backend-api
+        group: destinations
+        properties:
+          name: backend-api
+          url: '~{url}'
+          forwardAuthToken: true
+
+resources:
+  # 3. XSUAA Service Instance
+  - name: address-manager-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json

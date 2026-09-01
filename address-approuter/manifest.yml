@@ -1,0 +1,11 @@
+---
+applications:
+- name: address-manager-backend
+  memory: 128M
+  disk_quota: 256M
+  buildpacks:
+  - binary_buildpack
+  command: ./address_manager
+  env:
+    PORT: 8080
+    VIBED_PORT: 8080

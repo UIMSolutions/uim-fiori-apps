@@ -1,0 +1,51 @@
+_schema-version: '3.1'
+ID: admin-client
+version: 1.0.0
+description: Admin client with vibe.d OData backend and SAP Fiori frontend
+
+modules:
+- name: admin-backend
+  type: custom
+  path: backend
+  parameters:
+    buildpack: binary_buildpack
+    command: ./admin_backend
+    memory: 256M
+    disk-quota: 512M
+  build-parameters:
+    builder: custom
+    commands:
+    - dub build --build=release
+  provides:
+  - name: backend-api
+    properties:
+      url: '${default-url}'
+  requires:
+  - name: admin-xsuaa
+
+- name: admin-approuter
+  type: approuter.nodejs
+  path: frontend
+  parameters:
+    memory: 128M
+    disk-quota: 256M
+  build-parameters:
+    builder: custom
+    commands:
+    - npm install --production
+  requires:
+  - name: admin-xsuaa
+  - name: backend-api
+    group: destinations
+    properties:
+      name: backend-api
+      url: '~{url}'
+      forwardAuthToken: true
+
+resources:
+- name: admin-xsuaa
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: xsuaa
+    service-plan: application
+    path: ./xs-security.json

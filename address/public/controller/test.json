@@ -1,0 +1,27 @@
+{
+  "responses": [
+    {
+      "@odata.context": "$metadata#Addresses",
+      "value": [
+        {
+          "Street": "Leopoldstraße 12",
+          "Country": "Deutschland",
+          "LastName": "Mustermann",
+          "FirstName": "Max",
+          "City": "München",
+          "PostalCode": "80802",
+          "Id": "1001"
+        },
+        {
+          "Street": "Hauptstraße 45",
+          "Country": "Deutschland",
+          "LastName": "Musterfrau",
+          "FirstName": "Erika",
+          "City": "Nürnberg",
+          "PostalCode": "90402",
+          "Id": "1002"
+        }
+      ]
+    }
+  ]
+}

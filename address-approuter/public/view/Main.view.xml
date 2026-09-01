@@ -1,0 +1,39 @@
+<mvc:View
+    controllerName="sap.fiori.addressmanager.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true">
+
+    <Page id="mainPage" title="Address Manager" enableScrolling="true">
+        <content>
+            <Table
+                id="addressTable"
+                items="{
+                    path: '/Addresses'
+                }">
+                <columns>
+                    <Column><Text text="ID"/></Column>
+                    <Column><Text text="Vorname"/></Column>
+                    <Column><Text text="Nachname"/></Column>
+                    <Column><Text text="Straße"/></Column>
+                    <Column><Text text="PLZ"/></Column>
+                    <Column><Text text="Stadt"/></Column>
+                    <Column><Text text="Land"/></Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="{Id}"/>
+                            <Text text="{FirstName}"/>
+                            <Text text="{LastName}"/>
+                            <Text text="{Street}"/>
+                            <Text text="{PostalCode}"/>
+                            <Text text="{City}"/>
+                            <Text text="{Country}"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>
