@@ -1,0 +1,50 @@
+_schema-version: '3.1'
+ID: contact-management
+version: 1.0.0
+description: Contact Management SAP Fiori App with vibe.d OData Backend
+
+modules:
+  # 1. vibe.d Backend Modul (Dlang Executable)
+  - name: contact-manager-backend
+    type: custom
+    path: backend
+    parameters:
+      buildpack: binary_buildpack
+      command: ./contact_manager_backend
+      memory: 256M
+      disk-quota: 512M
+    provides:
+      - name: backend-api
+        properties:
+          url: '${default-url}' # Dynamische Cloud Foundry URL für den Approuter
+    requires:
+      - name: contact-manager-xsuaa
+
+  # 2. Approuter & Fiori Frontend Modul (Node.js)
+  - name: contact-manager-approuter
+    type: approuter.nodejs
+    path: frontend
+    parameters:
+      memory: 128M
+      disk-quota: 256M
+    build-parameters:
+      builder: custom
+      commands:
+        - npm install --production # Stellt sicher, dass @sap/approuter vor dem Packen installiert wird
+    requires:
+      - name: contact-manager-xsuaa
+      - name: backend-api
+        group: destinations
+        properties:
+          name: backend-api
+          url: '~{url}'
+          forwardAuthToken: true
+
+resources:
+  # 3. XSUAA Service Instance
+  - name: contact-manager-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json

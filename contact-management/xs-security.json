@@ -1,0 +1,20 @@
+{
+  "xsappname": "contact-manager",
+  "tenant-mode": "dedicated",
+  "description": "Security configuration for Contact Manager",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.User",
+      "description": "User access"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "ContactManagerUser",
+      "description": "Read and manage contacts",
+      "scope-references": [
+        "$XSAPPNAME.User"
+      ]
+    }
+  ]
+}
