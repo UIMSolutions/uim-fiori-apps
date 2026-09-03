@@ -1,0 +1,158 @@
+sap.ui.define([
+	"sap/ui/base/Object",
+	"sap/ui/comp/navpopover/Factory",
+	"sap/ui/thirdparty/jquery"
+], function(BaseObject, Factory, jQuery) {
+	"use strict";
+
+	var Util = BaseObject.extend("sap.ui.demoapps.rta.freestyle.util.SmartLink",  {});
+
+	Util.getServiceReal = Factory.getService;
+
+	var mSetting = {
+
+		semanticObjectSupplierId: {
+			links: [
+				{
+					action: "action_addtofavorites",
+					intent: "#1",
+					text: "Add to Favorites"
+				}, {
+					action: "action_gotoproducts",
+					intent: "#2",
+					text: "See other supplier products"
+				}, {
+					action: "action_gotoreviews",
+					intent: "#3",
+					text: "Check supplier reviews"
+				}
+			]
+		}
+	};
+
+	function getCrossApplicationNavigationService() {
+		return {
+			hrefForExternal: function(oTarget) {
+				if (!oTarget || !oTarget.target || !oTarget.target.shellHash) {
+					return null;
+				}
+				return oTarget.target.shellHash;
+			},
+			hrefForExternalAsync: function(oTarget) {
+				if (!oTarget || !oTarget.target || !oTarget.target.shellHash) {
+					return Promise.resolve(null);
+				}
+				return Promise.resolve(oTarget.target.shellHash);
+			},
+			getDistinctSemanticObjects: function() {
+				var aSemanticObjects = [];
+				for (var sSemanticObject in mSetting) {
+					aSemanticObjects.push(sSemanticObject);
+				}
+				var oDeferred = jQuery.Deferred();
+				setTimeout(function() {
+					oDeferred.resolve(aSemanticObjects);
+				}, 0);
+				return oDeferred.promise();
+			},
+			getLinks: function(aParams) {
+				var aLinks = [];
+				if (!Array.isArray(aParams)) {
+					aLinks = mSetting[aParams.semanticObject] ? mSetting[aParams.semanticObject].links : [];
+				} else {
+					aParams.forEach(function(aParams_) {
+						aLinks.push([ mSetting[aParams_[0].semanticObject] ? mSetting[aParams_[0].semanticObject].links : []]);
+					});
+				}
+				var oDeferred = jQuery.Deferred();
+				setTimeout(function() {
+					oDeferred.resolve(aLinks);
+				}, 0);
+				return oDeferred.promise();
+			}
+		};
+	}
+
+	function getURLParsing() {
+		return {
+			parseShellHash: function(sIntent) {
+				var sAction;
+				for ( var sSemanticObject in mSetting) {
+					mSetting[sSemanticObject].links.some(function(oLink) { // eslint-disable-line no-loop-func
+						if (oLink.intent === sIntent) {
+							sAction = oLink.action;
+							return true;
+						}
+					});
+					if (sAction) {
+						return {
+							semanticObject: sSemanticObject,
+							action: sAction
+						};
+					}
+				}
+				return {
+					semanticObject: null,
+					action: null
+				};
+			}
+		};
+	}
+
+	function getNavigationService() {
+		return {
+			getHref(oTarget) {
+				if (!oTarget || !oTarget.target || !oTarget.target.shellHash) {
+					return Promise.resolve(null);
+				}
+				return Promise.resolve(oTarget.target.shellHash);
+			},
+			getSemanticObjects() {
+				var aSemanticObjects = [];
+				for (var sSemanticObject in mSetting) {
+					aSemanticObjects.push(sSemanticObject);
+				}
+				return Promise.resolve(aSemanticObjects);
+			},
+			getLinks(aParams) {
+				var aLinks = [];
+				if (!Array.isArray(aParams)) {
+					aLinks = mSetting[aParams.semanticObject] ? mSetting[aParams.semanticObject].links : [];
+				} else {
+					aParams.forEach(function(aParams_) {
+						if (mSetting[aParams_[0].semanticObject]) {
+							aLinks.push([
+								mSetting[aParams_[0].semanticObject].links
+							]);
+						} else {
+							aLinks.push([[]]);
+						}
+					});
+				}
+				return Promise.resolve(aLinks);
+			}
+		};
+	}
+
+	Util.mockUShellServices = function() {
+
+		Factory.getService = function(sServiceName, bAsync) {
+			switch (sServiceName) {
+				case "CrossApplicationNavigation":
+					return bAsync ? Promise.resolve(getCrossApplicationNavigationService()) : getCrossApplicationNavigationService();
+				case "Navigation":
+					return bAsync ? Promise.resolve(getNavigationService()) : getNavigationService();
+				case "URLParsing":
+					return bAsync ? Promise.resolve(getURLParsing()) : getURLParsing();
+				default:
+					return Util.getServiceReal(sServiceName, bAsync);
+			}
+		};
+	};
+
+	Util.unMockUShellServices = function() {
+		Factory.getService = Util.getServiceReal;
+	};
+
+	return Util;
+}, /* bExport= */true);

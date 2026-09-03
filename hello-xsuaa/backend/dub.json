@@ -1,0 +1,9 @@
+{
+  "name": "hello-xsuaa",
+  "description": "Minimal SAP Fiori app powered by vibe.d on SAP BTP CF",
+  "targetName": "hello-xsuaa",
+  "targetType": "executable",
+  "dependencies": {
+    "vibe-d": "~>0.10.3"
+  }
+}
