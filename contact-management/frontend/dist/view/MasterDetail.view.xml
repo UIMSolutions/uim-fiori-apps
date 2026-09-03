@@ -1,0 +1,71 @@
+<mvc:View
+    controllerName="contact.manager.controller.MasterDetail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:form="sap.ui.layout.form">
+
+    <f:FlexibleColumnLayout id="flexibleColumnLayout" layout="TwoColumnsMidExpanded">
+        <!-- MASTER PAGE: Kontaktliste -->
+        <f:beginColumnPages>
+            <Page title="Kontakte ({= ${/Contacts} ? ${/Contacts}.length : 0 })">
+                <headerContent>
+                    <Button icon="sap-icon://add" text="Neu" press=".onAddContact" type="Emphasized" />
+                </headerContent>
+                <content>
+                    <List id="contactList" items="{/Contacts}" mode="SingleSelectMaster" selectionChange=".onSelectContact">
+                        <StandardListItem
+                            title="{firstName} {lastName}"
+                            description="{company}"
+                            info="{id}"
+                            type="Navigation" />
+                    </List>
+                </content>
+            </Page>
+        </f:beginColumnPages>
+
+        <!-- DETAIL PAGE: Kontaktdetails & Bearbeitung -->
+        <f:midColumnPages>
+            <Page id="detailPage" title="Kontaktdetails">
+                <headerContent>
+                    <Button icon="sap-icon://edit" text="Bearbeiten" press=".onEditContact" visible="{= !${ui>/editMode} }" />
+                    <Button icon="sap-icon://save" text="Speichern" type="Accept" press=".onSaveContact" visible="{ui>/editMode}" />
+                    <Button icon="sap-icon://delete" text="Löschen" type="Reject" press=".onDeleteContact" />
+                </headerContent>
+                <content>
+                    <form:SimpleForm editable="{ui>/editMode}" layout="ColumnLayout">
+                        <form:content>
+                            <Label text="ID" />
+                            <Input value="{id}" editable="false" />
+
+                            <Label text="Vorname" />
+                            <Input value="{firstName}" editable="{ui>/editMode}" />
+
+                            <Label text="Nachname" />
+                            <Input value="{lastName}" editable="{ui>/editMode}" />
+
+                            <Label text="E-Mail" />
+                            <Input value="{email}" editable="{ui>/editMode}" />
+
+                            <Label text="Telefon" />
+                            <Input value="{phone}" editable="{ui>/editMode}" />
+
+                            <Label text="Firma" />
+                            <Input value="{company}" editable="{ui>/editMode}" />
+
+                            <Label text="Straße" />
+                            <Input value="{address/street}" editable="{ui>/editMode}" />
+
+                            <Label text="PLZ / Ort" />
+                            <Input value="{address/zipCode}" editable="{ui>/editMode}" />
+                            <Input value="{address/city}" editable="{ui>/editMode}" />
+
+                            <Label text="Land" />
+                            <Input value="{address/country}" editable="{ui>/editMode}" />
+                        </form:content>
+                    </form:SimpleForm>
+                </content>
+            </Page>
+        </f:midColumnPages>
+    </f:FlexibleColumnLayout>
+</mvc:View>

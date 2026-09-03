@@ -1,7 +1,8 @@
 module uim.fiori.helpers.fiori;
 
-public:
 import uim.fiori;
+
+@safe:
 
 // Hilfsmethode: Garantiert, dass OData-Header bei JEDER Antwort gesetzt sind
 void writeODataJson(T)(HTTPServerResponse res, T data, HTTPStatus status = HTTPStatus

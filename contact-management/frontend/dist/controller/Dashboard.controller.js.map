@@ -1,0 +1,1 @@
+{"version":3,"file":"Dashboard.controller.js","names":["sap","ui","define","Controller","extend","onTilePress","this","getOwnerComponent","getRouter","navTo"],"sources":["Dashboard-dbg.controller.js"],"mappings":"AAAAA,IAAIC,GAAGC,OAAO,CAAC,8BAA+B,SAAUC,GACpD,aACA,OAAOA,EAAWC,OAAO,uCAAwC,CAC7DC,YAAa,WACTC,KAAKC,oBAAoBC,YAAYC,MAAM,eAC/C,GAER","ignoreList":[]}

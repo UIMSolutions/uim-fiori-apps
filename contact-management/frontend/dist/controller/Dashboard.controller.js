@@ -1,0 +1,2 @@
+sap.ui.define(["sap/ui/core/mvc/Controller"],function(e){"use strict";return e.extend("contact.manager.controller.Dashboard",{onTilePress:function(){this.getOwnerComponent().getRouter().navTo("MasterDetail")}})});
+//# sourceMappingURL=Dashboard.controller.js.map

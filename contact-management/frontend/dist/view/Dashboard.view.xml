@@ -1,0 +1,20 @@
+<mvc:View
+    controllerName="contact.manager.controller.Dashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page title="Fiori Launchpad - Übersicht">
+        <content>
+            <GenericTile 
+                header="Kontakte &amp; Adressen" 
+                subheader="Verwaltung &amp; Übersicht" 
+                press=".onTilePress" 
+                class="sapUiTinyMarginTop sapUiTinyMarginBegin">
+                <tileContent>
+                    <TileContent>
+                        <ImageContent src="sap-icon://group" />
+                    </TileContent>
+                </tileContent>
+            </GenericTile>
+        </content>
+    </Page>
+</mvc:View>

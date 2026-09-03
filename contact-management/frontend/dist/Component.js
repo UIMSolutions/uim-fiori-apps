@@ -1,0 +1,2 @@
+sap.ui.define(["sap/ui/core/UIComponent","sap/ui/model/json/JSONModel"],function(e,t){"use strict";return e.extend("contact.manager.Component",{metadata:{manifest:"json"},init:function(){e.prototype.init.apply(this,arguments);var i=new t;this.setModel(i);var n=this.getRouter();if(n){n.initialize()}else{console.error("Router konnte nicht initialisiert werden. Bitte Prüfen Sie die 'routing'-Sektion in der manifest.json.")}}})});
+//# sourceMappingURL=Component.js.map
