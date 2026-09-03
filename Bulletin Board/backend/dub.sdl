@@ -1,0 +1,11 @@
+name "bulletin_board_backend"
+description "vibe.d backend for SAP Fiori Bulletin Board using hexagonal architecture"
+
+targetType "executable"
+targetName "bulletin_board_backend"
+
+authors "Oz"
+license "proprietary"
+
+dependency "vibe-d" version="~>0.10.3"
+versions "VibeNoSSL"
