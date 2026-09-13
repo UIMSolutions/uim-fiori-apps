@@ -2,7 +2,6 @@
 	controllerName="sap.ui.demo.iconexplorer.controller.NotFound"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns="sap.m">
-
 	<MessagePage
 		title="{i18n>notFoundTitle}"
 		text="{i18n>notFoundText}"
@@ -13,5 +12,4 @@
 			<Link id="link" text="{i18n>backToOverview}" press=".onLinkPressed"/>
 		</customDescription>
 	</MessagePage>
-
 </mvc:View>

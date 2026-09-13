@@ -6,10 +6,8 @@ sap.ui.define([
 ], function(Opa5, Press, EnterText, TitleLink) {
 	"use strict";
 	var sViewName = "Home";
-
 	Opa5.createPageObjects({
 		onTheHomePage: {
-
 			actions: {
 				iClickOnTheTNTTitleLink: function () {
 					return this.waitFor({
@@ -23,7 +21,6 @@ sap.ui.define([
 						errorMessage: "Did not find the SAP icons TNT Title Link"
 					});
 				},
-
 				iSearchForAnIcon: function(sQuery) {
 					return this.waitFor({
 						id: "search",
@@ -35,7 +32,6 @@ sap.ui.define([
 						errorMessage: "Can't find the Input Field"
 					});
 				},
-
 				iEnterTextIntoSearchField: function() {
 					return this.waitFor({
 						id: "search",
@@ -45,13 +41,11 @@ sap.ui.define([
 					});
 				},
 
-
 				iSelectASuggestion: function(iWhich) {
 					return this.waitFor({
 						id: "search-popup-table",
 						viewName: sViewName,
 						actions: function(oTable) {
-
 							var oItems = oTable.getItems();
 							for (var i = 0; i < oItems.length; i++){
 								if (oItems[i].getCells()[1].getText() === iWhich){
@@ -64,7 +58,6 @@ sap.ui.define([
 					});
 				}
 			},
-
 			assertions: {
 				iShouldSeeSomeFontTiles: function () {
 					return this.waitFor({
@@ -76,7 +69,6 @@ sap.ui.define([
 						errorMessage: "Can't find block layout cells on the home page"
 					});
 				},
-
 				theSearchFieldShouldBeEmpty : function () {
 					return this.waitFor({
 						id: "search",

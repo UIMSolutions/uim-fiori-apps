@@ -2,12 +2,9 @@ sap.ui.define([
 	"sap/ui/core/library"
 ] , function(coreLibrary) {
 	"use strict";
-
 	// shortcut for sap.ui.core.ValueState
 	var ValueState = coreLibrary.ValueState;
-
 	return {
-
 		/**
 		 * Workaround for having to set an explicit height on the fixFlex surrounding container
 		 * @public
@@ -21,7 +18,6 @@ sap.ui.define([
 				return "8rem";
 			}
 		},
-
 		/**
 		 * Returns the speaking name for the technical name of the icon font
 		 * @public
@@ -32,17 +28,13 @@ sap.ui.define([
 			if (!sName) {
 				return;
 			}
-
 			var resourceBundle = this.getResourceBundle();
-
 			// remove special chars and camel case from the name to make legit i18n keys
 			sName = sName.split("-").map(function(sPart) {
 				return sPart.charAt(0).toUpperCase() + sPart.slice(1);
 			}).join("");
-
 			return resourceBundle.getText("fontName_" + sName);
 		},
-
 		/**
 		 * Checks if an icon is in the favorite model
 		 * @public
@@ -52,7 +44,6 @@ sap.ui.define([
 		isFavorite: function (sName) {
 			return this.getModel("fav").isFavorite(sName);
 		},
-
 		/**
 		 * Returns the approriate rating based on the favorite state
 		 * @public
@@ -62,7 +53,6 @@ sap.ui.define([
 		favoriteRating: function (sName) {
 			return (this.getModel("fav").isFavorite(sName) ? 1 : 0);
 		},
-
 		/**
 		 * Retrieves formatted text containing the unicode of the icon identified by the icon's name. Used as a formatter in the view.
 		 * @param {string} name the icon's name
@@ -77,7 +67,6 @@ sap.ui.define([
 			sFormattedText = this.getResourceBundle().getText("previewInfoUnicodeWithParams", [sUnicode]);
 			return sFormattedText;
 		},
-
 		/**
 		 * Makes the first letter of a string uppercase
 		 * @public
@@ -87,7 +76,6 @@ sap.ui.define([
 		uppercaseFirstLetter: function (sValue) {
 			return sValue.charAt(0).toUpperCase() + sValue.slice(1);
 		},
-
 		/**
 		 * Indicates the availability of the icon font
 		 * @public
@@ -101,7 +89,6 @@ sap.ui.define([
 				return ValueState.Error;
 			}
 		},
-
 		/**
 			* Returns the relative URL to a product picture
 		 	* @public
@@ -111,6 +98,5 @@ sap.ui.define([
 			pictureUrl: function(sUrl) {
 				return sap.ui.require.toUrl("sap/ui/demo/iconexplorer/") + sUrl;
 			}
-
 	};
 });

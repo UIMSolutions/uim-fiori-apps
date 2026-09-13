@@ -3,10 +3,8 @@ sap.ui.define([
 	"sap/ui/core/routing/HashChanger"
 ], function(Opa5, HashChanger) {
 	"use strict";
-
 	Opa5.createPageObjects({
 		onTheBrowser: {
-
 			actions: {
 				iPressOnTheBackwardsButton: function () {
 					return this.waitFor({
@@ -16,7 +14,6 @@ sap.ui.define([
 						}
 					});
 				},
-
 				iPressOnTheForwardsButton: function () {
 					return this.waitFor({
 						success: function () {
@@ -25,27 +22,22 @@ sap.ui.define([
 						}
 					});
 				},
-
 				iChangeTheHashToTheRememberedItem: function() {
 					return this.waitFor({
 						success: function() {
 							var sIconName = this.getContext().currentItem.name;
-
 							return this.iChangeTheHashParameter("icon", sIconName);
 						}
 					});
 				},
-
 				iChangeTheHashToSomethingInvalid: function () {
 					return this.waitFor({
 						success: function () {
 							var oHashChanger = HashChanger.getInstance();
-
 							oHashChanger.setHash("/somethingInvalid");
 						}
 					});
 				},
-
 				iChangeTheHashParameter: function (sKey, sValue) {
 					return this.waitFor({
 						success: function () {
@@ -67,9 +59,7 @@ sap.ui.define([
 					});
 				}
 			},
-
 			assertions: {}
 		}
-
 	});
 });

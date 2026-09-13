@@ -3,12 +3,9 @@ sap.ui.require([
 	"sap/ui/test/actions/Press"
 ], function(Opa5, Press) {
 	"use strict";
-
 	Opa5.createPageObjects({
 		onTheNotFoundPage: {
-
 			actions: {
-
 				iPressTheNotFoundShowOverviewLink: function () {
 					return this.waitFor({
 						id: "link",
@@ -18,9 +15,7 @@ sap.ui.require([
 					});
 				}
 			},
-
 			assertions: {
-
 				iShouldSeeResourceNotFound: function () {
 					return this.waitFor({
 						id: "page",
@@ -32,11 +27,7 @@ sap.ui.require([
 						errorMessage: "Did not display the object not found text"
 					});
 				}
-
 			}
-
 		}
-
 	});
-
 });

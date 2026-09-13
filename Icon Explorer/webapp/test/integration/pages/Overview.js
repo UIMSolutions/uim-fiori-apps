@@ -18,35 +18,28 @@ sap.ui.define([
 			Properties,
 			PropertyStrictEquals) {
 	"use strict";
-
 	var sViewName = "Overview",
 		sResultsId = "results",
 		sSearchFieldId = "searchField",
 		sSomethingThatCannotBeFound = "*!-Q@@||";
-
 	function allItemsInTheListContainTheSearchTerm (aControls) {
 		var oResults = aControls[0],
 			oSearchField = aControls[1],
 			aItems = oResults.getItems();
-
 		// table needs items
 		if (aItems.length === 0) {
 			return false;
 		}
-
 		return aItems.every(function (oItem) {
 			return oItem.getCells()[1].getText().indexOf(oSearchField.getValue()) !== -1;
 		});
 	}
-
 	function oneItemInTheListContainsTheSearchTerm (sName, oResults) {
 		var aItems = oResults.getItems();
-
 		// table needs items
 		if (aItems.length === 0) {
 			return false;
 		}
-
 		return !!aItems.some(function (oItem) {
 			var sText;
 			if (oItem.getCells) {
@@ -57,31 +50,24 @@ sap.ui.define([
 			return sText.indexOf(sName) !== -1;
 		});
 	}
-
 	function onlyOneItemInTheListContainsTheSearchTerm (sName, oResults) {
 		var aItems = oResults.getItems();
-
 		// only one item is present in the result table
 		if (aItems.length !== 1) {
 			return false;
 		}
-
 		return aItems[0].getCells()[1].getText().indexOf(sName) !== -1;
 	}
-
 	function allItemsInTheListContainTheTag (sTag, sModel, oResults) {
 		var aItems = oResults.getItems();
-
 		// table needs items
 		if (aItems.length === 0) {
 			return false;
 		}
-
 		return aItems.every(function (oItem) {
 			return oItem.getBindingContext(sModel).getProperty("tagString").search(sTag) >= 0;
 		});
 	}
-
 	function createWaitForTableItemWithName (oOptions) {
 		var sName = oOptions.name;
 		return {
@@ -97,7 +83,6 @@ sap.ui.define([
 			errorMessage: "Table in view \"" + sViewName + "\" does not contain an Item with name \"" + sName + "\""
 		};
 	}
-
 	function createWaitForTableItemFavoriteWithName (oOptions) {
 		var sName = oOptions.name;
 		return {
@@ -110,7 +95,6 @@ sap.ui.define([
 			},
 			success: function (aItems) {
 				var oItem = aItems[0];
-
 				if (oItem) {
 					return this.waitFor({
 						controlType: "sap.m.RatingIndicator",
@@ -123,7 +107,6 @@ sap.ui.define([
 			errorMessage: "Table in view \"" + sViewName + "\" does not contain an Item with name \"" + sName + "\""
 		};
 	}
-
 	function createWaitForTableItemAtPosition (oOptions) {
 		var iPosition = oOptions.position;
 		return {
@@ -137,9 +120,7 @@ sap.ui.define([
 			errorMessage: "Table in view \"" + sViewName + "\" does not contain an Item at position \"" + iPosition + "\""
 		};
 	}
-
 	Opa5.createPageObjects({
-
 		onTheOverviewPage: {
 			baseClass: Common,
 			actions: {
@@ -151,27 +132,23 @@ sap.ui.define([
 						errorMessage: "The Button is not there"
 					});
 				},
-
 				iPressATableItemWithName: function (sName) {
 					return this.waitFor(createWaitForTableItemWithName({
 						name: sName,
 						actions: new Press()
 					}));
 				},
-
 				iPressATableItemAtPosition: function (iPosition) {
 					return this.waitFor(createWaitForTableItemAtPosition({
 						position: iPosition,
 						actions: new Press()
 					}));
 				},
-
 				iRememberTheItemAtPosition: function (iPosition){
 					return this.waitFor(createWaitForTableItemAtPosition({
 						position: iPosition,
 						success: function (oResultsItem) {
 							var oBindingContext = oResultsItem.getBindingContext();
-
 							// Don't remember objects just strings since IE will not allow accessing objects of destroyed frames
 							this.getContext().currentItem = {
 								name: oBindingContext.getProperty("name")
@@ -179,14 +156,12 @@ sap.ui.define([
 						}
 					}));
 				},
-
 				iMarkAnIconAsFavorite: function (sName) {
 					return this.waitFor(createWaitForTableItemFavoriteWithName({
 						name: sName,
 						actions: new Press({idSuffix: "selector"})
 					}));
 				},
-
 				iPressOnMoreData: function (){
 					return this.waitFor({
 						id: sResultsId,
@@ -195,7 +170,6 @@ sap.ui.define([
 						errorMessage: "The Table does not have a trigger"
 					});
 				},
-
 				iWaitUntilTheTableIsLoaded: function () {
 					return this.waitFor({
 						id: sResultsId,
@@ -204,23 +178,19 @@ sap.ui.define([
 						errorMessage: "The Table has not been loaded"
 					});
 				},
-
 				iSearchForTheFirstObject: function(bWithEnter) {
 					var sFirstObjectTitle;
-
 					return this.waitFor({
 						id: sResultsId,
 						viewName: sViewName,
 						matchers: new AggregationFilled({name: "items"}),
 						success: function(oResults) {
 							sFirstObjectTitle = oResults.getItems()[0].getCells()[1].getText();
-
 							if (bWithEnter) {
 								this.iSearchForValueWithEnter(sFirstObjectTitle);
 							} else {
 								this.iSearchForValue(sFirstObjectTitle);
 							}
-
 							this.waitFor({
 								id: [sResultsId, sSearchFieldId],
 								viewName: sViewName,
@@ -231,7 +201,6 @@ sap.ui.define([
 						errorMessage: "Did not find table entries while trying to search for the first object"
 					});
 				},
-
 				iSearchForValueWithActions: function (aActions) {
 					return this.waitFor({
 						id: sSearchFieldId,
@@ -240,27 +209,21 @@ sap.ui.define([
 						errorMessage: "Failed to find search field in Overview view"
 					});
 				},
-
 				iSearchForValue: function (sSearchString) {
 					return this.iSearchForValueWithActions([new EnterText({text: sSearchString})]);
 				},
-
 				iSearchForValueWithEnter: function (sSearchString) {
 					return this.iSearchForValueWithActions([new EnterText({text: sSearchString}), new Press()]);
 				},
-
 				iTypeSomethingInTheSearchThatCannotBeFound: function () {
 					return this.iSearchForValueWithActions([new EnterText({text: sSomethingThatCannotBeFound})]);
 				},
-
 				iClearTheSearch: function () {
 					return this.iSearchForValueWithActions([new EnterText({text: ""})]);
 				},
-
 				iSearchForSomethingWithNoResults: function () {
 					return this.iSearchForValueWithActions([new EnterText({text: sSomethingThatCannotBeFound})]);
 				},
-
 				iPressOnTheTabWithTheKey: function (sKey) {
 					return this.waitFor({
 						controlType: "sap.m.IconTabFilter",
@@ -270,7 +233,6 @@ sap.ui.define([
 						errorMessage: "Cannot find the icon tab filter"
 					});
 				},
-
 				iPressTheSurpriseMeButton: function () {
 					return this.waitFor({
 						id: "surprise",
@@ -279,7 +241,6 @@ sap.ui.define([
 						errorMessage: "Failed to find surprise me button field in overview view"
 					});
 				},
-
 				iSelectTheTagWithName: function (sName) {
 					return this.waitFor({
 						id: "tagSelection",
@@ -301,7 +262,6 @@ sap.ui.define([
 						errorMessage: "Failed to find the tag selection bar in overview view"
 					});
 				},
-
 				iSelectTheCategoryWithName: function (sName) {
 					return this.waitFor({
 						id: "categorySelection",
@@ -344,7 +304,6 @@ sap.ui.define([
 							var oItems = oList.getContent()[0].getItems();
 							for (var i = 0; i < oItems.length; i++) {
 								var sItemFontName = oItems[i].getCustomData()[0].getValue();
-
 								if (sItemFontName === sFontName) {
 									new Press().executeOn(oItems[i]);
 								}
@@ -354,7 +313,6 @@ sap.ui.define([
 					});
 				}
 			},
-
 			assertions: {
 				iShouldSeeTheTNTFontPage: function () {
 					return this.waitFor({
@@ -369,7 +327,6 @@ sap.ui.define([
 						errorMessage: "Can't find the TNT font page"
 					});
 				},
-
 				iShouldSeeTheTable: function () {
 					return this.waitFor({
 						id: sResultsId,
@@ -380,7 +337,6 @@ sap.ui.define([
 						errorMessage: "Can't find the result table"
 					});
 				},
-
 				theTableShouldShowOnlyObjectsWithTheSearchStringInTheirTitle: function () {
 					return this.waitFor({
 						id: [sResultsId, sSearchFieldId],
@@ -392,7 +348,6 @@ sap.ui.define([
 						errorMessage: "The table did not have items matching the search term"
 					});
 				},
-
 				theTableShouldShowOnlyObjectsWithTheTag: function (sName, sModelName) {
 					return this.waitFor({
 						id: sResultsId,
@@ -406,14 +361,12 @@ sap.ui.define([
 						errorMessage: "The table does not show items with the tag \"" + sName + "\""
 					});
 				},
-
 				theTableShouldShowTheCategory: function (sName) {
 					return this.waitFor({
 						id: sResultsId,
 						viewName: sViewName,
 						check:  function (oControl) {
 							var sAbsolutePath = oControl.getBinding("items").getPath();
-
 							if (sAbsolutePath.startsWith("/")) {
 								return oControl.getModel().getProperty(sAbsolutePath.replace("/icons", "")).text === sName;
 							} else {
@@ -426,7 +379,6 @@ sap.ui.define([
 						errorMessage: "The table does not show items with the category \"" + sName + "\""
 					});
 				},
-
 				theTableShouldContainTheIcon: function (sName) {
 					return this.waitFor({
 						id: sResultsId,
@@ -440,7 +392,6 @@ sap.ui.define([
 						errorMessage: "The table did not have items"
 					});
 				},
-
 				theTableShouldContainOnlyTheIcon: function (sName) {
 					return this.waitFor({
 						id: sResultsId,
@@ -454,7 +405,6 @@ sap.ui.define([
 						errorMessage: "The table does not show only one single item with the substring \""  + sName + "\" in its title"
 					});
 				},
-
 				theTableShouldNotContainTheIcon: function (sName) {
 					return this.waitFor({
 						id: sResultsId,
@@ -468,18 +418,15 @@ sap.ui.define([
 						errorMessage: "The table did not have items"
 					});
 				},
-
 				theIconShouldBeMarkedAsFavorite: function (sName) {
 					return this.waitFor(createWaitForTableItemFavoriteWithName({
 						name: sName,
 						success: function(aControls) {
 							var oControl = aControls[0];
-
 							Opa5.assert.ok(oControl.getValue(), "The item is a favorite");
 						}
 					}));
 				},
-
 				theTableShouldHaveNoEntries: function () {
 					return this.waitFor({
 						viewName: sViewName,
@@ -491,11 +438,9 @@ sap.ui.define([
 						errorMessage : "The list does contain entries"
 					});
 				},
-
 				theTableShouldHaveAllEntries: function () {
 					var iAllEntities = 23,
 						iExpectedNumberOfItems;
-
 					// retrieve all Objects
 					return this.waitFor({
 						id: sResultsId,
@@ -511,7 +456,6 @@ sap.ui.define([
 						errorMessage: "Table does not have all entries"
 					});
 				},
-
 				theTitleShouldDisplayTheTotalAmountOfItems: function () {
 					return this.waitFor({
 						id: sResultsId,
@@ -519,7 +463,6 @@ sap.ui.define([
 						matchers: new AggregationFilled({name: "items"}),
 						success: function (oResults) {
 							var iObjectCount = oResults.getBinding("items").getLength();
-
 							return this.waitFor({
 								controlType: "sap.m.IconTabFilter",
 								viewName: sViewName,
@@ -536,11 +479,9 @@ sap.ui.define([
 						errorMessage: "The table has no items"
 					});
 				},
-
 				theTableShouldHaveTheDoubleAmountOfInitialEntries: function () {
 					var iAllEntities = 23,
 						iExpectedNumberOfItems;
-
 					return this.waitFor({
 						id: sResultsId,
 						viewName: sViewName,
@@ -554,7 +495,6 @@ sap.ui.define([
 						errorMessage: "Table does not have the double amount of entries"
 					});
 				},
-
 				iShouldSeeTheNoDataTextForNoSearchResults: function () {
 					return this.waitFor({
 						id: sResultsId,

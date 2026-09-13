@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
 module uim.edm;
-
 /**
  * UIM EDM (Enterprise Data Model) Library
  * 
@@ -52,13 +51,11 @@ module uim.edm;
  * schema.createEntitySet("People", personType);
  * ---
  */
-
 public {
     // Core imports
     import uim.oop;
     import uim.jsons;
 }
-
 public {
     // EDM modules
     import uim.edm.classes;

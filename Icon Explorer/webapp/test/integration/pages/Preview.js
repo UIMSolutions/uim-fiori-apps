@@ -5,14 +5,11 @@ sap.ui.require([
 	"sap/ui/test/matchers/Ancestor"
 ], function(Opa5, Press, Properties, Ancestor) {
 	"use strict";
-
 	var sViewName = "Overview",
 		sPreviewId = "preview",
 		sPreviewIconId = "previewIcon";
-
 	Opa5.createPageObjects({
 		onThePreviewPage: {
-
 			actions: {
 				iPressTheCloseButton: function () {
 					return this.waitFor({
@@ -22,7 +19,6 @@ sap.ui.require([
 						errorMessage: "Did not find the close preview button"
 					});
 				},
-
 				iCopyToClipBoard: function () {
 					return this.waitFor({
 						id: "previewCopy",
@@ -41,7 +37,6 @@ sap.ui.require([
 					});
 				}
 			},
-
 			assertions: {
 				iShouldSeeTheIcon: function (sName) {
 					return this.waitFor({
@@ -56,7 +51,6 @@ sap.ui.require([
 						errorMessage: "Did not display the icon \"" + sName + "\" in the preview area"
 					});
 				},
-
 				iShouldSeeTheRememberedObject: function() {
 					return this.waitFor({
 						success: function() {
@@ -64,7 +58,6 @@ sap.ui.require([
 						}
 					});
 				},
-
 				iShouldSeeARandomIcon: function () {
 					return this.waitFor({
 						id: sPreviewIconId,
@@ -78,7 +71,6 @@ sap.ui.require([
 						errorMessage: "Did not display a random icon in the preview area"
 					});
 				},
-
 				iShouldSeeThePreviewArea: function () {
 					return this.waitFor({
 						id: sPreviewId,
@@ -89,7 +81,6 @@ sap.ui.require([
 						errorMessage: "The preview area is not visible"
 					});
 				},
-
 				iShouldNotSeeThePreviewArea: function () {
 					return this.waitFor({
 						id: sPreviewId,
@@ -104,7 +95,6 @@ sap.ui.require([
 						errorMessage: "The preview area is visible"
 					});
 				},
-
 				iShouldSeeTheCopyArea: function () {
 					return this.waitFor({
 						id: "previewCopy",
@@ -115,7 +105,6 @@ sap.ui.require([
 						errorMessage: "The copy area is not visible"
 					});
 				},
-
 				iShouldSeeTheUseCasesArea: function () {
 					return this.waitFor({
 						id: "previewUseCases",
@@ -126,7 +115,6 @@ sap.ui.require([
 						errorMessage: "The use cases area is not visible"
 					});
 				},
-
 				iShouldSeeTheInfoArea: function () {
 					return this.waitFor({
 						id: "previewInfo",
@@ -137,7 +125,6 @@ sap.ui.require([
 						errorMessage: "The info area is not visible"
 					});
 				},
-
 				iShouldSeeTheUnicodeInfo: function () {
 					return this.waitFor({
 						id: "unicodeInfo",
@@ -148,7 +135,6 @@ sap.ui.require([
 						errorMessage: "The unicode info is not displayed"
 					});
 				},
-
 				iShouldSeeTheCategoryInfo: function () {
 					return this.waitFor({
 						id: "categoryInfo",
@@ -160,9 +146,6 @@ sap.ui.require([
 					});
 				}
 			}
-
 		}
-
 	});
-
 });

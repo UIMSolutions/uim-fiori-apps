@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
 module uim.edm.classes;
-
 public {
     import uim.edm.classes.element;
     import uim.edm.classes.property;

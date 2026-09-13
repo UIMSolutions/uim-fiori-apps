@@ -1,6 +1,5 @@
 sap.ui.define([], function() {
 	"use strict";
-
 	return {
 		/**
 		 * Sorts icons by icon name
@@ -16,7 +15,6 @@ sap.ui.define([], function() {
 			} else {
 				var sContext1Name = oContext1.name.toLowerCase();
 				var sContext2Name = oContext2.name.toLowerCase();
-
 				if (sContext1Name < sContext2Name) {
 					return -1;
 				} else {

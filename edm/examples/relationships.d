@@ -4,10 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
 module edm.examples.relationships;
-
 import std.stdio;
 import uim.edm;
-
 void main() {
     writeln("=== EDM Relationships Example ===\n");
     

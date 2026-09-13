@@ -4,11 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
 module uim.edm.classes.element;
-
 import uim.edm;
-
 @safe:
-
 /**
  * Base class for EDM elements
  */
@@ -25,7 +22,6 @@ class EdmElement : UIMObject, IEdmElement {
         return _schema;
     }
 }
-
 /**
  * Base class for named EDM elements
  */
