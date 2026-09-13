@@ -1,0 +1,190 @@
+<mvc:View
+    controllerName="landscape.frontend.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:uxap="sap.uxap"
+    xmlns:network="sap.suite.ui.commons.networkgraph"
+    height="100%">
+    <NavContainer id="navContainer">
+        <pages>
+            <Page id="overviewPage" title="IT-Bebauung Uebersicht">
+                <content>
+                    <VBox class="sapUiSmallMargin" renderType="Bare">
+                        <Title text="Application Landscape Map" level="H2" />
+                        <HBox renderType="Bare" justifyContent="SpaceBetween" wrap="Wrap">
+                            <VBox width="100%" class="landscapeCard sapUiSmallMarginBottom">
+                                <Title text="Kachel 1: Karten-Ansicht" level="H4" />
+                                <Table id="matrixTable" items="{/MatrixCells}">
+                                    <columns>
+                                        <Column><Text text="Geschaeftsbereich" /></Column>
+                                        <Column><Text text="Prozessebene" /></Column>
+                                        <Column><Text text="Systeme" /></Column>
+                                        <Column><Text text="Anzahl" /></Column>
+                                    </columns>
+                                    <items>
+                                        <ColumnListItem>
+                                            <cells>
+                                                <Text text="{BusinessArea}" />
+                                                <Text text="{ProcessLevel}" />
+                                                <Text text="{Systems}" />
+                                                <ObjectNumber number="{SystemCount}" />
+                                            </cells>
+                                        </ColumnListItem>
+                                    </items>
+                                </Table>
+                            </VBox>
+                        </HBox>
+                        <HBox renderType="Bare" justifyContent="SpaceBetween" wrap="Wrap">
+                            <VBox width="49%" class="landscapeCard sapUiSmallMarginBottom">
+                                <Title text="Kachel 2: Smart Filter Bar" level="H4" />
+                                <HBox renderType="Bare" wrap="Wrap">
+                                    <VBox class="sapUiSmallMarginEnd">
+                                        <Label text="Kritikalitaet" />
+                                        <Select id="criticalitySelect" width="12rem" selectedKey="{filters>/criticality}">
+                                            <items>
+                                                <core:Item key="" text="Alle" />
+                                                <core:Item key="Tier 1" text="Tier 1" />
+                                                <core:Item key="Tier 2" text="Tier 2" />
+                                                <core:Item key="Tier 3" text="Tier 3" />
+                                            </items>
+                                        </Select>
+                                    </VBox>
+                                    <VBox class="sapUiSmallMarginEnd">
+                                        <Label text="Betriebsart" />
+                                        <Select id="operatingModelSelect" width="12rem" selectedKey="{filters>/operatingModel}">
+                                            <items>
+                                                <core:Item key="" text="Alle" />
+                                                <core:Item key="Cloud" text="Cloud" />
+                                                <core:Item key="On-Premise" text="On-Premise" />
+                                            </items>
+                                        </Select>
+                                    </VBox>
+                                    <VBox class="sapUiSmallMarginEnd">
+                                        <Label text="Lebenszyklus" />
+                                        <Select id="lifecycleSelect" width="14rem" selectedKey="{filters>/lifecycleStatus}">
+                                            <items>
+                                                <core:Item key="" text="Alle" />
+                                                <core:Item key="Active" text="Active" />
+                                                <core:Item key="Decommissioning" text="Decommissioning" />
+                                                <core:Item key="Redundant" text="Redundant" />
+                                            </items>
+                                        </Select>
+                                    </VBox>
+                                    <VBox class="sapUiSmallMarginEnd">
+                                        <Label text="Suche" />
+                                        <SearchField id="nameSearch" width="16rem" search="onApplyFilters" />
+                                    </VBox>
+                                    <VBox justifyContent="End">
+                                        <Button text="Filter anwenden" type="Emphasized" press="onApplyFilters" />
+                                    </VBox>
+                                </HBox>
+                            </VBox>
+                            <VBox width="49%" class="landscapeCard sapUiSmallMarginBottom">
+                                <Title text="Kachel 3: KPI Tag Cloud" level="H4" />
+                                <FlexBox id="kpiCloud" wrap="Wrap" items="{/KPIOverview}">
+                                    <items>
+                                        <ObjectStatus
+                                            class="kpiTag"
+                                            text="{= ${Label} + ': ' + ${Value} }"
+                                            state="{ path: 'Semantic', formatter: '.formatter.toValueState' }" />
+                                    </items>
+                                </FlexBox>
+                            </VBox>
+                        </HBox>
+                        <VBox class="landscapeCard">
+                            <Title text="Systemliste" level="H4" />
+                            <Table id="systemsTable" items="{/Systems}">
+                                <columns>
+                                    <Column><Text text="System" /></Column>
+                                    <Column><Text text="Bereich" /></Column>
+                                    <Column><Text text="Prozessebene" /></Column>
+                                    <Column><Text text="Kritikalitaet" /></Column>
+                                    <Column><Text text="Betriebsart" /></Column>
+                                    <Column><Text text="Lifecycle" /></Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem type="Active" press="onOpenSystemDetail">
+                                        <cells>
+                                            <ObjectIdentifier title="{Name}" text="{ID}" />
+                                            <Text text="{BusinessArea}" />
+                                            <Text text="{ProcessLevel}" />
+                                            <ObjectStatus
+                                                text="{Criticality}"
+                                                state="{ path: 'StatusColor', formatter: '.formatter.toValueState' }" />
+                                            <Text text="{OperatingModel}" />
+                                            <Text text="{LifecycleStatus}" />
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </VBox>
+                    </VBox>
+                </content>
+            </Page>
+            <Page id="detailPage" title="System-Detail" showNavButton="true" navButtonPress="onBackToOverview">
+                <content>
+                    <uxap:ObjectPageLayout id="objectPageLayout" showAnchorBar="false">
+                        <uxap:headerTitle>
+                            <uxap:ObjectPageDynamicHeaderTitle>
+                                <uxap:heading>
+                                    <Title text="{detail>/selectedSystem/Name}" />
+                                </uxap:heading>
+                                <uxap:content>
+                                    <ObjectStatus
+                                        text="{detail>/selectedSystem/Criticality}"
+                                        state="{ path: 'detail>/selectedSystem/StatusColor', formatter: '.formatter.toValueState' }" />
+                                    <Text text="Lifecycle: {detail>/selectedSystem/LifecycleStatus}" />
+                                </uxap:content>
+                            </uxap:ObjectPageDynamicHeaderTitle>
+                        </uxap:headerTitle>
+                        <uxap:sections>
+                            <uxap:ObjectPageSection title="Stammdaten">
+                                <uxap:subSections>
+                                    <uxap:ObjectPageSubSection>
+                                        <uxap:blocks>
+                                            <VBox>
+                                                <Text text="{detail>/selectedSystem/Description}" />
+                                                <Text text="Business Area: {detail>/selectedSystem/BusinessArea}" />
+                                                <Text text="Process Level: {detail>/selectedSystem/ProcessLevel}" />
+                                                <Text text="Operating Model: {detail>/selectedSystem/OperatingModel}" />
+                                            </VBox>
+                                        </uxap:blocks>
+                                    </uxap:ObjectPageSubSection>
+                                </uxap:subSections>
+                            </uxap:ObjectPageSection>
+                            <uxap:ObjectPageSection title="Verantwortliche Personen">
+                                <uxap:subSections>
+                                    <uxap:ObjectPageSubSection>
+                                        <uxap:blocks>
+                                            <VBox>
+                                                <Text text="Business Owner: {detail>/selectedSystem/BusinessOwner}" />
+                                                <Text text="IT Owner: {detail>/selectedSystem/ITOwner}" />
+                                            </VBox>
+                                        </uxap:blocks>
+                                    </uxap:ObjectPageSubSection>
+                                </uxap:subSections>
+                            </uxap:ObjectPageSection>
+                            <uxap:ObjectPageSection title="Schnittstellen-Netzwerk">
+                                <uxap:subSections>
+                                    <uxap:ObjectPageSubSection>
+                                        <uxap:blocks>
+                                            <network:Graph id="interfaceGraph" orientation="LeftRight" nodes="{detail>/graphNodes}" lines="{detail>/graphLines}">
+                                                <network:nodes>
+                                                    <network:Node key="{detail>key}" title="{detail>title}" status="{detail>status}" />
+                                                </network:nodes>
+                                                <network:lines>
+                                                    <network:Line from="{detail>from}" to="{detail>to}" title="{detail>title}" />
+                                                </network:lines>
+                                            </network:Graph>
+                                        </uxap:blocks>
+                                    </uxap:ObjectPageSubSection>
+                                </uxap:subSections>
+                            </uxap:ObjectPageSection>
+                        </uxap:sections>
+                    </uxap:ObjectPageLayout>
+                </content>
+            </Page>
+        </pages>
+    </NavContainer>
+</mvc:View>

@@ -1,0 +1,89 @@
+{
+	"_version": "1.65.0",
+	"sap.app": {
+		"id": "landscape.frontend",
+		"type": "application",
+		"i18n": {
+			"bundleUrl": "i18n/i18n.properties",
+			"supportedLocales": [
+				"",
+				"en"
+			]
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"dataSources": {
+			"landscapeService": {
+				"uri": "/odata/v4/landscape-service/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "4.0"
+				}
+			}
+		},
+		"applicationVersion": {
+			"version": "1.0.0"
+		}
+	},
+	"sap.cloud": {
+		"public": true,
+		"service": "landscape.demo"
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "landscape.frontend.view.App",
+			"type": "XML",
+			"async": true,
+			"id": "app"
+		},
+		"dependencies": {
+			"minUI5Version": "1.120.0",
+			"libs": {
+				"sap.m": {},
+				"sap.ui.core": {},
+				"sap.ui.layout": {},
+				"sap.uxap": {},
+				"sap.suite.ui.commons": {}
+			}
+		},
+		"resources": {
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
+		},
+		"models": {
+			"": {
+				"dataSource": "landscapeService",
+				"preload": true,
+				"settings": {
+					"synchronizationMode": "None",
+					"operationMode": "Server",
+					"autoExpandSelect": true,
+					"groupId": "$direct",
+					"updateGroupId": "$direct"
+				}
+			},
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "landscape.frontend.i18n.i18n",
+					"supportedLocales": [
+						"",
+						"en"
+					]
+				}
+			}
+		},
+		"flexBundle": false
+	}
+}
