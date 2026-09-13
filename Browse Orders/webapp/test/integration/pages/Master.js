@@ -7,14 +7,11 @@ sap.ui.define([
 	"sap/ui/test/matchers/AggregationFilled"
 ], function(Opa5, Press, Common, EnterText, AggregationLengthEquals, AggregationFilled) {
 	"use strict";
-
 	Opa5.createPageObjects({
 		onTheMasterPage: {
 			baseClass: Common,
 			viewName: "Master",
-
 			actions: {
-
 				iWaitUntilTheListIsLoaded: function () {
 					return this.waitFor({
 						id: "list",
@@ -24,7 +21,6 @@ sap.ui.define([
 						errorMessage: "The master list has not been loaded"
 					});
 				},
-
 				iRememberTheSelectedItem: function () {
 					return this.waitFor({
 						id: "list",
@@ -37,7 +33,6 @@ sap.ui.define([
 						errorMessage: "The list does not have a selected item so nothing can be remembered"
 					});
 				},
-
 				iRememberTheIdOfListItemAtPosition: function (iPosition) {
 					return this.waitFor({
 						id: "list",
@@ -50,7 +45,6 @@ sap.ui.define([
 						errorMessage: "The list does not have an item at the index " + iPosition
 					});
 				},
-
 				iRememberAnIdOfAnObjectThatsNotInTheList: function () {
 					var aEntityData = this.getEntitySet("Orders");
 					return this.waitFor({
@@ -65,14 +59,12 @@ sap.ui.define([
 										return oListItem.getBindingContext().getProperty("OrderID") === oObject.OrderID;
 									});
 								});
-
 							if (!aItemsNotInTheList.length) {
 								// Not enough items all of them are displayed so we take the last one
 								sCurrentId = aEntityData[aEntityData.length - 1].OrderID;
 							} else {
 								sCurrentId = aItemsNotInTheList[0].OrderID;
 							}
-
 							var oCurrentItem = this.getContext().currentItem;
 							// Construct a binding path since the list item is not created yet and we only have the id.
 							oCurrentItem.bindingPath = "/" + oList.getModel().createKey("Orders", {
@@ -83,7 +75,6 @@ sap.ui.define([
 						errorMessage: "the model does not have a item that is not in the list"
 					});
 				},
-
 				iPressOnTheObjectAtPosition: function (iPositon) {
 					return this.waitFor({
 						id: "list",
@@ -94,7 +85,6 @@ sap.ui.define([
 						errorMessage: "List 'list' in view 'Master' does not contain an ObjectListItem at position '" + iPositon + "'"
 					});
 				},
-
 				iSearchFor: function (sSearch){
 					return this.waitFor({
 						id: "searchField",
@@ -107,11 +97,9 @@ sap.ui.define([
 						errorMessage: "Can't search for " + sSearch
 					});
 				},
-
 				iSearchForNotFound: function () {
 					return this.iSearchFor("*#-Q@@||");
 				},
-
 				iClearTheSearch: function () {
 					return this.waitFor({
 						id: "searchField",
@@ -121,7 +109,6 @@ sap.ui.define([
 						errorMessage: "Failed to clear the search in master list"
 					});
 				},
-
 				iRememberTheListItem: function (oListItem) {
 					var oBindingContext = oListItem.getBindingContext();
 					this.getContext().currentItem = {
@@ -130,7 +117,6 @@ sap.ui.define([
 						title: oBindingContext.getProperty("OrderID")
 					};
 				},
-
 				iFilterTheListOn: function (sOption) {
 					return this.waitFor({
 						id: "filterButton",
@@ -171,7 +157,6 @@ sap.ui.define([
 						errorMessage: "Did not find the filter button"
 					});
 				},
-
 				iResetFilters: function () {
 					return this.waitFor({
 						id: "filterButton",
@@ -201,15 +186,12 @@ sap.ui.define([
 						errorMessage: "Did not find the 'filter' button."
 					});
 				},
-
 				iGroupTheList: function () {
 					return this.iChooseGrouping("masterGroupCustomer");
 				},
-
 				iResetGrouping: function () {
 					return this.iChooseGrouping("VIEWSETTINGS_NONE_ITEM", "sap.m");
 				},
-
 				iChooseGrouping: function (sResourceId, sLibrary) {
 					return this.waitFor({
 						id: "groupButton",
@@ -240,13 +222,10 @@ sap.ui.define([
 					});
 				}
 			},
-
 			assertions: {
-
 				theListHeaderDisplaysZeroHits: function () {
 					return this.theHeaderShouldDisplayOrders(0);
 				},
-
 				theListHasEntries: function () {
 					return this.waitFor({
 						id: "list",
@@ -259,7 +238,6 @@ sap.ui.define([
 						errorMessage: "The maste list has no items"
 					});
 				},
-
 				iShouldSeeTheList: function () {
 					return this.waitFor({
 						id: "list",
@@ -269,7 +247,6 @@ sap.ui.define([
 						errorMessage: "Can't find the master list."
 					});
 				},
-
 				theListShowsOnlyObjectsContaining: function (sSearch) {
 					this.waitFor({
 						id: "list",
@@ -288,7 +265,6 @@ sap.ui.define([
 						errorMessage: "Not all items in the master list contain the text " + sSearch
 					});
 				},
-
 				theListShouldHaveAllEntries: function () {
 					var	iExpectedNumberOfItems;
 					return this.waitFor({
@@ -310,7 +286,6 @@ sap.ui.define([
 						}.bind(this)
 					});
 				},
-
 				iShouldSeeTheNoDataText: function () {
 					return this.waitFor({
 						id: "list",
@@ -320,7 +295,6 @@ sap.ui.define([
 						errorMessage: "list does not show the no data text for search and filter"
 					});
 				},
-
 				theHeaderShouldDisplayAllEntries: function () {
 					return this.waitFor({
 						id: "list",
@@ -331,7 +305,6 @@ sap.ui.define([
 						errorMessage: "Can't find the master list"
 					});
 				},
-
 				theHeaderShouldDisplayOrders: function (iOrders) {
 					return this.waitFor({
 						id: "masterHeaderTitle",
@@ -344,7 +317,6 @@ sap.ui.define([
 						errorMessage: "The  master page header does not display " + iOrders + " orders."
 					});
 				},
-
 				theListShouldHaveNoSelection: function () {
 					return this.waitFor({
 						id: "list",
@@ -357,7 +329,6 @@ sap.ui.define([
 						errorMessage: "List selection was not removed"
 					});
 				},
-
 				theRememberedListItemShouldBeSelected: function () {
 					this.waitFor({
 						id: "list",
@@ -370,7 +341,6 @@ sap.ui.define([
 						errorMessage: "The list has no selection"
 					});
 				},
-
 				theListShouldBeFilteredOnShippedOrders: function () {
 					function fnCheckFilter (oList){
 						var fnIsFiltered = function (oElement) {
@@ -385,10 +355,8 @@ sap.ui.define([
 								}
 							}
 						};
-
 						return oList.getItems().every(fnIsFiltered);
 					}
-
 					return this.waitFor({
 						id: "list",
 						matchers: fnCheckFilter,
@@ -398,7 +366,6 @@ sap.ui.define([
 						errorMessage: "Master list has not been filtered correctly"
 					});
 				},
-
 				theListShouldContainAGroupHeader: function () {
 					return this.waitFor({
 						controlType: "sap.m.GroupHeaderListItem",
@@ -408,12 +375,10 @@ sap.ui.define([
 						errorMessage: "Master list is not grouped"
 					});
 				},
-
 				theListShouldNotContainGroupHeaders: function () {
 					function fnIsGroupHeader (oElement) {
 						return oElement.getMetadata().getName() === "sap.m.GroupHeaderListItem";
 					}
-
 					return this.waitFor({
 						id: "list",
 						matchers: function (oList) {
@@ -426,9 +391,6 @@ sap.ui.define([
 					});
 				}
 			}
-
 		}
-
 	});
-
 });

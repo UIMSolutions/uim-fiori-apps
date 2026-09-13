@@ -111,7 +111,6 @@
 									],
 									formatter:'.formatter.deliveryText'
 								}"/>
-
 						</firstStatus>
 						<attributes>
 							<ObjectAttribute id="companyName" text="{Customer/CompanyName}" />

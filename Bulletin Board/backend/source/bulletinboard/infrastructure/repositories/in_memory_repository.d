@@ -1,19 +1,15 @@
-module bulletinboard.infrastructure.repositories.in_memory_repository;
-
+module bulletinboard.infrastructure.repositories.memory_repository;
 import bulletinboard.application.ports.repository;
 import bulletinboard.domain.entities;
 import std.algorithm.searching : countUntil;
 import std.array : array;
 import std.range : iota;
 import std.string : toLower;
-
 @safe:
-
 class InMemoryBulletinBoardRepository : BulletinBoardRepository {
     private Post[] posts;
     private Category[] categories;
     private Comment[] comments;
-
     this() {
         categories = [
             Category("1", "Bicycles"),
@@ -25,7 +21,6 @@ class InMemoryBulletinBoardRepository : BulletinBoardRepository {
             Category("7", "Furniture"),
             Category("8", "Clothing")
         ];
-
         posts = [
             Post("PostID_1", "29'er Mountain Bike (red)", "A great mountainbike, barely used and good as new. Pedals and saddle included", "/Date(1428223780000)/", "Bicycles", "contact.me07@gmail.com", "USD", 81, false),
             Post("PostID_2", "Football (rare with signatures)", "A trophy for collectors, 2014 football with original signatures from the german national soccer team and the spirit of the world cup.", "/Date(1428504382000)/", "Sports", "soccernerd@hotmail.de", "EUR", 420, false),
@@ -51,7 +46,6 @@ class InMemoryBulletinBoardRepository : BulletinBoardRepository {
             Post("PostID_22", "Plasma TV 60\"!", "I got a larger one, so selling this one cheap for all the movie lovers out there", "/Date(1425501468000)/", "Multimedia", "large.one@gmail.com", "USD", 360, false),
             Post("PostID_23", "Cheap Boat", "Living close to a lake or the ocean? This dream of a yacht (30ft long!) comes with lots of extras. Get it and fulfill yourself a dream.", "/Date(1439561313000)/", "Miscellaneous", "gotboats@gmail.com", "USD", 26263, false)
         ];
-
         comments = [
             Comment("CommentID 1", "PostID_1", "Nice bike, I will definitely consider buying", "John", "/Date(1271774249000)/"),
             Comment("CommentID 2", "PostID_1", "Is it also suitable for girls?", "Lisa", "/Date(1179931049000)/"),
@@ -65,19 +59,15 @@ class InMemoryBulletinBoardRepository : BulletinBoardRepository {
             Comment("CommentID 10", "PostID_15", "I am interested in the color as well", "Amy", "/Date(1335364649000)/")
         ];
     }
-
     override Post[] listPosts(PostQuery query) {
         auto filtered = filterPosts(query);
-
         if (!query.hasTop && query.skip == 0) {
             return filtered;
         }
-
         size_t start = query.skip;
         if (start > filtered.length) {
             start = filtered.length;
         }
-
         size_t end = filtered.length;
         if (query.hasTop) {
             end = start + query.top;
@@ -85,14 +75,11 @@ class InMemoryBulletinBoardRepository : BulletinBoardRepository {
                 end = filtered.length;
             }
         }
-
         return filtered[start .. end].dup;
     }
-
     override size_t countPosts(PostQuery query) {
         return filterPosts(query).length;
     }
-
     override Post* findPostById(string postID) {
         foreach (idx; 0 .. posts.length) {
             if (posts[idx].postID == postID) {
@@ -101,15 +88,12 @@ class InMemoryBulletinBoardRepository : BulletinBoardRepository {
         }
         return null;
     }
-
     override Category[] listCategories() {
         return categories.dup;
     }
-
     override Comment[] listComments() {
         return comments.dup;
     }
-
     override Comment[] listCommentsByPostId(string postID) {
         Comment[] matches;
         foreach (entry; comments) {
@@ -119,10 +103,8 @@ class InMemoryBulletinBoardRepository : BulletinBoardRepository {
         }
         return matches;
     }
-
     private Post[] filterPosts(PostQuery query) {
         Post[] result = posts.dup;
-
         if (query.titleContains.length > 0) {
             Post[] titleFiltered;
             auto needle = query.titleContains.toLower;
@@ -133,16 +115,13 @@ class InMemoryBulletinBoardRepository : BulletinBoardRepository {
             }
             result = titleFiltered;
         }
-
         sortPosts(result, query.orderBy, query.orderDescending);
         return result;
     }
-
     private void sortPosts(ref Post[] values, string orderBy, bool descending) {
         if (values.length < 2) {
             return;
         }
-
         foreach (i; iota(values.length)) {
             foreach (j; i + 1 .. values.length) {
                 if (mustSwap(values[i], values[j], orderBy, descending)) {
@@ -153,7 +132,6 @@ class InMemoryBulletinBoardRepository : BulletinBoardRepository {
             }
         }
     }
-
     private bool mustSwap(const ref Post left, const ref Post right, string orderBy, bool descending) {
         int cmp;
         switch (orderBy) {
@@ -175,10 +153,8 @@ class InMemoryBulletinBoardRepository : BulletinBoardRepository {
                 cmp = compareString(left.title, right.title);
                 break;
         }
-
         return descending ? (cmp < 0) : (cmp > 0);
     }
-
     private int compareString(string a, string b) {
         if (a < b) {
             return -1;

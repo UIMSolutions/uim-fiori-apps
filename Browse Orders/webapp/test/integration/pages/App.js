@@ -3,13 +3,10 @@ sap.ui.define([
 	"sap/ui/test/matchers/Properties"
 ], function (Opa5, Properties) {
 	"use strict";
-
 	// var sViewName = "App";
-
 	Opa5.createPageObjects({
 		onTheAppPage: {
 			viewName: "App",
-
 			actions: {
 				// TODO - destroy() ?
 				iCloseTheMessageBox: function () {
@@ -23,9 +20,7 @@ sap.ui.define([
 					});
 				}
 			},
-
 			assertions: {
-
 				iShouldSeeTheMessageBox: function () {
 					return this.waitFor({
 						searchOpenDialogs: true,
@@ -38,7 +33,6 @@ sap.ui.define([
 						}
 					});
 				},
-
 				theAppShowsFCLDesign: function (sLayout) {
 					return this.waitFor({
 						id: "layout",
@@ -52,11 +46,7 @@ sap.ui.define([
 						errorMessage: "The app doesn't show " + sLayout + " layout"
 					});
 				}
-
 			}
-
 		}
-
 	});
-
 });

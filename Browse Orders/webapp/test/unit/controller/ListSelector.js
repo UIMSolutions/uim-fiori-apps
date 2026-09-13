@@ -1,10 +1,8 @@
 /*global QUnit*/
-
 sap.ui.define([
 	"sap/ui/demo/orderbrowser/controller/ListSelector"
 ], function(ListSelector) {
 	"use strict";
-
 	QUnit.module("Initialization", {
 		beforeEach : function () {
 			this.oListSelector = new ListSelector();
@@ -13,16 +11,13 @@ sap.ui.define([
 			this.oListSelector.destroy();
 		}
 	});
-
 	QUnit.test("Should initialize the List loading promise", function (assert) {
 		// Arrange
 		var done = assert.async(),
 			fnRejectSpy = this.spy(),
 			fnResolveSpy = this.spy();
-
 		// Act
 		this.oListSelector.oWhenListLoadingIsDone.then(fnResolveSpy, fnRejectSpy);
-
 		// Assert
 		setTimeout(function () {
 			assert.strictEqual(fnResolveSpy.callCount, 0, "Did not resolve the promise");
@@ -30,7 +25,6 @@ sap.ui.define([
 			done();
 		}, 0);
 	});
-
 	QUnit.module("List loading", {
 		beforeEach : function () {
 			this.oListSelector = new ListSelector();
@@ -39,7 +33,6 @@ sap.ui.define([
 			this.oListSelector.destroy();
 		}
 	});
-
 	function createListStub (bCreateListItem, sBindingPath) {
 		var fnGetParameter = function () {
 				return true;
@@ -62,11 +55,9 @@ sap.ui.define([
 				})
 			},
 			aListItems = [];
-
 		if (bCreateListItem) {
 			aListItems.push(oListItemStub);
 		}
-
 		return {
 			attachEvent : fnAttachEvent,
 			attachEventOnce : fnAttachEventOnce,
@@ -74,7 +65,6 @@ sap.ui.define([
 			getItems : this.stub().returns(aListItems)
 		};
 	}
-
 	QUnit.test("Should resolve the list loading promise, if the list has items", function (assert) {
 		// Arrange
 		var done = assert.async(),
@@ -85,12 +75,10 @@ sap.ui.define([
 				assert.strictEqual(fnRejectSpy.callCount, 0, "Did not reject the promise");
 				done();
 			};
-
 		// Act
 		this.oListSelector.oWhenListLoadingIsDone.then(fnResolveSpy, fnRejectSpy);
 		this.oListSelector.setBoundMasterList(createListStub.call(this, true, "anything"));
 	});
-
 	QUnit.test("Should reject the list loading promise, if the list has no items", function (assert) {
 		// Arrange
 		var done = assert.async(),
@@ -100,12 +88,10 @@ sap.ui.define([
 				assert.strictEqual(fnResolveSpy.callCount, 0, "Did not resolve the promise");
 				done();
 			};
-
 		// Act
 		this.oListSelector.oWhenListLoadingIsDone.then(fnResolveSpy, fnRejectSpy);
 		this.oListSelector.setBoundMasterList(createListStub.call(this, false));
 	});
-
 	QUnit.module("Selecting item in the list", {
 		beforeEach : function () {
 			this.oListSelector = new ListSelector();
@@ -119,7 +105,6 @@ sap.ui.define([
 			this.oListSelector.destroy();
 		}
 	});
-
 	function createStubbedListItem (sBindingPath) {
 		return {
 			getBindingContext : this.stub().returns({
@@ -127,13 +112,11 @@ sap.ui.define([
 			})
 		};
 	}
-
 	QUnit.test("Should select an Item of the list when it is loaded and the binding contexts match", function (assert) {
 		// Arrange
 		var sBindingPath = "anything",
 			oListItemToSelect = createStubbedListItem.call(this, sBindingPath),
 			oSelectedListItemStub = createStubbedListItem.call(this, "a different binding path");
-
 		this.oListSelector._oList = {
 			getMode : this.stub().returns("SingleSelectMaster"),
 			getSelectedItem : this.stub().returns(oSelectedListItemStub),
@@ -143,47 +126,37 @@ sap.ui.define([
 				assert.strictEqual(oItem, oListItemToSelect, "Did select the list item with a matching binding context");
 			}
 		};
-
 		// Act
 		this.oListSelector.selectAListItem(sBindingPath);
 		// Resolve list loading
 		this.fnAct();
 	});
-
 	QUnit.test("Should not select an Item of the list when it is already selected", function (assert) {
 		// Arrange
 		var sBindingPath = "anything",
 			oSelectedListItemStub = createStubbedListItem.call(this, sBindingPath);
-
 		this.oListSelector._oList = {
 			getMode:  this.stub().returns("SingleSelectMaster"),
 			getSelectedItem : this.stub().returns(oSelectedListItemStub)
 		};
-
 		// Act
 		this.oListSelector.selectAListItem(sBindingPath);
 		// Resolve list loading
 		this.fnAct();
-
 		// Assert
 		assert.ok(true, "did not fail");
 	});
-
 	QUnit.test("Should not select an item of the list when the list has the selection mode none", function (assert) {
 		// Arrange
 		var sBindingPath = "anything";
-
 		this.oListSelector._oList = {
 			getMode : this.stub().returns("None")
 		};
-
 		// Act
 		this.oListSelector.selectAListItem(sBindingPath);
 		// Resolve list loading
 		this.fnAct();
-
 		// Assert
 		assert.ok(true, "did not fail");
 	});
-
 });

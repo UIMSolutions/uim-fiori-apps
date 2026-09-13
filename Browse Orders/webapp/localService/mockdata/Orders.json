@@ -1,5 +1,4 @@
 [
-
 	{
 	"OrderID": 7918,
 	"CustomerID": "TORTU",
@@ -54,7 +53,7 @@
   {
 	"OrderID": 6189,
 	"CustomerID": "BERGS",
-	"CustomerName": "Berglunds snabbköp",
+	"CustomerName": "Berglunds snabbkï¿½p",
 	"EmployeeID": 7829,
 	"OrderDate": "/Date(1480287600000)/",
 	"RequiredDate": "/Date(1482274800000)/",
@@ -62,7 +61,7 @@
 	"ShipVia": 1923,
 	"Freight": 5422.26,
 	"ShipName": "1A Paket- und Lieferservice",
-	"ShipAddress": "Bismarckstraße 5",
+	"ShipAddress": "Bismarckstraï¿½e 5",
 	"ShipCity": "Berlin",
 	"ShipRegion": "Berlin",
 	"ShipPostalCode": "10179",
@@ -79,7 +78,7 @@
 	"ShipVia": 3059,
 	"Freight": 9130.44,
 	"ShipName": "1A Paket- und Lieferservice",
-	"ShipAddress": "Bismarckstraße 5",
+	"ShipAddress": "Bismarckstraï¿½e 5",
 	"ShipCity": "Berlin",
 	"ShipRegion": "Berlin",
 	"ShipPostalCode": "10179",
@@ -96,7 +95,7 @@
 	"ShipVia": 4728,
 	"Freight": 8237.06,
 	"ShipName": "1A Paket- und Lieferservice",
-	"ShipAddress": "Bismarckstraße 5",
+	"ShipAddress": "Bismarckstraï¿½e 5",
 	"ShipCity": "Berlin",
 	"ShipRegion": "Berlin",
 	"ShipPostalCode": "10179",
@@ -156,7 +155,7 @@
   {
 	"OrderID": 7991,
 	"CustomerID": "BERGS",
-	"CustomerName": "Berglunds snabbköp",
+	"CustomerName": "Berglunds snabbkï¿½p",
 	"EmployeeID": 7830,
 	"OrderDate": "/Date(1479682800000)/",
 	"RequiredDate": "/Date(1481151600000)/",

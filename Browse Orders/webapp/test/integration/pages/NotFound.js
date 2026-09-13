@@ -4,16 +4,12 @@ sap.ui.define([
 	"sap/ui/test/matchers/Properties"
 ], function (Opa5, Press, Properties) {
 	"use strict";
-
 	var sNotFoundPageId = "page",
 		sNotFoundView = "NotFound",
 		sDetailNotFoundView = "DetailObjectNotFound";
-
 	Opa5.createPageObjects({
 		onTheNotFoundPage: {
-
 			actions: {
-
 				iPressTheBackButton: function (sViewName) {
 					return this.waitFor({
 						viewName: sViewName,
@@ -25,11 +21,8 @@ sap.ui.define([
 						errorMessage: "Did not find the back button"
 					});
 				}
-
 			},
-
 			assertions: {
-
 				iShouldSeeTheNotFoundGeneralPage: function (sPageViewName) {
 					return this.waitFor({
 						controlType: "sap.m.MessagePage",
@@ -40,15 +33,12 @@ sap.ui.define([
 						errorMessage: "Did not reach the empty page"
 					});
 				},
-
 				iShouldSeeTheNotFoundPage: function () {
 					return this.iShouldSeeTheNotFoundGeneralPage(sNotFoundView);
 				},
-
 				iShouldSeeTheObjectNotFoundPage: function () {
 					return this.iShouldSeeTheNotFoundGeneralPage(sDetailNotFoundView);
 				},
-
 				theNotFoundPageShouldSayResourceNotFound: function () {
 					return this.waitFor({
 						id: sNotFoundPageId,
@@ -60,7 +50,6 @@ sap.ui.define([
 						errorMessage: "Did not display the resource not found text"
 					});
 				},
-
 				theNotFoundPageShouldSayObjectNotFound: function () {
 					return this.waitFor({
 						id: sNotFoundPageId,
@@ -72,11 +61,7 @@ sap.ui.define([
 						errorMessage: "Did not display the object not found text"
 					});
 				}
-
 			}
-
 		}
-
 	});
-
 });

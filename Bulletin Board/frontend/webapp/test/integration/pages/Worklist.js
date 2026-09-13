@@ -8,10 +8,8 @@ sap.ui.define([
 ],
 function (Opa5, AggregationLengthEquals, I18NText, BindingPath, Press, EnterText) {
 	"use strict";
-
 	var sViewName = "Worklist",
 		sTableId = "table";
-
 	Opa5.createPageObjects({
 		onTheWorklistPage: {
 			actions: {
@@ -24,7 +22,6 @@ function (Opa5, AggregationLengthEquals, I18NText, BindingPath, Press, EnterText
 						errorMessage: "The table does not have a trigger"
 					});
 				},
-
 				iPressOnTheItemWithTheID: function (sId) {
 					return this.waitFor({
 						controlType: "sap.m.ColumnListItem",
@@ -36,7 +33,6 @@ function (Opa5, AggregationLengthEquals, I18NText, BindingPath, Press, EnterText
 						errorMessage: "No list item with the ID " + sId + " was found."
 					});
 				},
-
 				iSearchFor: function (sSearchString) {
 					return this.waitFor({
 						id: "searchField",
@@ -63,7 +59,6 @@ function (Opa5, AggregationLengthEquals, I18NText, BindingPath, Press, EnterText
 						errorMessage: "The table does not contain one item."
 					});
 				},
-
 				theTableShouldHavePagination: function () {
 					return this.waitFor({
 						id: sTableId,
@@ -78,7 +73,6 @@ function (Opa5, AggregationLengthEquals, I18NText, BindingPath, Press, EnterText
 						errorMessage: "The table does not contain all items."
 					});
 				},
-
 				theTableShouldHaveAllEntries: function () {
 					return this.waitFor({
 						id: sTableId,
@@ -93,7 +87,6 @@ function (Opa5, AggregationLengthEquals, I18NText, BindingPath, Press, EnterText
 						errorMessage: "The table does not contain all items."
 					});
 				},
-
 				theTitleShouldDisplayTheTotalAmountOfItems: function () {
 					return this.waitFor({
 						id: "tableHeader",
@@ -109,7 +102,6 @@ function (Opa5, AggregationLengthEquals, I18NText, BindingPath, Press, EnterText
 						errorMessage: "The table header does not contain the number of items: 23"
 					});
 				},
-
 				iShouldSeeTheTable: function () {
 					return this.waitFor({
 						id: sTableId,
@@ -123,5 +115,4 @@ function (Opa5, AggregationLengthEquals, I18NText, BindingPath, Press, EnterText
 			}
 		}
 	});
-
 });

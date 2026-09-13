@@ -3,7 +3,6 @@ sap.ui.define([
 	"sap/ui/core/format/DateFormat"
 ], function(Object, DateFormat) {
 		"use strict";
-
 	return Object.extend("sap.ui.demo.bulletinboard.model.DateFormatter", {
 		/**
 		 * Formatter for human readable dates.
@@ -22,10 +21,8 @@ sap.ui.define([
 			this.dateFormat = DateFormat.getDateInstance({
 				style: "medium"
 			}, oProperties.locale);
-
 			this.now = oProperties.now;
 		},
-
 		/**
 		 * Formats a date into something readable
 		 * today - a time format
@@ -51,7 +48,6 @@ sap.ui.define([
 				return this.dateFormat.format(oDate);
 			}
 		},
-
 		_getElapsedDays: function(oDate) {
 			var iElapsedMilliseconds = this.now() - oDate.getTime();
 			var fElapsedDays = iElapsedMilliseconds / 1000 / 60 / 60 / 24;

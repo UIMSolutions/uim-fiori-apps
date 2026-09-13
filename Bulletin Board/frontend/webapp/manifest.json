@@ -94,7 +94,6 @@
 					"name": "post",
 					"target": "post"
 				}
-
 			],
 			"targets": {
 				"worklist": {
@@ -108,7 +107,6 @@
 					"level": 2
 				}
 			}
-
 		}
 	}
 }

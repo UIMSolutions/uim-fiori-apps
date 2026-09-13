@@ -1,7 +1,5 @@
 module bulletinboard.domain.entities;
-
 @safe:
-
 struct Post {
     string postID;
     string title;
@@ -13,12 +11,10 @@ struct Post {
     double price;
     bool flagged;
 }
-
 struct Category {
     string categoryID;
     string name;
 }
-
 struct Comment {
     string commentID;
     string parentID;
@@ -26,7 +22,6 @@ struct Comment {
     string author;
     string date;
 }
-
 struct PostQuery {
     string titleContains;
     string orderBy;

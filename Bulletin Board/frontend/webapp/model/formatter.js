@@ -2,7 +2,6 @@ sap.ui.define([
 	"sap/ui/demo/bulletinboard/model/DateFormatter"
 ], function (DateFormatter) {
 	"use strict";
-
 	return {
 		/**
 		 * Rounds the number unit value to 2 digits
@@ -15,10 +14,8 @@ sap.ui.define([
 			if (!sValue) {
 				return "";
 			}
-
 			return parseFloat(sValue).toFixed(2);
 		},
-
 		/**
 		 * Defines a value state based on the price
 		 *
@@ -37,7 +34,6 @@ sap.ui.define([
 				return "Error";
 			}
 		},
-
 		/**
 		 * Creates a human readable date
 		 *
@@ -49,5 +45,4 @@ sap.ui.define([
 			return new DateFormatter({ now: Date.now }).format(oDate);
 		}
 	};
-
 });

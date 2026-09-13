@@ -1,0 +1,8 @@
+name "chart_demo_backend"
+description "vibe.d backend for Chart Demo App"
+targetType "executable"
+targetName "chart_demo_backend"
+authors "Oz"
+license "proprietary"
+dependency "vibe-d" version="~>0.10.3"
+versions "VibeNoSSL"

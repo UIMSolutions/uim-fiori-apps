@@ -2,12 +2,9 @@ sap.ui.define([
 	"sap/ui/test/Opa5"
 ], function (Opa5) {
 	"use strict";
-
 	Opa5.createPageObjects({
 		onTheBrowserPage: {
-
 			actions: {
-
 				iChangeTheHashToObjectN: function (iObjIndex) {
 					return this.waitFor({
 						success: function () {
@@ -16,7 +13,6 @@ sap.ui.define([
 						}
 					});
 				},
-
 				iChangeTheHashToTheRememberedItem: function () {
 					return this.waitFor({
 						success: function () {
@@ -25,7 +21,6 @@ sap.ui.define([
 						}
 					});
 				},
-
 				iChangeTheHashToSomethingInvalid: function () {
 					return this.waitFor({
 						success: function () {
@@ -33,11 +28,8 @@ sap.ui.define([
 						}
 					});
 				}
-
 			},
-
 			assertions: {
-
 				iShouldSeeTheHashForObjectN: function (iObjIndex) {
 					return this.waitFor({
 						success: function () {
@@ -48,7 +40,6 @@ sap.ui.define([
 						}
 					});
 				},
-
 				iShouldSeeTheHashForTheRememberedObject: function () {
 					return this.waitFor({
 						success: function () {
@@ -59,7 +50,6 @@ sap.ui.define([
 						}
 					});
 				},
-
 				iShouldSeeAnEmptyHash: function () {
 					return this.waitFor({
 						success: function () {
@@ -70,11 +60,7 @@ sap.ui.define([
 						errorMessage: "The Hash is not Correct!"
 					});
 				}
-
 			}
-
 		}
-
 	});
-
 });

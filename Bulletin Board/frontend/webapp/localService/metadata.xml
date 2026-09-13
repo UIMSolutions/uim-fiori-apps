@@ -22,7 +22,6 @@
 				<Property Name="Flagged" Nullable="false" Type="Edm.Boolean"/>
 				<NavigationProperty Name="Comments" ToRole="ToRole_PostToComment" FromRole="FromRole_PostToComment" Relationship="BULLETINBOARD.PostToComment"/>
 			</EntityType>
-
 			<EntityType Name="Category" sap:content-version="1" xmlns:sap="http://www.sap.com/Protocols/SAPData">
 				<Key>
 					<PropertyRef Name="CategoryID"/>

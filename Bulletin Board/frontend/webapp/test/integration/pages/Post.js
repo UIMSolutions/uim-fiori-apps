@@ -4,9 +4,7 @@ sap.ui.define([
 	'sap/ui/test/actions/Press'
 ], function (Opa5, Properties, Press) {
 	"use strict";
-
 	var sViewName = "Post";
-
 	Opa5.createPageObjects({
 		onThePostPage: {
 			actions: {
@@ -44,7 +42,6 @@ sap.ui.define([
 						errorMessage: "The Post " + sName + " is not shown"
 					});
 				},
-
 				iShouldSeeTheViewCounter: function () {
 					return this.waitFor({
 						id: "viewCounter",

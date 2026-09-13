@@ -6,14 +6,11 @@ sap.ui.define([
 	"sap/ui/test/matchers/Properties"
 ], function (Opa5, Press, Common, AggregationFilled, Properties) {
 	"use strict";
-
 	Opa5.createPageObjects({
 		onTheDetailPage: {
 			baseClass: Common,
 			viewName: "Detail",
-
 			actions: {
-
 				iPressProcessorTab: function () {
 					return this.waitFor({
 						id: "iconTabFilterProcessor",
@@ -21,7 +18,6 @@ sap.ui.define([
 						errorMessage: "Did not find the processor tab on detail page"
 					});
 				},
-
 				iPressTheHeaderActionButton: function (sId) {
 					return this.waitFor({
 						id: sId,
@@ -29,21 +25,16 @@ sap.ui.define([
 						errorMessage: "Did not find the button with id " + sId + " on detail page"
 					});
 				}
-
 			},
-
 			assertions: {
-
 				theObjectPageShowsTheFirstObject: function () {
 					return this.iShouldBeOnTheObjectNPage(0);
 				},
-
 				iShouldBeOnTheObjectNPage: function (iObjIndex) {
 					return this.waitFor(this.getEntitySet({
 						entitySet: "Orders",
 						success: function (aEntitySet) {
 							var sItemName = aEntitySet[iObjIndex].Name;
-
 							this.waitFor({
 								controlType: "sap.m.ObjectHeader",
 								matchers: new Properties({
@@ -66,7 +57,6 @@ sap.ui.define([
 						}
 					});
 				},
-
 				_waitForPageBindingPath: function (sBindingPath) {
 					return this.waitFor({
 						id: "page",
@@ -79,7 +69,6 @@ sap.ui.define([
 						errorMessage: "Remembered object " + sBindingPath + " is not shown"
 					});
 				},
-
 				iShouldSeeTheObjectLineItemsList: function () {
 					return this.waitFor({
 						id: "lineItemsList",
@@ -88,12 +77,10 @@ sap.ui.define([
 						}
 					});
 				},
-
 				theLineItemsListShouldHaveTheCorrectNumberOfItems: function () {
 					return this.waitFor(this.getEntitySet({
 						entitySet: "Order_Details",
 						success: function (aEntitySet) {
-
 							return this.waitFor({
 								id: "lineItemsList",
 								matchers: new AggregationFilled({
@@ -101,13 +88,10 @@ sap.ui.define([
 								}),
 								// TODO matcher
 								check: function (oList) {
-
 									var sObjectID = oList.getBindingContext().getProperty("OrderID");
-
 									var iLength = aEntitySet.filter(function (oLineItem) {
 										return oLineItem.OrderID === sObjectID;
 									}).length;
-
 									return oList.getItems().length === iLength;
 								},
 								success: function () {
@@ -118,7 +102,6 @@ sap.ui.define([
 						}
 					}));
 				},
-
 				theLineItemsTableShouldContainOnlyFormattedUnitNumbers: function () {
 					var rTwoDecimalPlaces =  /^-?[\d,]+\.\d{2}$/;
 					return this.waitFor({
@@ -154,7 +137,6 @@ sap.ui.define([
 						}
 					});
 				},
-
 				iShouldSeeTheShippingInfo: function () {
 					return this.waitFor({
 						id: "SimpleFormShipAddress",
@@ -165,7 +147,6 @@ sap.ui.define([
 						errorMessage: "Did not find shipping info"
 					});
 				},
-
 				iShouldSeeTheProcessorInfo: function () {
 					return this.waitFor({
 						id: "SimpleFormProcessorInfo",
@@ -176,7 +157,6 @@ sap.ui.define([
 						errorMessage: "Did not find processor info"
 					});
 				},
-
 				iShouldSeeHeaderActionButtons: function () {
 					return this.waitFor({
 						id: ["closeColumn", "enterFullScreen"],
@@ -186,7 +166,6 @@ sap.ui.define([
 						errorMessage: "The action buttons were not found"
 					});
 				},
-
 				iShouldSeeTheFullScreenToggleButton: function (sId) {
 					return this.waitFor({
 						id: sId,
@@ -194,9 +173,6 @@ sap.ui.define([
 					});
 				}
 			}
-
 		}
-
 	});
-
 });

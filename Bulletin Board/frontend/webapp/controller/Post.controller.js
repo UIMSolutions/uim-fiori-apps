@@ -4,15 +4,11 @@ sap.ui.define([
 	'../model/formatter'
 ], function (BaseController, JSONModel, formatter) {
 	"use strict";
-
 	return BaseController.extend("sap.ui.demo.bulletinboard.controller.Post", {
-
 		formatter: formatter,
-
 		/* =========================================================== */
 		/* lifecycle methods                                           */
 		/* =========================================================== */
-
 		/**
 		 * Called when the worklist controller is instantiated.
 		 * @public
@@ -24,15 +20,12 @@ sap.ui.define([
 			var oViewModel = new JSONModel({
 					busy: false
 				});
-
 			this.getRouter().getRoute("post").attachPatternMatched(this._onPostMatched, this);
 			this.setModel(oViewModel, "postView");
 		},
-
 		/* =========================================================== */
 		/* event handlers                                              */
 		/* =========================================================== */
-
 		/**
 		 * Navigates back to the worklist
 		 * @function
@@ -40,11 +33,9 @@ sap.ui.define([
 		onNavBack: function () {
 			this.myNavBack("worklist");
 		},
-
 		/* =========================================================== */
 		/* internal methods                                            */
 		/* =========================================================== */
-
 		/**
 		 * Binds the view to the post path.
 		 *
@@ -55,7 +46,6 @@ sap.ui.define([
 		_onPostMatched: function (oEvent) {
 			var oViewModel = this.getModel("postView"),
 				oDataModel = this.getModel();
-
 			this.getView().bindElement({
 				path: "/Posts('" + oEvent.getParameter("arguments").postId + "')",
 				events: {
@@ -74,7 +64,5 @@ sap.ui.define([
 				}
 			});
 		}
-
 	});
-
 });

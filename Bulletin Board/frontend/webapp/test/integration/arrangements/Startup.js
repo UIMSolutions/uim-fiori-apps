@@ -4,9 +4,7 @@ sap.ui.define([
 	"sap/ui/model/odata/v2/ODataModel"
 ], function(Opa5, mockserver, ODataModel) {
 	"use strict";
-
 	return Opa5.extend("sap.ui.demo.bulletinboard.test.integration.arrangements.Startup", {
-
 		/**
 		 * Initializes mock server, then starts the app component
 		 * @param {object} oOptionsParameter An object that contains the configuration for starting up the app
@@ -16,15 +14,11 @@ sap.ui.define([
 		 */
 		iStartMyApp : function (oOptionsParameter) {
 			var oOptions = oOptionsParameter || {};
-
 			this._clearSharedData();
-
 			// start the app with a minimal delay to make tests fast but still async to discover basic timing issues
 			oOptions.delay = oOptions.delay || 1;
-
 			// configure mock server with the current options
 			var oMockserverInitialized = mockserver.init(oOptions);
-
 			this.iWaitForPromise(oMockserverInitialized);
 			// start the app UI component
 			this.iStartMyUIComponent({
@@ -36,7 +30,6 @@ sap.ui.define([
 				autoWait: oOptions.autoWait
 			});
 		},
-
 		_clearSharedData: function () {
 			// clear shared metadata in ODataModel to allow tests for loading the metadata
 			ODataModel.mSharedData = { server: {}, service: {}, meta: {} };

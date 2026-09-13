@@ -2,9 +2,7 @@ sap.ui.define([
 	"sap/ui/model/type/Currency"
 ], function (Currency) {
 	"use strict";
-
 	return {
-
 		/**
 		 * Rounds the currency value to 2 digits
 		 *
@@ -18,7 +16,6 @@ sap.ui.define([
 			}
 			return parseFloat(sValue).toFixed(2);
 		},
-
 		/**
 		 * Rounds the currency value to 2 digits
 		 *
@@ -33,7 +30,6 @@ sap.ui.define([
 			var fTotal = iQuantity * fPrice;
 			return oCurrency.formatValue([fTotal.toFixed(2), sCurrencyCode], "string");
 		},
-
 		/**
 		 * Converts a binary string into an image format suitable for the src attribute
 		 *
@@ -50,7 +46,6 @@ sap.ui.define([
 				return "../images/Employee.png";
 			}
 		},
-
 		/**
 		 * Provides a text to indicate the delivery status based on shipped and required dates
 		 *
@@ -61,11 +56,9 @@ sap.ui.define([
 		 */
 		deliveryText: function (oRequiredDate, oShippedDate) {
 			var oResourceBundle = this.getModel("i18n").getResourceBundle();
-
 			if (oShippedDate === null) {
 				return "None";
 			}
-
 			// delivery is urgent (takes more than 7 days)
 			if (oRequiredDate - oShippedDate > 0 && oRequiredDate - oShippedDate <= 432000000) {
 				return oResourceBundle.getText("formatterDeliveryUrgent");
@@ -75,7 +68,6 @@ sap.ui.define([
 				return oResourceBundle.getText("formatterDeliveryInTime");
 			}
 		},
-
 		/**
 		 * Provides a semantic state to indicate the delivery status based on shipped and required dates
 		 *
@@ -88,7 +80,6 @@ sap.ui.define([
 			if (oShippedDate === null) {
 				return "None";
 			}
-
 			// delivery is urgent (takes more than 7 days)
 			if (oRequiredDate - oShippedDate > 0 && oRequiredDate - oShippedDate <= 432000000) {
 				return "Warning";

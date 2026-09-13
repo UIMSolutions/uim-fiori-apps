@@ -1,0 +1,31 @@
+ID: chartdemo-app
+_schema-version: '3.1'
+version: 1.0.0
+modules:
+  # 1. vibe.d Backend Engine
+  - name: chartdemo-backend
+    type: binary
+    path: backend/
+    parameters:
+      buildpack: binary_buildpack
+      command: ./chartdemo-backend
+      memory: 128M
+      disk-quota: 256M
+    provides:
+      - name: backend-api
+        properties:
+          url: ${default-url}
+  # 2. Standalone Approuter / Webserver für UI5 Frontend
+  - name: chartdemo-frontend
+    type: approuter.nodejs
+    path: frontend/
+    parameters:
+      disk-quota: 256M
+      memory: 128M
+    requires:
+      - name: backend-api
+        group: destinations
+        properties:
+          name: backend-destination
+          url: ~{url}
+          forwardAuthToken: false

@@ -8,18 +8,14 @@ sap.ui.define([
 	"sap/ui/model/FilterOperator"
 ], function (BaseController, JSONModel, formatter, FlaggedType, mobileLibrary, Filter, FilterOperator) {
 	"use strict";
-
 	return BaseController.extend("sap.ui.demo.bulletinboard.controller.Worklist", {
 		types : {
 			flagged: new FlaggedType()
 		},
-
 		formatter: formatter,
-
 		/* =========================================================== */
 		/* lifecycle methods                                           */
 		/* =========================================================== */
-
 		/**
 		 * Called when the worklist controller is instantiated.
 		 * @public
@@ -28,12 +24,10 @@ sap.ui.define([
 			var oViewModel,
 				iOriginalBusyDelay,
 				oTable = this.byId("table");
-
 			// Put down worklist table's original value for busy indicator delay,
 			// so it can be restored later on. Busy handling on the table is
 			// taken care of by the table itself.
 			iOriginalBusyDelay = oTable.getBusyIndicatorDelay();
-
 			// Model used to manipulate control states
 			oViewModel = new JSONModel({
 				worklistTableTitle: this.getResourceBundle().getText("worklistTableTitle"),
@@ -42,7 +36,6 @@ sap.ui.define([
 				tableBusyDelay: 0
 			});
 			this.setModel(oViewModel, "worklistView");
-
 			// Make sure, busy indication is showing immediately so there is no
 			// break after the busy indication for loading the view's meta data is
 			// ended (see promise 'oWhenMetadataIsLoaded' in AppController)
@@ -51,11 +44,9 @@ sap.ui.define([
 				oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
 			});
 		},
-
 		/* =========================================================== */
 		/* event handlers                                              */
 		/* =========================================================== */
-
 		/**
 		 * Triggered by the table's 'updateFinished' event: after new table
 		 * data is available, this handler method updates the table counter.
@@ -80,27 +71,23 @@ sap.ui.define([
 			}
 			this.getModel("worklistView").setProperty("/worklistTableTitle", sTitle);
 		},
-
 		/**
 		 * Triggered by the SearchFields's 'search' event
 		 * @param {sap.ui.base.Event} oEvent SearchFields's search event
 		 * @public
 		 */
 		onFilterPosts: function (oEvent) {
-
 			// build filter array
 			var aFilter = [];
 			var sQuery = oEvent.getParameter("query");
 			if (sQuery) {
 				aFilter.push(new Filter("Title", FilterOperator.Contains, sQuery));
 			}
-
 			// filter binding
 			var oTable = this.byId("table");
 			var oBinding = oTable.getBinding("items");
 			oBinding.filter(aFilter);
 		},
-
 		/**
 		 * Event handler when a table item gets pressed
 		 * @param {sap.ui.base.Event} oEvent the table selectionChange event
@@ -111,13 +98,10 @@ sap.ui.define([
 				// The source is the list item that got pressed
 				postId: oEvent.getSource().getBindingContext().getProperty("PostID")
 			});
-
 		},
-
 		/* =========================================================== */
 		/* internal methods                                            */
 		/* =========================================================== */
-
 		/**
 		 * Sets the item count on the worklist view header
 		 * @param {int} iTotalItems the total number of items in the table
@@ -131,7 +115,6 @@ sap.ui.define([
 				this.oViewModel.setProperty("/worklistTableTitle", sTitle);
 			}
 		},
-
 		/**
 		 * Event handler when the share by E-Mail button has been clicked
 		 * @public
@@ -145,5 +128,4 @@ sap.ui.define([
 			);
 		}
 	});
-
 });

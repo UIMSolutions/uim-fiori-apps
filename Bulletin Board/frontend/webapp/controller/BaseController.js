@@ -4,9 +4,7 @@ sap.ui.define([
 	'sap/ui/core/UIComponent'
 ], function(Controller, History, UIComponent) {
 	"use strict";
-
 	return Controller.extend("sap.ui.demo.bulletinboard.controller.BaseController", {
-
 		/**
 		 * Convenience method for accessing the event bus.
 		 * @public
@@ -15,7 +13,6 @@ sap.ui.define([
 		getEventBus: function () {
 			return this.getOwnerComponent().getEventBus();
 		},
-
 		/**
 		 * Convenience method for accessing the router.
 		 * @public
@@ -24,7 +21,6 @@ sap.ui.define([
 		getRouter: function () {
 			return UIComponent.getRouterFor(this);
 		},
-
 		/**
 		 * Convenience method for getting the view model by name.
 		 * @public
@@ -34,7 +30,6 @@ sap.ui.define([
 		getModel: function (sName) {
 			return this.getView().getModel(sName);
 		},
-
 		/**
 		 * Convenience method for setting the view model.
 		 * @public
@@ -45,7 +40,6 @@ sap.ui.define([
 		setModel: function (oModel, sName) {
 			return this.getView().setModel(oModel, sName);
 		},
-
 		/**
 		 * Getter for the resource bundle.
 		 * @public
@@ -54,7 +48,6 @@ sap.ui.define([
 		getResourceBundle: function () {
 			return this.getOwnerComponent().getModel("i18n").getResourceBundle();
 		},
-
 		/**
 		 * Navigates back in the browser history, if the entry was created by this app.
 		 * If not, it navigates to a route passed to this function.
@@ -66,7 +59,6 @@ sap.ui.define([
 		myNavBack: function (sRoute, mData) {
 			var oHistory = History.getInstance();
 			var sPreviousHash = oHistory.getPreviousHash();
-
 			if (sPreviousHash !== undefined) {
 				// The history contains a previous entry
 				history.go(-1);
@@ -77,7 +69,5 @@ sap.ui.define([
 			}
 		}
 
-
 	});
-
 });
