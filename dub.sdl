@@ -5,25 +5,19 @@ homepage "https://www.....de/uim/fioriapps"
 authors "Ozan Nurettin Süel" "UI Manufaktur (R.I.P)"
 copyright "Copyright © 2018-2026, Ozan Nurettin Süel"
 license "Apache-2.0"
-
 // Target
 targetType "library"
 targetName "uim-fioriapps"
-
 // External dependencies
-dependency "uim-framework" version="~>26.8.3"
+dependency "uim-framework" version="~>26.9.2"
 dependency "vibe-d" version="~>0.10.3"
-
 // Internal Dependencies
 dependency ":fiori" version="*"
 dependency ":projectmanager" version="*"
-
 // Source files
 sourceFiles "./source/package.d"
-
 // Subpackages
 subPackage "fiori"
 subPackage "projectmanager"
-
 buildRequirements "allowWarnings" "silenceDeprecations"
 buildOptions "ignoreDeprecations" "debugInfo"
