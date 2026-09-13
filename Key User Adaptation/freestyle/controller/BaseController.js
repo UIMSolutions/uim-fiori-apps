@@ -3,10 +3,8 @@ sap.ui.define([
 	"../model/formatter"
 ], function(Controller, formatter) {
 	"use strict";
-
 	return Controller.extend("sap.ui.demoapps.rta.freestyle.controller.BaseController", {
 		formatter: formatter, // make formatters available
-
 		/**
 		 * Convenience method for getting the view model by name (must not be called in onInit)
 		 * @public
@@ -16,7 +14,6 @@ sap.ui.define([
 		getModel: function(sName) {
 			return this.getView().getModel(sName);
 		},
-
 		/**
 		 * Convenience method for setting the view model
 		 * @public
@@ -27,7 +24,6 @@ sap.ui.define([
 		setModel: function(oModel, sName) {
 			return this.getView().setModel(oModel, sName);
 		},
-
 		/**
 		 * Convenience method for getting the resource bundle.
 		 * @public
@@ -36,7 +32,6 @@ sap.ui.define([
 		getResourceBundle: function() {
 			return this.getOwnerComponent().getModel("i18n").getResourceBundle();
 		},
-
 		/**
 		 * Convenience method to get the global model containing the global state of the app.
 		 * @returns {sap.ui.model.Model} the global Propery model
@@ -44,7 +39,6 @@ sap.ui.define([
 		getApplicationProperties: function() {
 			return this.getOwnerComponent().getModel("appProperties");
 		},
-
 		/**
 		 * Convenience method to get the controller of the whole app
 		 * @returns {sap.ui.demoapps.rta.freestyle.controller.Application} the application controller
@@ -53,5 +47,4 @@ sap.ui.define([
 			return this.getApplicationProperties().getProperty("/applicationController");
 		}
 	});
-
 });

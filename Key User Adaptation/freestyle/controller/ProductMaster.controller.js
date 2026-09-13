@@ -12,9 +12,7 @@ sap.ui.define([
 ], function(BaseController, JSONModel, Sorter, GroupHeaderListItem, Device, TableOperations, utilities,
 	SubControllerForFGS, controls, MessageToast) {
 	"use strict";
-
 	var sInitialSort = "to_ProductTextInOriginalLang/Name";
-
 	function fnGetRelevantIdFromContext(oContext) {
 		return oContext.getProperty("Product") || oContext.getProperty("DraftUUID");
 	}
@@ -22,7 +20,6 @@ sap.ui.define([
 	// is changed in the edit screen.  Suspended is used when the list is still loading and edit has started.  Once the list
 	// has been refreshed, further refreshes are prevented whilst the editing is taking place.
 	return BaseController.extend("sap.ui.demoapps.rta.freestyle.controller.ProductMaster", {
-
 		updateMode: {
 			AUTO: 0,
 			PREPARESUSPEND: 1,
@@ -31,7 +28,6 @@ sap.ui.define([
 		/* =========================================================== */
 		/* lifecycle methods                                           */
 		/* =========================================================== */
-
 		/**
 		 * Called when the master list controller is instantiated. It sets up the event handling for the master/detail communication and other lifecycle tasks.
 		 * @public
@@ -54,15 +50,12 @@ sap.ui.define([
 			// Put down master list's original value for busy indicator delay,
 			// so it can be restored later on. Busy handling on the master list is
 			// taken care of by the master list itself.
-
 			var oDefaultSorter = new Sorter(sInitialSort);
-
 			this._oTableOperations = new TableOperations(this._oList, ["to_ProductTextInOriginalLang/Name", "ProductForEdit"], oDefaultSorter);
 			var fnApplyTableOperations = this.applyTableOperations.bind(this);
 			this.getApplication().registerMaster(this);
 			this._oSubControllerForFGS = new SubControllerForFGS(this.getView(), this._oTableOperations, fnApplyTableOperations);
 			this._iAdaptAfterUpdateMode = 0;
-
 			// The default filter required to provide the correct products to show each user is defined and added to Table Operations
 			// in the constructor of SubControllerForFGS.  To save an extra request to backend, this default filter is obtained from
 			// table operations and added here to the list binding here.  In this context, the filters are applied as FilterType
@@ -80,20 +73,15 @@ sap.ui.define([
 					expand: "to_ProductTextInOriginalLang,to_ProductCategory,DraftAdministrativeData,to_ProductStock,to_ProductStock/to_StockAvailability,to_Supplier",
 					select: "Product,DraftUUID,Price,Currency,ProductCategory,Product,to_ProductTextInOriginalLang/Name,to_ProductCategory/ProductCategory,DraftAdministrativeData/InProcessByUser,DraftAdministrativeData/DraftIsCreatedByMe,DraftAdministrativeData/InProcessByUserDescription,DraftAdministrativeData/LastChangedByUser,DraftAdministrativeData/DraftUUID,DraftAdministrativeData/CreationDateTime,DraftAdministrativeData/LastChangeDateTime,ProductBaseUnit,IsActiveEntity,HasDraftEntity,to_ProductCategory/MainProductCategory,ProductPictureURL,to_ProductStock/Quantity,to_ProductStock/to_StockAvailability/StockAvailability_Text,to_Supplier/EmailAddress"
 				},
-
 				events: {
 					dataRequested: this.onDataRequested.bind(this),
 					dataReceived: this.onDataReceived.bind(this)
 				}
-
 			});
-
 		},
-
 		/* =========================================================== */
 		/* event handlers                                              */
 		/* =========================================================== */
-
 		onDataRequested: function() {
 			// Event handler called when retrieving data for the the master list starts. It is attached declaratively.
 			// Resets the displayed content of the search field to the search term that is actually used.
@@ -101,7 +89,6 @@ sap.ui.define([
 			this._oSearchField.setValue(this._sCurrentSearchTerm);
 			this._oApplicationProperties.setProperty("/isListLoading", true);
 		},
-
 		onDataReceived: function(oEvent) {
 			if (this._oApplicationProperties.getProperty("/metaDataLoadState") < 1) {
 				return;
@@ -113,7 +100,6 @@ sap.ui.define([
 			this._oApplicationProperties.setProperty("/isListLoading", false);
 			this._oApplicationProperties.setProperty("/masterImmediateBusy", false);
 			var iCount = this._getListBinding().getLength();
-
 			this._oViewProperties.setProperty("/itemCount", iCount);
 			if (iCount === 0) {
 				var sNoDataId = ((this._oTableOperations.getSearchTerm() || this._oTableOperations.getFilterTable()) ? "ymsg.noDataAfterSearch" :
@@ -130,7 +116,6 @@ sap.ui.define([
 				this._selectCurrentItem();
 			}
 		},
-
 		findItem: function() {
 			// This method has four tasks:
 			// - Check whether it is necessary to identify a new list item to be displayed in the detail area (if not return immediately)
@@ -158,7 +143,6 @@ sap.ui.define([
 				this.getApplication().navToEmptyPage(this._oApplicationProperties.getProperty("/listNoDataText"), true); // Task 3
 			}
 		},
-
 		adaptToDetailSelection: function(bScrollTo) {
 			// adapt the state of the master list to the object displayed in the detail area
 			// This contains two aspects:
@@ -170,7 +154,6 @@ sap.ui.define([
 				this._selectCurrentItem();
 			}
 		},
-
 		_selectCurrentItem: function() {
 			// this method has the same specification as adaptToDetailSelection. However, it must not be called
 			// while the list is still loading.
@@ -186,16 +169,13 @@ sap.ui.define([
 				this._scrollToListItem(oItemToSelect);
 			}
 		},
-
 		_getListBinding: function() {
 			return this._oList.getBinding("items");
 		},
-
 		_isListInMultiSelectMode: function() {
 			// helper method to check if the current list is currently in the MultiSelect mode
 			return this._oApplicationProperties.getProperty("/isMultiSelect");
 		},
-
 		applyTableOperations: function(fnAfterUpdate) {
 			// This method is called when a new backend search has to be triggered, due to changed 'search settings'.
 			// More precisely the method is called:
@@ -207,9 +187,7 @@ sap.ui.define([
 				this._oList.attachEventOnce("updateFinished", fnAfterUpdate);
 			}
 		},
-
 		// --- Methods dealing with new data retrieval triggered by the user. All event handlers are attached declaratively.
-
 		onSearch: function(oEvent) {
 			// Event handler for the search field in the master list.
 			// Note that this handler listens to the search button and to the refresh button in the search field
@@ -219,7 +197,6 @@ sap.ui.define([
 				sNewSearchContent = oEvent.getParameter("refreshButtonPressed") ? this._sCurrentSearchTerm : sCurrentSearchFieldContent;
 			this._explicitRefresh(sNewSearchContent);
 		},
-
 		_explicitRefresh: function(sNewSearchContent, fnNoMetadata) {
 			// This method is called when the user refreshes the list either via the search field or via the pull-to-refresh element
 			// sNewSearchContent is the content of the search field to be applied.
@@ -236,7 +213,6 @@ sap.ui.define([
 			}.bind(this);
 			this.getApplication().whenMetadataLoaded(fnMetadataLoaded, fnNoMetadata);
 		},
-
 		listRefresh: function() {
 			var oBinding = this._getListBinding();
 			if (this._iAutomaticUpdateMode === this.updateMode.SUSPENDED) {
@@ -245,7 +221,6 @@ sap.ui.define([
 			}
 			oBinding.refresh();
 		},
-
 		setAutomaticUpdate: function(bAutomaticUpdate) {
 			if (bAutomaticUpdate === (this._iAutomaticUpdateMode === this.updateMode.AUTO)) { // nothing to do
 				return;
@@ -263,7 +238,6 @@ sap.ui.define([
 				this._iAutomaticUpdateMode = this.updateMode.PREPARESUSPEND;
 			}
 		},
-
 		onRefresh: function(oEvent) {
 			// Event handler for the pullToRefresh-element of the list.
 			var oPullToRefresh = oEvent.getSource(),
@@ -273,19 +247,15 @@ sap.ui.define([
 			// Refresh list from backend
 			this._explicitRefresh(this._sCurrentSearchTerm, fnHidePullToRefresh);
 		},
-
 		onSort: function() {
 			this._oSubControllerForFGS.openDialog("Sort", sInitialSort);
 		},
-
 		onFilter: function() {
 			this._oSubControllerForFGS.openDialog("Filter");
 		},
-
 		onGroup: function() {
 			this._oSubControllerForFGS.openDialog("Grouping");
 		},
-
 		/**
 		 * Event handler for the list selection event
 		 * @param {sap.ui.base.Event} oEvent the list selectionChange event
@@ -295,7 +265,6 @@ sap.ui.define([
 			// get the list item, either from the listItem parameter or from the event's source itself (will depend on the device-dependent mode).
 			var aSelectedItems, oBindingContext, oProduct, oDraftAdministrativeData, bLockedOnly = true;
 			var oListItem = oEvent.getParameter("listItem") || oEvent.getSource();
-
 			var bMultiSelect = this._isListInMultiSelectMode();
 			// If creaeted, destroy the supplier card fragment so that the supplier information is not always
 			// read. Only when the user request the supplier card is it necessary to read it.
@@ -306,7 +275,6 @@ sap.ui.define([
 				// newly selected product.  If the product display did show the chart, we leave
 				// the chart and it will be filled (and shown) for the newly selected product.
 				this.getApplication().destroyDetailChart();
-
 			}
 			if (bMultiSelect) { // in multi-select mode select mode selecting the list item inverts the current selection state
 				if (oEvent.getParameter("selected")) { // the item turns into selected
@@ -319,7 +287,6 @@ sap.ui.define([
 				}
 				//In case only locked items have been selected, don't activate delete button
 				aSelectedItems = this._oList.getSelectedItems();
-
 				for (var i = 0; i < aSelectedItems.length; i++) {
 					oBindingContext = aSelectedItems[i].getBindingContext();
 					oProduct = oBindingContext.getObject();
@@ -328,17 +295,14 @@ sap.ui.define([
 						bLockedOnly = false;
 						break;
 					}
-
 				}
 				// At least one of the selected items is not locked, and at lease one item has been selected
 				this._oViewProperties.setProperty("/markExists", (!bLockedOnly && this._iMarkedCount > 0));
-
 			} else { // in single-select mode the user wants to navigate to the selected item
 				this._navToListItem(oListItem);
 				this.getApplication().hideMasterInPortrait();
 			}
 		},
-
 		onMultiSelect: function() {
 			if (this._isListInMultiSelectMode()) {
 				this._iMarkedCount = 0;
@@ -348,7 +312,6 @@ sap.ui.define([
 				this.adaptToDetailSelection();
 			}
 		},
-
 		onAdd: function() {
 			var oApplication = this.getApplication(),
 				oODataHelper = oApplication.getODataHelper(),
@@ -359,7 +322,6 @@ sap.ui.define([
 				};
 			oODataHelper.createProductDraft(fnProductDraftCreated);
 		},
-
 		onSwipe: function(oEvent) {
 			// Event handler for swipe in the list.
 			// Its purpose is to deactivate swipe in case of multi select and in edit mode.
@@ -384,7 +346,6 @@ sap.ui.define([
 			}
 			this._oViewProperties.setProperty("/swipeEnabled", !bDisabled);
 		},
-
 		onSwipeDeleteItem: function() {
 			// user has confirmed the deletion via swipe
 			var oBindingContext = this._oList.getSwipedItem().getBindingContext(),
@@ -394,10 +355,8 @@ sap.ui.define([
 			oApplication.getODataHelper().deleteProduct(oBindingContext);
 			this._oList.swipeOut();
 		},
-
 		onDelete: function() {
 			MessageToast.show('Delete action');
-
 			// //From the master list user has changed to multi select mode, selected items, then pressed delete
 			// var oProduct, oBindingContext, oDraftAdministrativeData, oProductTextInOriginalLang,
 			// 	aItemsLocked = [],
@@ -482,10 +441,8 @@ sap.ui.define([
 			// 	}
 			// }
 		},
-
 		// User decides to delete items as determined by the ProductMultiDeleteDialog.
 		onDeleteConfirm: function() {
-
 			var bDeleteUnsavedChanges = this._oDialogProperties.getProperty("/deleteUnsavedChanges");
 			var oODataHelper = this.getApplication().getODataHelper();
 			if (this.aItemsToDelete.length > 0) {
@@ -494,28 +451,21 @@ sap.ui.define([
 			if (bDeleteUnsavedChanges && this.aItemsUnsaved.length > 0) {
 				oODataHelper.deleteEntities(this.aItemsUnsaved);
 			}
-
 			this._oMultiDeleteDialog.close();
 		},
-
 		// Show details in the multi delete dialog, according to use case
 		onShowDetails: function() {
 			this._oDialogProperties.setProperty("/showDetails", true);
 		},
-
 		// User makes no action from the multi delete dialog
 		onCancel: function() {
 			this._oMultiDeleteDialog.close();
 		},
-
 		onNavBack: function() {
 			this.getApplication().navBack(true, false);
 		},
-
 		onSelect: function(oEvent) {
-
 		},
-
 		_navToListItem: function(oListItem) {
 			// This method triggers the navigation to the detail page with the specified list item oListItem
 			var oCtx = oListItem.getBindingContext(),
@@ -534,7 +484,6 @@ sap.ui.define([
 				}
 			}
 		},
-
 		_scrollToListItem: function(oListItem) {
 			// Scroll the list to the given list item.
 			var oTarget = (oListItem !== this._getFirstRealItem() && oListItem) || this._oList,
@@ -543,7 +492,6 @@ sap.ui.define([
 				oDomRef.scrollIntoView();
 			}
 		},
-
 		_getFirstRealItem: function() {
 			// Returns the first item of the list which is not a grouping item. Returns a faulty value if list is empty.
 			var aItems = this._oList.getItems();
@@ -553,7 +501,6 @@ sap.ui.define([
 				}
 			}
 		},
-
 		_setItemSelected: function(oItemToSelect) {
 			// Set the specified list item to be selected, resp. remove all selections if the specififed item is faulty
 			this._oList.removeSelections(true);
@@ -561,7 +508,6 @@ sap.ui.define([
 				this._oList.setSelectedItem(oItemToSelect);
 			}
 		},
-
 		_getListItemForId: function(sId) {
 			// Return the list item for the specified product id or a faulty value if the list does not contain the product
 			if (!sId || sId === "-") {
@@ -578,11 +524,9 @@ sap.ui.define([
 				}
 			}
 		},
-
 		_relevantId: function() {
 			return this._oApplicationProperties.getProperty("/productId") || this._oApplicationProperties.getProperty("/draftId");
 		},
-
 		getPreferredSuccessors: function(sId, aPreferredReplace) {
 			var aPreferredIds = aPreferredReplace || [sId],
 				bFound = false,
@@ -606,7 +550,6 @@ sap.ui.define([
 			}
 			return aPreferredIds;
 		},
-
 		// Prepare for the removal of some items from the list (due to deletion).
 		// This is done by setting the IDs currently in the list to preferredIds. Thereby we
 		// start with the item currently displayed. Then the IDs following this element are added
@@ -629,7 +572,6 @@ sap.ui.define([
 			this._oApplicationProperties.setProperty("/preferredIds", aPreferredIds);
 			this._oApplicationProperties.setProperty("/productId", null); // Reset the current ID (we only have preferences now)
 		},
-
 		/**
 		 * Used to create GroupHeaders with non - capitalized caption.*These headers are inserted into the master list to * group the master list 's items.
 		 * @param {Object} oGroup group whose text is to be displayed
@@ -642,7 +584,6 @@ sap.ui.define([
 				upperCase: false
 			});
 		},
-
 		// Order the list of selected products for delete into those that can be deleted (active products and users own drafts), those that user has
 		// to confirm (unsaved changes) and those that cannot be deleted (locked by other users)
 		_getDeletedRequested: function(aItemsForDelete) {
@@ -652,13 +593,11 @@ sap.ui.define([
 				aItemsToDelete = [],
 				aLockedLongText = [],
 				aUnsavedLongText = [];
-
 			for (var i = 0; i < aItemsForDelete.length; i++) {
 				oBindingContext = aItemsForDelete[i].getBindingContext();
 				oProduct = oBindingContext.getObject();
 				oDraftAdministrativeData = oBindingContext.getObject("DraftAdministrativeData");
 				oProductTextInOriginalLang = oBindingContext.getObject("to_ProductTextInOriginalLang");
-
 				if (oProduct.HasDraftEntity && oDraftAdministrativeData.InProcessByUser !== "") {
 					//Product is locked by another user and cannot be deleted.
 					aItemsLocked.push({
@@ -700,12 +639,10 @@ sap.ui.define([
 				toDelete: aItemsToDelete
 			};
 		},
-
 		// Depending on the whether the set of items selected to be deleted contains locked items, unsaved changes or
 		// active items/drafts, determine the texts for the dialogue and the list of items for the details.   This dialogue is specified in the Fiori
 		// UX Guidelines in the document "Draft Handling". Note that UPDATES are not currently supported by the Application Infrastructure.
 		_determineDialogContent: function(aItemsLocked) {
-
 			var iCanBeDeleted = this.aItemsToDelete.length,
 				iLocked = aItemsLocked.length,
 				iUnsaved = this.aItemsUnsaved.length,
@@ -716,7 +653,6 @@ sap.ui.define([
 				bShowCheckbox = false, //If there are unsaved items and active items, offer user a checkbox to request deletion of unsaved items too
 				bDefaultUnsaved = true,
 				sLockedText, sDeleteText, sUnsavedText, sDeleteAnywayText, sCheckboxText, sUnsavedNumber;
-
 			// LOCKED ITEMS
 			// For the selected locked items, there are only two possibilities to show this.  For one selected locked item, we display
 			// the name of this product and show no details. For more than one selected, we show how many locked items were selected.
@@ -728,7 +664,6 @@ sap.ui.define([
 					aItemsLocked[0].Name, aItemsLocked[0].User
 				]);
 			}
-
 			// ACTIVE ITEMS
 			// For active items (including the user's drafts), there are no details shown.  If one such item has been selected,
 			// the name of this item appears in the message.  If more than one item has been shown, the user is asked whether he wants
@@ -750,7 +685,6 @@ sap.ui.define([
 				// Just one active/draft product has been selected.  Text to delete the named product.
 				sDeleteText = this.getResourceBundle().getText("ymsg.deleteText", [this.aItemsToDelete[0].Name]);
 			}
-
 			// UNSAVED ITEMS
 			// The messages when unsaved items have been selected are more detailled. It is assumed that the deletion of active
 			// items excludes locked items by definition. The action button to Delete is based on these items.
@@ -758,7 +692,6 @@ sap.ui.define([
 			// the delete of the active items.  If there are only unsaved items selected, the action Delete can only apply to the
 			// unsaved items, so the checkbox is not shown.
 			if (iUnsaved > 0) {
-
 				// In case locked items have also been selected, state how many unsaved items were selected.
 				if (iUnsaved > 1 && iLocked > 0) {
 					sUnsavedNumber = this.getResourceBundle().getText("ymsg.unsavedNumber", iUnsaved);
@@ -793,7 +726,6 @@ sap.ui.define([
 						}
 				}
 			}
-
 			// Decide on Lists to show
 			if (iLocked > 1 && iUnsaved <= 1) {
 				aSingleList = aItemsLocked;
@@ -802,11 +734,9 @@ sap.ui.define([
 			} else if (iUnsaved > 1) {
 				aSingleList = this.aItemsUnsaved;
 			}
-
 			if (aSingleList.length < 1) {
 				bDetails = false;
 			}
-
 			return {
 				lockedText: sLockedText,
 				deleteText: sDeleteText,
@@ -820,7 +750,6 @@ sap.ui.define([
 				singleList: aSingleList,
 				unsaved: iUnsaved,
 				unsavedNumber: sUnsavedNumber
-
 			};
 		}
 	});

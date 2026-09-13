@@ -4,17 +4,13 @@ sap.ui.define([
 	"./Common"
 ], function(Opa5, Common) {
 	"use strict";
-
 	var sNotFoundPageId = "page",
 		sNotFoundView = "EmptyPage",
 		sDetailNotFoundView = "DetailObjectNotFound";
-
 	Opa5.createPageObjects({
 		onTheNotFoundPage: {
 			baseClass: Common,
-
 			actions: {
-
 				iPressTheBackButton: function(sViewName) {
 					return this.waitFor({
 						id: sNotFoundPageId,
@@ -24,11 +20,8 @@ sap.ui.define([
 						}
 					});
 				}
-
 			},
-
 			assertions: {
-
 				iShouldSeeTheNotFoundGeneralPage: function(sPageId, sPageViewName) {
 					return this.waitFor({
 						controlType: "sap.m.MessagePage",
@@ -39,15 +32,12 @@ sap.ui.define([
 						errorMessage: "Did not reach the empty page"
 					});
 				},
-
 				iShouldSeeTheNotFoundPage: function() {
 					return this.iShouldSeeTheNotFoundGeneralPage(sNotFoundPageId, sNotFoundView);
 				},
-
 				iShouldSeeTheObjectNotFoundPage: function() {
 					return this.iShouldSeeTheNotFoundGeneralPage(sNotFoundPageId, sDetailNotFoundView);
 				},
-
 				theNotFoundPageShouldSayResourceNotFound: function() {
 					return this.waitFor({
 						id: sNotFoundPageId,
@@ -61,7 +51,6 @@ sap.ui.define([
 						errorMessage: "Did not display the resource not found text"
 					});
 				},
-
 				theNotFoundPageShouldSayObjectNotFound: function() {
 					return this.waitFor({
 						id: sNotFoundPageId,
@@ -74,11 +63,7 @@ sap.ui.define([
 						errorMessage: "Did not display the object not found text"
 					});
 				}
-
 			}
-
 		}
-
 	});
-
 });

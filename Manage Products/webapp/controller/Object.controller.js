@@ -10,15 +10,11 @@ sap.ui.define([
 ], function (
 	BaseController, JSONModel, UI5Date, History, formatter, DateFormat, Filter, FilterOperator) {
 	"use strict";
-
 	return BaseController.extend("mycompany.myapp.MyWorklistApp.controller.Object", {
-
 		formatter: formatter,
-
 		/* =========================================================== */
 		/* lifecycle methods                                           */
 		/* =========================================================== */
-
 		/**
 		 * Called when the worklist controller is instantiated.
 		 * @public
@@ -32,9 +28,7 @@ sap.ui.define([
 					busy : true,
 					delay : 0
 				});
-
 			this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
-
 			// Store original busy indicator delay, so it can be restored later on
 			iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
 			this.setModel(oViewModel, "objectView");
@@ -44,11 +38,9 @@ sap.ui.define([
 				}
 			);
 		},
-
 		/* =========================================================== */
 		/* event handlers                                              */
 		/* =========================================================== */
-
 
 		/**
 		 * Event handler  for navigating back.
@@ -58,18 +50,15 @@ sap.ui.define([
 		 */
 		onNavBack : function() {
 			var sPreviousHash = History.getInstance().getPreviousHash();
-
 			if (sPreviousHash !== undefined) {
 				history.go(-1);
 			} else {
 				this.getRouter().navTo("worklist", {}, true);
 			}
 		},
-
 		/* =========================================================== */
 		/* internal methods                                            */
 		/* =========================================================== */
-
 		/**
 		 * Binds the view to the object path.
 		 * @function
@@ -85,7 +74,6 @@ sap.ui.define([
 				this._bindView("/" + sObjectPath);
 			}.bind(this));
 		},
-
 		/**
 		 * Binds the view to the object path.
 		 * @function
@@ -95,7 +83,6 @@ sap.ui.define([
 		_bindView : function (sObjectPath) {
 			var oViewModel = this.getModel("objectView"),
 				oDataModel = this.getModel();
-
 			this.getView().bindElement({
 				path: sObjectPath,
 				events: {
@@ -115,35 +102,29 @@ sap.ui.define([
 				}
 			});
 		},
-
 		_onBindingChange : function () {
 			var oView = this.getView(),
 				oViewModel = this.getModel("objectView"),
 				oElementBinding = oView.getElementBinding();
-
 			// No data for the binding
 			if (!oElementBinding.getBoundContext()) {
 				this.getRouter().getTargets().display("objectNotFound");
 				return;
 			}
-
 			var oResourceBundle = this.getResourceBundle(),
 				oObject = oView.getBindingContext().getObject(),
 				sObjectId = oObject.ProductID,
 				sObjectName = oObject.ProductName;
-
 			oViewModel.setProperty("/busy", false);
 			oViewModel.setProperty("/shareSendEmailSubject",
 			oResourceBundle.getText("shareSendEmailObjectSubject", [sObjectId]));
 			oViewModel.setProperty("/shareSendEmailMessage",
 			oResourceBundle.getText("shareSendEmailObjectMessage", [sObjectName, sObjectId, location.href]));
-
 			// Update the comments in the list
 			var oList = this.byId("idCommentsList");
 			var oBinding = oList.getBinding("items");
 			oBinding.filter(new Filter("productID", FilterOperator.EQ, sObjectId));
 		},
-
 		/**
 		 * Updates the model with the user comments on Products.
 		 * @function
@@ -168,7 +149,5 @@ sap.ui.define([
 				productComments : aEntries
 			});
 		}
-
 	});
-
 });

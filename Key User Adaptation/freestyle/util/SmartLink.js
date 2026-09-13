@@ -4,13 +4,9 @@ sap.ui.define([
 	"sap/ui/thirdparty/jquery"
 ], function(BaseObject, Factory, jQuery) {
 	"use strict";
-
 	var Util = BaseObject.extend("sap.ui.demoapps.rta.freestyle.util.SmartLink",  {});
-
 	Util.getServiceReal = Factory.getService;
-
 	var mSetting = {
-
 		semanticObjectSupplierId: {
 			links: [
 				{
@@ -29,7 +25,6 @@ sap.ui.define([
 			]
 		}
 	};
-
 	function getCrossApplicationNavigationService() {
 		return {
 			hrefForExternal: function(oTarget) {
@@ -72,7 +67,6 @@ sap.ui.define([
 			}
 		};
 	}
-
 	function getURLParsing() {
 		return {
 			parseShellHash: function(sIntent) {
@@ -98,7 +92,6 @@ sap.ui.define([
 			}
 		};
 	}
-
 	function getNavigationService() {
 		return {
 			getHref(oTarget) {
@@ -133,9 +126,7 @@ sap.ui.define([
 			}
 		};
 	}
-
 	Util.mockUShellServices = function() {
-
 		Factory.getService = function(sServiceName, bAsync) {
 			switch (sServiceName) {
 				case "CrossApplicationNavigation":
@@ -149,10 +140,8 @@ sap.ui.define([
 			}
 		};
 	};
-
 	Util.unMockUShellServices = function() {
 		Factory.getService = Util.getServiceReal;
 	};
-
 	return Util;
 }, /* bExport= */true);

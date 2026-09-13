@@ -2,12 +2,9 @@ sap.ui.define([
 	"sap/ui/core/library"
 ] , function (coreLibrary) {
 	"use strict";
-
 	// shortcut for sap.ui.core.ValueState
 	var ValueState = coreLibrary.ValueState;
-
 	return {
-
 		/**
 		 * Rounds the number unit value to 2 digits
 		 * @public
@@ -20,7 +17,6 @@ sap.ui.define([
 			}
 			return parseFloat(sValue).toFixed(2);
 		},
-
 		/**
 		 * Defines a value state based on the stock level
 		 *
@@ -37,7 +33,5 @@ sap.ui.define([
 				return ValueState.Success;
 			}
 		}
-
 	};
-
 });

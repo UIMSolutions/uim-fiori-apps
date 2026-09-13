@@ -4,18 +4,15 @@ sap.ui.define([
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
 	"sap/ui/model/Sorter"
-
 ], function(Controller, formatter, Filter, FilterOperator, Sorter) {
 	"use strict";
 	return Controller.extend("sap.ui.demoapps.rta.fiorielements.ext.view.Default", {
 		formatter: formatter,
-
 		onInit: function() {
 			this._mDialogs = {};
 			this.aMessageFilters = [];
 			this.oSBTable = this.oView.byId("storageBinTable");
 		},
-
 		onOpenSortDialog: function() {
 			var sFullFragmentName = "sap.ui.demoapps.rta.fiorielements.ext.view.SortDialog",
 				oDialog = this._mDialogs[sFullFragmentName];
@@ -25,7 +22,6 @@ sap.ui.define([
 			}
 			oDialog.open();
 		},
-
 		onSortDialogConfirmed: function(oEvent) {
 			var mParams = oEvent.getParameters(),
 				sSortPath = mParams.sortItem.getKey(),
@@ -34,7 +30,6 @@ sap.ui.define([
 				oTableBinding.sort(new Sorter(sSortPath, mParams.sortDescending));
 			}
 		},
-
 		getMessageFilter: function() {
 			//The message filters are used by the message model to find the messages that refere to the currently shown entities.
 			//Therefore the new binding context has to be known in order to build the correct filters.

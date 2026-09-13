@@ -1,5 +1,4 @@
 /* global QUnit */
-
 sap.ui.define([
 	"sap/base/util/extend",
 	"sap/ui/test/Opa5",
@@ -18,22 +17,17 @@ sap.ui.define([
 	jQuery
 ) {
 	"use strict";
-
 	var sViewName = "ProductMaster",
 		sSomethingThatCannotBeFound = "*#-Q@@||",
 		iGroupingBoundary = 100;
-
 	function enterSomethingInASearchField(oSearchField, oSearchParams) {
 		oSearchParams = oSearchParams || {};
-
 		if (oSearchParams.searchValue) {
 			oSearchField.setValue(oSearchParams.searchValue);
 		}
-
 		if (oSearchParams.skipEvent) {
 			return;
 		}
-
 		var oEvent = jQuery.Event("touchend"); // eslint-disable-line new-cap
 		oEvent.originalEvent = {
 			query: oSearchParams.searchValue,
@@ -43,16 +37,12 @@ sap.ui.define([
 		oEvent.target = oSearchField;
 		oEvent.srcElement = oSearchField;
 		extend(oEvent, oEvent.originalEvent);
-
 		oSearchField.fireSearch(oEvent);
 	}
-
 	Opa5.createPageObjects({
 		onTheMasterPage: {
 			baseClass: Common,
-
 			actions: {
-
 				iWaitUntilTheListIsLoaded: function() {
 					return this.waitFor({
 						id: "list",
@@ -63,7 +53,6 @@ sap.ui.define([
 						errorMessage: "The master list has not been loaded"
 					});
 				},
-
 				iWaitUntilTheFirstItemIsSelected: function() {
 					return this.waitFor({
 						id: "list",
@@ -76,35 +65,27 @@ sap.ui.define([
 						errorMessage: "The first item of the master list is not selected"
 					});
 				},
-
 				iSortTheListOnName: function() {
 					return this.iPressItemInSelectInFooter("sort-select", "masterSort1");
 				},
-
 				iSortTheListOnUnitNumber: function() {
 					return this.iPressItemInSelectInFooter("sort-select", "masterSort2");
 				},
-
 				iRemoveFilterFromTheList: function() {
 					return this.iPressItemInSelectInFooter("filter-select", "masterFilterNone");
 				},
-
 				iFilterTheListLessThan100UoM: function() {
 					return this.iPressItemInSelectInFooter("filter-select", "masterFilter1");
 				},
-
 				iFilterTheListMoreThan100UoM: function() {
 					return this.iPressItemInSelectInFooter("filter-select", "masterFilter2");
 				},
-
 				iGroupTheList: function() {
 					return this.iPressItemInSelectInFooter("group-select", "masterGroup1");
 				},
-
 				iRemoveListGrouping: function() {
 					return this.iPressItemInSelectInFooter("group-select", "masterGroupNone");
 				},
-
 				iOpenViewSettingsDialog: function() {
 					return this.waitFor({
 						id: "filter-button",
@@ -122,7 +103,6 @@ sap.ui.define([
 						errorMessage: "Did not find the 'filter' button."
 					});
 				},
-
 				iSelectListItemInViewSettingsDialog: function(sListItemTitle) {
 					return this.waitFor({
 						searchOpenDialogs: true,
@@ -137,7 +117,6 @@ sap.ui.define([
 						errorMessage: "Did not find list item with title " + sListItemTitle + " in View Settings Dialog."
 					});
 				},
-
 				iPressOKInViewSelectionDialog: function() {
 					return this.waitFor({
 						searchOpenDialogs: true,
@@ -152,7 +131,6 @@ sap.ui.define([
 						errorMessage: "Did not find the ViewSettingDialog's 'OK' button."
 					});
 				},
-
 				iPressResetInViewSelectionDialog: function() {
 					return this.waitFor({
 						searchOpenDialogs: true,
@@ -167,7 +145,6 @@ sap.ui.define([
 						errorMessage: "Did not find the ViewSettingDialog's 'Reset' button."
 					});
 				},
-
 				iPressItemInSelectInFooter: function(sSelect, sItem) {
 					return this.waitFor({
 						id: sSelect,
@@ -186,7 +163,6 @@ sap.ui.define([
 						errorMessage: "Did not find the " + sSelect + " select"
 					});
 				},
-
 				iRememberTheSelectedItem: function() {
 					return this.waitFor({
 						id: "list",
@@ -200,7 +176,6 @@ sap.ui.define([
 						errorMessage: "The list does not have a selected item so nothing can be remembered"
 					});
 				},
-
 				iRememberTheIdOfListItemAtPosition: function(iPosition) {
 					return this.waitFor({
 						id: "list",
@@ -214,7 +189,6 @@ sap.ui.define([
 						errorMessage: "The list does not have an item at the index " + iPosition
 					});
 				},
-
 				iRememberAnIdOfAnObjectThatsNotInTheList: function() {
 					return this.waitFor(this.createAWaitForAnEntitySet({
 						entitySet: "SEPMRA_C_PD_Product",
@@ -231,11 +205,9 @@ sap.ui.define([
 											return oListItem.getBindingContext().getProperty("ActiveProduct") === oObject.ActiveProduct;
 										});
 									});
-
 									if (!aItemsNotInTheList.length) {
 										QUnit.assert.ok(false, "Did not find a list item that is not in the list");
 									}
-
 									this.getContext().currentId = aItemsNotInTheList[0].ActiveProduct;
 								},
 								errorMessage: "the model does not have a item that is not in the list"
@@ -243,7 +215,6 @@ sap.ui.define([
 						}
 					}));
 				},
-
 				iPressOnTheObjectAtPosition: function(iPositon) {
 					return this.waitFor({
 						id: "list",
@@ -257,10 +228,8 @@ sap.ui.define([
 						errorMessage: "List 'list' in view '" + sViewName + "' does not contain an ObjectListItem at position '" + iPositon + "'"
 					});
 				},
-
 				iSearchForTheFirstObject: function() {
 					var sFirstObjectTitle;
-
 					this.waitFor({
 						id: "list",
 						viewName: sViewName,
@@ -272,7 +241,6 @@ sap.ui.define([
 						},
 						errorMessage: "Did not find list items while trying to search for the first item."
 					});
-
 					return this.waitFor({
 						id: "searchField",
 						viewName: sViewName,
@@ -284,14 +252,12 @@ sap.ui.define([
 						errorMessage: "Failed to find search field in Master view.'"
 					});
 				},
-
 				iTypeSomethingInTheSearchThatCannotBeFound: function() {
 					return this.iSearchForValue({
 						searchValue: sSomethingThatCannotBeFound,
 						skipEvent: true
 					});
 				},
-
 				iSearchForValue: function(oSearchParams) {
 					return this.waitFor({
 						id: "searchField",
@@ -302,29 +268,23 @@ sap.ui.define([
 						errorMessage: "Failed to find search field in Master view.'"
 					});
 				},
-
 				iClearTheSearch: function() {
 					return this.iSearchForValue({
 						searchValue: ""
 					});
 				},
-
 				iSearchForSomethingWithNoResults: function() {
 					return this.iSearchForValue({
 						searchValue: sSomethingThatCannotBeFound
 					});
 				},
-
 				iTriggerRefresh: function() {
 					return this.iSearchForValue({
 						refreshButtonPressed: true
 					});
 				}
-
 			},
-
 			assertions: {
-
 				iShouldSeeTheBusyIndicator: function() {
 					return this.waitFor({
 						id: "list",
@@ -336,14 +296,12 @@ sap.ui.define([
 						errorMessage: "The master list is not busy."
 					});
 				},
-
 				theListGroupShouldBeFilteredOnUnitNumberValue20OrLess: function() {
 					return this.theListShouldBeFilteredOnUnitNumberValue(20, false, {
 						iLow: 1,
 						iHigh: 2
 					});
 				},
-
 				theListShouldContainAGroupHeader: function() {
 					return this.waitFor({
 						controlType: "sap.m.GroupHeaderListItem",
@@ -354,14 +312,12 @@ sap.ui.define([
 						errorMessage: "Master list is not grouped"
 					});
 				},
-
 				theListShouldContainOnlyFormattedUnitNumbers: function() {
 					return this.theUnitNumbersShouldHaveTwoDecimals("sap.m.ObjectListItem",
 						sViewName,
 						"Numbers in ObjectListItems numbers are properly formatted",
 						"List has no entries which can be checked for their formatting");
 				},
-
 				theListHeaderDisplaysZeroHits: function() {
 					return this.waitFor({
 						viewName: sViewName,
@@ -376,7 +332,6 @@ sap.ui.define([
 						errorMessage: "The list still has items"
 					});
 				},
-
 				theListHasEntries: function() {
 					return this.waitFor({
 						viewName: sViewName,
@@ -390,12 +345,10 @@ sap.ui.define([
 						errorMessage: "The list had no items"
 					});
 				},
-
 				theListShouldNotContainGroupHeaders: function() {
 					function fnIsGroupHeader(oElement) {
 						return oElement.getMetadata().getName() === "sap.m.GroupHeaderListItem";
 					}
-
 					return this.waitFor({
 						viewName: sViewName,
 						id: "list",
@@ -408,15 +361,12 @@ sap.ui.define([
 						errorMessage: "Master list still contains a group header although grouping has been removed."
 					});
 				},
-
 				theListShouldBeSortedAscendingOnUnitNumber: function() {
 					return this.theListShouldBeSortedAscendingOnField("Price");
 				},
-
 				theListShouldBeSortedAscendingOnName: function() {
 					return this.theListShouldBeSortedAscendingOnField("Product_Text");
 				},
-
 				theListShouldBeSortedAscendingOnField: function(sField) {
 					function fnCheckSort(oList) {
 						var oLastValue = null,
@@ -424,13 +374,10 @@ sap.ui.define([
 								if (!oElement.getBindingContext()) {
 									return false;
 								}
-
 								var oCurrentValue = oElement.getBindingContext().getProperty(sField);
-
 								if (oCurrentValue === undefined) {
 									return false;
 								}
-
 								if (!oLastValue || oCurrentValue >= oLastValue) {
 									oLastValue = oCurrentValue;
 								} else {
@@ -438,10 +385,8 @@ sap.ui.define([
 								}
 								return true;
 							};
-
 						return oList.getItems().every(fnIsOrdered);
 					}
-
 					return this.waitFor({
 						viewName: sViewName,
 						id: "list",
@@ -452,9 +397,7 @@ sap.ui.define([
 						errorMessage: "Master list has not been sorted correctly for field '" + sField + "'."
 					});
 				},
-
 				theListShouldBeFilteredOnUnitNumberValue: function(iThreshhold, bGreaterThan, oRange) {
-
 					function fnCheckFilter(oList) {
 						var fnIsGreaterThanMaxValue = function(oElement) {
 							if (bGreaterThan) {
@@ -466,10 +409,8 @@ sap.ui.define([
 						if (oRange) {
 							aItems = aItems.slice(oRange.iLow, oRange.iHigh);
 						}
-
 						return !aItems.some(fnIsGreaterThanMaxValue);
 					}
-
 					return this.waitFor({
 						id: "list",
 						viewName: sViewName,
@@ -480,15 +421,12 @@ sap.ui.define([
 						errorMessage: "Master list has not been filtered correctly with filter value '" + iThreshhold + "'."
 					});
 				},
-
 				theMasterListShouldBeFilteredOnUnitNumberValueMoreThanTheGroupBoundary: function() {
 					return this.theListShouldBeFilteredOnUnitNumberValue(iGroupingBoundary, true);
 				},
-
 				theMasterListShouldBeFilteredOnUnitNumberValueLessThanTheGroupBoundary: function() {
 					return this.theListShouldBeFilteredOnUnitNumberValue(iGroupingBoundary);
 				},
-
 				iShouldSeeTheList: function() {
 					return this.waitFor({
 						id: "list",
@@ -499,7 +437,6 @@ sap.ui.define([
 						errorMessage: "Can't see the master list."
 					});
 				},
-
 				theListShowsOnlyObjectsWithTheSearchStringInTheirTitle: function() {
 					this.waitFor({
 						id: "list",
@@ -512,13 +449,11 @@ sap.ui.define([
 								bEveryItemContainsTheTitle = oList.getItems().every(function(oItem) {
 									return oItem.getTitle().indexOf(sTitle) !== -1;
 								});
-
 							QUnit.assert.ok(bEveryItemContainsTheTitle, "Every item did contain the title");
 						},
 						errorMessage: "The list did not have items"
 					});
 				},
-
 				theListShouldHaveNEntries: function(iObjIndex) {
 					return this.waitFor({
 						id: "list",
@@ -533,7 +468,6 @@ sap.ui.define([
 						errorMessage: "List does not have " + iObjIndex + " entries."
 					});
 				},
-
 				theListShouldHaveAllEntries: function() {
 					return this.waitFor({
 						id: "list",
@@ -551,7 +485,6 @@ sap.ui.define([
 						errorMessage: "List does not have all entries."
 					});
 				},
-
 				iShouldSeeTheNoDataTextForNoSearchResults: function() {
 					return this.waitFor({
 						id: "list",
@@ -563,7 +496,6 @@ sap.ui.define([
 						errorMessage: "list does not show the no data text for search and filter"
 					});
 				},
-
 				theHeaderShouldDisplayAllEntries: function() {
 					return this.waitFor({
 						id: "list",
@@ -586,7 +518,6 @@ sap.ui.define([
 						errorMessage: "Header does not display the number of items in the list"
 					});
 				},
-
 				theFirstItemShouldBeSelected: function() {
 					return this.waitFor({
 						id: "list",
@@ -600,7 +531,6 @@ sap.ui.define([
 						errorMessage: "The first object is not selected."
 					});
 				},
-
 				theListShouldHaveNoSelection: function() {
 					return this.waitFor({
 						id: "list",
@@ -614,7 +544,6 @@ sap.ui.define([
 						errorMessage: "List selection was not removed"
 					});
 				},
-
 				theRememberedListItemShouldBeSelected: function() {
 					this.waitFor({
 						id: "list",
@@ -628,11 +557,7 @@ sap.ui.define([
 						errorMessage: "The list has no selection"
 					});
 				}
-
 			}
-
 		}
-
 	});
-
 });

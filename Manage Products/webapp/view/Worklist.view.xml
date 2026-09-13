@@ -3,17 +3,14 @@
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:semantic="sap.f.semantic">
-
 	<semantic:SemanticPage
 		id="page"
 		headerPinnable="false"
 		toggleHeaderOnTitleClick="false"
 		showFooter="true">
-
 		<semantic:titleHeading>
 			<Title text="{i18n>worklistTitle}" />
 		</semantic:titleHeading>
-
 		<semantic:headerContent>
 			<IconTabBar
 				id="iconTabBar"
@@ -79,7 +76,6 @@
 							</SearchField>
 						</Toolbar>
 					</headerToolbar>
-
 						<columns>
 							<Column id="nameColumn">
 								<Text

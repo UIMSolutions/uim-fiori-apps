@@ -6,7 +6,6 @@ sap.ui.define([
 	"sap/ui/model/FilterType"
 ], function(Object, Sorter, Filter, FilterOperator, FilterType) {
 	"use strict";
-
 	return Object.extend("sap.ui.demoapps.rta.freestyle.util.TableOperationsImpl", {
 		// This object provides functions to facilitate sorting, filtering, grouping and searching of tables.
 		// The following features are provided:
@@ -23,7 +22,6 @@ sap.ui.define([
 		//  function applyTableOperations is called
 		// Please note that TableOperationsImpl is not meant to be consumed directly by apps.
 		// Instead interface classes like TableOperationsV2 are provided for consumption in apps.
-
 		constructor: function(oSettings) {
 			// currently the following properties of oSettings are evaluated:
 			// oTable - this is the table on which the operations are performed
@@ -48,7 +46,6 @@ sap.ui.define([
 			this.aSearchableFields = oSettings.aSearchableFields || []; //List of searchable
 			// columns - taken from the import parameter
 		},
-
 		addFilter: function(oFilter, sFilterAttribute) {
 			// This function creates one list containing the filters for all attributes. In this list there is
 			// one multiFilter for each attribute. The multiFilters contain two separate lists for including
@@ -95,7 +92,6 @@ sap.ui.define([
 				this.bFilterChanged = true;
 			}
 		},
-
 		addSorter: function(oSorter) {
 			// adds the new sorter as the new main sorter to the list of active sorters.
 			// Delete any existing sorter for the path specified
@@ -113,7 +109,6 @@ sap.ui.define([
 			}
 			this.bSortChanged = true;
 		},
-
 		addSFBFilters: function(oSFBFilters) {
 			// This method evaluates the filter description of the smart filter bar and creates filter objects according to the description.
 			// By calling function addFilter the smartFilterBar filters are added to the filter dictionary and to list of active filters.
@@ -143,7 +138,6 @@ sap.ui.define([
 				}
 			}
 		},
-
 		applyTableOperations: function(bUseApplicationFilters) {
 			// Here the binding of the table items is updated with the currently active sorters and filters.
 			// It is assumed that all changes done by the user are immediately reflected in the table.
@@ -152,7 +146,6 @@ sap.ui.define([
 				aActiveFilters = this.oFixedFilter ? [this.oFixedFilter] : [],
 				oTableBinding = this.oTable.getBinding("items"),
 				sFilterType = bUseApplicationFilters ? FilterType.Application : FilterType.Control;
-
 			if (oTableBinding) {
 				if (this.bGroupingChanged || this.bSortChanged) {
 					// The grouping or sorting of the table has changed. The sorting on the binding needs to be updated.
@@ -171,14 +164,12 @@ sap.ui.define([
 					// filter bar need to be applied together.
 					// Note that if the search is done in more than one column then the corresponding filters have
 					// to be connected using "or". All other filters are connected using "and" logic.
-
 					if (this.aSearchFilter.length > 0) {
 						aActiveFilters.push(new Filter(this.aSearchFilter, false));
 					}
 					if (this.aFilterList.length > 0) {
 						aActiveFilters.push(new Filter(this.aFilterList, true));
 					}
-
 					if (aActiveFilters.length > 0) {
 						oTableBinding.filter(new Filter(aActiveFilters, true), sFilterType);
 					} else {
@@ -188,19 +179,16 @@ sap.ui.define([
 				this._resetChangeIndicators();
 			}
 		},
-
 		getSearchFilters: function() {
 			// Searching is done using filters. This function returns the list of filters which are used to perform a
 			// search. During a search the list contains one filter per searchable column (the search filters are
 			// created in function setSearchTerm)
 			return this.aSearchFilter;
 		},
-
 		getSearchTerm: function() {
 			// returns the currently active search term
 			return this.sSearchTerm;
 		},
-
 		_getSortListIndexByPath: function(sPath) {
 			// searches the list of active sorters for a sorter with the given path and returns the sorter's position
 			// in the list (there can be only one) or -1 if no matching sorter was found
@@ -212,35 +200,29 @@ sap.ui.define([
 			}
 			return -1;
 		},
-
 		getGrouping: function() {
 			// returns the the currently active grouping sorter
 			return this.oGrouper;
 		},
-
 		getSorters: function() {
 			// returns the list of currently active sorters (sorters for searches and for grouping are not part of this list)
 			return this.aSortList;
 		},
-
 		getFilterTable: function() {
 			// returns the list of currently active filters
 			return (this.aFilterList && this.aFilterList.length > 0) ? this.aFilterList : null;
 		},
-
 		resetFilters: function() {
 			// removes all active filters
 			this.aFilterList.length = 0;
 			this.oFilterDict = {};
 			this.bFilterChanged = true;
 		},
-
 		removeGrouping: function() {
 			// removes the active grouping sorter
 			this.oGrouper = null;
 			this.bGroupingChanged = true;
 		},
-
 		setGrouping: function(oNewGrouper) {
 			// If there is already a sorter for the path specified, the sorting order
 			// must be the same as in the new grouper
@@ -251,7 +233,6 @@ sap.ui.define([
 			this.oGrouper = oNewGrouper;
 			this.bGroupingChanged = true;
 		},
-
 		setSearchTerm: function(sNewSearchTerm) {
 			// Searching may be done in more than one column - therefore a filter for
 			// each of the searchable columns has to be created
@@ -268,7 +249,6 @@ sap.ui.define([
 			}
 			this.bSearchChanged = true;
 		},
-
 		_resetChangeIndicators: function() {
 			// after all pending changes are executed the change indicators need to be reset.
 			// this is done here

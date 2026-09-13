@@ -4,9 +4,7 @@ sap.ui.define([
 	"sap/ui/test/matchers/PropertyStrictEquals"
 ], function(Opa5, Press, PropertyStrictEquals) {
 	"use strict";
-
 	return {
-
 		createActions : function (sViewName) {
 			return {
 				iPressOnTheShareButton : function () {
@@ -23,10 +21,8 @@ sap.ui.define([
 				}
 			};
 		},
-
 		createAssertions : function (sViewName) {
 			return {
-
 				iShouldSeeTheShareEmailButton : function () {
 					return this.waitFor({
 						viewName : sViewName,
@@ -41,11 +37,7 @@ sap.ui.define([
 						errorMessage : "The E-Mail button was not found"
 					});
 				}
-
 			};
-
 		}
-
 	};
-
 });

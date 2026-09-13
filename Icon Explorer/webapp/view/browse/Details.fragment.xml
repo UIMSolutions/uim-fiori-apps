@@ -21,7 +21,6 @@
 		growingScrollToLoad="true"
 		growingThreshold="{view>/growingThreshold}"
 		updateFinished=".onUpdateFinished">
-
 		<columns>
 			<Column id="iconColumn" width="2rem" vAlign="Middle">
 				<Text id="iconColumnTitle" text="{i18n>tableIconColumnTitle}"/>
@@ -47,7 +46,6 @@
 			</Column>
 			<Column id="favColumn" width="2rem" vAlign="Middle"/>
 		</columns>
-
 		<items>
 			<ColumnListItem
 				type="Active">

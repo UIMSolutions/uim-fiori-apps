@@ -26,15 +26,11 @@ sap.ui.define([
 	library
 ) {
 	"use strict";
-
 	var DraftIndicatorState = library.DraftIndicatorState;
-
 	return BaseController.extend("sap.ui.demoapps.rta.freestyle.controller.ProductEdit", {
-
 		/* =========================================================== */
 		/* lifecycle methods                                           */
 		/* =========================================================== */
-
 		onInit: function() {
 			var oApplication = this.getApplication();
 			oApplication.registerEdit(this);
@@ -47,7 +43,6 @@ sap.ui.define([
 			this.setModel(this._oViewModel, "editView");
 			this._oSubCategory = this.byId("subcategory");
 			this._oSubcategoryItemTemplate = this._oSubCategory && this.byId("subcategoryItem").clone();
-
 			// Create Message Popover for Error Handling
 			MessagePopover.setDefaultHandlers({
 				asyncDescriptionHandler: function(oConfig) {
@@ -59,7 +54,6 @@ sap.ui.define([
 					});
 				}
 			});
-
 			this._oMessagePopover = new MessagePopover({
 				items: {
 					path: "message>/",
@@ -73,9 +67,7 @@ sap.ui.define([
 			controls.attachControlToView(this.getView(), this._oMessagePopover);
 			this.setModel(Messaging.getMessageModel(), "message");
 		},
-
 		productChanged: function() {
-
 			var oApplicationProperties = this.getApplicationProperties(),
 				sDraftId = oApplicationProperties.getProperty("/draftId");
 			// if (sDraftId === utilities.getNullUUID()) {
@@ -92,7 +84,6 @@ sap.ui.define([
 			var sTitleKey = this._sProductId ? "xtit.productEdit" : "xtit.productNew";
 			this._oViewModel.setProperty("/title", this.getResourceBundle().getText(sTitleKey));
 		},
-
 		// Bind the header and the items to the context path
 		_bindView: function(sContextPath) {
 			// this._oViewModel.setProperty("/dataLoaded", false);
@@ -111,11 +102,9 @@ sap.ui.define([
 				});
 			}
 		},
-
 		onSave: function() {
 			MessageToast.show('Save action');
 		},
-
 		onCancel: function(oEvent) {
 			if (this._isInvalid()) {
 				return;
@@ -130,12 +119,10 @@ sap.ui.define([
 				this._onDiscard();
 			}
 		},
-
 		onDiscard: function() {
 			this._oCancelPopover.close();
 			this._onDiscard();
 		},
-
 		_onDiscard: function() {
 			if (this._bIsInHistory) {
 				this.onNavBack();
@@ -146,11 +133,9 @@ sap.ui.define([
 			this.getApplication().displayProduct('HT-1000');
 			// this._oODataHelper.deleteDraftEntity(this._oBindingContext, this._bIsDraftDirty);
 		},
-
 		onMessageIndicator: function(oEvent) {
 			this._oMessagePopover.toggle(oEvent.getSource());
 		},
-
 		onDataLoaded: function(sContextPath, oEvent) {
 			if (sContextPath !== this._sContextPath || this._isInvalid()) {
 				return;
@@ -178,12 +163,10 @@ sap.ui.define([
 			// 	this._notAvailable();
 			// }
 		},
-
 		onItemsRequested: function() {
 			var iOpenRequest = this._oViewModel.getProperty("/openItemsRequest") + 1;
 			this._oViewModel.setProperty("/openItemsRequest", iOpenRequest);
 		},
-
 		onItemsReceived: function() {
 			var iOpenRequest = this._oViewModel.getProperty("/openItemsRequest") - 1;
 			this._oViewModel.setProperty("/openItemsRequest", iOpenRequest);
@@ -191,22 +174,18 @@ sap.ui.define([
 				this.getApplication().resetAppBusy();
 			}
 		},
-
 		_notAvailable: function() {
 			this.getApplication().navToEmptyPage(this.getResourceBundle().getText("ymsg.draftNotAvailable"));
 		},
-
 		unbind: function() {
 			this._sContextPath = null;
 			this._oBindingContext = null;
 			this.getView().unbindElement();
 			this._oViewModel.setProperty("/openItemsRequest", 0);
 		},
-
 		onInputChange: function() {
 			this._fieldChange();
 		},
-
 		onNumberChange: function(oEvent) {
 			// If a number field is empty, an error occurs in the backend.
 			// So this sets a missing number to "0".
@@ -217,7 +196,6 @@ sap.ui.define([
 			}
 			this._fieldChange();
 		},
-
 		onCategoryChange: function(oEvent) {
 			// Category is not save with the Product.  It is unique accroding to the sub category and
 			// can be found in the navigation property.
@@ -227,7 +205,6 @@ sap.ui.define([
 				this._setCategoryFilter(oCategory.getValue());
 			}
 		},
-
 		onSubCategoryChange: function() {
 			var oCategory = this.byId("category");
 			if (oCategory && oCategory.getValue().trim() === "") {
@@ -238,7 +215,6 @@ sap.ui.define([
 			}
 			this._fieldChange();
 		},
-
 		_fieldChange: function() {
 			if (this._isInvalid()) {
 				return;
@@ -247,7 +223,6 @@ sap.ui.define([
 			Log.info("Event triggered for Field Change ", null, "nw.epm.refapps.products.manage.view.S3_ProductEdit.controller");
 			this._oODataHelper.saveProductDraft();
 		},
-
 		_setCategoryFilter: function(sMainCatgId) {
 			if (this._oSubCategory) {
 				var sPath = sMainCatgId.trim() ? "/SEPMRA_I_ProductMainCategory('" + encodeURIComponent(sMainCatgId) + "')/to_Category" :
@@ -263,15 +238,12 @@ sap.ui.define([
 				this._oSubCategory.bindItems(oBindingInfo);
 			}
 		},
-
 		_isInvalid: function() {
 			return !this._oODataHelper.isDraftIdValid(this._sDraftId);
 		},
-
 		onNavBack: function() {
 			this.getApplication().navBack(true, false);
 		},
-
 		sendEmail: function() {
 			var sProductId = this._oBindingContext.getProperty("ProductForEdit"),
 				oProductNameInput = this.byId("productNameInput"),

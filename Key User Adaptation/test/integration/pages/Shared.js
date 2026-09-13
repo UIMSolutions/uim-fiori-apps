@@ -1,15 +1,12 @@
 /* global QUnit */
-
 sap.ui.define([
 	"sap/ui/test/Opa5",
 	"./Common"
 ], function(Opa5, Common) {
 	"use strict";
-
 	Opa5.createPageObjects({
 		onAnyPage: {
 			baseClass: Common,
-
 			actions: {
 				iScrollDown: function(sId) {
 					return this.waitFor({

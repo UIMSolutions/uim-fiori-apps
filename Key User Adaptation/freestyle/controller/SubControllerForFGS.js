@@ -16,14 +16,11 @@ sap.ui.define([
 	controls
 ) {
 	"use strict";
-
 	// Reads the SAP attribute label from the list-item context
 	function fnGetSAPLabel(oListItemContext, sAttributeName) {
 		return oListItemContext.getProperty("/#SEPMRA_C_PD_ProductType/" + sAttributeName + "/@sap:label");
 	}
-
 	return BaseObject.extend("sap.ui.demoapps.rta.freestyle.controller.SubControllerForFGS", {
-
 		mFilters: {
 			Availibility: {
 				filters: {},
@@ -43,19 +40,16 @@ sap.ui.define([
 			}
 		},
 		aFilterByKeys: [null, "xtit.filterBy", "xtit.filterBy2", "xtit.filterBy3"],
-
 		constructor: function(oParentView, oTableOperations, fnApplyTableOperations) {
 			this._oParentView = oParentView;
 			this._oResourceBundle = oParentView.getController().getResourceBundle();
 			this._oTableOperations = oTableOperations;
 			this._fnApplyTableOperations = fnApplyTableOperations;
 			this._mDialogs = {};
-
 			var sTextBelow100 = this._getText("xfld.groupPriceBetween", ["0-100"]),
 				sTextBelow500 = this._getText("xfld.groupPriceBetween", ["100-500"]),
 				sTextBelow1000 = this._getText("xfld.groupPriceBetween", ["500-1000"]),
 				sTextAbove1000 = this._getText("xfld.groupPrice", ["1000"]);
-
 			// Sets the pre-defined price ranges for use in grouping. The texts can only be defined once i18n bundle is
 			// available because the text "price between" is defined only once.
 			this._oPriceGroups = {
@@ -72,7 +66,6 @@ sap.ui.define([
 			oViewPropertiesModel.setProperty("/GT1000", sTextAbove1000);
 			this._addDefaultFilters({});
 		},
-
 		// Where the user has selected no filter for a ViewSettingsFilterItem, add the default filter if this
 		// has been defined in mFilters.
 		_addDefaultFilters: function(oFilterFlags) {
@@ -85,7 +78,6 @@ sap.ui.define([
 				}
 			}
 		},
-
 		// Opens the requested filter, grouping, and sorting dialogs
 		openDialog: function(sDialogFragmentName, sInitialSelection) {
 			var sFullFragmentName = "sap.ui.demoapps.rta.freestyle.view.dialog." + sDialogFragmentName,
@@ -105,17 +97,14 @@ sap.ui.define([
 			}
 			return oDialog.open();
 		},
-
 		// Handler for the filter criteria, which is set by the user
 		onFilterDialogConfirm: function(oEvent) {
 			var params = oEvent.getParameters(),
 				oFilterFlags = {},
 				i = 0;
-
 			var aFilterItems = params.filterItems; // Array of type ViewSettingsItem
 			// Rebuilds filters every time. Makes it easier if the user has removed filter selections
 			this._oTableOperations.resetFilters();
-
 			// Determines which filters the user selected according to the predefined price and stock filters
 			for (i = 0; i < aFilterItems.length; i++) {
 				var oViewSettingsItem = aFilterItems[i],
@@ -123,7 +112,6 @@ sap.ui.define([
 					sViewSettingsFilterItemKey = oViewSettingsItem.getParent().getKey(),
 					oFilterHandler = this.mFilters[sViewSettingsFilterItemKey],
 					oSelectedFilterExpression = oFilterHandler.filters[sViewSettingsItemKey];
-
 				if (!oSelectedFilterExpression) {
 					oSelectedFilterExpression = oFilterHandler.filters[sViewSettingsItemKey] = oFilterHandler.missingFilter(sViewSettingsItemKey);
 				}
@@ -140,7 +128,6 @@ sap.ui.define([
 			// Updates table operation settings and updates list binding accordingly
 			this._fnApplyTableOperations(this._setFilterToolbar.bind(this, oFilterFlags));
 		},
-
 		// In the case of a filter of Editing Status, filter is based on Product Flags
 		_setEditingFilter: function(oSelectedFilterExpression, sKey) {
 			switch (sKey) {
@@ -155,10 +142,8 @@ sap.ui.define([
 					break;
 			}
 		},
-
 		_setFilterToolbar: function(oFilterFlags) {
 			// Shows/hides infoToolbar in the list
-
 			var aFilterTexts = [];
 			for (var sKey in this.mFilters) {
 				if (oFilterFlags[sKey]) {
@@ -171,15 +156,12 @@ sap.ui.define([
 			oViewPropertiesModel.setProperty("/isFilterBarVisible", !!sFilterByKey);
 			oViewPropertiesModel.setProperty("/filterBarLabel", sFilterBarLabel);
 		},
-
 		// Defines the Draft filter settings available
 		_oEditingFilters: {
 			"editingDraft": new Filter("IsActiveEntity", FilterOperator.EQ, "false"),
 			"editingLocked": new Filter("HasDraftEntity", FilterOperator.EQ, "true"),
 			"editingActive": new Filter("IsActiveEntity", FilterOperator.EQ, "true")
-
 		},
-
 		// Handler for the Confirm button on the sort dialog. Depending on the selections made on the sort
 		// dialog, the respective sorters are created and stored in the _oTableOperations object.
 		// The actual setting of the sorters on the binding is done in function setSorters
@@ -189,7 +171,6 @@ sap.ui.define([
 			this._oTableOperations.addSorter(new Sorter(sSortPath, mParams.sortDescending));
 			this._fnApplyTableOperations();
 		},
-
 		// Handler for the grouping criteria, which are set by the user
 		onGroupingDialogConfirmed: function(oEvent) {
 			var mParams = oEvent.getParameters(),
@@ -207,9 +188,7 @@ sap.ui.define([
 			//}
 			this._fnApplyTableOperations();
 		},
-
 		_oGroupFunctions: {
-
 			// Assumption is that all prices contain the currency code and that the currency conversion has to be done in
 			// the backend system of the app
 			Price: function(oListItemContext) {
@@ -225,13 +204,11 @@ sap.ui.define([
 				} else {
 					sKey = "unknownPrice";
 				}
-
 				return {
 					key: sKey,
 					text: this._oPriceGroups[sKey]
 				};
 			},
-
 			"to_ProductStock/Quantity": function(oListItemContext) {
 				var sText = oListItemContext.getProperty("to_ProductStock/to_StockAvailability/StockAvailability_Text") || this._getText(
 					"xfld.undefinedAvail");
@@ -240,16 +217,13 @@ sap.ui.define([
 					text: sText
 				};
 			},
-
 			"to_ProductCategory/MainProductCategory": function(oListItemContext) {
 				return this._getCategoryName(oListItemContext, "to_ProductCategory/MainProductCategory");
 			},
-
 			ProductCategory: function(oListItemContext) {
 				return this._getCategoryName(oListItemContext, "ProductCategory");
 			}
 		},
-
 		// Reads the corresponding category name based on the list-item context
 		_getCategoryName: function(oListItemContext, sCategoryType) {
 			var sKey = oListItemContext.getProperty(sCategoryType);
@@ -258,7 +232,6 @@ sap.ui.define([
 				text: this._getText("xfld.groupingLabel", [fnGetSAPLabel(oListItemContext, sCategoryType), sKey])
 			};
 		},
-
 		// Shortcut to get i18n text
 		_getText: function() {
 			return this._oResourceBundle.getText.apply(this._oResourceBundle, arguments);

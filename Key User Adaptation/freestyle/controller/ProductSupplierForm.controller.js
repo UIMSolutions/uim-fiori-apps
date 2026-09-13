@@ -2,7 +2,6 @@ sap.ui.define([
 	"./BaseController"
 ], function(BaseController) {
 	"use strict";
-
 	return BaseController.extend("sap.ui.demoapps.rta.freestyle.controller.ProductSupplierForm", {
 		onInit: function() {
 			this.byId("supplierForm").bindElement({path:"to_Supplier"});

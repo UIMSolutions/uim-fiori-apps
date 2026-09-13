@@ -1,0 +1,20 @@
+{
+  "xsappname": "hello-xsuaa",
+  "tenant-mode": "dedicated",
+  "description": "Security configuration for vibe.d SAP Fiori App",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.User",
+      "description": "Standard User Access"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "ViewerRole",
+      "description": "Viewer access for Fiori App",
+      "scope-references": [
+        "$XSAPPNAME.User"
+      ]
+    }
+  ]
+}

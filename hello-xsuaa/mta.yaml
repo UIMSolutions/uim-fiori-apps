@@ -1,0 +1,43 @@
+_schema-version: '3.2'
+ID: hello-xsuaa-mta
+version: 1.0.0
+description: "MTA Deployment for vibe.d Dlang App with XSUAA and Approuter"
+modules:
+  # --------------------- VIBE.D BACKEND MODULE ---------------------
+  - name: hello-xsuaa-backend
+    type: binary
+    path: backend
+    parameters:
+      stack: cflinuxfs5
+      buildpack: binary_buildpack
+      command: ./hello-xsuaa
+      memory: 128M
+      disk-quota: 256M
+    provides:
+      - name: vibe-backend-api
+        properties:
+          url: ${default-url}
+  # ----------------------- APPROUTER MODULE -----------------------
+  - name: hello-xsuaa-approuter
+    type: nodejs
+    path: approuter
+    parameters:
+      buildpack: nodejs_buildpack
+      memory: 128M
+      disk-quota: 256M
+    requires:
+      - name: hello-xsuaa
+      - name: vibe-backend-api
+        group: destinations
+        properties:
+          name: vibe-backend-dest
+          url: ~{url}
+          forwardAuthToken: true
+resources:
+  # ----------------------- XSUAA SERVICE -----------------------
+  - name: hello-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json

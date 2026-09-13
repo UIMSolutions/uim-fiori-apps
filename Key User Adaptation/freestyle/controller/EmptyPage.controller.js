@@ -2,7 +2,6 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller"
 ], function(Controller) {
 	"use strict";
-
 	// Controller of the EmptyPage view
 	return Controller.extend("sap.ui.demoapps.rta.freestyle.controller.EmptyPage", {
 		onNavBack: function() {

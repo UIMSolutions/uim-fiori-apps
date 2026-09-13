@@ -4,13 +4,10 @@ sap.ui.define([
 	"./Common"
 ], function(Opa5, PropertyStrictEquals, Common) {
 	"use strict";
-
 	Opa5.createPageObjects({
 		onTheAppPage : {
 			baseClass : Common,
-
 			actions : {
-
 				iCloseTheMessageBox : function () {
 					return this.waitFor({
 						id : "serviceErrorMessageBox",
@@ -22,9 +19,7 @@ sap.ui.define([
 					});
 				}
 			},
-
 			assertions : {
-
 				iShouldSeeTheMessageBox : function () {
 					return this.waitFor({
 						id : "serviceErrorMessageBox",
@@ -36,7 +31,5 @@ sap.ui.define([
 				}
 			}
 		}
-
 	});
-
 });

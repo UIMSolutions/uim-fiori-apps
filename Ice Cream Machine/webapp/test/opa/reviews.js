@@ -8,17 +8,12 @@ sap.ui.require([
 	"sap/ui/test/matchers/Properties"
 ], function(Opa5, opaTest, Config, MobileLibrary, EnterText, Press, PropertiesMatcher) {
 	Opa5.extendConfig(Config);
-
 	opaTest("Customer review data is entered and saved", function(Given, When, Then) {
 		var USER_NAME = "John Doe",
 			USER_COMMENT = "Make ice cream homemade again!";
-
 		Opa5.assert.expect(2);
-
 		Given.iStartMyApp();
-
 		When.iPressOnATileWithStateAndSize(MobileLibrary.LoadState.Loaded, MobileLibrary.FrameType.TwoByOne);
-
 		When.waitFor({
 			id: /input.+--timeline/i,
 			actions: new EnterText({
@@ -38,7 +33,6 @@ sap.ui.require([
 			actions: new Press(),
 			errorMessage: "The button for submitting the review could not be found."
 		});
-
 		Then.waitFor({
 			controlType: "sap.suite.ui.commons.TimelineItem",
 			matchers: [
@@ -52,7 +46,6 @@ sap.ui.require([
 			},
 			errorMessage: "Timeline item has not been found."
 		});
-
 		Then.waitFor({
 			controlType: "sap.suite.ui.commons.TimelineItem",
 			matchers: [
@@ -66,7 +59,6 @@ sap.ui.require([
 			},
 			errorMessage: "Timeline item has not been found."
 		});
-
 		Then.iTeardownMyAppFrame();
 	});
 });

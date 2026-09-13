@@ -51,7 +51,6 @@
                                     parseAsString: true,
                                     showMeasure: false }
                             }" wrapping="true" enabled="{= ${component>/uiMode} === 'Edit' }"/>
-
 				<smartField:SmartField value="{PoItmQuantity}" wrapping="true" enabled="false"></smartField:SmartField>
 			</cells>
 		</ColumnListItem>

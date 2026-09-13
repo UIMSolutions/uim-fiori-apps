@@ -4,7 +4,6 @@ sap.ui.define([
 	Common
 ) {
 	"use strict";
-
 	return Common.extend("sap.ui.demoapps.rta.freestyle.test.integration.pages.Common", {
 		constructor: function () {
 			this.sUrl = "sap/ui/demoapps/rta/freestyle/test/flpSandbox";

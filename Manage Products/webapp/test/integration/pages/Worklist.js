@@ -17,27 +17,22 @@ sap.ui.define([
 	Common,
 	shareOptions) {
 	"use strict";
-
 	var sViewName = "Worklist",
 		sTableId = "table",
 		sSearchFieldId = "searchField",
 		sSomethingThatCannotBeFound = "*#-Q@@||";
-
 	function allItemsInTheListContainTheSearchTerm (aControls) {
 		var oTable = aControls[0],
 			oSearchField = aControls[1],
 			aItems = oTable.getItems();
-
 		// table needs items
 		if (aItems.length === 0) {
 			return false;
 		}
-
 		return aItems.every(function (oItem) {
 			return oItem.getCells()[0].getTitle().indexOf(oSearchField.getValue()) !== -1;
 		});
 	}
-
 	function createWaitForItemAtPosition (oOptions) {
 		var iPosition = oOptions.position;
 		return {
@@ -51,9 +46,7 @@ sap.ui.define([
 			errorMessage : "Table in view '" + sViewName + "' does not contain an Item at position '" + iPosition + "'"
 		};
 	}
-
 	Opa5.createPageObjects({
-
 		onTheWorklistPage : {
 			baseClass : Common,
 			actions : Object.assign({
@@ -63,13 +56,11 @@ sap.ui.define([
 						actions : new Press()
 					}));
 				},
-
 				iRememberTheItemAtPosition : function (iPosition){
 					return this.waitFor(createWaitForItemAtPosition({
 						position : iPosition,
 						success : function (oTableItem) {
 							var oBindingContext = oTableItem.getBindingContext();
-
 							// Don't remember objects just strings since IE will not allow accessing objects of destroyed frames
 							this.getContext().currentItem = {
 								bindingPath: oBindingContext.getPath(),
@@ -79,7 +70,6 @@ sap.ui.define([
 						}
 					}));
 				},
-
 				iPressOnMoreData : function (){
 					return this.waitFor({
 						id : sTableId,
@@ -91,10 +81,8 @@ sap.ui.define([
 						errorMessage : "The Table does not have a trigger"
 					});
 				},
-
 				iSearchForTheFirstObject: function() {
 					var sFirstObjectTitle;
-
 					return this.waitFor({
 						id: sTableId,
 						viewName: sViewName,
@@ -103,9 +91,7 @@ sap.ui.define([
 						}),
 						success: function(oTable) {
 							sFirstObjectTitle = oTable.getItems()[0].getCells()[0].getTitle();
-
 							this.iSearchForValue(sFirstObjectTitle);
-
 							this.waitFor({
 								id: [sTableId, sSearchFieldId],
 								viewName: sViewName,
@@ -116,7 +102,6 @@ sap.ui.define([
 						errorMessage: "Did not find table entries while trying to search for the first object."
 					});
 				},
-
 				iSearchForValueWithActions : function (aActions) {
 					return this.waitFor({
 						id : sSearchFieldId,
@@ -125,34 +110,26 @@ sap.ui.define([
 						errorMessage : "Failed to find search field in Worklist view.'"
 					});
 				},
-
 				iSearchForValue : function (sSearchString) {
 					return this.iSearchForValueWithActions([new EnterText({text : sSearchString}), new Press()]);
 				},
-
 				iTypeSomethingInTheSearchThatCannotBeFoundAndTriggerRefresh : function () {
 					var fnEnterTextAndFireRefreshButtonPressedOnSearchField = function (oSearchField) {
 						// set the search field value directly as EnterText action triggers a search event
 						oSearchField.setValue(sSomethingThatCannotBeFound);
-
 						// fire the search to simulate a refresh button press
 						oSearchField.fireSearch({refreshButtonPressed: true});
 					};
 					return this.iSearchForValueWithActions(fnEnterTextAndFireRefreshButtonPressedOnSearchField);
 				},
-
 				iClearTheSearch : function () {
 					return this.iSearchForValueWithActions([new EnterText({text: ""}), new Press()]);
 				},
-
 				iSearchForSomethingWithNoResults : function () {
 					return this.iSearchForValueWithActions([new EnterText({text: sSomethingThatCannotBeFound}), new Press()]);
 				}
-
 			}, shareOptions.createActions(sViewName)),
-
 			assertions: Object.assign({
-
 				iShouldSeeTheTable : function () {
 					return this.waitFor({
 						id : sTableId,
@@ -163,7 +140,6 @@ sap.ui.define([
 						errorMessage : "Can't see the master Table."
 					});
 				},
-
 				theTableShowsOnlyObjectsWithTheSearchStringInTheirTitle : function () {
 					this.waitFor({
 						id : [sTableId, sSearchFieldId],
@@ -175,7 +151,6 @@ sap.ui.define([
 						errorMessage : "The table did not have items"
 					});
 				},
-
 				theTableHasEntries : function () {
 					return this.waitFor({
 						viewName : sViewName,
@@ -189,11 +164,9 @@ sap.ui.define([
 						errorMessage : "The table had no entries"
 					});
 				},
-
 				theTableShouldHaveAllEntries : function () {
 					var aAllEntities,
 						iExpectedNumberOfItems;
-
 					// retrieve all Objects to be able to check for the total amount
 					this.waitFor(this.createAWaitForAnEntitySet({
 						entitySet: "Products",
@@ -201,7 +174,6 @@ sap.ui.define([
 							aAllEntities = aEntityData;
 						}
 					}));
-
 					return this.waitFor({
 						id : sTableId,
 						viewName : sViewName,
@@ -216,7 +188,6 @@ sap.ui.define([
 						errorMessage : "Table does not have all entries."
 					});
 				},
-
 				theTitleShouldDisplayTheTotalAmountOfItems : function () {
 					return this.waitFor({
 						id : sTableId,
@@ -240,10 +211,8 @@ sap.ui.define([
 						errorMessage : "The table has no items."
 					});
 				},
-
 				theTableShouldHaveTheDoubleAmountOfInitialEntries : function () {
 					var iExpectedNumberOfItems;
-
 					return this.waitFor({
 						id : sTableId,
 						viewName : sViewName,
@@ -257,14 +226,12 @@ sap.ui.define([
 						errorMessage : "Table does not have the double amount of entries."
 					});
 				},
-
 				theTableShouldContainOnlyFormattedUnitNumbers : function () {
 					return this.theUnitNumbersShouldHaveTwoDecimals("sap.m.ObjectNumber",
 						sViewName,
 						"Object numbers are properly formatted",
 						"Table has no entries which can be checked for their formatting");
 				},
-
 				iShouldSeeTheNoDataTextForNoSearchResults : function () {
 					return this.waitFor({
 						id : sTableId,
@@ -279,9 +246,6 @@ sap.ui.define([
 					});
 				}
 			}, shareOptions.createAssertions(sViewName))
-
 		}
-
 	});
-
 });

@@ -6,7 +6,6 @@ sap.ui.define([
 	Common
 ) {
 	"use strict";
-
 	Opa5.createPageObjects({
 		onS3ProductDisplayPage: {
 			baseClass: Common,
@@ -15,13 +14,11 @@ sap.ui.define([
 					return this.waitFor({
 						controlType: "sap.m.Link",
 						viewName: "ProductDetailInfo",
-
 						success: function(oLinks) {
 							oLinks[0].firePress();
 						}
 					});
 				},
-
 				iWaitUntilTheBusyIndicatorIsGone: function() {
 					return this.waitFor({
 						autoWait: true,
@@ -35,22 +32,18 @@ sap.ui.define([
 						errorMessage: "The app is still busy.."
 					});
 				},
-
 				iClickSalesDataTab: function() {
 					return this.waitFor({
 						controlType: "sap.m.IconTabBar",
 						viewName: "ProductDetail",
 						success: function(iconTab) {
 							var item = iconTab[0].getItems()[2];
-
 							var evt = iconTab[0].setSelectedItem(item);
 							iconTab[0].fireSelect(evt);
 							item = iconTab[0].getItems()[0];
-
 							evt = iconTab[0].setSelectedItem(item);
 							iconTab[0].fireSelect(evt);
 							item = iconTab[0].getItems()[1];
-
 							evt = iconTab[0].setSelectedItem(item);
 							iconTab[0].fireSelect(evt);
 						},
@@ -58,7 +51,6 @@ sap.ui.define([
 					});
 				}
 			},
-
 			assertions: {
 				iSeeTableControl: function() {
 					return this.waitFor({
@@ -70,10 +62,8 @@ sap.ui.define([
 						success: function(oSelectCtrl) {
 							Opa5.assert.ok(oSelectCtrl, "Table control present"); // eslint-disable-line no-undef
 						}
-
 					});
 				},
-
 				iSeeCompanyCard: function() {
 					return this.waitFor({
 						id: "companyQuickView-quickView-popover",
@@ -83,7 +73,6 @@ sap.ui.define([
 						errorMessage: "Company card pop over is not open"
 					});
 				},
-
 				iCheckIfProductTitleDisplayedInDetail: function() {
 					this.waitFor({
 						id: "ProductDetailLayout",

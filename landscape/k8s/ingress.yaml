@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: landscape-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+  - host: landscape.local
+    http:
+      paths:
+      - path: /odata(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: landscape-backend
+            port:
+              number: 8081
+      - path: /()(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: landscape-frontend
+            port:
+              number: 80

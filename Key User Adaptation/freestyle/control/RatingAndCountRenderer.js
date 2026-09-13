@@ -1,7 +1,6 @@
 sap.ui.define([],
 	function() {
 		"use strict";
-
 		/**
 		 * RatingAndCount renderer.
 		 * @namespace
@@ -9,7 +8,6 @@ sap.ui.define([],
 		var RatingAndCountRenderer = {
 			apiVersion: 2
 		};
-
 		/**
 		 * Renders the HTML for the given control, using the provided
 		 * {@link sap.ui.core.RenderManager}.
@@ -25,7 +23,6 @@ sap.ui.define([],
 			var oRatingCount = oControl.hasListeners("press")
 				? oControl.getAggregation("_ratingCountLink")
 				: oControl.getAggregation("_ratingCountLabel");
-
 			// if (oControl.getVerticalAdjustment() && oControl.getVerticalAdjustment() !== 0) {
 			//   oRm.style("-ms-transform", "translateY(" + oControl.getVerticalAdjustment() + "%)");
 			//   oRm.style("-webkit-transform", "translateY(" + oControl.getVerticalAdjustment() + "%)");
@@ -35,7 +32,6 @@ sap.ui.define([],
 			//   oRm.style("line-height", oControl.getIconSize());
 			//   oRatingCount.addStyleClass("sapUiRtaTestDemoappControlRatingAndCountVAlign");
 			// }
-
 			oRm.openStart("div", oControl); // provides control ID and enables event handling
 			oRm.class('sapUiDemoappsDemokitRtaFreestyleRatingAndCount');
 			oRm.openEnd();

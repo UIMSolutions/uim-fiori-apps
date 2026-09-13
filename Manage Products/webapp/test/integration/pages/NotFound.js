@@ -4,13 +4,10 @@ sap.ui.define([
 	"./Common"
 ], function(Opa5, Press, Common) {
 	"use strict";
-
 	Opa5.createPageObjects({
 		onTheNotFoundPage : {
 			baseClass : Common,
-
 			actions : {
-
 				iWaitUntilISeeObjectNotFoundPage : function () {
 					return this.waitFor({
 						id : "page",
@@ -22,7 +19,6 @@ sap.ui.define([
 						errorMessage : "Did not display the object not found text"
 					});
 				},
-
 				iWaitUntilISeeResourceNotFoundPage : function () {
 					return this.waitFor({
 						id : "page",
@@ -34,7 +30,6 @@ sap.ui.define([
 						errorMessage : "Did not display the object not found text"
 					});
 				},
-
 				iPressTheObjectNotFoundShowWorklistLink : function () {
 					return this.waitFor({
 						id : "link",
@@ -43,7 +38,6 @@ sap.ui.define([
 						errorMessage : "Did not find the link on the not found page"
 					});
 				},
-
 				iPressTheNotFoundShowWorklistLink : function () {
 					return this.waitFor({
 						id : "link",
@@ -53,9 +47,7 @@ sap.ui.define([
 					});
 				}
 			},
-
 			assertions : {
-
 				iShouldSeeObjectNotFound : function () {
 					return this.waitFor({
 						id : "page",
@@ -73,7 +65,6 @@ sap.ui.define([
 						errorMessage: "Did not display the object not found illustration"
 					});
 				},
-
 				iShouldSeeResourceNotFound : function () {
 					return this.waitFor({
 						id : "page",
@@ -91,11 +82,7 @@ sap.ui.define([
 						errorMessage: "Did not display the object not found illustration"
 					});
 				}
-
 			}
-
 		}
-
 	});
-
 });

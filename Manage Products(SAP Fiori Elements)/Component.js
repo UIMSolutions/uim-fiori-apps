@@ -9,13 +9,10 @@ sap.ui.define([
 	UrlParser
 ) {
 	"use strict";
-
 	return UIComponent.extend("sap.ui.demoapps.rta.fiorielements.Component", {
-
 		metadata: {
 			manifest: "json"
 		},
-
 		/**
 		 * Initialize MockServer & FakeLrep in constructor before model is loaded from the manifest.json
 		 * @public
@@ -24,12 +21,10 @@ sap.ui.define([
 		constructor: function () {
 			this.FakeLrepConnector = {};
 			this._startMockServer();
-
 			UIComponent.prototype.constructor.apply(this, arguments);
 				this.getModel().attachMetadataLoaded(function(){
 			}.bind(this));
 		},
-
 		/**
 		 * The component is initialized by UI5 automatically during the startup of the app and calls the init method once.
 		 * @public
@@ -37,11 +32,9 @@ sap.ui.define([
 		 */
 		init: function() {
 			this._createODataModel();
-
 			// call the base component's init function and start the application
 			UIComponent.prototype.init.apply(this, arguments);
 		},
-
 		/**
 		 * Start the MockServer
 		 * @private
@@ -49,7 +42,6 @@ sap.ui.define([
 		_startMockServer: function () {
 			mockserver.init(this.getManifestEntry.bind(this));
 		},
-
 		/**
 		 * Create the ODataModel for the app
 		 * @private
@@ -67,6 +59,5 @@ sap.ui.define([
 				this.setModel(oModel);
 			}
 		}
-
 	});
 });

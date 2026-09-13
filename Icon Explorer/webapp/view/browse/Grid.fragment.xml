@@ -21,11 +21,9 @@
 		growingScrollToLoad="true"
 		growingThreshold="{view>/growingThreshold}"
 		updateFinished=".onUpdateFinished">
-
 		<f:customLayout>
 			<grid:GridBoxLayout boxWidth="8.125rem"/>
 		</f:customLayout>
-
 		<f:GridListItem class="sapUiTinyMargin">
 			<VBox alignItems="Center">
 				<core:Icon

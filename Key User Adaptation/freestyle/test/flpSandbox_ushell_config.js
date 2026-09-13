@@ -1,6 +1,5 @@
 (function() {
 	"use strict";
-
 	globalThis["sap-ushell-config"] = {
 		defaultRenderer : "fiori2",
 		bootstrapPlugins: {

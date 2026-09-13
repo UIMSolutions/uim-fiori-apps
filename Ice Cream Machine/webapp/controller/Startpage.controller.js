@@ -7,22 +7,18 @@ sap.ui.define([
 	"sap/m/library"
 ], function(jQuery, Controller, JSONModel, NumberFormat, MessageToast, MobileLibrary) {
 	"use strict";
-
 	return Controller.extend("sap.suite.ui.commons.demo.tutorial.controller.Startpage", {
 		onInit: function() {
 			var sDataPath = sap.ui.require.toUrl("sap/suite/ui/commons/demo/tutorial/model/data/News.json");
 			var oModel = new JSONModel(sDataPath);
 			this.getView().setModel(oModel, "news");
 		},
-
 		onNavToProcessFlow: function() {
 			this.getRouter().navTo("processFlow");
 		},
-
 		onNavToChartContainer: function() {
 			this.getRouter().navTo("chartContainer");
 		},
-
 		/**
 		 * Handles the press event on a tile.
 		 *
@@ -33,7 +29,6 @@ sap.ui.define([
 				this.getRouter().navTo("reviews");
 			}
 		},
-
 		/**
 		 * Handles the press event on a tile.
 		 *
@@ -47,11 +42,9 @@ sap.ui.define([
 				this.getResourceBundle().getText("startpageTileClickedMessage");
 			MessageToast.show(sMessage);
 		},
-
 		getRouter: function() {
 			return this.getOwnerComponent().getRouter();
 		},
-
 		/**
 		 * Getter for the resource bundle.
 		 * @public
@@ -60,16 +53,13 @@ sap.ui.define([
 		getResourceBundle: function() {
 			return this.getOwnerComponent().getModel("i18n").getResourceBundle();
 		},
-
 		formatJSONDate: function(date) {
 			var oDate = new Date(Date.parse(date));
 			return oDate.toLocaleDateString();
 		},
-
 		getEntityCount: function(entities) {
 			return entities && entities.length || 0;
 		},
-
 		/**
 		 * Calculated the current progress state of the process.
 		 *
@@ -81,7 +71,6 @@ sap.ui.define([
 			if (!aNodes || aNodes.length === 0) {
 				return 0;
 			}
-
 			var iSum = 0;
 			for (var i = 0; i < aNodes.length; i++) {
 				iSum += aNodes[i].state === "Positive";
@@ -89,7 +78,6 @@ sap.ui.define([
 			var fPercent = (iSum / aNodes.length) * 100;
 			return fPercent.toFixed(0);
 		},
-
 		formatNumber: function(value) {
 			var oFloatFormatter = NumberFormat.getFloatInstance({
 				style: "short",

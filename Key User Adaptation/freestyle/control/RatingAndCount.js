@@ -7,7 +7,6 @@ sap.ui.define([
 	"./RatingAndCountRenderer"
 ], function(Label, Link, RatingIndicator, Control, RatingAndCountRenderer) {
 	"use strict";
-
 	/**
 	 * Constructor for a new RatingAndCount control.
 	 *
@@ -37,7 +36,6 @@ sap.ui.define([
 					group: "Data",
 					defaultValue: 5
 				},
-
 				/**
 				 * value
 				 */
@@ -46,7 +44,6 @@ sap.ui.define([
 					group: "Data",
 					defaultValue: 0
 				},
-
 				/**
 				 * enabled
 				 */
@@ -55,7 +52,6 @@ sap.ui.define([
 					group: "Behavior",
 					defaultValue: true
 				},
-
 				/**
 				 * iconSize
 				 */
@@ -64,7 +60,6 @@ sap.ui.define([
 					group: "Dimension",
 					defaultValue: "auto"
 				},
-
 				/**
 				 * ratingCount
 				 */
@@ -73,7 +68,6 @@ sap.ui.define([
 					group: "Data",
 					defaultValue: 0
 				},
-
 				/**
 				 * verticalAlignContent
 				 */
@@ -82,7 +76,6 @@ sap.ui.define([
 					group: "Behavior",
 					defaultValue: false
 				},
-
 				/**
 				 * verticalAdjustment
 				 */
@@ -91,7 +84,6 @@ sap.ui.define([
 					group: "Behavior",
 					defaultValue: 0
 				}
-
 			},
 			events: {
 				/**
@@ -128,11 +120,9 @@ sap.ui.define([
 		},
 		renderer: RatingAndCountRenderer
 	});
-
 	RatingAndCount.prototype.init = function() {
 		// [km]
 		// Make sure the CSS file is included for all themes
-
 		// TODO: check if styles are loaded properly
 		// if (sap.ui.getCore().getConfiguration().getTheme() !== "sap_belize") {
 		// 	// Get RTL mode flag
@@ -144,7 +134,6 @@ sap.ui.define([
 		// 	// Include stylesheet in HEAD of document, using URL and ID
 		// 	includeStyleSheet(sUrl, "sap-ui-theme-" + "nw.epm.refapps.lib.reuse");
 		// }
-
 		this._oRating = new RatingIndicator(this.getId() + "-rating");
 		this._oRating.setEnabled(false);
 		this.setAggregation("_ratingIndicator", this._oRating, true);
@@ -156,7 +145,6 @@ sap.ui.define([
 		this._oRatingCountLabel.addStyleClass("noColonLabelInForm");
 		this.setAggregation("_ratingCountLabel", this._oRatingCountLabel, true);
 	};
-
 	RatingAndCount.prototype.onclick = function() {
 		if (this.getEnabled() === true) {
 			this.firePress({
@@ -164,7 +152,6 @@ sap.ui.define([
 			});
 		}
 	};
-
 	// Overwriting the setter method is done in order to hand down the values to the
 	// inner control in this. The setter method is used by the binding to update the
 	// controls value.
@@ -176,7 +163,6 @@ sap.ui.define([
 		this._oRating.setValue(fValue);
 		return this.setProperty("value", fValue, true);
 	};
-
 	// Overwriting the setter method is done in order to hand down the values to the
 	// inner control in this. The setter method is used by the binding to update the
 	// controls value.
@@ -184,7 +170,6 @@ sap.ui.define([
 		this._oRating.setMaxValue(sMaxRatingValue);
 		return this.setProperty("maxRatingValue", sMaxRatingValue);
 	};
-
 	// Overwriting the setter method is done in order to hand down the values to the
 	// inner control in this. The setter method is used by the binding to update the
 	// controls value.
@@ -192,7 +177,6 @@ sap.ui.define([
 		this._oRating.setIconSize(sIconSize);
 		return this.setProperty("iconSize", sIconSize, true);
 	};
-
 	// Overwriting the setter method is done in order to hand down the values to the
 	// inner control. The setter method is used by the binding to update the
 	// controls value.
@@ -201,11 +185,9 @@ sap.ui.define([
 		if (sRatingCount === null) {
 			sRatingCount = 0;
 		}
-
 		this._oRatingCountLabel.setText("(" + sRatingCount + ")");
 		this._oRatingCountLink.setText("(" + sRatingCount + ")");
 		return this.setProperty("ratingCount", sRatingCount);
 	};
-
 	return RatingAndCount;
 });

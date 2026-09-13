@@ -50,7 +50,6 @@
 					icon="sap-icon://download"
 					press=".onDownload"
 					ariaLabelledBy="labelDownloadButton"/>
-
 				<MenuButton  tooltip="appearance" id="aboutMenuButton" icon="sap-icon://palette" type="Transparent" visible="{=!${appView>/bSearchMode}}" key="appearance">
 					<layoutData>
 						<OverflowToolbarLayoutData priority="NeverOverflow" />
@@ -67,7 +66,6 @@
 						</Menu>
 					</menu>
 				</MenuButton>
-
 			</Toolbar>
 		</customHeader>
 		<content>

@@ -1,0 +1,132 @@
+_schema-version: "3.3"
+ID: material-demo
+version: 1.0.0
+description: Material app with UI5 frontend and D backend
+parameters:
+  deploy_mode: html5-repo
+modules:
+- name: material-backend
+  type: custom
+  path: backend
+  parameters:
+    buildpack: binary_buildpack
+    command: ./material-backend
+    memory: 256M
+    disk-quota: 256M
+  build-parameters:
+    builder: custom
+    commands:
+    - dub build
+  provides:
+  - name: material-backend-api
+    properties:
+      url: ${default-url}
+  requires:
+  - name: material-xsuaa
+- name: material-frontend
+  type: html5
+  path: frontend
+  build-parameters:
+    builder: custom
+    commands:
+    - npm install
+    - npm run build
+    build-result: dist
+    supported-platforms: []
+- name: material-ui-deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: material-html5-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - name: material-frontend
+      artifacts:
+      - material-frontend.zip
+      target-path: resources/
+- name: material-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: material-destination
+    parameters:
+      content-target: true
+  - name: material-xsuaa
+    parameters:
+      service-key:
+        name: material-xsuaa-key
+  - name: material-html5-host
+    parameters:
+      service-key:
+        name: material-html5-host-key
+  - name: material-backend-api
+  parameters:
+    content:
+      instance:
+        existing_destinations_policy: update
+        destinations:
+        - Name: material_backend
+          URL: ~{material-backend-api/url}
+          Type: HTTP
+          ProxyType: Internet
+          Authentication: NoAuthentication
+          HTML5.DynamicDestination: true
+          HTML5.ForwardAuthToken: true
+        - Name: material_html5_repo_host
+          ServiceInstanceName: material-html5-host
+          ServiceKeyName: material-html5-host-key
+          sap.cloud.service: material.demo
+        - Name: material_xsuaa
+          ServiceInstanceName: material-xsuaa
+          ServiceKeyName: material-xsuaa-key
+          Authentication: OAuth2UserTokenExchange
+          sap.cloud.service: material.demo
+  build-parameters:
+    no-source: true
+- name: material-approuter
+  type: approuter.nodejs
+  path: approuter
+  parameters:
+    memory: 128M
+    disk-quota: 128M
+    keep-existing-routes: true
+  requires:
+  - name: material-xsuaa
+  - name: material-destination
+  - name: material-html5-runtime
+  - name: material-backend-api
+    group: destinations
+    properties:
+      name: material_backend
+      url: ~{url}
+      forwardAuthToken: true
+resources:
+- name: material-xsuaa
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: xsuaa
+    service-plan: application
+    service-name: material-xsuaa
+    path: xs-security.json
+- name: material-destination
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: destination
+    service-plan: lite
+    service-name: material-destination
+    config:
+      HTML5Runtime_enabled: true
+- name: material-html5-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+    service-name: material-html5-host
+- name: material-html5-runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+    service-name: material-html5-runtime

@@ -1,9 +1,7 @@
 /*global QUnit*/
 sap.ui.define(["sap/ui/test/opaQunit"], function (opaTest) {
 	"use strict";
-
 	QUnit.module("Product Master");
-
 	// Show the master view with product list
 	opaTest("Show the master view with product list", function(Given, When, Then) {
 		// Arrangements
@@ -18,7 +16,6 @@ sap.ui.define(["sap/ui/test/opaQunit"], function (opaTest) {
 		Then.onS3ProductDisplayPage.iCheckIfProductTitleDisplayedInDetail();
 		Then.onS2ProductMasterPage.iCheckMasterListHeader();
 	});
-
 	opaTest("Select another product in the master list", function(Given, When, Then) {
 		// Actions
 		When.onS2ProductMasterPage.iChooseItemFromMasterList(1).
@@ -28,7 +25,6 @@ sap.ui.define(["sap/ui/test/opaQunit"], function (opaTest) {
 		//Assertions
 		Then.onS3ProductDisplayPage.iCheckIfProductTitleDisplayedInDetail();
 	});
-
 	opaTest("Sort the product list by a certain sort criteria, e.g. Product", function(Given, When, Then) {
 		// Actions
 		When.onS2ProductMasterPage.iOpenSortDialog().
@@ -37,7 +33,6 @@ sap.ui.define(["sap/ui/test/opaQunit"], function (opaTest) {
 		//Assertions
 		Then.onS2ProductMasterPage.iCheckMasterListHeader();
 	});
-
 	opaTest("Apply a Filter", function(Given, When, Then) {
 		// Actions
 		When.onS2ProductMasterPage.iOpenFilterDialog().
@@ -47,7 +42,6 @@ sap.ui.define(["sap/ui/test/opaQunit"], function (opaTest) {
 		//Assertions
 		Then.onS2ProductMasterPage.iSeeFilterBarStatus("Filtered by Availability");
 	});
-
 	opaTest("Group the list, e.g. by Price", function(Given, When, Then) {
 		// Actions
 		When.onS2ProductMasterPage.iOpenGroupDialog().
@@ -57,7 +51,6 @@ sap.ui.define(["sap/ui/test/opaQunit"], function (opaTest) {
 		Then.onS2ProductMasterPage.iCheckMasterListHeader().
 		and.iTeardownMyAppFrame();
 	});
-
 	opaTest("Switch the master list into the multi-select mode", function(Given, When, Then) {
 		// Actions
 		Given.iStartTheApp();
@@ -67,7 +60,6 @@ sap.ui.define(["sap/ui/test/opaQunit"], function (opaTest) {
 		// Assertions
 		Then.onS2ProductMasterPage.iCheckifMultiSelectIsOn();
 	});
-
 	opaTest("Sort the product list by a certain sort criteria, e.g. Product", function(Given, When, Then) {
 		// Actions
 		When.onS2ProductMasterPage.iOpenSortDialog().
@@ -76,7 +68,6 @@ sap.ui.define(["sap/ui/test/opaQunit"], function (opaTest) {
 		//Assertions
 		Then.onS2ProductMasterPage.iCheckMasterListHeader();
 	});
-
 	opaTest("Apply a Filter", function(Given, When, Then) {
 		// Actions
 		When.onS2ProductMasterPage.iOpenFilterDialog().
@@ -86,7 +77,6 @@ sap.ui.define(["sap/ui/test/opaQunit"], function (opaTest) {
 		//Assertions
 		Then.onS2ProductMasterPage.iSeeFilterBarStatus("Filtered by Availability");
 	});
-
 	opaTest("Group the list, e.g. by Price", function(Given, When, Then) {
 		// Actions
 		When.onS2ProductMasterPage.iOpenGroupDialog().

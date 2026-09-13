@@ -1,4 +1,5 @@
 module uim.fiori.views.view;
+
 import uim.fiori;
 import uim.xml;
 
@@ -7,11 +8,22 @@ class FioriView {
     protected string _path;
     protected auto writer = new OOPXMLWriter!string();
     protected string _content;
+
     this() {
+        initialize();
     }
 
-    this(string customPath) {
+    this(Json initData) {
+        initialize(initData);
+    }
+
+    this(string customPath, Json initData = Json(null)) {
         _path = customPath;
+        initialize(initData);
+    }
+
+    bool initialize(Json initData = Json(null)) {
+        return true;
     }
 
     void registerRoutes(URLRouter router) {

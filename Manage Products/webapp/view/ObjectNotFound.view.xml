@@ -2,7 +2,6 @@
 	controllerName="mycompany.myapp.MyWorklistApp.controller.NotFound"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc">
-
 	<Page
 	title="{i18n>objectTitle}"
 	titleAlignment="Center"
@@ -23,5 +22,4 @@
 			</IllustratedMessage>
 		</HBox>
 	</Page>
-
 </mvc:View>

@@ -5,7 +5,6 @@ sap.ui.define([
 	"../util/controls"
 ], function(Device, Controller, controls) {
 	"use strict";
-
 	// This class is the controller of view sap.ui.demoapps.rta.freestyle.view.Root, the view hosting the whole app.
 	return Controller.extend("sap.ui.demoapps.rta.freestyle.controller.Root", {
 		// This class possesses one instance variable, namely _oAppControl. It provides access to the instance of sap.m.SplitApp hosting the app.
@@ -14,14 +13,11 @@ sap.ui.define([
 			this.getView().addStyleClass(controls.getContentDensityClass());
 			this._oAppControl = this.byId("idAppControl");
 		},
-
 		//--- Public methods used by class Application (or its helper classes)
-
 		hideMaster: function() {
 			// Hide master list in portrait mode on tablet
 			this._oAppControl.hideMaster();
 		},
-
 		attachAfterNavigate: function(fnAfterDetailNavigate, oListener) {
 			// attach a function that is called after each navigation step
 			if (Device.system.phone) {

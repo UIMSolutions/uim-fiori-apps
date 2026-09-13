@@ -5,27 +5,23 @@ sap.ui.define([
 	"../util/messages"
 ], function(BaseObject, MessageBox, controls, messages) {
 	"use strict";
-
 	return BaseObject.extend("sap.ui.demoapps.rta.freestyle.controller.ODataMetadataLoader", {
 		// The purpose of this class is to check that the app can connect to the oData Backend service.
 		// When the metadata of an oData service has been loaded, the app startup can continue, assuming that
 		// the backend connection is available.  If the connection is not available, the user can re request the
 		// loading from the error message provided.
 		// The search and refresh in the master list also make use of this class.
-
 		constructor: function(oComponent) {
 			this._oResourceBundle = oComponent.getModel("i18n").getResourceBundle();
 			this._oODataModel = oComponent.getModel();
 			this._oApplicationProperties = oComponent.getModel("appProperties");
 			this._oOnMetaData = {};
 		},
-
 		init: function(oNavigationManager) {
 			this._oNavigationManager = oNavigationManager;
 			this._oODataModel.attachMetadataLoaded(this.onMetadataLoaded, this);
 			this._oODataModel.attachMetadataFailed(this.onMetadataFailed, this);
 		},
-
 		onMetadataLoaded: function() {
 			// In normal scenarios this method is called at the end of the startup process. However, when the initial loading of
 			// metadata fails, this method may be called later. It is registered in init().
@@ -37,7 +33,6 @@ sap.ui.define([
 			this._oNavigationManager.metadataSuccess();
 			this._oOnMetaData = null;
 		},
-
 		// User gets an error message, with the details.  The user can rerequest the start
 		// and a refresh of the load of the metadata is triggered.
 		onMetadataFailed: function(oError) {
@@ -63,7 +58,6 @@ sap.ui.define([
 				styleClass: controls.getContentDensityClass()
 			});
 		},
-
 		whenMetadataLoaded: function(fnMetadataLoaded, fnNoMetadata) {
 			if (this._bMessageOpen) {
 				return;

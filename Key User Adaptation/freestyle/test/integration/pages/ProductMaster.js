@@ -14,23 +14,18 @@ sap.ui.define([
 	Properties
 ) {
 	"use strict";
-
 	var sFirstObjectTitle;
 	var sViewName = "ProductMaster";
-
 	Opa5.createPageObjects({
 		onS2ProductMasterPage: {
 			baseClass: Common,
 			actions: {
-
 				iClickMultiSelect: function() {
 					return this.waitFor({
 						id: "multiSelectButton",
 						viewName: "ProductMaster",
-
 						actions: new Press(),
 						errorMessage: "MultiSelect Button not Found"
-
 					});
 				},
 				iOpenFilterDialog: function() {
@@ -44,12 +39,10 @@ sap.ui.define([
 							// if there is no view settings dialog yet, there is no need to wait
 							return !oSortSettingsDialog || oSortSettingsDialog.$().length === 0;
 						},
-
 						actions: new Press(),
 						errorMessage: "Did not find the 'filter' button."
 					});
 				},
-
 				iSelectAFilter: function(sItem) {
 					return this.waitFor({
 						searchOpenDialogs: true,
@@ -59,7 +52,6 @@ sap.ui.define([
 							value: sItem
 						}),
 						actions: new Press(),
-
 						errorMessage: "Did not find the " + sItem + " element in filter dialog"
 					});
 				},
@@ -72,7 +64,6 @@ sap.ui.define([
 							value: "OK"
 						}),
 						actions: new Press(),
-
 						errorMessage: "Did not find the SortDialog's 'OK' button."
 					});
 				},
@@ -105,7 +96,6 @@ sap.ui.define([
 						},
 						errorMessage: "The item from the master list is not selected"
 					});
-
 				},
 				iWaitUntilTheItemIsSelected: function(itemNumber) {
 					return this.waitFor({
@@ -134,11 +124,8 @@ sap.ui.define([
 						},
 						errorMessage: "Did not find product items"
 					});
-
 				},
-
 				iSearchForTheFirstObject: function() {
-
 					this.waitFor({
 						id: "list",
 						viewName: "ProductMaster",
@@ -146,21 +133,16 @@ sap.ui.define([
 							name: "items"
 						}),
 						success: function(oList) {
-
 							sFirstObjectTitle = oList.getItems()[0].getTitle();
-
 						},
 						errorMessage: "Did not find list items while trying to search for the first item."
 					});
-
 					return this.waitFor({
 						id: "searchField",
 						viewName: "ProductMaster",
-
 						actions: [new EnterText({
 							text: sFirstObjectTitle
 						}), new Press()],
-
 						errorMessage: "Failed to find search field in Master view."
 					});
 				},
@@ -174,7 +156,6 @@ sap.ui.define([
 						errorMessage: "Did not find the search field"
 					});
 				},
-
 				OpenSortDialog: function() {
 					return this.waitFor({
 						id: "sort",
@@ -187,7 +168,6 @@ sap.ui.define([
 							return !oSortSettingsDialog || oSortSettingsDialog.$().length === 0;
 						},
 						actions: new Press(),
-
 						errorMessage: "Did not find the 'sort' button."
 					});
 				},
@@ -200,7 +180,6 @@ sap.ui.define([
 							value: sListItemTitle
 						}),
 						actions: new Press(),
-
 						errorMessage: "Did not find list item with title " + sListItemTitle + " in Sort Dialog."
 					});
 				},
@@ -213,7 +192,6 @@ sap.ui.define([
 							value: "OK"
 						}),
 						actions: new Press(),
-
 						errorMessage: "Did not find the SortDialog's 'OK' button."
 					});
 				},
@@ -229,7 +207,6 @@ sap.ui.define([
 							return !oSortSettingsDialog || oSortSettingsDialog.$().length === 0;
 						},
 						actions: new Press(),
-
 						errorMessage: "Did not find the 'sort' button."
 					});
 				},
@@ -245,7 +222,6 @@ sap.ui.define([
 							return !oGroupSettingsDialog || oGroupSettingsDialog.$().length === 0;
 						},
 						actions: new Press(),
-
 						errorMessage: "Did not find the 'group' button."
 					});
 				},
@@ -258,11 +234,9 @@ sap.ui.define([
 							value: sListItemTitle
 						}),
 						actions: new Press(),
-
 						errorMessage: "Did not find list item with title " + sListItemTitle + " in Group Dialog."
 					});
 				},
-
 				iPressOKInGroupDialog: function() {
 					return this.waitFor({
 						searchOpenDialogs: true,
@@ -272,7 +246,6 @@ sap.ui.define([
 							value: "OK"
 						}),
 						actions: new Press(),
-
 						errorMessage: "Did not find the GroupDialog's 'OK' button."
 					});
 				},
@@ -291,13 +264,9 @@ sap.ui.define([
 						},
 						errorMessage: "The item from the master list is not selected"
 					});
-
 				}
-
 			},
-
 			assertions: {
-
 				iCheckifMultiSelectIsOn: function() {
 					return this.waitFor({
 						id: "list",
@@ -310,9 +279,7 @@ sap.ui.define([
 						},
 						errorMessage: "Multi select option is not enabled"
 					});
-
 				},
-
 				iCheckMasterListHeader: function() {
 					return this.waitFor({
 						id: "page",
@@ -327,7 +294,6 @@ sap.ui.define([
 						errorMessage: "Header of the master list is not displayed"
 					});
 				},
-
 				iCheckIfSearchFieldIsEmpty: function() {
 					return this.waitFor({
 						viewName: "ProductMaster",
@@ -342,7 +308,6 @@ sap.ui.define([
 						errorMessage: "Did not find the search field"
 					});
 				},
-
 				iCheckIfItemSearchedIsMatchingOnMasterList: function() {
 					return this.waitFor({
 						viewName: "ProductMaster",
@@ -353,7 +318,6 @@ sap.ui.define([
 						}
 					});
 				},
-
 				iSeeFilterBarStatus: function(status) {
 					return this.waitFor({
 						id: "filterBarLabel",

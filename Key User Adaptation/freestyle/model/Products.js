@@ -19,16 +19,13 @@ sap.ui.define([
 	library
 ) {
 	"use strict";
-
 	var DraftIndicatorState = library.DraftIndicatorState;
-
 	var oResolvedPromise = Promise.resolve(),
 		mParametersForRead = Object.freeze({
 			expand: "DraftAdministrativeData,to_ProductTextInOriginalLang,to_Supplier,to_ProductStock,to_ProductStock/to_StockAvailability" +
 				",to_ProductCategory,to_CollaborativeReview,to_ProductBaseUnit,to_DimensionUnit,to_WeightUnit,to_Supplier,to_Supplier/to_PrimaryContactPersonType",
 			select: "Currency,Depth,DraftUUID,HasDraftEntity,Height,IsActiveEntity,Price,Product,ProductBaseUnit,ProductCategory,ProductForEdit,ProductPictureURL,Weight,Width,DraftAdministrativeData/InProcessByUser,DraftAdministrativeData/DraftUUID,DraftAdministrativeData/CreationDateTime,DraftAdministrativeData/LastChangeDateTime,DraftAdministrativeData/DraftIsCreatedByMe,to_ProductTextInOriginalLang/Name,to_ProductTextInOriginalLang/Description,to_Supplier/PhoneNumber, to_Supplier/FaxNumber,to_Supplier/URL,to_Supplier/CompanyName,to_Supplier/EmailAddress,to_ProductStock/StockAvailability,to_ProductStock/to_StockAvailability/StockAvailability_Text,to_ProductCategory/MainProductCategory,to_ProductCategory/ProductCategory,to_CollaborativeReview/AverageRatingValue,to_CollaborativeReview/NumberOfReviewPosts,to_ProductBaseUnit/UnitOfMeasure_Text,to_DimensionUnit/UnitOfMeasure_Text,to_WeightUnit/UnitOfMeasure_Text,to_Supplier/to_PrimaryContactPersonType/EmailAddress,to_Supplier/to_PrimaryContactPersonType/FirstName,to_Supplier/to_PrimaryContactPersonType/LastName,to_Supplier/to_PrimaryContactPersonType/PhoneNumber,to_Supplier/to_PrimaryContactPersonType/FormattedContactName,to_Supplier/to_PrimaryContactPersonType/MobilePhoneNumber"
 		});
-
 	return BaseObject.extend("sap.ui.demoapps.rta.freestyle.model.Products", {
 		// Attributes of this class:
 		// _oResourceBundle, _oODataModel, _oApplicationProperties, _oApplication, _oMainView
@@ -47,7 +44,6 @@ sap.ui.define([
 			this._mDeletedDrafts = {};
 			this._oTransactionController = new TransactionController(this._oODataModel);
 		},
-
 		getPathForDraft: function(sProductId, sDraftId, bIsActive) {
 			return this._oODataModel.createKey("/SEPMRA_C_PD_Product", {
 				Product: sProductId,
@@ -55,13 +51,10 @@ sap.ui.define([
 				IsActiveEntity: bIsActive
 			});
 		},
-
 		getParametersForRead: function() {
 			return mParametersForRead;
 		},
-
 		// Additional methods for working with products
-
 		// Creates a product draft for a new product.
 		createProductDraft: function(fnProductDraftCreated) {
 			this._oApplication.setAppBusy();
@@ -72,7 +65,6 @@ sap.ui.define([
 				};
 			oCreatePromise.then(fnCreatedHandler, this._oApplication.resetAppBusy());
 		},
-
 		// Creates product draft from a specified product ID for CopyProduct
 		copyProductToDraft: function(sProductId, fnNavToDraft) {
 			var fnSuccess = function(oResponseContent) {
@@ -87,7 +79,6 @@ sap.ui.define([
 				fnSuccess
 			);
 		},
-
 		// Gets product draft from a specified product ID for EditProduct
 		getProductDraftFromProductId: function(oContext, fnNavToDraft, fnNoDraft) {
 			this._oApplication.setAppBusy();
@@ -104,7 +95,6 @@ sap.ui.define([
 			oProductHasNoDraft.then(oDraftController.createEditDraftEntity.bind(oDraftController, oContext)).then(fnCreatedHandler).catch(
 				fnFailedHandler);
 		},
-
 		// Convenience method for calling function imports. Provides error handling and the busy indicator.
 		_callFunctionImport: function(sFunctionName, oURLParameters, fnAfterFunctionExecuted, sProcessingProperty) {
 			this._oODataModel.callFunction(sFunctionName, {
@@ -114,7 +104,6 @@ sap.ui.define([
 				error: this._getResetPropertyFunction(sProcessingProperty)
 			});
 		},
-
 		// Turns ProductDraft into Product and deletes ProductDraft
 		activateProduct: function(oContext, fnAfterActivation) {
 			this._fnBeforeActivation();
@@ -123,7 +112,6 @@ sap.ui.define([
 			this._submitChanges().then(
 				this._activateProduct.bind(this, oContext, fnAfterActivation, this._fnOnActivationFailed));
 		},
-
 		_activateProduct: function(oContext, fnAfterActivation, fnActivationFailed) {
 			var oDraftController = this._oTransactionController.getDraftController(),
 				oActivatePromise = oDraftController.activateDraftEntity(oContext),
@@ -139,7 +127,6 @@ sap.ui.define([
 			oActivatePromise.then(this._invalidateFrontendCache.bind(this, sProductId, fnActivatedHandler), this._getResetPropertyFunction(
 				"isBusySaving", fnActivationFailed));
 		},
-
 		// Saves ProductDraft each time a user edits a field
 		saveProductDraft: function() {
 			if (this._oODataModel.hasPendingChanges()) {
@@ -147,7 +134,6 @@ sap.ui.define([
 				this._submitChanges();
 			}
 		},
-
 		_submitChanges: function() {
 			if (this._fnChangeSubmitResolve || !this._oODataModel.hasPendingChanges()) {
 				return this._oChangesSubmitted;
@@ -181,11 +167,9 @@ sap.ui.define([
 				}.bind(this);
 				oParameters.error = this._fnChangeSubmitResolve;
 				this._oODataModel.submitChanges(oParameters);
-
 			}.bind(this));
 			return this._oChangesSubmitted;
 		},
-
 		_getResetPropertyFunction: function(sProperty, fnAfterwards) {
 			return function() {
 				this._oApplicationProperties.setProperty("/" + sProperty, false);
@@ -194,9 +178,7 @@ sap.ui.define([
 				}
 			}.bind(this);
 		},
-
 		deleteDraftFromResume: function(sPath, sDraftId, bDirty) {
-
 			if (this._mDeletedDrafts[sDraftId]) { // product is already deleted (or in the process of being deleted)
 				return;
 			}
@@ -215,14 +197,12 @@ sap.ui.define([
 				this._oApplication.resetAppBusy();
 				delete this._mDeletedDrafts[sDraftId];
 			};
-
 			this._oApplication.setAppBusy();
 			this._oTransactionController.deleteEntity(sPath).then(
 				fnSuccess,
 				fnFailed
 			);
 		},
-
 		deleteDraftEntity: function(oContext, bIsDraftDirty) {
 			var sProductId = oContext.getObject().Product;
 			var sDraftId = oContext.getObject().DraftUUID;
@@ -256,20 +236,16 @@ sap.ui.define([
 						MessageToast.show(sSuccessMessage);
 					});
 				}
-
 			}.bind(this);
 			var fnFailed = function() {
 				delete this._mDeletedDrafts[sDraftId];
 			};
-
 			this._oApplication.setAppBusy();
 			this._oTransactionController.deleteEntity(oContext).then(
 				fnSuccess(oContext, bIsDraftDirty),
 				fnFailed
 			);
-
 		},
-
 		deleteProduct: function(oContext) {
 			var sProductId = oContext.getObject().ProductForEdit;
 			if (this._mDeletedProducts[sProductId]) { // product is already deleted (or in the process of being deleted)
@@ -289,13 +265,11 @@ sap.ui.define([
 				fnFailed = function() {
 					delete this._mDeletedProducts[sProductId];
 				};
-
 			this._oApplication.setAppBusy();
 			this._oTransactionController.deleteEntity(oContext).then(
 				fnSuccess,
 				fnFailed);
 		},
-
 		deleteEntities: function(aItemsToDelete) {
 			// Delete an array of Products by using a list of binding contexts with the transaction controller
 			// The binding contexts were added to the array of items to be deleted when selected by the user
@@ -324,32 +298,26 @@ sap.ui.define([
 			// the previously selected item
 			this._oApplicationProperties.setProperty("/productId", null);
 			this._oApplicationProperties.setProperty("/draftId", null);
-
 			this._oTransactionController.deleteEntities(aItems).then(
 				this._onDeletionsSuccess).catch(
 				// Error handling has currently a bug and does not work
 				this._onDeletionsFailure);
 		},
-
 		_onDeletionsSuccess: function(oResponse) {
 			//assume that all items have been deleted
 		},
-
 		_onDeletionsFailure: function(oResponse) {
 			// remove those items that could not be deleted
 		},
-
 		_invalidateFrontendCache: function(sProductId, fnAfterInvalidation) {
 			if (sProductId) {
 				var sActivePath = this.getPathForDraft(sProductId, utilities.getNullUUID(), true);
 				this._oODataModel.createBindingContext(sActivePath, null, mParametersForRead, fnAfterInvalidation || function() {}, true);
 			}
 		},
-
 		isDraftIdValid: function(sDraftId) {
 			return !this._mDeletedDrafts[sDraftId];
 		},
-
 		whenProductIsClean: function(sProductId) {
 			return oResolvedPromise;
 		}

@@ -1,0 +1,40 @@
+<mvc:View
+    controllerName="sap.ui.core.mvc.Controller"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f">
+    <Shell>
+        <App>
+            <pages>
+                <Page title="SAP Fiori Launchpad Sandbox (vibe.d)">
+                    <content>
+                        <VBox class="sapUiResponsiveMargin">
+                            <f:Card class="sapUiMediumMarginBottom">
+                                <f:header>
+                                    <card:Header 
+                                        xmlns:card="sap.f.cards"
+                                        title="Status vom Dlang Backend"
+                                        subtitle="Daten via JSONModel abgerufen"
+                                        iconSrc="sap-icon://accept" />
+                                </f:header>
+                                <f:content>
+                                    <VBox class="sapUiSmallMargin">
+                                        <Label text="Nachricht:" design="Bold" />
+                                        <Text text="{backendData>/message}" class="sapUiTinyMarginBottom" />
+                                        
+                                        <Label text="Zeitstempel:" design="Bold" />
+                                        <Text text="{backendData>/timestamp}" class="sapUiTinyMarginBottom" />
+                                        <Label text="Authentifiziert über XSUAA:" design="Bold" />
+                                        <ObjectStatus 
+                                            text="{= ${backendData>/authenticated} ? 'Ja (JWT vorhanden)' : 'Nein' }" 
+                                            state="{= ${backendData>/authenticated} ? 'Success' : 'Error' }" />
+                                    </VBox>
+                                </f:content>
+                            </f:Card>
+                        </VBox>
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>

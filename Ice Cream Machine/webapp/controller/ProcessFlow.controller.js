@@ -3,13 +3,10 @@ sap.ui.define([
 	"sap/m/MessageToast"
 ], function(Controller, MessageToast) {
 	"use strict";
-
 	return Controller.extend("sap.suite.ui.commons.demo.tutorial.controller.ProcessFlow", {
-
 		onNavButtonPressed: function() {
 			this.getOwnerComponent().getRouter().navTo("home");
 		},
-
 		/**
 		 * Handles the press event on a process flow node.
 		 *
@@ -19,7 +16,6 @@ sap.ui.define([
 			var sItemTitle = oEvent.getParameters().getTitle();
 			MessageToast.show(this.getResourceBundle().getText("processFlowNodeClickedMessage", [sItemTitle]));
 		},
-
 		/**
 		 * Getter for the resource bundle.
 		 * @public
@@ -28,7 +24,6 @@ sap.ui.define([
 		getResourceBundle: function() {
 			return this.getOwnerComponent().getModel("i18n").getResourceBundle();
 		},
-
 		/**
 		 * Calculates difference between expected and actual values
 		 * @param {float} fFirstValue Expected value

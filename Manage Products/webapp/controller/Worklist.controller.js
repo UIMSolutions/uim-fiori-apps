@@ -8,15 +8,11 @@ sap.ui.define([
 	"sap/m/MessageBox"
 ], function (BaseController, JSONModel, formatter, Filter, FilterOperator, MessageToast, MessageBox) {
 	"use strict";
-
 	return BaseController.extend("mycompany.myapp.MyWorklistApp.controller.Worklist", {
-
 		formatter: formatter,
-
 		/* =========================================================== */
 		/* lifecycle methods                                           */
 		/* =========================================================== */
-
 		/**
 		 * Called when the worklist controller is instantiated.
 		 * @public
@@ -25,7 +21,6 @@ sap.ui.define([
 			var oViewModel,
 				iOriginalBusyDelay,
 				oTable = this.byId("table");
-
 			// Put down worklist table's original value for busy indicator delay,
 			// so it can be restored later on. Busy handling on the table is
 			// taken care of by the table itself.
@@ -33,7 +28,6 @@ sap.ui.define([
 			this._oTable = oTable;
 			// keeps the search state
 			this._aTableSearchState = [];
-
 			// Model used to manipulate control states
 			oViewModel = new JSONModel({
 				worklistTableTitle: this.getResourceBundle().getText("worklistTableTitle"),
@@ -55,7 +49,6 @@ sap.ui.define([
 				"shortage": [new Filter("UnitsInStock", FilterOperator.BT, 1, 10)],
 				"all": []
 			};
-
 			// Make sure, busy indication is showing immediately so there is no
 			// break after the busy indication for loading the view's meta data is
 			// ended (see promise 'oWhenMetadataIsLoaded' in AppController)
@@ -64,11 +57,9 @@ sap.ui.define([
 				oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
 			});
 		},
-
 		/* =========================================================== */
 		/* event handlers                                              */
 		/* =========================================================== */
-
 		/**
 		 * Triggered by the table's 'updateFinished' event: after new table
 		 * data is available, this handler method updates the table counter.
@@ -120,7 +111,6 @@ sap.ui.define([
 			}
 			this.getModel("worklistView").setProperty("/worklistTableTitle", sTitle);
 		},
-
 		/**
 		 * Event handler when a table item gets pressed
 		 * @param {sap.ui.base.Event} oEvent the table selectionChange event
@@ -130,7 +120,6 @@ sap.ui.define([
 			// The source is the list item that got pressed
 			this._showObject(oEvent.getSource());
 		},
-
 		/**
 		 * Event handler for navigating back.
 		 * We navigate back in the browser history
@@ -139,7 +128,6 @@ sap.ui.define([
 		onNavBack : function() {
 			history.go(-1);
 		},
-
 
 		onSearch : function (oEvent) {
 			if (oEvent.getParameters().refreshButtonPressed) {
@@ -151,15 +139,12 @@ sap.ui.define([
 			} else {
 				var aTableSearchState = [];
 				var sQuery = oEvent.getParameter("query");
-
 				if (sQuery && sQuery.length > 0) {
 					aTableSearchState = [new Filter("ProductName", FilterOperator.Contains, sQuery)];
 				}
 				this._applySearch(aTableSearchState);
 			}
-
 		},
-
 		/**
 		 * Event handler for refresh event. Keeps filter, sort
 		 * and group settings and refreshes the list binding.
@@ -169,11 +154,9 @@ sap.ui.define([
 			var oTable = this.byId("table");
 			oTable.getBinding("items").refresh();
 		},
-
 		/* =========================================================== */
 		/* internal methods                                            */
 		/* =========================================================== */
-
 		/**
 		 * Shows the selected item on the object page
 		 * On phones a additional history entry is created
@@ -185,7 +168,6 @@ sap.ui.define([
 				objectId: oItem.getBindingContext().getProperty("ProductID")
 			});
 		},
-
 		/**
 		 * Internal helper method to apply both filter and search state together on the list binding
 		 * @param {sap.ui.model.Filter[]} aTableSearchState An array of filters for the search
@@ -200,7 +182,6 @@ sap.ui.define([
 				oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
 			}
 		},
-
 		/**
 		 * Displays an error message dialog. The displayed dialog is content density aware.
 		 * @param {string} sMsg The error message to be displayed
@@ -211,7 +192,6 @@ sap.ui.define([
 				styleClass: this.getOwnerComponent().getContentDensityClass()
 			});
 		},
-
 		/**
 		 * Event handler when a filter tab gets pressed
 		 * @param {sap.ui.base.Event} oEvent the filter tab event
@@ -222,7 +202,6 @@ sap.ui.define([
 				sKey = oEvent.getParameter("selectedKey");
 			oBinding.filter(this._mFilters[sKey]);
 		},
-
 		/**
 		 * Error and success handler for the unlist action.
 		 * @param {string} sProductId the product ID for which this handler is called
@@ -231,7 +210,6 @@ sap.ui.define([
 		 * @param {number} iTotalRequests the number of all requests sent
 		 * @private
 		 */
-
 		_handleUnlistActionResult : function (sProductId, bSuccess, iRequestNumber, iTotalRequests){
 			// we could create a counter for successful and one for failed requests
 			// however, we just assume that every single request was successful and display a success message once
@@ -239,7 +217,6 @@ sap.ui.define([
 				MessageToast.show(this.getModel("i18n").getResourceBundle().getText("StockRemovedSuccessMsg", [iTotalRequests]));
 			}
 		},
-
 		/**
 		 * Error and success handler for the reorder action.
 		 * @param {string} sProductId the product ID for which this handler is called
@@ -248,7 +225,6 @@ sap.ui.define([
 		 * @param {number} iTotalRequests the number of all requests sent
 		 * @private
 		 */
-
 		_handleReorderActionResult : function (sProductId, bSuccess, iRequestNumber, iTotalRequests){
 			// we could create a counter for successful and one for failed requests
 			// however, we just assume that every single request was successful and display a success message once
@@ -256,16 +232,13 @@ sap.ui.define([
 				MessageToast.show(this.getModel("i18n").getResourceBundle().getText("StockUpdatedSuccessMsg", [iTotalRequests]));
 			}
 		},
-
 		/**
 		 * Event handler for the unlist button. Will delete the
 		 * product from the (local) model.
 		 * @public
 		 */
-
 		onUnlistObjects: function() {
 			var aSelectedProducts, i, sPath, oProduct, oProductId;
-
 			aSelectedProducts = this.byId("table").getSelectedItems();
 			if (aSelectedProducts.length) {
 				for (i = 0; i < aSelectedProducts.length; i++) {
@@ -281,7 +254,6 @@ sap.ui.define([
 				this._showErrorMessage(this.getModel("i18n").getResourceBundle().getText("TableSelectProduct"));
 			}
 		},
-
 		/**
 		 * Event handler for the reorder button. Will reorder the
 		 * product by updating the (local) model
@@ -289,7 +261,6 @@ sap.ui.define([
 		 */
 		onUpdateStockObjects: function() {
 			var aSelectedProducts, i, sPath, oProductObject;
-
 			aSelectedProducts = this.byId("table").getSelectedItems();
 			if (aSelectedProducts.length) {
 				for (i = 0; i < aSelectedProducts.length; i++) {
@@ -305,7 +276,5 @@ sap.ui.define([
 				this._showErrorMessage(this.getModel("i18n").getResourceBundle().getText("TableSelectProduct"));
 			}
 		}
-
 	});
-
 });

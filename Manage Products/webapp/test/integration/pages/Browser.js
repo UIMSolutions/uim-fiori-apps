@@ -3,13 +3,10 @@ sap.ui.define([
 	"./Common"
 ], function(Opa5, Common) {
 	"use strict";
-
 	Opa5.createPageObjects({
 		onTheBrowser : {
 			baseClass : Common,
-
 			actions : {
-
 				iPressOnTheBackwardsButton : function () {
 					return this.waitFor({
 						success : function () {
@@ -18,7 +15,6 @@ sap.ui.define([
 						}
 					});
 				},
-
 				iPressOnTheForwardsButton : function () {
 					return this.waitFor({
 						success : function () {
@@ -27,7 +23,6 @@ sap.ui.define([
 						}
 					});
 				},
-
 				iChangeTheHashToSomethingInvalid : function () {
 					return this.waitFor({
 						success : function () {
@@ -35,7 +30,6 @@ sap.ui.define([
 						}
 					});
 				},
-
 				iChangeTheHashToTheRememberedItem : function () {
 					return this.waitFor({
 						success : function () {
@@ -45,10 +39,7 @@ sap.ui.define([
 					});
 				}
 			},
-
 			assertions: {}
 		}
-
 	});
-
 });

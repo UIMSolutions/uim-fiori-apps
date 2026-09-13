@@ -1,0 +1,39 @@
+{
+  "_version": "1.12.0",
+  "sap.app": {
+    "id": "hello.fiori.vibe",
+    "type": "application",
+    "title": "SAP Fiori vibe.d App",
+    "description": "SAPUI5 Frontend powered by Dlang vibe.d"
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "rootView": {
+      "viewName": "hello.fiori.vibe.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "app"
+    },
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.f": {}
+      }
+    },
+    "models": {
+      "backendData": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "/api/hello"
+      }
+    }
+  }
+}

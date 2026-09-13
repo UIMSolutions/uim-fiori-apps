@@ -14,7 +14,6 @@ sap.ui.define([
 	controls
 ) {
 	"use strict";
-
 	return BaseController.extend("sap.ui.demoapps.rta.freestyle.controller.ProductGeneralForm", {
 		// User wants to open the business card of the product supplier
 		onSupplierPressed: function(oEvent) {
@@ -23,7 +22,6 @@ sap.ui.define([
 			}
 			this._oPopover.openBy(oEvent.getSource());
 		},
-
 		_initializeSupplierCard: function() {
 			var oCardModel = new JSONModel({
 				open: true,
@@ -53,7 +51,6 @@ sap.ui.define([
 							oCardModel.setProperty.bind(oCardModel, "/open", false);
 						}
 					});
-
 					this._oPopover.removeStyleClass("sapUiPopupWithPadding");
 					this._oPopover.addStyleClass("sapUiSizeCompact");
 					this._oPopover.setModel(oCardModel, "supplierCard");

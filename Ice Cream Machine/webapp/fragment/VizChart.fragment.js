@@ -8,10 +8,8 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel"
 ], function(jQuery, VizFrame, FlattenedDataset, DimensionDefinition, MeasureDefinition, FeedItem, JSONModel) {
 	"use strict";
-
 	return {
 		createContent: function(controller) {
-
 			var oVizFrame = new VizFrame({
 				height: "700px",
 				width: "100%",
@@ -20,7 +18,6 @@ sap.ui.define([
 					applicationSet: 'fiori'
 				}
 			});
-
 			var oDataset = new FlattenedDataset({
 				dimensions: new DimensionDefinition({
 					name: "Ice Cream",
@@ -38,9 +35,7 @@ sap.ui.define([
 				],
 				data: "{/Temperatures}"
 			});
-
 			oVizFrame.setDataset(oDataset);
-
 			oVizFrame.addFeed(new FeedItem({
 				uid: "valueAxis",
 				type: "Measure",
@@ -48,7 +43,6 @@ sap.ui.define([
 					"Temperature"
 				]
 			}));
-
 			oVizFrame.addFeed(new FeedItem({
 				uid: "targetValues",
 				type: "Measure",
@@ -56,13 +50,11 @@ sap.ui.define([
 					"Target Temperature"
 				]
 			}));
-
 			oVizFrame.addFeed(new FeedItem({
 				uid: "categoryAxis",
 				type: "Dimension",
 				values: [ "Ice Cream" ]
 			}));
-
 			oVizFrame.setVizProperties({
 				plotArea: {
 					showGap: true
@@ -76,11 +68,9 @@ sap.ui.define([
 					}
 				}
 			});
-
 			var sDataPath = sap.ui.require.toUrl("sap/suite/ui/commons/demo/tutorial/model/data/IceCreamTestData.json");
 			var oModel = new JSONModel(sDataPath);
 			controller.getView().setModel(oModel);
-
 			return oVizFrame;
 		}
 	}

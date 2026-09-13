@@ -4,13 +4,11 @@ sap.ui.define([
 	"sap/ui/core/routing/History"
 ], function(BaseObject, Device, History) {
 	"use strict";
-
 	// 'Constants' for the route names used in this app
 	var sDisplayRoute = "display",
 		sEditRoute = "edit",
 		sCreateRoute = "create",
 		sMasterRoute = "master";
-
 	// The main task of this method is initializing the router. However, it is first checked, whether the component data contain
 	// information about cross-app navigation. If so, the startup parameters are translated into a route. This route
 	// is set programmatically. Initialization of the router is postponed until this has been executed.
@@ -31,7 +29,6 @@ sap.ui.define([
 		}
 		oRouter.initialize();
 	}
-
 	// Helper class for class Application. It handles all navigation related issues in the app.
 	// In particular, this class is the only one that interacts with the router.
 	// This class has references to the controllers of S2 and S3 views and calls methods from them.
@@ -53,7 +50,6 @@ sap.ui.define([
 		// _oMasterController, _oDisplayController, _oEditController: Controllers of S2 and S3 views.
 		//    they are registered in the corresponding onInit-methods.
 		// _bRouteMatched: Set to true on the first match of a route
-
 		// The following attributes will change during the lifetime of this class:
 		// _bProgrammaticNavigation: This attribute is used to distinguish between hash changes performed
 		//    programmatically (via method _executeNavigation) and hash changes performed by the user (via browser interaction).
@@ -64,15 +60,12 @@ sap.ui.define([
 		//    properties 'route' (the name of the route) and 'arguments' (the arguments from the route).
 		//    Exception: For illegal routes the object is just empty.
 		//    Note that this attribute is used to defer handling of routes manually entered by the user while the app is busy.
-
 		// --- Startup
-
 		constructor: function(oRouter, oApplicationProperties, oResourceBundle) {
 			this._oRouter = oRouter;
 			this._oApplicationProperties = oApplicationProperties;
 			this._oResourceBundle = oResourceBundle;
 		},
-
 		init: function(oComponentData, oMainView) {
 			//Allow root view to be sync and async in demos
 			Promise.resolve().then(function(){
@@ -88,8 +81,6 @@ sap.ui.define([
 				oController.attachAfterNavigate(this.afterNavigate, this);
 			}.bind(this));
 
-
-
 			this._bSubControllersMustBeAdapted = true;
 			this._oRouter.getTargetHandler().setCloseDialogs(false);
 			this._oRouter.attachRoutePatternMatched(this.onRoutePatternMatched, this);
@@ -98,34 +89,27 @@ sap.ui.define([
 			// In onInit of the views we want to rely on the component being correctly initialized.
 			fnExtractStartupParametersAndInitializeRouter(oComponentData, this._oRouter);
 		},
-
 		registerMaster: function(oMasterController) {
 			// This method is called in onInit() of the S2-view
 			this._oMasterController = oMasterController;
 		},
-
 		registerDisplay: function(oDisplayController) {
 			// This method is called in onInit() of the S3Display-view
 			this._oDisplayController = oDisplayController;
 		},
-
 		registerEdit: function(oEditController) {
 			// This method is called in onInit() of the S3Edit-view
 			this._oEditController = oEditController;
 		},
-
 		registerDetailInfo: function(oDetailInfoController) {
 			// This method is used by onSelectionChange() of S2_ProductMaster controller
 			this._oDetailInfoController = oDetailInfoController;
 		},
-
 		registerDetailChart: function(oDetailChartController) {
 			// This method is used by onSelectionChange() of S2_ProductMaster controller
 			this._oDetailChartController = oDetailChartController;
 		},
-
 		// - Navigation methods
-
 		afterNavigate: function() {
 			// This method is called after each navigation. It unbinds the S3-views which are currently not visible, so that they
 			// do not load any data. Note that both S3 views may be invisible (on phone).
@@ -138,7 +122,6 @@ sap.ui.define([
 				this._oDisplayController.unbind();
 			}
 		},
-
 		onRoutePatternMatched: function(oEvent) {
 			// This method is registered at the router. It will be called whenever the url-hash changes. Note that there may be
 			// two reasons for this. The hash may be set by the browser (e.g. if the user follows a link leading to this App) or
@@ -148,13 +131,11 @@ sap.ui.define([
 				arguments: oEvent.getParameter("arguments")
 			});
 		},
-
 		_routeMatched: function(oUnhandledRoute) {
 			this._bRouteMatched = true;
 			this._oUnhandledRoute = oUnhandledRoute;
 			this._routeHandler();
 		},
-
 		_routeHandler: function() {
 			// This method checks whether there is an unhandled route which can currently be handled. If this is the case the
 			// route is handled.
@@ -196,12 +177,10 @@ sap.ui.define([
 				this._bProgrammaticNavigation = false;
 			}
 		},
-
 		// Called for invalid url-hashes
 		onBypassed: function() {
 			this._routeMatched({});
 		},
-
 		_onBypassed: function() {
 			this._oApplicationProperties.setProperty("/emptyText", this._oResourceBundle.getText("ymsg.pageNotFound"));
 			this._oApplicationProperties.setProperty("/productId", " ");
@@ -209,9 +188,7 @@ sap.ui.define([
 			this._oMasterController.adaptToDetailSelection(false);
 			this._oApplicationProperties.setProperty("/preferredIds", []);
 		},
-
 		// --- Implementation of the public navigation methods exposed by the Application class
-
 		navToEmptyPage: function(sText, bResetUrl) {
 			// This method navigates to the empty page in detail area. Prerequisites for
 			// calling this method are as for showProductDetailPage.
@@ -227,12 +204,10 @@ sap.ui.define([
 			this._oRouter.getTargets().display("empty");
 			this._oApplicationProperties.setProperty("/preferredIds", []);
 		},
-
 		displayProduct: function(sProductId, bFromList) {
 			// This method navigates to the display page for the specified product id.
 			this._oApplicationProperties.setProperty("/productId", sProductId);
 			this._oApplicationProperties.setProperty("/draftId", "");
-
 			this._oMasterController.adaptToDetailSelection();
 			this._oMasterController.setAutomaticUpdate(true);
 			if (this._oDisplayController) {
@@ -242,7 +217,6 @@ sap.ui.define([
 				productId: encodeURIComponent(sProductId)
 			}, !(bFromList && Device.system.phone)); // true: hash should not be stored in the history
 		},
-
 		editProductDraft: function(sProductId, sDraftId, bFromList) {
 			this._oApplicationProperties.setProperty("/productId", sProductId);
 			this._oApplicationProperties.setProperty("/draftId", sDraftId);
@@ -262,7 +236,6 @@ sap.ui.define([
 			// true: hash should not be stored in the history
 			this._executeNavigation(sProductId ? sEditRoute : sCreateRoute, oParams, !bAddToHistory);
 		},
-
 		navToMaster: function(sId, aPreferredReplace) {
 			// This method navigates to the master route. sPreferredId is an optional parameter that may contain the id of a
 			// product that (on non-phone devices) is preferably shown (provided it is in the master list). Prerequisites for
@@ -274,9 +247,7 @@ sap.ui.define([
 				this._oApplicationProperties.setProperty("/preferredIds", this._oMasterController.getPreferredSuccessors(sId, aPreferredReplace));
 			}
 			this._oMasterController.setAutomaticUpdate(true);
-
 		},
-
 		// Handling of back functionality.
 		// bPreferHistory: Information whether back should be realized via browser-history if browser history is available.
 		//                 This should be true with the exception of those views which do not have an own url (like the
@@ -309,7 +280,6 @@ sap.ui.define([
 				}
 			});
 		},
-
 		metadataFailed: function(sErrorText) {
 			this._oApplicationProperties.setProperty("/emptyText", sErrorText);
 			if (!Device.system.phone || this._oApplicationProperties.getProperty("/productId") || this._oApplicationProperties.getProperty(
@@ -317,11 +287,9 @@ sap.ui.define([
 				this._oRouter.getTargets().display("empty");
 			}
 		},
-
 		metadataSuccess: function() {
 			this._routeHandler();
 		},
-
 		_executeNavigation: function(sRoute, oParameters, bReplace) {
 			// This method wraps the navTo-method of the router. It is called for navigation performed programmatically.
 			// Thus, we expect that the subcontrollers have already been informed. So _bSubControllersMustBeAdapted is
@@ -332,7 +300,6 @@ sap.ui.define([
 			this._bSubControllersMustBeAdapted = !(sRoute === sDisplayRoute ? this._oDisplayController : this._oEditController);
 			this._oRouter.navTo(sRoute, oParameters, bReplace);
 		},
-
 		destroySupplierCard: function() {
 			// When a new item is selected, the supplier card is destroyed to prevent the supplier information
 			// being read by default every time a new item is selected.
@@ -340,7 +307,6 @@ sap.ui.define([
 				this._oDetailInfoController.destroySupplierCard();
 			}
 		},
-
 		destroyDetailChart: function() {
 			// When a user has selected sales data for a product, but then switches back to the product display, it
 			// is assumed that the user will usually not want to display the sales data for a different product.

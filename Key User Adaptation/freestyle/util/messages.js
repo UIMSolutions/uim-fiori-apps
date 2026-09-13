@@ -4,7 +4,6 @@ sap.ui.define([
 	"./controls"
 ], function(MessageBox, JSONModel, controls) {
 	"use strict";
-
 	function extractErrorMessageFromDetails(sDetails) {
 		if (sDetails && sDetails.startsWith("{\"error\":")) {
 			var oErrModel = new JSONModel();
@@ -12,12 +11,10 @@ sap.ui.define([
 			return oErrModel.getProperty("/error/message/value") || "Error";
 		}
 	}
-
 	function parseError(oParameter) {
 		var oParameters = null,
 			oResponse = null,
 			oError = {};
-
 		// "getParameters": for the case of catching oDataModel "requestFailed" event
 		oParameters = oParameter.getParameters ? oParameter.getParameters() : null;
 		// "oParameters.response": V2 interface, response object is under the getParameters()
@@ -28,13 +25,11 @@ sap.ui.define([
 		oError.sMessage = extractErrorMessageFromDetails(oError.sDetails) || oResponse.message || (oParameters && oParameters.message);
 		return oError;
 	}
-
 	return {
 		// Show an error dialog with information from the oData response object.
 		// oParameter - The object containing error information
 		showErrorMessage: function(oParameter, fnOnClose) {
 			var oErrorDetails = parseError(oParameter);
-
 			//TODO: get correct text from i18n
 				// oBundle = sap.ui.getCore().getLibraryResourceBundle("nw.epm.refapps.lib.reuse");
 			MessageBox.show(oErrorDetails.sMessage, {
@@ -46,15 +41,12 @@ sap.ui.define([
 				styleClass: controls.getContentDensityClass()
 			});
 		},
-
 		getErrorContent: function(oParameter) {
 			return parseError(oParameter).sMessage;
 		},
-
 		getErrorDetails: function(oParameter) {
 			return parseError(oParameter).sDetails;
 		},
-
 		extractErrorMessageFromDetails: function(sDetails) {
 			return extractErrorMessageFromDetails(sDetails);
 		}

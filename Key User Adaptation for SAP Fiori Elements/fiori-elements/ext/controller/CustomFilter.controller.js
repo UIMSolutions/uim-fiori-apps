@@ -17,14 +17,11 @@ sap.ui.define([
 	FilterOperator
 ) {
 	"use strict";
-
 	// This class is the controller of view sap.ui.demoapps.rta.fiorielements.view.Root, the view hosting the whole app.
 	return {
-
 		onInitSmartFilterBarExtension: function(oEvent) {
 			// the custom field in the filter bar might have to be bound to a custom data model
 			// if a value change in the field shall trigger a follow up action, this method is the place to define and bind an event handler to the field
-
 			this.fnAddTokensFromMultiInput = function() {
 				//List of suppliers loaded to the tableSelectDialog
 				var aSuppliers = this.byId("selectedSuppliers").getItems();
@@ -33,7 +30,6 @@ sap.ui.define([
 				.map(function(oToken) {
 					return oToken.getKey();
 				});
-
 				// Update all selections
 				aSuppliers.forEach(function(oSupplier) {
 					var sKey = oSupplier.getBindingContext().getProperty("Supplier");
@@ -41,7 +37,6 @@ sap.ui.define([
 				});
 			};
 		},
-
 		onBeforeRebindTableExtension: function(oEvent) {
 			// usually the value of the custom field should have an effect on the selected data in the table.
 			// So this is the place to add a binding parameter depending on the value in the custom field.
@@ -50,7 +45,6 @@ sap.ui.define([
 			oBindingParams.parameters = oBindingParams.parameters || {};
 			var oSmartTable = oEvent.getSource();
 			var oSmartFilterBar = this.byId(oSmartTable.getSmartFilterId());
-
 			if (oSmartFilterBar instanceof SmartFilterBar) {
 				//Custom Supplier filter
 				var oCustomControl = oSmartFilterBar.getControlByKey("Supplier");
@@ -70,7 +64,6 @@ sap.ui.define([
 				}
 			}
 		},
-
 		onCustomSupplierDialogOpen: function() {
 			Promise.resolve().then(function() {
 				if (!this._oSupplierDialog) {
@@ -95,14 +88,12 @@ sap.ui.define([
 				this.byId("selectedSuppliers").getBinding("items").refresh();
 			}.bind(this));
 		},
-
 		onHandleCustomSupplierDialogSearch: function(oEvent) {
 			this.byId("selectedSuppliers").getBinding("items").detachDataReceived(this.fnAddTokensFromMultiInput, this);
 			var sValue = oEvent.getParameter("value");
 			var oFilter = new Filter("CompanyName", FilterOperator.Contains, sValue);
 			oEvent.getSource().getBinding("items").filter([oFilter]);
 		},
-
 		onHandleCustomSupplierTableSelectDialogClose: function(oEvent) {
 			// Don't execute event when dataReceived as this is for new loading of suppliers only
 			this.byId("selectedSuppliers").getBinding("items").detachDataReceived(this.fnAddTokensFromMultiInput, this);
@@ -124,7 +115,6 @@ sap.ui.define([
 			oEvent.getSource().getBinding("items").filter([]);
 			this.getView().updateBindings();
 		},
-
 		getCustomAppStateDataExtension: function(oCustomData) {
 			//the content of the custom field shall be stored in the app state, so that it can be restored later again e.g. after a back navigation.
 			//The developer has to ensure, that the content of the field is stored in the object that is returned by this method.
@@ -150,12 +140,10 @@ sap.ui.define([
 						if (aKeyValues.length > 0) {
 							oCustomData.Supplier = aKeyValues;
 						}
-
 					}
 				}
 			}
 		},
-
 		restoreCustomAppStateDataExtension: function(oCustomData) {
 			//in order to to restore the content of the custom field in the filter bar e.g. after a back navigation,
 			//an object with the content is handed over to this method and the developer has to ensure, that the content of the custom field is set accordingly
@@ -164,7 +152,6 @@ sap.ui.define([
 			var oSmartFilterBar = this.byId("listReportFilter");
 			var aTokens;
 			var oCustomControl;
-
 			if (oSmartFilterBar instanceof SmartFilterBar) {
 				if (oCustomData.AverageRatingValue !== undefined) {
 					oCustomControl = oSmartFilterBar.getControlByKey("to_CollaborativeReview/AverageRatingValue");
@@ -172,7 +159,6 @@ sap.ui.define([
 						oCustomControl.setValue(oCustomData.AverageRatingValue);
 					}
 				}
-
 				oCustomControl = oSmartFilterBar.getControlByKey("ProductCategory");
 				if (oCustomControl instanceof MultiInput) {
 					oCustomControl.removeAllTokens();
@@ -183,7 +169,6 @@ sap.ui.define([
 						}
 					}
 				}
-
 				oCustomControl = oSmartFilterBar.getControlByKey("Supplier");
 				if (oCustomControl instanceof MultiInput) {
 					oCustomControl.removeAllTokens();
@@ -196,7 +181,6 @@ sap.ui.define([
 				}
 			}
 		},
-
 		_getRatingFilter: function(oRatingSelect) {
 			var sRating = oRatingSelect.getValue(),
 				oFilter;
@@ -209,7 +193,6 @@ sap.ui.define([
 			}
 			return oFilter;
 		},
-
 		_getTokens: function(oControl, sName) {
 			var aToken, aFilters = [];
 			aToken = oControl.getTokens();
@@ -220,7 +203,6 @@ sap.ui.define([
 			}
 			return aFilters;
 		},
-
 		_getKeyValuePairs: function(oCustomControl) {
 			var aKeyValue = [],
 				oToken = oCustomControl.getTokens();
@@ -231,7 +213,6 @@ sap.ui.define([
 			}
 			return aKeyValue;
 		},
-
 		_createTokens: function(oCustomField) {
 			var aTokens = [];
 			for (var i = 0; i < oCustomField.length; i++) {
@@ -242,7 +223,6 @@ sap.ui.define([
 			}
 			return aTokens;
 		},
-
 		onTokenUpdate: function(oEvent) {
 			// If a user deletes a token in the supplier multiinput field, set dirty state
 			this.byId("listReportFilter").fireFilterChange();

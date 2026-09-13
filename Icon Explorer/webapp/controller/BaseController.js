@@ -1,6 +1,5 @@
 sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/UIComponent"], function(Controller, UIComponent) {
 		"use strict";
-
 		return Controller.extend("sap.ui.demo.iconexplorer.controller.BaseController", {
 			/**
 			 * Convenience method for accessing the router.
@@ -10,7 +9,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/UIComponent"], functio
 			getRouter : function () {
 				return UIComponent.getRouterFor(this);
 			},
-
 			/**
 			 * Convenience method for getting the view model by name.
 			 * @public
@@ -20,7 +18,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/UIComponent"], functio
 			getModel : function (sName) {
 				return this.getView().getModel(sName);
 			},
-
 			/**
 			 * Convenience method for setting the view model.
 			 * @public
@@ -31,7 +28,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/UIComponent"], functio
 			setModel : function (oModel, sName) {
 				return this.getView().setModel(oModel, sName);
 			},
-
 			/**
 			 * Getter for the resource bundle.
 			 * @public
@@ -40,8 +36,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/UIComponent"], functio
 			getResourceBundle : function () {
 				return this.getOwnerComponent().getModel("i18n").getResourceBundle();
 			}
-
 		});
-
 	}
 );

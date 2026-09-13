@@ -16,13 +16,10 @@ sap.ui.define([
 	Utils
 ) {
 	"use strict";
-
 	return UIComponent.extend("sap.ui.demoapps.rta.freestyle.Component", {
-
 		metadata: {
 			manifest: "json"
 		},
-
 		/**
 		 * Initialize MockServer & FakeLrep in constructor before model is loaded from the manifest.json
 		 * @public
@@ -33,7 +30,6 @@ sap.ui.define([
 			SmartLink.mockUShellServices();
 			UIComponent.prototype.constructor.apply(this, arguments);
 		},
-
 		/**
 		 * The component is initialized by UI5 automatically during the startup of the app and calls the init method once.
 		 * @public
@@ -44,14 +40,11 @@ sap.ui.define([
 			this._createODataModel();
 			// add custom "Adapt UI" button if application is running as a standalone app
 			this._adaptButtonConfiguration();
-
 			// call the base component's init function and start the application
 			UIComponent.prototype.init.apply(this, arguments);
-
 			this.oApplicationController = new Application();
 			this.oApplicationController.init(this);
 		},
-
 		/**
 		 * The component is destroyed by UI5 automatically.
 		 * In this method, the ApplicationControlled is destroyed.
@@ -63,7 +56,6 @@ sap.ui.define([
 			// call the base component's destroy function
 			UIComponent.prototype.destroy.apply(this, arguments);
 		},
-
 		/**
 		 * Start the MockServer
 		 * @private
@@ -71,7 +63,6 @@ sap.ui.define([
 		_startMockServer: function () {
 			mockserver.init(this.getManifestEntry.bind(this));
 		},
-
 		/**
 		 * Adapt the visibility of the "Adapt UI" button
 		 * @private
@@ -81,21 +72,18 @@ sap.ui.define([
 				showAdaptButton: !Utils.getUshellContainer()
 			}), "app");
 		},
-
 		/**
 		 * Read the mainService configuration from the app descriptor
 		 * @private
 		 */
 		_assignMainService: function () {
 			var oAppEntry = this.getMetadata().getManifestEntry("sap.app");
-
 			if (oAppEntry.dataSources.mainService) {
 				this._oMainService = oAppEntry.dataSources.mainService;
 			} else {
 				this._oMainService = undefined;
 			}
 		},
-
 		/**
 		 * Create the ODataModel for the app
 		 * @private

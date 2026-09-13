@@ -2,18 +2,14 @@ sap.ui.define([
 	"sap/ui/test/Opa5"
 ], function(Opa5) {
 	"use strict";
-
 	return Opa5.extend("mycompany.myapp.MyWorklistApp.test.integration.pages.Common", {
-
 		createAWaitForAnEntitySet : function  (oOptions) {
 			return {
 				success: function () {
 					var aEntitySet;
-
 					var oMockServerInitialized = this.getMockServer().then(function (oMockServer) {
 						aEntitySet = oMockServer.getEntitySetData(oOptions.entitySet);
 					});
-
 					this.iWaitForPromise(oMockServerInitialized);
 					return this.waitFor({
 						success : function () {
@@ -23,10 +19,8 @@ sap.ui.define([
 				}
 			};
 		},
-
 		theUnitNumbersShouldHaveTwoDecimals : function (sControlType, sViewName, sSuccessMsg, sErrMsg) {
 			var rTwoDecimalPlaces =  /^-?\d+\.\d{2}$/;
-
 			return this.waitFor({
 				controlType : sControlType,
 				viewName : sViewName,
@@ -39,7 +33,6 @@ sap.ui.define([
 				errorMessage : sErrMsg
 			});
 		},
-
 		getMockServer : function () {
 			return new Promise(function (success) {
 				Opa5.getWindow().sap.ui.require(["mycompany/myapp/MyWorklistApp/localService/mockserver"], function (mockserver) {
@@ -47,7 +40,5 @@ sap.ui.define([
 				});
 			});
 		}
-
 	});
-
 });

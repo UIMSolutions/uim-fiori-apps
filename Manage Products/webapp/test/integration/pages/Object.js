@@ -6,13 +6,10 @@ sap.ui.define([
 	"./shareOptions"
 ], function (Opa5, Press, PropertyStrictEquals, Common, shareOptions) {
 	"use strict";
-
 	var sViewName = "Object";
-
 	Opa5.createPageObjects({
 		onTheObjectPage: {
 			baseClass : Common,
-
 			actions : Object.assign({
 				iPressTheBackButton : function () {
 					return this.waitFor({
@@ -22,11 +19,8 @@ sap.ui.define([
 						errorMessage : "Did not find the nav button on object page"
 					});
 				}
-
 			}, shareOptions.createActions(sViewName)),
-
 			assertions: Object.assign({
-
 				iShouldSeeTheRememberedObject : function () {
 					return this.waitFor({
 						success : function () {
@@ -45,7 +39,6 @@ sap.ui.define([
 						}
 					});
 				},
-
 				iShouldSeeTheObjectViewsBusyIndicator : function () {
 					return this.waitFor({
 						id : "page",
@@ -61,7 +54,6 @@ sap.ui.define([
 						errorMessage : "The object view is not busy"
 					});
 				},
-
 				theObjectViewsBusyIndicatorDelayIsRestored : function () {
 					return this.waitFor({
 						id : "page",
@@ -76,14 +68,12 @@ sap.ui.define([
 						errorMessage : "The object view's busy indicator delay is still zero."
 					});
 				},
-
 				theObjectViewShouldContainOnlyFormattedUnitNumbers : function () {
 					return this.theUnitNumbersShouldHaveTwoDecimals("sap.m.ObjectNumber",
 						sViewName,
 						"Object numbers are properly formatted",
 						"Object view has no entries which can be checked for their formatting");
 				},
-
 				theShareTileButtonShouldContainTheRememberedObjectName : function () {
 					return this.waitFor({
 						id : "shareTile",
@@ -99,11 +89,7 @@ sap.ui.define([
 						errorMessage : "The Save as Tile did not contain the object name"
 					});
 				}
-
 			}, shareOptions.createAssertions(sViewName))
-
 		}
-
 	});
-
 });

@@ -4,7 +4,6 @@ sap.ui.define([
 	"sap/m/library"
 ], function (Controller, UIComponent, mobileLibrary) {
 	"use strict";
-
 	return Controller.extend("mycompany.myapp.MyWorklistApp.controller.BaseController", {
 		/**
 		 * Convenience method for accessing the router.
@@ -14,7 +13,6 @@ sap.ui.define([
 		getRouter : function () {
 			return UIComponent.getRouterFor(this);
 		},
-
 		/**
 		 * Convenience method for getting the view model by name.
 		 * @public
@@ -24,7 +22,6 @@ sap.ui.define([
 		getModel : function (sName) {
 			return this.getView().getModel(sName);
 		},
-
 		/**
 		 * Convenience method for setting the view model.
 		 * @public
@@ -35,7 +32,6 @@ sap.ui.define([
 		setModel : function (oModel, sName) {
 			return this.getView().setModel(oModel, sName);
 		},
-
 		/**
 		 * Getter for the resource bundle.
 		 * @public
@@ -44,7 +40,6 @@ sap.ui.define([
 		getResourceBundle : function () {
 			return this.getOwnerComponent().getModel("i18n").getResourceBundle();
 		},
-
 		/**
 		 * Event handler when the share by E-Mail button has been clicked
 		 * @public
@@ -57,7 +52,5 @@ sap.ui.define([
 				oViewModel.getProperty("/shareSendEmailMessage")
 			);
 		}
-
 	});
-
 });

@@ -3,20 +3,15 @@ sap.ui.define([
 	"sap/ui/demo/iconexplorer/controller/BaseController"
 ], function(formatter, BaseController) {
 	"use strict";
-
 	return BaseController.extend("sap.ui.demo.iconexplorer.controller.Home", {
-
 		formatter:formatter,
-
 		onInit: function () {
 			// search in tags and icon string for the global search
 			var oSearchField = this.byId("search");
 			oSearchField.setFilterFunction(function (sValue, oControl) {
 				var oContext = oControl.getBindingContext().getObject();
-
 				return !!(oContext.name.indexOf(sValue) >= 0 || oContext.tagString.indexOf(sValue) >= 0);
 			});
-
 			oSearchField.setValueHelpIconSrc("sap-icon://search");
 			oSearchField.addEventDelegate({
 				// re-open suggestions when pressing inside the search field again
@@ -28,7 +23,6 @@ sap.ui.define([
 				}.bind(oSearchField)
 			});
 		},
-
 		/**
 		 * Navigate to the selected icon font and preselect the icon
 		 * @param {sap.ui.base.Event} oEvent the suggestionItemSelected event
@@ -37,7 +31,6 @@ sap.ui.define([
 		onSuggestionSelect: function(oEvent){
 			var sSearch = oEvent.getSource().getValue(),
 				oBindingContext = oEvent.getParameter("selectedRow").getBindingContext().getObject();
-
 			this.getRouter().navTo("overview",{
 				fontName : oBindingContext.font,
 				query: {
@@ -57,7 +50,6 @@ sap.ui.define([
 					return oRow.getVisible();
 				}),
 				oBindingContext;
-
 			if (oInput.getValue().length >= oInput.getStartSuggestion() && aVisibleSuggestions.length) {
 				oBindingContext = aVisibleSuggestions[0].getBindingContext().getObject();
 				this.getRouter().navTo("overview",{
@@ -68,7 +60,6 @@ sap.ui.define([
 				});
 			}
 		},
-
 		/**
 		 * Navigate to the selected icon font
 		 * @param {sap.ui.base.Event} oEvent the press event
@@ -76,7 +67,6 @@ sap.ui.define([
 		 */
 		onTitleLinkPress: function (oEvent) {
 			var sSelectedFont = oEvent.getSource().getCustomData().length && oEvent.getSource().getCustomData()[0].getValue();
-
 			this.getRouter().navTo("overview", {
 				fontName : sSelectedFont
 			});

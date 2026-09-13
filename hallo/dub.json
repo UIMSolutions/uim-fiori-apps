@@ -1,0 +1,8 @@
+{
+  "name": "hello",
+  "description": "Minimal SAP Fiori app powered by vibe.d on SAP BTP CF",
+  "targetType": "executable",
+  "dependencies": {
+    "vibe-d": "~>0.10.3"
+  }
+}

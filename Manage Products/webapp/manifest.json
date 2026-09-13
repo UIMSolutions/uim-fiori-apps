@@ -1,6 +1,5 @@
 {
 	"_version": "1.21.0",
-
 	"sap.app": {
 		"id": "mycompany.myapp.MyWorklistApp",
 		"type": "application",
@@ -28,7 +27,6 @@
 			}
 		}
 	},
-
 	"sap.ui": {
 		"technology": "UI5",
 		"icons": {
@@ -45,7 +43,6 @@
 			"phone": true
 		}
 	},
-
 	"sap.ui5": {
 		"rootView": {
 			"viewName": "mycompany.myapp.MyWorklistApp.view.App",

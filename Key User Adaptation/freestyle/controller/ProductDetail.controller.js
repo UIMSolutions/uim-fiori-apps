@@ -18,7 +18,6 @@ sap.ui.define([
 	startKeyUserAdaptation
 ) {
 	"use strict";
-
 	return BaseController.extend("sap.ui.demoapps.rta.freestyle.controller.ProductDetail", {
 		onInit: function() {
 			this.getApplication().registerDisplay(this);
@@ -29,7 +28,6 @@ sap.ui.define([
 			});
 			this.setModel(this._oViewModel, "displayView");
 		},
-
 		productChanged: function() {
 			var sProductId = this.getApplicationProperties().getProperty("/productId"),
 				sContextPath = this.getApplication().getODataHelper().getPathForDraft(sProductId, utilities.getNullUUID(), true);
@@ -41,7 +39,6 @@ sap.ui.define([
 				this.getApplication().resetAppBusy();
 			}
 		},
-
 		// Bind the header and the items to the context path
 		_bindView: function(sContextPath) {
 			this._oViewModel.setProperty("/dataLoaded", false);
@@ -112,17 +109,14 @@ sap.ui.define([
 				parameters: this.getApplication().getODataHelper().getParametersForRead()
 			});
 		},
-
 		_deleteDraftFromResume: function(sPath, sDraftUUID, bDirty) {
 			this.getApplication().getODataHelper().deleteDraftFromResume(sPath, sDraftUUID, bDirty);
 		},
-
 		unbind: function() {
 			this._sContextPath = null;
 			this._oBindingContext = null;
 			this.getView().unbindElement();
 		},
-
 		onImagePressed: function() {
 			if (!this._oLargeImage) {
 				Fragment.load({
@@ -142,23 +136,18 @@ sap.ui.define([
 				this._oLargeImage.open();
 			}
 		},
-
 		onEdit: function() {
 			MessageToast.show('Edit action');
 		},
-
 		onCopy: function() {
 			MessageToast.show('Copy action');
 		},
-
 		onNavBack: function() {
 			this.getApplication().navBack(true, false);
 		},
-
 		onDelete: function() {
 			MessageToast.show('Delete action');
 		},
-
 		sendEmail: function() {
 			var sProductId = this.getApplicationProperties().getProperty("/productId"),
 				oProduct = this._getProduct(),
@@ -169,25 +158,20 @@ sap.ui.define([
 				sSupplierName = oSupplier ? oSupplier.CompanyName : "";
 			utilities.sendEmailForProduct(this.getResourceBundle(), sProductName, sProductId, sProductDescription, sSupplierName);
 		},
-
 		_getProduct: function() {
 			return this._oBindingContext && this._oBindingContext.getObject();
 		},
-
 		_getAdminData: function() {
 			return this._oBindingContext && this._oBindingContext.getObject("DraftAdministrativeData");
 		},
-
 		_getTextData: function() {
 			return this._oBindingContext && this._oBindingContext.getObject("to_ProductTextInOriginalLang");
 		},
-
 		switchToAdaptionMode: function() {
 			startKeyUserAdaptation({
 				rootControl: this.getOwnerComponent()
 			});
 		},
-
 		modifyFailed: function(aArgs) {
 			this._oViewModel.setProperty("/showsMessage", true);
 			messages.showErrorMessage(aArgs[0].response, this._oViewModel.setProperty.bind(this._oViewModel, "/showsMessage", false));

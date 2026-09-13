@@ -4,11 +4,9 @@ sap.ui.define([
 	"./MockRequests"
 ], function(Log, MockServer, MockRequests) {
 	"use strict";
-
 	var oMockServer,
 		_sAppModulePath = "sap/ui/demoapps/rta/freestyle/",
 		_sJsonFilesModulePath = _sAppModulePath + "localService/mockdata";
-
 	return {
 		/**
 		 * Initializes the mock server.
@@ -16,7 +14,6 @@ sap.ui.define([
 		 * The local mock data in this folder is returned instead of the real data for testing.
 		 * @public
 		 */
-
 		init: function(fnGetManifestEntry) {
 			var oUriParameters = new URLSearchParams(window.location.search),
 				sJsonFilesUrl = sap.ui.require.toUrl(_sJsonFilesModulePath),
@@ -27,7 +24,6 @@ sap.ui.define([
 				sMetadataUrl = sap.ui.require.toUrl(_sAppModulePath + oMainDataSource.settings.localUri),
 				// ensure there is a trailing slash
 				sMockServerUrl = /.*\/$/.test(oMainDataSource.uri) ? oMainDataSource.uri : oMainDataSource.uri + "/";
-
 			var oMockServer = new MockServer({
 				rootUri: sMockServerUrl
 			});
@@ -37,12 +33,10 @@ sap.ui.define([
 				autoRespond: true,
 				autoRespondAfter: (oUriParameters.get("serverDelay") || 50)
 			});
-
 			oMockServer.simulate(sMetadataUrl, {
 				sMockdataBaseUrl: sJsonFilesUrl,
 				bGenerateMissingMockData: true
 			});
-
 			var aRequests = oMockServer.getRequests(),
 				fnResponse = function(iErrCode, sMessage, aRequest) {
 					aRequest.response = function(oXhr) {
@@ -51,7 +45,6 @@ sap.ui.define([
 						}, sMessage);
 					};
 				};
-
 			// handling the metadata error test
 			if (oUriParameters.get("metadataError")) {
 				aRequests.forEach(function(aEntry) {
@@ -60,7 +53,6 @@ sap.ui.define([
 					}
 				});
 			}
-
 			// Handling request errors
 			if (sErrorParam) {
 				aRequests.forEach(function(aEntry) {
@@ -71,12 +63,9 @@ sap.ui.define([
 			}
 			//add the app-specific mock implementation to the standard one
 			oMockServer.setRequests(aRequests.concat(oRequests.getRequests()));
-
 			MockServer.startAll();
-
 			Log.info("Running the app with mock data");
 		},
-
 		/**
 		 * @public returns the mockserver of the app, should be used in integration tests
 		 * @returns {sap.ui.core.util.MockServer} the mockserver instance
@@ -85,5 +74,4 @@ sap.ui.define([
 			return oMockServer;
 		}
 	};
-
 });

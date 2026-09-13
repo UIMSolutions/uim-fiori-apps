@@ -66,7 +66,6 @@
 			}
 		}
 	},
-
 	"sap.ui": {
 		"technology": "UI5",
 		"icons": {
@@ -204,17 +203,14 @@
 			}
 		}
 	},
-
 	"sap.platform.abap": {
 		"_version": "1.2.0",
 		"uri": "/sap/bc/ui5_ui5/sap/EPM_REF_PRODMAN"
 	},
-
 	"sap.platform.hcp": {
 		"_version": "1.1.0",
 		"uri": ""
 	},
-
 	"sap.fiori": {
 		"_version": "1.1.0",
 		"registrationIds": [

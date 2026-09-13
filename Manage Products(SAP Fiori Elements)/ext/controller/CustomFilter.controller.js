@@ -7,10 +7,8 @@ sap.ui.define( [
 	"sap/ui/comp/smartfilterbar/SmartFilterBar"
 ], function(Filter, Token, RatingIndicator, ComboBox, MultiInput, SmartFilterBar) {
 	"use strict";
-
 	// This class is the controller of view sap.ui.demoapps.rta.fiorielements.view.Root, the view hosting the whole app.
 	return {
-
 		onInitSmartFilterBarExtension: function(oEvent) {
 			// the custom field in the filter bar might have to be bound to a custom data model
 			// if a value change in the field shall trigger a follow up action, this method is the place to define and bind an event handler to the field
@@ -23,7 +21,6 @@ sap.ui.define( [
 			oBindingParams.parameters = oBindingParams.parameters || {};
 			var oSmartTable = oEvent.getSource();
 			var oSmartFilterBar = this.byId(oSmartTable.getSmartFilterId());
-
 			if (oSmartFilterBar instanceof SmartFilterBar) {
 				//Custom Supplier filter
 				var oCustomControl = oSmartFilterBar.getControlByKey("Supplier");
@@ -98,7 +95,6 @@ sap.ui.define( [
 						if (aKeyValues.length > 0) {
 							oCustomData.Supplier = aKeyValues;
 						}
-
 					}
 				}
 			}
@@ -110,7 +106,6 @@ sap.ui.define( [
 			//Example:
 			var oSmartFilterBar = this.byId("listReportFilter"),
 				aTokens;
-
 			if (oSmartFilterBar instanceof SmartFilterBar) {
 				if (oCustomData.AverageRatingValue !== undefined) {
 					var oCustomControl = oSmartFilterBar.getControlByKey("to_CollaborativeReview/AverageRatingValue");

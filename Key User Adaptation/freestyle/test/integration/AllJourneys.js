@@ -18,7 +18,6 @@ sap.ui.define([
 	"sap/ui/rta/test/internal/integration/pages/Adaptation"
 ], function(Opa5, Common) {
 	"use strict";
-
 	Opa5.extendConfig({
 		arrangements: new Common(),
 		viewNamespace: "sap.ui.demoapps.rta.freestyle.view.",

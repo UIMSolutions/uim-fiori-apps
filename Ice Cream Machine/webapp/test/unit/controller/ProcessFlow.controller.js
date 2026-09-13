@@ -1,5 +1,4 @@
 /*global QUnit,sinon*/
-
 sap.ui.define([
 	"sap/ui/thirdparty/jquery",
 	"sap/suite/ui/commons/demo/tutorial/controller/ProcessFlow.controller",
@@ -7,7 +6,6 @@ sap.ui.define([
 	"sap/ui/thirdparty/sinon-qunit"
 ], function(jQuery, ProcessFlowController) {
 	"use strict";
-
 	QUnit.module("ProcessFlow Controller - getValuesDelta formatter", {
 		beforeEach: function() {
 			this.oController = new ProcessFlowController();
@@ -16,18 +14,15 @@ sap.ui.define([
 			this.oController.destroy();
 		}
 	});
-
 	QUnit.test("should return the delta with measure", function(assert) {
 		var sResult = this.oController.getValuesDelta(5, 3, "%");
 		assert.equal(sResult, "-2", "Correct string returned");
 	});
-
 	QUnit.module("ProcessFlow Controller - onNodePressed event handler", {
 		beforeEach: function() {
 			function getResourceBundle() {
 				return jQuery.sap.resources({ url: "../../i18n/i18n.properties" });
 			}
-
 			this.oController = new ProcessFlowController();
 			this.oController.getOwnerComponent = function() {
 				return {
@@ -52,7 +47,6 @@ sap.ui.define([
 			this.oController.destroy();
 		}
 	});
-
 	QUnit.test("Node title should be part of the message toast text", function(assert) {
 		var oSpy = sinon.spy(sap.m.MessageToast, "show");
 		this.oController.onNodePressed(this.oEventMock);

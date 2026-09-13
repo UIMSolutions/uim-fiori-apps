@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vibe.d SAP Fiori App</title>
+    
+    <!-- SAPUI5 Bootstrap via SAP CDN -->
+    <script id="sap-ui-bootstrap"
+        src="https://ui5.sap.com/resources/sap-ui-core.js"
+        data-sap-ui-theme="sap_horizon"
+        data-sap-ui-libs="sap.m, sap.ui.layout"
+        data-sap-ui-compatVersion="edge"
+        data-sap-ui-async="true">
+    </script>
+    <script>
+        sap.ui.getCore().attachInit(function () {
+            // UI5 App Controls
+            var oTitleText = new sap.m.Text({ text: "Lade Daten vom vibe.d Server..." });
+            var oPage = new sap.m.Page({
+                title: "SAP Fiori Hello World (Dlang)",
+                content: [
+                    new sap.m.VBox({
+                        class: "sapUiSmallMargin",
+                        items: [
+                            new sap.m.Title({ text: "Willkommen auf SAP BTP", titleStyle: "H2" }),
+                            oTitleText
+                        ]
+                    })
+                ]
+            });
+            var oApp = new sap.m.App({
+                pages: [oPage]
+            });
+            oApp.placeAt("content");
+            // Daten aus dem Dlang Backend abrufen
+            fetch('/api/hello')
+                .then(response => response.json())
+                .then(data => {
+                    oTitleText.setText(data.message + " (Zeitstempel: " + data.timestamp + ")");
+                })
+                .catch(err => {
+                    oTitleText.setText("Fehler beim Abrufen der Daten vom Backend.");
+                });
+        });
+    </script>
+</head>
+<body class="sapUiBody" id="content">
+</body>
+</html>

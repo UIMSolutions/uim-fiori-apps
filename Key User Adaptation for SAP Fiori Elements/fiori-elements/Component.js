@@ -6,13 +6,10 @@ sap.ui.define([
 	mockserver
 ) {
 	"use strict";
-
 	return UIComponent.extend("sap.ui.demoapps.rta.fiorielements.Component", {
-
 		metadata: {
 			manifest: "json"
 		},
-
 		/**
 		 * Initialize MockServer & FakeLrep in constructor before model is loaded from the manifest.json
 		 * @public
@@ -20,10 +17,8 @@ sap.ui.define([
 		 */
 		constructor: function () {
 			this._startMockServer();
-
 			UIComponent.prototype.constructor.apply(this, arguments);
 		},
-
 		/**
 		 * The component is initialized by UI5 automatically during the startup of the app and calls the init method once.
 		 * @public
@@ -33,7 +28,6 @@ sap.ui.define([
 			// call the base component's init function and start the application
 			UIComponent.prototype.init.apply(this, arguments);
 		},
-
 		/**
 		 * Start the MockServer
 		 * @private

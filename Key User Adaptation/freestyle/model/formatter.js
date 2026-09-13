@@ -6,28 +6,21 @@ sap.ui.define([
 	library
 ) {
 	"use strict";
-
 	var ValueState = library.ValueState;
-
 	var bDemokitAvailable;
-
 	function getDemokitPath(sFileName) {
 		if (bDemokitAvailable === false) {
 			return bDemokitAvailable;
 		}
-
 		var sFilePath = sap.ui.require.toUrl('sap/ui/documentation').replace('resources', 'test-resources') + '/sdk/images/' + sFileName;
-
 		if (typeof bDemokitAvailable !== "boolean") {
 			bDemokitAvailable = [200, 301, 302, 304].indexOf(jQuery.ajax({
 				async: false,
 				url: sFilePath
 			}).status) !== -1;
 		}
-
 		return bDemokitAvailable && sFilePath;
 	}
-
 	return {
 		/**
 		 * Formatter for the title of the master list. iCount is the number of entries. It is negative when the number has not yet been determined.
@@ -39,7 +32,6 @@ sap.ui.define([
 			var oBundle = this.getResourceBundle();
 			return (iCount < 0) ? oBundle.getText("xtit.products") : oBundle.getText("xtit.productMasterProducts", [iCount]);
 		},
-
 		/**
 		 * Formatter for retrieving corresponding status codes for availability statuses.
 		 * @param {Integer} iAvailabilityCode
@@ -57,7 +49,6 @@ sap.ui.define([
 					return ValueState.None;
 			}
 		},
-
 		/**
 		 * Formatter for retrieving custom availability text.
 		 *
@@ -72,7 +63,6 @@ sap.ui.define([
 			}
 			return sAvailabilityText || "";
 		},
-
 		/**
 		 * Formatter for images uri - return absolute uri related to the current entry point directory path.
 		 *
@@ -84,7 +74,6 @@ sap.ui.define([
 				? getDemokitPath(sFileName) || sap.ui.require.toUrl("sap/ui/demoapps/rta/freestyle/localService/img") + '/' + sFileName
 				: null;
 		},
-
 		/**
 		 * Formatter for Measures - Returns concatenated string with Measure and Unit
 		 *

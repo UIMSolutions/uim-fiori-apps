@@ -11,10 +11,8 @@ sap.ui.define([
 	'sap/m/Title'
 ], function(coreLibrary, Renderer, Device, Toolbar, Title) {
 	"use strict";
-
 	// shortcut for sap.ui.core.TitleLevel
 	var TitleLevel = coreLibrary.TitleLevel;
-
 	/**
 	 * @class
 	 * Adds link functionality and wrapping to the existing title control for display in the demo kit application
@@ -27,17 +25,14 @@ sap.ui.define([
 				 * Options are the standard values for window.open() supported by browsers: _self, _top, _blank, _parent, _search. Alternatively, a frame name can be entered. This property is only used when the href property is set.
 				 */
 				target : {type : "string", group : "Behavior", defaultValue : null},
-
 				/**
 				 * The link target URI. Supports standard hyperlink behavior. If a JavaScript action should be triggered, this should not be set, but instead an event handler for the "press" event should be registered.
 				 */
 				href : {type : "sap.ui.core.URI", group : "Data", defaultValue : null},
-
 				/**
 				 * Stores a text that can be different to the text property for filtering purposes
 				 */
 				filter : {type : "string", group : "Data", defaultValue : ""},
-
 				/**
 				 * If set to true, the text will wrap to multiple lines, if not it will truncate on a single line
 				 */
@@ -50,14 +45,12 @@ sap.ui.define([
 				press : {allowPreventDefault : true}
 			}
 		},
-
 		init: function () {
 			if (Device.support.touch) {
 				this.ontap = this._handlePress;
 			} else {
 				this.onclick = this._handlePress;
 			}
-
 			/**
 			 * Handles the touch event on mobile devices.
 			 *
@@ -70,7 +63,6 @@ sap.ui.define([
 				}
 			};
 		},
-
 		/**
 		 * Triggers link activation when space key is pressed on the focused control.
 		 *
@@ -82,18 +74,15 @@ sap.ui.define([
 			if (this.getHref() && !oEvent.isDefaultPrevented()) {
 				// Normal browser link, the browser does the job. According to the keyboard spec, Space should do the same as Enter/Click.
 				// To make the browser REALLY do the same (history, referrer, frames, target,...), create a new "click" event and let the browser "do the needful".
-
 				// first disarm the Space key event
 				oEvent.preventDefault(); // prevent any scrolling which the browser might do because from its perspective the Link does not handle the "space" key
 				oEvent.setMarked();
-
 				// then create the click event
 				var oClickEvent = document.createEvent('MouseEvents');
 				oClickEvent.initEvent('click' /* event type */, false, true); // non-bubbling, cancelable
 				this.getDomRef().dispatchEvent(oClickEvent);
 			}
 		},
-
 		/**
 		 * Handler for the "press" event of the link.
 		 *
@@ -102,19 +91,16 @@ sap.ui.define([
 		 */
 		_handlePress : function(oEvent) {
 			oEvent.setMarked();
-
 			if (!this.firePress() || !this.getHref()) { // fire event and check return value whether default action should be prevented
 				oEvent.preventDefault();
 			}
 		},
-
 		setHref : function(sUri){
 			this.setProperty("href", sUri, true);
 			sUri = this.getProperty("href");
 			this.$().attr("href", sUri);
 			return this;
 		},
-
 		setTarget : function(sTarget){
 			this.setProperty("target", sTarget, true);
 			if (!sTarget) {
@@ -124,7 +110,6 @@ sap.ui.define([
 			}
 			return this;
 		},
-
 		/**
 		 * Renders the HTML for the given control, using the provided {@link sap.ui.core.RenderManager}.
 		 * @param {sap.ui.core.RenderManager} oRm the RenderManager that can be used for writing to the Render-Output-Buffer
@@ -138,13 +123,11 @@ sap.ui.define([
 					bAutoLevel = sLevel == TitleLevel.Auto,
 					sTag = bAutoLevel ? "div" : sLevel.toLowerCase(),
 					sTextAlign = Renderer.getTextAlign(oTitle.getTextAlign());
-
 				oRm.openStart(sTag, oTitle)
 					.class("sapUiDocTitleLink")
 					.class("sapMTitle")
 					.class("sapMTitleStyle" + (oTitle.getTitleStyle() || coreLibrary.TitleLevel.Auto))
 					.class("sapUiSelectable");
-
 				// adding wrap functionality begin
 				if (oTitle.getWrap()) {
 					oRm.class("wrap");
@@ -152,55 +135,44 @@ sap.ui.define([
 					oRm.class("sapMTitleNoWrap");
 				}
 				// adding wrap functionality end
-
 				var sWidth = oTitle.getWidth();
 				if (!sWidth) {
 					oRm.class("sapMTitleMaxWidth");
 				} else {
 					oRm.style("width", sWidth);
 				}
-
 				if (sTextAlign) {
 					oRm.style("text-align", sTextAlign);
 				}
-
 				if (oTitle.getParent() instanceof Toolbar) {
 					oRm.class("sapMTitleTB");
 				}
-
 				var sTooltip = oAssoTitle ? oAssoTitle.getTooltip_AsString() : oTitle.getTooltip_AsString();
 				if (sTooltip) {
 					oRm.attr("title", sTooltip);
 				}
-
 				if (bAutoLevel) {
 					oRm.attr("role", "heading");
 				}
-
 				oRm.openEnd();
-
 					// adding link functionality begin
 					oRm.openStart("a")
 						.class("sapMLnk")
 						.attr("tabindex", oTitle.getText() ? "0" : "-1")
 						.attr("href", oTitle.getHref());
-
 					if (oTitle.getTarget()) {
 						oRm.attr("target", oTitle.getTarget());
 					}
 					oRm.openEnd();
 					// adding link functionality end
-
 						oRm.openStart("span", oTitle.getId() + "-inner")
 							.openEnd()
 							.text(oAssoTitle ? oAssoTitle.getText() : oTitle.getText())
 							.close("span");
-
 					oRm.close("a");
 				oRm.close(sTag);
 			}
 		}
 	});
-
 	return TitleLink;
 });

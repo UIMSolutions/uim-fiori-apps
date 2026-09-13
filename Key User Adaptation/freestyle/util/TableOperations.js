@@ -3,7 +3,6 @@ sap.ui.define([
 	"./TableOperationsImpl"
 ], function(Object, TableOpImp) {
 	"use strict";
-
 	return Object.extend("sap.ui.demoapps.rta.freestyle.util.TableOperations", {
 		// This object provides functions to facilitate sorting, filtering, grouping and searching of tables.
 		// The following features are provided:
@@ -23,7 +22,6 @@ sap.ui.define([
 		// functions can be found in TableOperationsImpl.
 		// TableOperationsImpl provides grouping, filtering and sorting functionality. It is not meant to be consumed
 		// directly by apps. Instead interface classes like TableOperations are provided for consumption in apps..
-
 		constructor: function(oTable, aSearchableFields, oDefaultSorter, oFixedFilter) {
 			// Storage of the active grouping and sorting is private because
 			// of their interdependency
@@ -33,51 +31,39 @@ sap.ui.define([
 				oDefaultSorter: oDefaultSorter,
 				oFixedFilter: oFixedFilter
 			});
-
 			this.addSorter = function(oSorter) {
 				oTableOpImp.addSorter(oSorter);
 			};
-
 			this.setGrouping = function(oNewGrouper) {
 				oTableOpImp.setGrouping(oNewGrouper);
 			};
-
 			this.removeGrouping = function() {
 				oTableOpImp.removeGrouping();
 			};
-
 			this.getGrouping = function() {
 				return oTableOpImp.getGrouping();
 			};
-
 			this.getSorter = function() {
 				return oTableOpImp.getSorters();
 			};
-
 			this.addFilter = function(oFilter, sFilterAttribute) {
 				oTableOpImp.addFilter(oFilter, sFilterAttribute);
 			};
-
 			this.getFilterTable = function() {
 				return oTableOpImp.getFilterTable();
 			};
-
 			this.resetFilters = function() {
 				oTableOpImp.resetFilters();
 			};
-
 			this.setSearchTerm = function(sNewSearchTerm) {
 				oTableOpImp.setSearchTerm(sNewSearchTerm);
 			};
-
 			this.getSearchTerm = function() {
 				return oTableOpImp.getSearchTerm();
 			};
-
 			this.addSFBFilters = function(oSFBFilters) {
 				oTableOpImp.addSFBFilters(oSFBFilters);
 			};
-
 			this.applyTableOperations = function(bUseApplicationFilters) {
 				oTableOpImp.applyTableOperations(bUseApplicationFilters);
 			};

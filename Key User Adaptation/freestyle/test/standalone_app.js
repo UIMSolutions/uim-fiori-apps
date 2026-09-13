@@ -4,7 +4,6 @@ sap.ui.define([
 	"sap/ui/core/ComponentContainer"
 ], async (Shell, Component, ComponentContainer) => {
 	"use strict";
-
 	const oComponent = await Component.create({
 		name: "sap.ui.demoapps.rta.freestyle",
 		id : "freestyle",

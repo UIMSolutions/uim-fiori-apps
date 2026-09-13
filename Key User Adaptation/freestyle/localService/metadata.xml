@@ -531,7 +531,6 @@
 				<End Type="SEPMRA_PROD_MAN.SEPMRA_C_PD_Supplier" Multiplicity="1" Role="FromRole_assoc_5A5270F64744207B0026143D2B225BFE"/>
 				<End Type="SEPMRA_PROD_MAN.SEPMRA_I_AddressType" Multiplicity="0..1" Role="ToRole_assoc_5A5270F64744207B0026143D2B225BFE"/>
 			</Association>
-
 			<Association Name="assoc_F084DD07968874308B48BE93BBA42D64" sap:content-version="1">
 				<End Type="SEPMRA_PROD_MAN.SEPMRA_C_PD_Supplier" Multiplicity="1" Role="FromRole_assoc_F084DD07968874308B48BE93BBA42D64"/>
 				<End Type="SEPMRA_PROD_MAN.SEPMRA_I_ContactPersonType" Multiplicity="0..1" Role="ToRole_assoc_F084DD07968874308B48BE93BBA42D64"/>
@@ -1375,7 +1374,6 @@
 				xmlns="http://docs.oasis-open.org/odata/ns/edm">
 				<Annotation Term="com.sap.vocabularies.Communication.v1.IsEmailAddress" Bool="true"/>
 			</Annotations>
-
 			<Annotations Target="SEPMRA_PROD_MAN.SEPMRA_I_ContactPersonType/PhoneNumber"
 				xmlns="http://docs.oasis-open.org/odata/ns/edm">
 				<Annotation Term="com.sap.vocabularies.Communication.v1.IsPhoneNumber" Bool="true"/>
