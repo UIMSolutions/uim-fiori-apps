@@ -1,0 +1,19 @@
+specVersion: "3.0"
+metadata:
+  name: contact-manager-ui5
+type: application
+framework:
+  name: OpenUI5
+  version: "1.120.0"
+  libraries:
+    - name: sap.m
+    - name: sap.f
+    - name: sap.ui.core
+    - name: sap.ui.layout
+server:
+  customMiddleware:
+    - name: ui5-middleware-simpleproxy
+      mountPath: /api
+      afterMiddleware: compression
+      configuration:
+        baseUri: "http://localhost:8080/api"

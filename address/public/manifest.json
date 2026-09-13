@@ -1,6 +1,5 @@
 {
   "_version": "1.59.0",
-
   "sap.app": {
     "id": "sap.fiori.addressmanager",
     "type": "application",
@@ -20,7 +19,6 @@
       }
     }
   },
-
   "sap.ui": {
     "technology": "UI5",
     "deviceTypes": {
@@ -29,7 +27,6 @@
       "phone": true
     }
   },
-
   "sap.ui5": {
     "flexEnabled": false,
     "rootView": {

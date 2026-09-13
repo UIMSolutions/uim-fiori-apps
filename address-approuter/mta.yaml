@@ -2,7 +2,6 @@ _schema-version: '3.1'
 ID: address-manager
 version: 1.0.0
 description: Address Manager with SAP Approuter and Dlang Backend
-
 modules:
   # 1. Backend-Modul: Stellt die Schnittstelle bereit
   - name: address-manager-backend
@@ -19,7 +18,6 @@ modules:
           url: '${default-url}' # Stellt die dynamische CF-URL für den Approuter bereit
     requires:
       - name: address-manager-xsuaa
-
   # 2. Approuter-Modul: Konsumiert die Schnittstelle
   - name: address-manager-approuter
     type: approuter.nodejs
@@ -34,7 +32,6 @@ modules:
           name: backend-api
           url: '~{url}'
           forwardAuthToken: true
-
 resources:
   # 3. XSUAA Service Instance
   - name: address-manager-xsuaa

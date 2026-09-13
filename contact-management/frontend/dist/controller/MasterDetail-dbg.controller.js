@@ -5,24 +5,20 @@ sap.ui.define([
     "sap/m/MessageBox"
 ], function (Controller, JSONModel, MessageToast, MessageBox) {
     "use strict";
-
     return Controller.extend("contact.manager.controller.MasterDetail", {
         onInit: function () {
             // 1. Hauptdatenmodell für den View sicherstellen
             var oModel = new JSONModel({ Contacts: [] });
             this.getView().setModel(oModel);
-
             // 2. UI-Steuerungsmodell initialisieren
             var oViewModel = new JSONModel({
                 editMode: false,
                 isNew: false
             });
             this.getView().setModel(oViewModel, "ui");
-
             // 3. Kontakte vom vibe.d Backend abrufen
             this._loadContacts();
         },
-
         _loadContacts: function () {
             var oController = this;
             
@@ -42,7 +38,6 @@ sap.ui.define([
                 }
             });
         },
-
         onSelectContact: function (oEvent) {
             var oItem = oEvent.getParameter("listItem");
             var oContext = oItem.getBindingContext();
@@ -52,7 +47,6 @@ sap.ui.define([
             
             this.getView().getModel("ui").setProperty("/editMode", false);
         },
-
         onAddContact: function () {
             var oModel = this.getView().getModel();
             var aContacts = oModel.getProperty("/Contacts") || [];
@@ -66,10 +60,8 @@ sap.ui.define([
                 company: "",
                 address: { street: "", zipCode: "", city: "", country: "" }
             };
-
             aContacts.push(oNewContact);
             oModel.setProperty("/Contacts", aContacts);
-
             var iIndex = aContacts.length - 1;
             var oList = this.byId("contactList");
             var oNewItem = oList.getItems()[iIndex];
@@ -78,25 +70,20 @@ sap.ui.define([
                 oList.setSelectedItem(oNewItem);
                 this.byId("detailPage").setBindingContext(oNewItem.getBindingContext());
             }
-
             var oUIModel = this.getView().getModel("ui");
             oUIModel.setProperty("/editMode", true);
             oUIModel.setProperty("/isNew", true);
         },
-
         onEditContact: function () {
             this.getView().getModel("ui").setProperty("/editMode", true);
         },
-
         onSaveContact: function () {
             var oController = this;
             var oContext = this.byId("detailPage").getBindingContext();
             var oData = oContext.getObject();
             var bIsNew = this.getView().getModel("ui").getProperty("/isNew");
-
             var sUrl = bIsNew ? "/api/v1/Contacts" : "/api/v1/Contacts/" + oData.id;
             var sMethod = bIsNew ? "POST" : "PUT";
-
             jQuery.ajax({
                 url: sUrl,
                 method: sMethod,
@@ -113,14 +100,11 @@ sap.ui.define([
                 }
             });
         },
-
         onDeleteContact: function () {
             var oController = this;
             var oContext = this.byId("detailPage").getBindingContext();
             if (!oContext) return;
-
             var sId = oContext.getProperty("id");
-
             MessageBox.confirm("Möchtest du diesen Kontakt wirklich löschen?", {
                 onClose: function (sAction) {
                     if (sAction === MessageBox.Action.OK) {

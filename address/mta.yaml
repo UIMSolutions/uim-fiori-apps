@@ -2,7 +2,6 @@ _schema-version: '3.1'
 ID: address-manager
 version: 1.0.0
 description: Address Manager Dlang OData v4 on SAP BTP (ohne Docker)
-
 modules:
   # 1. Dlang Backend Module (ohne Docker)
   - name: address-manager-backend

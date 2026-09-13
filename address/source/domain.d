@@ -1,5 +1,4 @@
 module domain;
-
 import uim.fiori;
 @safe:
 /// Entitätsdefinition für die Adressverwaltung
@@ -13,7 +12,6 @@ struct Address {
     string City;
     string PostalCode;
     string Country;
-
     Json toJson() const {
         Json j = Json.emptyObject;
         j["Id"] = Id;

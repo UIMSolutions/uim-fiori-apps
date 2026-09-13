@@ -4,18 +4,15 @@ sap.ui.define([
     "sap/m/MessageBox"
 ], function (Controller, MessageToast, MessageBox) {
     "use strict";
-
     return Controller.extend("sap.fiori.addressmanager.controller.Main", {
         
         onInit: function () {
             // Initialisierung
         },
-
         // 1. CREATE: Neuen Adresseintrag erstellen
         onCreateAddress: function () {
             console.log("onCreateAddress called");
             var oListBinding = this.byId("addressTable").getBinding("items");
-
             // Erstellt eine neue Entität im OData v4 Model Context
             var oContext = oListBinding.create({
                 "FirstName": "Hans",
@@ -25,7 +22,6 @@ sap.ui.define([
                 "City": "München",
                 "Country": "Deutschland"
             });
-
             // Auf Bestätigung vom Server warten
             oContext.created().then(function () {
                 MessageToast.show("Adresse erfolgreich erstellt!");
@@ -33,10 +29,8 @@ sap.ui.define([
                 MessageBox.error("Fehler beim Erstellen: " + oError.message);
             });
         },
-
         onSearch: function (oEvent) {
             console.log("onSearch called");
-
             var sQuery = oEvent.getParameter("query");
             var aFilter = [];
             if (sQuery && sQuery.length > 0) {
@@ -46,38 +40,31 @@ sap.ui.define([
             var oBinding = oTable.getBinding("items");
             oBinding.filter(aFilter);
         },
-
         // 2. UPDATE: Feld in ausgewählter Zeile ändern
         onUpdateAddress: function () {
             console.log("onUpdateAddress called");
             
             var oTable = this.byId("addressTable");
             var oSelectedItem = oTable.getSelectedItem();
-
             if (!oSelectedItem) {
                 MessageToast.show("Bitte wähle zuerst eine Zeile aus!");
                 return;
             }
-
             var oContext = oSelectedItem.getBindingContext();
             // Automatisiertes PATCH-Update an Backend senden
             oContext.setProperty("FirstName", "Max (Geändert)");
             
             MessageToast.show("Änderung gesendet.");
         },
-
         // 3. DELETE: Ausgewählte Adresse löschen
         onDeleteAddress: function () {
             console.log("onDeleteAddress called");
-
             var oTable = this.byId("addressTable");
             var oSelectedItem = oTable.getSelectedItem();
-
             if (!oSelectedItem) {
                 MessageToast.show("Bitte wähle zuerst eine Zeile aus!");
                 return;
             }
-
             var oContext = oSelectedItem.getBindingContext();
             oContext.delete().then(function () {
                 MessageToast.show("Adresse gelöscht!");
@@ -85,12 +72,10 @@ sap.ui.define([
                 MessageBox.error("Fehler beim Löschen: " + oError.message);
             });
         },
-
         // Refresh-Button zum manuellen Neuladen
         onRefresh: function () {
             this.byId("addressTable").getBinding("items").refresh();
         },
-
         onOpenCreateDialog: function () {
             console.log("onOpenCreateDialog called");
             var oModel = this.getView().getModel();
@@ -98,10 +83,8 @@ sap.ui.define([
             // OData v4 Transient Context zum Hinzufügen erstellen
             var oTable = this.byId("addressTable");
             console.log("oTable: ", oTable);
-
             var oListBinding = oTable.getBinding("items");
             console.log("oListBinding: ", oListBinding);
-
             var oContext = oListBinding.create({
                 "FirstName": "",
                 "LastName": "",
@@ -110,7 +93,6 @@ sap.ui.define([
                 "City": "",
                 "Country": "Deutschland"
             });
-
             if (!this._oDialog) {
                 this._oDialog = new Dialog({
                     title: "Neue Adresse anlegen",
@@ -154,7 +136,6 @@ sap.ui.define([
                 });
                 this.getView().addDependent(this._oDialog);
             }
-
             this._oDialog.setBindingContext(oContext);
             this._oDialog.open();
         }

@@ -1,18 +1,14 @@
 module controller;
-
 import uim.fiori;
 import domain;
 @safe:
-
 class AddressController : ODataController {
     protected Json[string] store;
-
     // Collect related contacts for one address from the in-memory store.
     protected Json getContactsForAddress(string addressId) @trusted {
         writeln("AdressController:Fetching contacts for addressId: ", addressId);
         
         Json contacts = Json.emptyArray;
-
         if (auto items = "Contacts" in store) {
             foreach (item; (*items).byValue) {
                 bool matches = false;
@@ -21,21 +17,17 @@ class AddressController : ODataController {
                 } else if ("AddressId" in item) {
                     matches = item["AddressId"].get!string == addressId;
                 }
-
                 if (matches) {
                     contacts.appendArrayElement(item);
                 }
             }
         }
-
         return contacts;
     }
-
     this() {
         // Initialer In-Memory Speicher
         store["Addresses"] = Json.emptyArray;
                 // Initial-Daten
-
         auto addr1 = domain.Address();
         addr1.Id = "1001";
         addr1.FirstName = "Max";
@@ -44,7 +36,6 @@ class AddressController : ODataController {
         addr1.City = "München";
         addr1.PostalCode = "80802";
         addr1.Country = "Deutschland";
-
         auto addr2 = domain.Address();
         addr2.Id = "1002";
         addr2.FirstName = "Erika";
@@ -53,20 +44,16 @@ class AddressController : ODataController {
         addr2.City = "Nürnberg";
         addr2.PostalCode = "90402";
         addr2.Country = "Deutschland";
-
         store["Addresses"] ~= addr1.toJson();
         store["Addresses"] ~= addr2.toJson();
     }
-
     override Json getEntitySet(string entitySetName, string expand = "") {
         writeln("AdressController:Fetching entity set: ", entitySetName, " with expand: ", expand);
-
         Json res = Json.emptyObject;
         res["@odata.context"] = "/api/v4/$metadata#" ~ entitySetName;
         
         writeln("Store contents for ", entitySetName, ": ", store[entitySetName]);
         Json list = store.get(entitySetName, Json.emptyArray);
-
         // Falls $expand=Contacts angefordert wurde, Relationen dazuhängen
         if (expand == "Contacts") {
             foreach (ref item; list.byValue) {
@@ -74,7 +61,6 @@ class AddressController : ODataController {
                 item["Contacts"] = getContactsForAddress(addressId);
             }
         }
-
         res["value"] = list;
         return res;
     }
@@ -84,7 +70,6 @@ class AddressController : ODataController {
         // assert(res["@odata.context"] == "$metadata#Addresses");
         // assert(res["value"].isArray);
     }
-
     override Json getEntity(string entitySetName, string id, string expand = "") {
         writeln("AdressController:Fetching entity: ", entitySetName, " with id: ", id, " and expand: ", expand);
         if (auto items = entitySetName in store) {
@@ -113,26 +98,20 @@ class AddressController : ODataController {
         assert(res["@odata.context"] == "$metadata#Addresses/$entity");
         assert(res["FirstName"].get!string == "Max");
     }
-
     override Json createEntity(string entitySetName, Json payload) {
         writeln("AdressController:Creating entity in ", entitySetName, ": ", payload);
-
         Json newEntity = payload;
-
         // 1. Sichere Id-Vergabe
         if ("Id" !in newEntity || newEntity["Id"].get!string.length == 0) {
             newEntity["Id"] = Clock.currTime.toUnixTime().to!string;
         }
-
         // 2. OData v4 Einzel-Kontext setzen
         newEntity["@odata.context"] = "$metadata#" ~ entitySetName ~ "/$entity";
-
         // 3. Im Speicher ablegen
         if (entitySetName !in store) {
             store[entitySetName] = Json.emptyArray;
         }
         store[entitySetName].appendArrayElement(newEntity);
-
         return newEntity;
     }
     unittest {
@@ -144,10 +123,8 @@ class AddressController : ODataController {
         assert(res["@odata.context"] == "$metadata#Addresses/$entity");
         assert(res["FirstName"].get!string == "John");
     }
-
     override Json updateEntity(string entitySetName, string id, Json payload) @trusted {
         writeln("AdressController:AdressController:Updating entity in ", entitySetName, " with id: ", id, ": ", payload);
-
         if (auto items = entitySetName in store) {
             foreach (ref item; (*items).byValue) {
                 if ("Id" in item && item["Id"].get!string == id) {
@@ -171,20 +148,17 @@ class AddressController : ODataController {
         payload["LastName"] = "Smith";
         auto created = controller.createEntity("Addresses", payload);
         string id = created["Id"].get!string;
-
         Json updatePayload = Json.emptyObject;
         updatePayload["FirstName"] = "Janet";
         auto updated = controller.updateEntity("Addresses", id, updatePayload);
         assert(updated["@odata.context"] == "$metadata#Addresses/$entity");
         assert(updated["FirstName"].get!string == "Janet");
     }
-
     override bool deleteEntity(string entitySetName, string id) {
         writeln("AdressController:Deleting entity in ", entitySetName, " with id: ", id);
         if (auto items = entitySetName in store) {
             Json newArray = Json.emptyArray;
             bool found = false;
-
             foreach (item; (*items).byValue) {
                 if ("Id" in item && item["Id"].get!string == id) {
                     found = true;
@@ -192,7 +166,6 @@ class AddressController : ODataController {
                     newArray.appendArrayElement(item);
                 }
             }
-
             if (found) {
                 store[entitySetName] = newArray;
                 return true;
@@ -207,23 +180,18 @@ class AddressController : ODataController {
         payload["LastName"] = "Johnson";
         auto created = controller.createEntity("Addresses", payload);
         string id = created["Id"].get!string;
-
         bool deleted = controller.deleteEntity("Addresses", id);
         assert(deleted);
-
         auto res = controller.getEntity("Addresses", id);
         assert(res.isUndefined);
     }
-
     Json getEntitiesJson() {
         /// Hilfsmethode zur Bereitstellung der Adress-Daten
         Json response = Json.emptyObject;
         response["@odata.context"] = "/api/v4/$metadata#Addresses";
         response["value"] = store.get("Addresses", Json.emptyArray);
-
         return response;
     }
-
 }
 unittest {
     auto controller = new AddressController();
@@ -232,10 +200,8 @@ unittest {
     payload["LastName"] = "Brown";
     auto created = controller.createEntity("Addresses", payload);
     string id = created["Id"].get!string;
-
     bool deleted = controller.deleteEntity("Addresses", id);
     assert(deleted);
-
     auto res = controller.getEntity("Addresses", id);
     assert(res.isUndefined);
 }

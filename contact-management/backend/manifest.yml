@@ -1,0 +1,7 @@
+applications:
+- name: contact-manager-backend
+  memory: 128M
+  buildpack: binary_buildpack
+  command: ./contact-manager-backend --port=$PORT
+  env:
+    VIBE_ENV: production
