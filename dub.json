@@ -1,0 +1,9 @@
+{
+	"authors": [
+		"runner"
+	],
+	"description": "A D library for building SAP Fiori app descriptors, with optional vibe.d JSON support.",
+	"license": "Apache-2.0",
+	"name": "uim-fiori-apps",
+	"targetType": "library"
+}
