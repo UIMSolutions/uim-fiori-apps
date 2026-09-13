@@ -4,13 +4,10 @@ sap.ui.define([
 	"sap/base/Log"
 ], function (MockServer, JSONModel, Log) {
 	"use strict";
-
 	var oMockServer,
 		_sAppPath = "sap/ui/demo/orderbrowser/",
 		_sJsonFilesPath = _sAppPath + "localService/mockdata";
-
 	var oMockServerInterface = {
-
 		/**
 		 * Initializes the mock server asynchronously.
 		 * You can configure the delay with the URL parameter "serverDelay".
@@ -20,11 +17,9 @@ sap.ui.define([
 		 */
 		init : function (oOptionsParameter) {
 			var oOptions = oOptionsParameter || {};
-
 			return new Promise(function(fnResolve) {
 				var sManifestUrl = sap.ui.require.toUrl(_sAppPath + "manifest.json"),
 					oManifestModel = new JSONModel(sManifestUrl);
-
 				oManifestModel.attachRequestCompleted(function ()  {
 					var oUriParameters = new URLSearchParams(window.location.search),
 						// parse manifest for local metadata URI
@@ -33,7 +28,6 @@ sap.ui.define([
 						sMetadataUrl = sap.ui.require.toUrl(_sAppPath + oMainDataSource.settings.localUri),
 						// ensure there is a trailing slash
 						sMockServerUrl = /.*\/$/.test(oMainDataSource.uri) ? oMainDataSource.uri : oMainDataSource.uri + "/";
-
 					// create a mock server instance or stop the existing one to reinitialize
 					if (!oMockServer) {
 						oMockServer = new MockServer({
@@ -42,28 +36,23 @@ sap.ui.define([
 					} else {
 						oMockServer.stop();
 					}
-
 					// configure mock server with the given options or a default delay of 0.5s
 					MockServer.config({
 						autoRespond : true,
 						autoRespondAfter : (oOptions.delay || oUriParameters.get("serverDelay") || 500)
 					});
-
 					// simulate all requests using mock data
 					oMockServer.simulate(sMetadataUrl, {
 						sMockdataBaseUrl : sJsonFilesUrl,
 						bGenerateMissingMockData : true
 					});
-
 					var aRequests = oMockServer.getRequests();
-
 					// compose an error response for requesti
 					var fnResponse = function (iErrCode, sMessage, aRequest) {
 						aRequest.response = function(oXhr){
 							oXhr.respond(iErrCode, {"Content-Type": "text/plain;charset=utf-8"}, sMessage);
 						};
 					};
-
 					// simulate metadata errors
 					if (oOptions.metadataError || oUriParameters.get("metadataError")) {
 						aRequests.forEach(function (aEntry) {
@@ -72,7 +61,6 @@ sap.ui.define([
 							}
 						});
 					}
-
 					// simulate request errors
 					var sErrorParam = oOptions.errorType || oUriParameters.get("errorType"),
 						iErrorCode = sErrorParam === "badRequest" ? 400 : 500;
@@ -81,24 +69,19 @@ sap.ui.define([
 							fnResponse(iErrorCode, sErrorParam, aEntry);
 						});
 					}
-
 					// custom mock behaviour may be added here
-
 					// set requests and start the server
 					oMockServer.setRequests(aRequests);
 					oMockServer.start();
-
 					Log.info("Running the app with mock data");
 					fnResolve();
 				});
-
 				oManifestModel.attachRequestFailed(function () {
 					Log.error("Failed to load application manifest");
 					fnResolve();
 				});
 			});
 		},
-
 		/**
 		 * @public returns the mockserver of the app, should be used in integration tests
 		 * @returns {sap.ui.core.util.MockServer} the mockserver instance
@@ -107,6 +90,5 @@ sap.ui.define([
 			return oMockServer;
 		}
 	};
-
 	return oMockServerInterface;
 });

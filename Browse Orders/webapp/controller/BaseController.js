@@ -3,7 +3,6 @@ sap.ui.define([
 	"sap/ui/core/routing/History"
 ], function (Controller, History) {
 	"use strict";
-
 	return Controller.extend("sap.ui.demo.orderbrowser.controller.BaseController", {
 		/**
 		 * Convenience method for accessing the router in every controller of the application.
@@ -13,7 +12,6 @@ sap.ui.define([
 		getRouter : function () {
 			return this.getOwnerComponent().getRouter();
 		},
-
 		/**
 		 * Convenience method for getting the view model by name in every controller of the application.
 		 * @public
@@ -23,7 +21,6 @@ sap.ui.define([
 		getModel : function (sName) {
 			return this.getView().getModel(sName);
 		},
-
 		/**
 		 * Convenience method for setting the view model in every controller of the application.
 		 * @public
@@ -34,7 +31,6 @@ sap.ui.define([
 		setModel : function (oModel, sName) {
 			return this.getView().setModel(oModel, sName);
 		},
-
 		/**
 		 * Convenience method for getting the resource bundle.
 		 * @public
@@ -43,7 +39,6 @@ sap.ui.define([
 		getResourceBundle : function () {
 			return this.getOwnerComponent().getModel("i18n").getResourceBundle();
 		},
-
 		/**
 		 * Event handler for navigating back.
 		 * It there is a history entry we go one step back in the browser history
@@ -52,13 +47,11 @@ sap.ui.define([
 		 */
 		onNavBack : function() {
 			var sPreviousHash = History.getInstance().getPreviousHash();
-
 			if (sPreviousHash !== undefined) {
 				history.go(-1);
 			} else {
 				this.getRouter().navTo("master", {}, true);
 			}
 		}
-
 	});
 });

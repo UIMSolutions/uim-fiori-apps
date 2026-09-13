@@ -3,15 +3,12 @@ sap.ui.define([
   "sap/ui/model/json/JSONModel"
 ], function (UIComponent, JSONModel) {
   "use strict";
-
   return UIComponent.extend("admin.client.Component", {
     metadata: {
       manifest: "json"
     },
-
     init: function () {
       UIComponent.prototype.init.apply(this, arguments);
-
       var oModel = new JSONModel({
         users: [],
         selectedUser: {
@@ -25,7 +22,6 @@ sap.ui.define([
         isNew: false,
         busy: false
       });
-
       this.setModel(oModel);
     }
   });

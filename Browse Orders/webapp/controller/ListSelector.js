@@ -3,9 +3,7 @@ sap.ui.define([
 	"sap/base/Log"
 ], function (BaseObject, Log) {
 	"use strict";
-
 	return BaseObject.extend("sap.ui.demo.orderbrowser.controller.ListSelector", {
-
 		/**
 		 * Provides a convenience API for selecting list items. All the functions will wait until the initial load of the a List passed to the instance by the setBoundMasterList
 		 * function.
@@ -13,7 +11,6 @@ sap.ui.define([
 		 * @public
 		 * @alias sap.ui.demo.orderbrowser.controller.ListSelector
 		 */
-
 		constructor: function () {
 			this._oWhenListHasBeenSet = new Promise(function (fnResolveListHasBeenSet) {
 				this._fnResolveListHasBeenSet = fnResolveListHasBeenSet;
@@ -41,7 +38,6 @@ sap.ui.define([
 					}.bind(this));
 			}.bind(this));
 		},
-
 		/**
 		 * A bound list should be passed in here. Should be done, before the list has received its initial data from the server.
 		 * May only be invoked once per ListSelector instance.
@@ -52,7 +48,6 @@ sap.ui.define([
 			this._oList = oList;
 			this._fnResolveListHasBeenSet(oList);
 		},
-
 		/**
 		 * Tries to select and scroll to a list item with a matching binding context. If there are no items matching the binding context or the ListMode is none,
 		 * no selection/scrolling will happen
@@ -60,23 +55,18 @@ sap.ui.define([
 		 * @public
 		 */
 		selectAListItem: function (sBindingPath) {
-
 			this.oWhenListLoadingIsDone.then(
 				function () {
 					var oList = this._oList,
 						oSelectedItem;
-
 					if (oList.getMode() === "None") {
 						return;
 					}
-
 					oSelectedItem = oList.getSelectedItem();
-
 					// skip update if the current selection is already matching the object path
 					if (oSelectedItem && oSelectedItem.getBindingContext().getPath() === sBindingPath) {
 						return;
 					}
-
 					oList.getItems().some(function (oItem) {
 						if (oItem.getBindingContext() && oItem.getBindingContext().getPath() === sBindingPath) {
 							oList.setSelectedItem(oItem);
@@ -89,7 +79,6 @@ sap.ui.define([
 				}
 			);
 		},
-
 		/**
 		 * Removes all selections from master list.
 		 * Does not trigger 'selectionChange' event on master list, though.

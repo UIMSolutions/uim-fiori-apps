@@ -1,5 +1,4 @@
 module uim.fiori.admin;
-
 public:
 //    import uim.fiori.admin.controllers;
 //    import uim.fiori.admin.helpers;

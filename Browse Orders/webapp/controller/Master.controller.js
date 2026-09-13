@@ -11,15 +11,11 @@ sap.ui.define([
 	"sap/ui/core/format/DateFormat"
 ], function (BaseController, JSONModel, Filter, FilterOperator, Sorter, GroupHeaderListItem, Device, Fragment, formatter, DateFormat) {
 	"use strict";
-
 	return BaseController.extend("sap.ui.demo.orderbrowser.controller.Master", {
-
 		formatter: formatter,
-
 		/* =========================================================== */
 		/* lifecycle methods                                           */
 		/* =========================================================== */
-
 		/**
 		 * Called when the master list controller is instantiated. It sets up the event handling for the master/detail communication and other lifecycle tasks.
 		 * @public
@@ -32,7 +28,6 @@ sap.ui.define([
 				// so it can be restored later on. Busy handling on the master list is
 				// taken care of by the master list itself.
 				iOriginalBusyDelay = oList.getBusyIndicatorDelay();
-
 			this._oGroupFunctions = {
 				CompanyName: function (oContext) {
 					var sCompanyName = oContext.getProperty("Customer/CompanyName");
@@ -41,19 +36,16 @@ sap.ui.define([
 						text: sCompanyName
 					};
 				},
-
 				OrderDate: function (oContext) {
 					var oDate = oContext.getProperty("OrderDate"),
 						iYear = oDate.getFullYear(),
 						iMonth = oDate.getMonth() + 1,
 						sMonthName = this._oMonthNameFormat.format(oDate);
-
 					return {
 						key: iYear + "-" + iMonth,
 						text: this.getResourceBundle().getText("masterGroupTitleOrderedInPeriod", [sMonthName, iYear])
 					};
 				}.bind(this),
-
 				ShippedDate: function (oContext) {
 					var oDate = oContext.getProperty("ShippedDate");
 					// Special handling needed because shipping date may be empty (=> not yet shipped).
@@ -61,7 +53,6 @@ sap.ui.define([
 						var iYear = oDate.getFullYear(),
 							iMonth = oDate.getMonth() + 1,
 							sMonthName = this._oMonthNameFormat.format(oDate);
-
 						return {
 							key: iYear + "-" + iMonth,
 							text: this.getResourceBundle().getText("masterGroupTitleShippedInPeriod", [sMonthName, iYear])
@@ -75,15 +66,12 @@ sap.ui.define([
 				}.bind(this)
 			};
 			this._oMonthNameFormat = DateFormat.getInstance({ pattern: "MMMM"});
-
 			this._oList = oList;
-
 			// keeps the filter and search state
 			this._oListFilterState = {
 				aFilter : [],
 				aSearch : []
 			};
-
 			this.setModel(oViewModel, "masterView");
 			// Make sure, busy indication is showing immediately so there is no
 			// break after the busy indication for loading the view's meta data is
@@ -92,21 +80,17 @@ sap.ui.define([
 				// Restore original busy indicator delay for the list
 				oViewModel.setProperty("/delay", iOriginalBusyDelay);
 			});
-
 			this.getView().addEventDelegate({
 				onBeforeFirstShow: function () {
 					this.getOwnerComponent().oListSelector.setBoundMasterList(oList);
 				}.bind(this)
 			});
-
 			this.getRouter().getRoute("master").attachPatternMatched(this._onMasterMatched, this);
 			this.getRouter().attachBypassed(this.onBypassed, this);
 		},
-
 		/* =========================================================== */
 		/* event handlers                                              */
 		/* =========================================================== */
-
 		/**
 		 * After list data is available, this handler method updates the
 		 * master list counter
@@ -117,7 +101,6 @@ sap.ui.define([
 			// update the master list object counter after new data is loaded
 			this._updateListItemCount(oEvent.getParameter("total"));
 		},
-
 		/**
 		 * Event handler for the master search field. Applies current
 		 * filter value and triggers a new search. If the search field's
@@ -135,18 +118,14 @@ sap.ui.define([
 				this.onRefresh();
 				return;
 			}
-
 			var sQuery = oEvent.getParameter("query");
-
 			if (sQuery) {
 				this._oListFilterState.aSearch = [new Filter("CustomerName", FilterOperator.Contains, sQuery)];
 			} else {
 				this._oListFilterState.aSearch = [];
 			}
 			this._applyFilterSearch();
-
 		},
-
 		/**
 		 * Event handler for refresh event. Keeps filter, sort
 		 * and group settings and refreshes the list binding.
@@ -155,7 +134,6 @@ sap.ui.define([
 		onRefresh : function () {
 			this._oList.getBinding("items").refresh();
 		},
-
 		/**
 		 * Event handler for the filter, sort and group buttons to open the ViewSettingsDialog.
 		 * @param {sap.ui.base.Event} oEvent the button press event
@@ -188,7 +166,6 @@ sap.ui.define([
 				oDialog.open(sDialogTab);
 			});
 		},
-
 		/**
 		 * Event handler called when ViewSettingsDialog has been confirmed, i.e.
 		 * has been closed with 'OK'. In the case, the currently chosen filters or groupers
@@ -220,7 +197,6 @@ sap.ui.define([
 			this._applyFilterSearch();
 			this._applyGrouper(oEvent);
 		},
-
 		/**
 		 * Apply the chosen grouper to the master list
 		 * @param {sap.ui.base.Event} oEvent the confirm event
@@ -241,7 +217,6 @@ sap.ui.define([
 			}
 			this._oList.getBinding("items").sort(aSorters);
 		},
-
 		/**
 		 * Event handler for the list selection event
 		 * @param {sap.ui.base.Event} oEvent the list selectionChange event
@@ -250,14 +225,12 @@ sap.ui.define([
 		onSelectionChange : function (oEvent) {
 			var oList = oEvent.getSource(),
 				bSelected = oEvent.getParameter("selected");
-
 			// skip navigation when deselecting an item in multi selection mode
 			if (!(oList.getMode() === "MultiSelect" && !bSelected)) {
 				// get the list item, either from the listItem parameter or from the event's source itself (will depend on the device-dependent mode).
 				this._showDetail(oEvent.getParameter("listItem") || oEvent.getSource());
 			}
 		},
-
 		/**
 		 * Event handler for the bypassed event, which is fired when no routing pattern matched.
 		 * If there was an object selected in the master list, that selection is removed.
@@ -266,7 +239,6 @@ sap.ui.define([
 		onBypassed : function () {
 			this._oList.removeSelections(true);
 		},
-
 		/**
 		 * Used to create GroupHeaders with non-capitalized caption.
 		 * These headers are inserted into the master list to
@@ -281,11 +253,9 @@ sap.ui.define([
 				upperCase : false
 			});
 		},
-
 		/* =========================================================== */
 		/* begin: internal methods                                     */
 		/* =========================================================== */
-
 
 		_createViewModel : function() {
 			return new JSONModel({
@@ -296,12 +266,10 @@ sap.ui.define([
 				noDataText: this.getResourceBundle().getText("masterListNoDataText")
 			});
 		},
-
 		_onMasterMatched :  function() {
 			//Set the layout property of the FCL control to 'OneColumn'
 			this.getModel("appView").setProperty("/layout", "OneColumn");
 		},
-
 		/**
 		 * Shows the selected item on the detail page
 		 * On phones a additional history entry is created
@@ -316,7 +284,6 @@ sap.ui.define([
 				objectId : oItem.getBindingContext().getProperty("OrderID")
 			}, bReplace);
 		},
-
 		/**
 		 * Sets the item count on the master list header
 		 * @param {int} iTotalItems the total number of items in the list
@@ -328,7 +295,6 @@ sap.ui.define([
 				this.getModel("masterView").setProperty("/titleCount", iTotalItems);
 			}
 		},
-
 		/**
 		 * Internal helper method to apply both filter and search state together on the list binding
 		 * @private
@@ -345,7 +311,6 @@ sap.ui.define([
 				oViewModel.setProperty("/noDataText", this.getResourceBundle().getText("masterListNoDataText"));
 			}
 		},
-
 		/**
 		 * Internal helper method that sets the filter bar visibility property and the label's caption to be shown
 		 * @param {string} sFilterBarText the selected filter value
@@ -356,6 +321,5 @@ sap.ui.define([
 			oViewModel.setProperty("/isFilterBarVisible", (this._oListFilterState.aFilter.length > 0));
 			oViewModel.setProperty("/filterBarLabel", this.getResourceBundle().getText("masterFilterBarText", [sFilterBarText]));
 		}
-
 	});
 });

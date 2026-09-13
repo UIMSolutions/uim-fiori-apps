@@ -1,10 +1,7 @@
 module uim.fiori.admin.models;
-
 import std.datetime : Clock;
 import std.conv : to;
-
 @safe:
-
 struct AdminUser {
     string id;
     string username;
@@ -13,21 +10,17 @@ struct AdminUser {
     bool active;
     string createdAt;
 }
-
 class UserRepository {
 private:
     AdminUser[] m_users;
     size_t m_nextId = 1000;
-
 public:
     this() {
         seed();
     }
-
     AdminUser[] list() const {
         return m_users.dup;
     }
-
     AdminUser getById(string id) const {
         foreach (u; m_users) {
             if (u.id == id) {
@@ -36,14 +29,12 @@ public:
         }
         return AdminUser.init;
     }
-
     AdminUser create(AdminUser user) {
         user.id = to!string(m_nextId++);
         user.createdAt = Clock.currTime().toISOString();
         m_users ~= user;
         return user;
     }
-
     AdminUser update(string id, AdminUser user) {
         foreach (i, existing; m_users) {
             if (existing.id == id) {
@@ -57,7 +48,6 @@ public:
         }
         return AdminUser.init;
     }
-
     bool remove(string id) {
         foreach (i, u; m_users) {
             if (u.id == id) {
@@ -67,7 +57,6 @@ public:
         }
         return false;
     }
-
 private:
     void seed() {
         m_users ~= AdminUser(

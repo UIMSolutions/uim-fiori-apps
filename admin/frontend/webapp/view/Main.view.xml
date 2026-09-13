@@ -5,7 +5,6 @@
   xmlns:layout="sap.ui.layout"
   xmlns:form="sap.ui.layout.form"
   xmlns:core="sap.ui.core">
-
   <App>
     <Page title="Admin User Management" class="sapUiContentPadding">
       <content>
@@ -18,7 +17,6 @@
             <Button text="Delete" type="Negative" press=".onDelete" />
             <Button icon="sap-icon://refresh" press=".onRefresh" />
           </Toolbar>
-
           <layout:Grid defaultSpan="L8 M8 S12" hSpacing="1" vSpacing="1">
             <VBox>
               <Table
@@ -45,19 +43,15 @@
                 </items>
               </Table>
             </VBox>
-
             <VBox class="sapUiSmallMarginBegin">
               <Title text="Details" level="H4" />
               <form:SimpleForm editable="true" layout="ResponsiveGridLayout">
                 <Label text="ID" />
                 <Input value="{/selectedUser/id}" editable="false" />
-
                 <Label text="Username" />
                 <Input value="{/selectedUser/username}" />
-
                 <Label text="Email" />
                 <Input value="{/selectedUser/email}" type="Email" />
-
                 <Label text="Role" />
                 <Select selectedKey="{/selectedUser/role}">
                   <items>
@@ -66,10 +60,8 @@
                     <core:Item key="Viewer" text="Viewer" />
                   </items>
                 </Select>
-
                 <Label text="Active" />
                 <Switch state="{/selectedUser/active}" />
-
                 <Label text="Created At" />
                 <Input value="{/selectedUser/createdAt}" editable="false" />
               </form:SimpleForm>
