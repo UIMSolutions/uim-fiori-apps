@@ -4,11 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
 module uim.edm.classes.type;
-
 import uim.edm;
-
 @safe:
-
 /**
  * Base class for EDM types
  */
@@ -30,7 +27,6 @@ abstract class EdmType : EdmNamedElement, IEdmType {
         return fullName();
     }
 }
-
 /**
  * Primitive type implementation
  */
@@ -72,7 +68,6 @@ unittest {
         writeln("All tests passed.");
     }
 }
-
 /// Factory function to get primitive type reference
 EdmPrimitiveTypeRef primitiveType(EdmPrimitiveType type) {
     return new EdmPrimitiveTypeRef(type);

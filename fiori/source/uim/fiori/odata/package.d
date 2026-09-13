@@ -1,5 +1,4 @@
 module uim.fiori.odata;
-
 public:
     import uim.fiori.odata.batch;
     import uim.fiori.odata.batch_parser;

@@ -4,11 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
 module uim.edm.interfaces.element;
-
 import uim.edm;
-
 @safe:
-
 /**
  * Base interface for all EDM model elements
  */

@@ -1,9 +1,6 @@
 module uim.fiori.odata.batch;
-
 import uim.fiori;
-
 @safe:
-
 
 /// Repräsentiert eine einzelne Operation innerhalb eines Batch-Requests
 struct BatchRequestItem {
@@ -16,7 +13,6 @@ struct BatchRequestItem {
 }
 unittest {
     writeln("Testing BatchRequestItem...");
-
     BatchRequestItem item;
     item.id = "1";
     item.method = "POST";
@@ -25,7 +21,6 @@ unittest {
     item.body = Json.emptyObject
         .set("Name", "New Product");
     item.headers["Content-Type"] = "application/json";
-
     assert(item.id == "1");
     assert(item.method == "POST");
     assert(item.url == "/Products");
@@ -33,20 +28,17 @@ unittest {
     assert(item.body.getString("Name") == "New Product");
     assert(item.headers["Content-Type"] == "application/json");
 }
-
 /// Repräsentiert die Antwort auf eine einzelne Batch-Operation
 struct BatchResponseItem {
     string id;
     int status = 200;
     Json body;
     string[string] headers;
-
     Json toJson() const {
         Json hdrs = Json.emptyObject;
         foreach (k, v; headers) {
             hdrs[k] = v;
         }
-
         return Json.emptyObject
             .set("id", id)
             .set("status", status)
@@ -56,7 +48,6 @@ struct BatchResponseItem {
 }
 unittest {
     writeln("Testing BatchResponseItem.toJson...");
-
     BatchResponseItem resp;
     resp.id = "1";
     resp.status = 201;
@@ -64,7 +55,6 @@ unittest {
     resp.body["Id"] = "1001";
     resp.body["Name"] = "New Product";
     resp.headers["Content-Type"] = "application/json";
-
     Json jsonResp = resp.toJson();
     assert(jsonResp["id"].get!string == "1");
     assert(jsonResp["status"].get!int == 201);

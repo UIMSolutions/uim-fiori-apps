@@ -1,9 +1,6 @@
 module uim.fiori.odata.provider;
-
 import uim.fiori;
-
 @safe:
-
 interface IODataProvider {
     Json getEntitySet(string entitySetName, const ref ODataQueryOptions options);
     Json getEntity(string entitySetName, string key, const ref ODataQueryOptions options);
@@ -18,7 +15,6 @@ Json generateServiceDocument(string[] entitySetNames) {
             .set("kind", "EntitySet")
             .set("url", name);
     }
-
     return Json.emptyObject
         .set("@odata.context", "$metadata")
         .set("value", value);
@@ -26,10 +22,8 @@ Json generateServiceDocument(string[] entitySetNames) {
 ///
 unittest {
     writeln("Testing generateServiceDocument...");
-
     string[] entitySetNames = ["Persons", "Orders"];
     Json serviceDoc = generateServiceDocument(entitySetNames);
-
     assert(serviceDoc["@odata.context"].get!string == "$metadata");
     assert(serviceDoc["value"].isArray);
     assert(serviceDoc["value"].length == 2);

@@ -1,9 +1,6 @@
 module uim.fiori.odata.helper;
-
 import uim.fiori;
-
 @safe:
-
 string toODataPascalCase(string name) {
     if (name.length == 0) return name;
     import std.uni : toUpper, toLower;

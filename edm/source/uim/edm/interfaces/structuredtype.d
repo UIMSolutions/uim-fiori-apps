@@ -4,11 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
 module uim.edm.interfaces.structuredtype;
-
 import uim.edm;
-
 @safe:
-
 /**
  * Interface for structured types (complex and entity types)
  */
@@ -31,7 +28,6 @@ interface IEdmStructuredType : IEdmType {
     /// Find property by name
     IEdmProperty findProperty(string propertyName);
 }
-
 /**
  * Interface for entity types (with keys)
  */
@@ -42,7 +38,6 @@ interface IEdmEntityType : IEdmStructuredType {
     /// Check if this entity has a stream
     bool hasStream();
 }
-
 /**
  * Interface for complex types (without keys)
  */

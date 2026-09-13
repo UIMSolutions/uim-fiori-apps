@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
 module uim.edm.enumerations.propertykind;
-
 /**
  * Kinds of properties in EDM types
  */

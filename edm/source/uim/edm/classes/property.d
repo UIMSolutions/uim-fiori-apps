@@ -4,11 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
 module uim.edm.classes.property;
-
 import uim.edm;
-
 @safe:
-
 /**
  * Base property implementation
  */
@@ -48,7 +45,6 @@ abstract class EdmProperty : EdmNamedElement, IEdmProperty {
         return _declaringType;
     }
 }
-
 /**
  * Structural property (data member)
  */
@@ -110,7 +106,6 @@ class EdmStructuralProperty : EdmProperty, IEdmStructuralProperty {
         return this;
     }
 }
-
 /**
  * Navigation property (relationship)
  */

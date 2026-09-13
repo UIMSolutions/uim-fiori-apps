@@ -4,12 +4,9 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
 module edm.tests.test;
-
 import uim.edm;
 import std.stdio;
-
 @safe:
-
 // Test primitive types
 unittest {
     writeln("Testing EDM Primitive Types...");
@@ -25,7 +22,6 @@ unittest {
     
     writeln("  ✓ Primitive types work correctly");
 }
-
 // Test schema creation
 unittest {
     writeln("Testing EDM Schema...");
@@ -37,7 +33,6 @@ unittest {
     
     writeln("  ✓ Schema creation works");
 }
-
 // Test entity type
 unittest {
     writeln("Testing EDM Entity Type...");
@@ -63,7 +58,6 @@ unittest {
     
     writeln("  ✓ Entity type creation and properties work");
 }
-
 // Test complex type
 unittest {
     writeln("Testing EDM Complex Type...");
@@ -83,7 +77,6 @@ unittest {
     
     writeln("  ✓ Complex type creation works");
 }
-
 // Test navigation properties
 unittest {
     writeln("Testing EDM Navigation Properties...");
@@ -107,7 +100,6 @@ unittest {
     
     writeln("  ✓ Navigation properties work");
 }
-
 // Test type inheritance
 unittest {
     writeln("Testing EDM Type Inheritance...");
@@ -131,7 +123,6 @@ unittest {
     
     writeln("  ✓ Type inheritance works");
 }
-
 // Test finding types and properties
 unittest {
     writeln("Testing EDM Type and Property Lookup...");
@@ -156,7 +147,6 @@ unittest {
     
     writeln("  ✓ Type and property lookup works");
 }
-
 void main() {
     writeln("\n=== Running EDM Tests ===\n");
     writeln("All tests passed! ✓\n");

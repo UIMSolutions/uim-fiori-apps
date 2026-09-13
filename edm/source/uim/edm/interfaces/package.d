@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
 module uim.edm.interfaces;
-
 public {
     import uim.edm.interfaces.element;
     import uim.edm.interfaces.namedelement;

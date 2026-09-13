@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
 module uim.edm.enumerations;
-
 public {
     import uim.edm.enumerations.primitivetypes;
     import uim.edm.enumerations.propertykind;

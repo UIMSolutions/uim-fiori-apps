@@ -1,9 +1,6 @@
 module uim.fiori.odata.query;
-
 import uim.fiori;
-
 @safe:
-
 
 /// Repräsentiert die geparsten OData v4 System Query Option Werte
 struct ODataQueryOptions {
@@ -12,27 +9,21 @@ struct ODataQueryOptions {
     string[] select;
     string filterRaw;
 }
-
 /// Extrahiert OData v4 Parameter aus einem Vibe.d Request
 ODataQueryOptions parseQueryOptions(HTTPServerRequest req) {
     ODataQueryOptions options;
-
     if (auto pTop = "$top" in req.query) {
         try { options.top = (*pTop).to!size_t; } catch (ConvException e) {}
     }
-
     if (auto pSkip = "$skip" in req.query) {
         try { options.skip = (*pSkip).to!size_t; } catch (ConvException e) {}
     }
-
     if (auto pSelect = "$select" in req.query) {
         options.select = (*pSelect).splitter(',').map!(s => s.strip).array;
     }
-
     if (auto pFilter = "$filter" in req.query) {
         options.filterRaw = *pFilter;
     }
-
     return options;
 }
 unittest {

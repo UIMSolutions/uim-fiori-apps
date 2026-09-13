@@ -1,5 +1,4 @@
 module uim.fiori.controllers.controller;
-
 import std.algorithm.searching : canFind;
 import std.array : appender;
 import std.file : exists, mkdirRecurse, readText, write;
@@ -8,15 +7,12 @@ import std.regex : matchAll, regex, replaceFirst;
 import std.string : join, split;
 import uim.fiori.controllers.manifest;
 import uim.fiori.views;
-
 @safe:
-
 struct ControllerMethod {
     string name;
     string[] bodyLines;
     string[] parameters;
 }
-
 struct ControllerConfig {
     string namespace;
     string name;
@@ -24,14 +20,12 @@ struct ControllerConfig {
     ControllerMethod[] methods;
     bool withBaseController = true;
 }
-
 private void ensureParentFolder(string filePath) {
     auto parent = dirName(filePath);
     if (parent.length > 0 && parent != ".") {
         mkdirRecurse(parent);
     }
 }
-
 private string jsQuote(string value) {
     auto buf = appender!string();
     foreach (ch; value) {
@@ -46,7 +40,6 @@ private string jsQuote(string value) {
     }
     return buf.data;
 }
-
 string buildController(ControllerConfig cfg) {
     string[] deps = cfg.dependencies.dup;
     if (cfg.withBaseController) {
@@ -61,16 +54,13 @@ string buildController(ControllerConfig cfg) {
             deps = ["sap/ui/core/mvc/Controller"] ~ deps;
         }
     }
-
     string[] aliases;
     foreach (dep; deps) {
         auto parts = dep.split("/");
         aliases ~= parts[$ - 1];
     }
-
     auto buf = appender!string();
     buf.put("sap.ui.define([\n");
-
     foreach (idx, dep; deps) {
         buf.put("    \"");
         buf.put(jsQuote(dep));
@@ -80,26 +70,22 @@ string buildController(ControllerConfig cfg) {
         }
         buf.put("\n");
     }
-
     buf.put("], function (");
     buf.put(aliases.join(", "));
     buf.put(") {\n");
     buf.put("    \"use strict\";\n\n");
-
     string baseAlias = cfg.withBaseController ? aliases[0] : "Controller";
     buf.put("    return ");
     buf.put(baseAlias);
     buf.put(".extend(\"");
     buf.put(jsQuote(cfg.namespace ~ "." ~ cfg.name));
     buf.put("\", {\n");
-
     foreach (idx, method; cfg.methods) {
         buf.put("        ");
         buf.put(method.name);
         buf.put(": function (");
         buf.put(method.parameters.join(", "));
         buf.put(") {\n");
-
         if (method.bodyLines.length == 0) {
             buf.put("            // TODO: Implement\n");
         } else {
@@ -109,20 +95,16 @@ string buildController(ControllerConfig cfg) {
                 buf.put("\n");
             }
         }
-
         buf.put("        }");
         if (idx + 1 < cfg.methods.length) {
             buf.put(",");
         }
         buf.put("\n");
     }
-
     buf.put("    });\n");
     buf.put("});\n");
-
     return buf.data;
 }
-
 ControllerConfig listReportController(string namespace, string name) {
     return ControllerConfig(
         namespace,
@@ -146,7 +128,6 @@ ControllerConfig listReportController(string namespace, string name) {
         ]
     );
 }
-
 ControllerConfig objectPageController(string namespace, string name) {
     return ControllerConfig(
         namespace,
@@ -168,7 +149,6 @@ ControllerConfig objectPageController(string namespace, string name) {
         ]
     );
 }
-
 ControllerConfig createEditController(string namespace, string name) {
     return ControllerConfig(
         namespace,
@@ -190,16 +170,13 @@ ControllerConfig createEditController(string namespace, string name) {
         ]
     );
 }
-
 void writeControllerFile(ControllerConfig config, string filePath) {
     ensureParentFolder(filePath);
     write(filePath, buildController(config));
 }
-
 string readControllerFile(string filePath) {
     return readText(filePath);
 }
-
 string[] extractHandlerNames(string jsControllerContent) {
     string[] methods;
     foreach (capture; matchAll(jsControllerContent,
@@ -208,7 +185,6 @@ string[] extractHandlerNames(string jsControllerContent) {
     }
     return methods;
 }
-
 string upsertMethod(string jsControllerContent, ControllerMethod method) {
     auto existing = extractHandlerNames(jsControllerContent);
     foreach (name; existing) {
@@ -222,14 +198,12 @@ string upsertMethod(string jsControllerContent, ControllerMethod method) {
                 }
             }
             replacement ~= "        }";
-
             return replaceFirst(jsControllerContent,
                 regex(`\b` ~ method.name ~ `\s*:\s*function\s*\([^\)]*\)\s*\{[\s\S]*?\n\s*\}`),
                 replacement
             );
         }
     }
-
     string insertBlock = "\n        " ~ method.name ~ ": function (" ~ method.parameters.join(", ") ~ ") {\n";
     if (method.bodyLines.length == 0) {
         insertBlock ~= "            // TODO: Implement\n";
@@ -239,14 +213,11 @@ string upsertMethod(string jsControllerContent, ControllerMethod method) {
         }
     }
     insertBlock ~= "        }";
-
     if (jsControllerContent.canFind("    });")) {
         return replaceFirst(jsControllerContent, regex(`\n\s*\}\);\s*$`), "," ~ insertBlock ~ "\n    });\n");
     }
-
     return jsControllerContent;
 }
-
 void scaffoldListReportApp(
         string appNamespace,
         string viewName,
@@ -260,7 +231,6 @@ void scaffoldListReportApp(
         "controller",
         controllerName ~ ".controller.js"
     );
-
     auto viewNode = xmlView(
         appNamespace ~ ".controller." ~ controllerName,
         app("app", [
@@ -273,13 +243,10 @@ void scaffoldListReportApp(
             ], "mainPage")
         ])
     );
-
     ensureParentFolder(viewFilePath);
     writeXmlView(viewNode, viewFilePath);
-
     auto controllerCfg = listReportController(appNamespace ~ ".controller", controllerName);
     writeControllerFile(controllerCfg, controllerFilePath);
-
     auto manifestPath = buildPath(webappRoot, "manifest.json");
     if (exists(manifestPath)) {
         auto content = readText(manifestPath);
@@ -294,28 +261,22 @@ void scaffoldListReportApp(
         write(manifestPath, updated);
     }
 }
-
 unittest {
     auto cfg = listReportController("demo.controller", "Main");
     auto js = buildController(cfg);
-
     assert(js.canFind("sap.ui.define"));
     assert(js.canFind("demo.controller.Main"));
     assert(js.canFind("onRefresh: function ()"));
     assert(extractHandlerNames(js).length >= 3);
-
     auto updated = upsertMethod(js,
         ControllerMethod("onSearch", [
             "var sQuery = oEvent.getParameter(\"query\") || \"\";",
             "console.log(sQuery);"
         ], ["oEvent"])
     );
-
     assert(updated.canFind("onSearch: function (oEvent)"));
-
     auto objectPage = buildController(objectPageController("demo.controller", "Object"));
     assert(objectPage.canFind("onSave: function ()"));
-
     auto createEdit = buildController(createEditController("demo.controller", "Editor"));
     assert(createEdit.canFind("onCreate: function ()"));
 }

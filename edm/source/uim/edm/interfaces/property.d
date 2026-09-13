@@ -4,11 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
 module uim.edm.interfaces.property;
-
 import uim.edm;
-
 @safe:
-
 /**
  * Interface for EDM properties
  */
@@ -25,7 +22,6 @@ interface IEdmProperty : IEdmNamedElement {
     /// Get the declaring type
     IEdmStructuredType declaringType();
 }
-
 /**
  * Interface for structural properties (data members)
  */
@@ -45,7 +41,6 @@ interface IEdmStructuralProperty : IEdmProperty {
     /// Check if Unicode
     bool unicode();
 }
-
 /**
  * Interface for navigation properties (relationships)
  */

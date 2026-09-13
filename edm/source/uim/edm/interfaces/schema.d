@@ -4,11 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
 module uim.edm.interfaces.schema;
-
 import uim.edm;
-
 @safe:
-
 /**
  * Interface for EDM schema
  */

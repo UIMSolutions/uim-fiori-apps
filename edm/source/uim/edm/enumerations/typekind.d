@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
 module uim.edm.enumerations.typekind;
-
 /**
  * Kinds of EDM types in the type system
  */

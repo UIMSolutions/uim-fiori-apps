@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
 module uim.edm.enumerations.primitivetypes;
-
 /**
  * EDM Primitive Types as defined in the OData specification.
  * These are the built-in scalar types supported by EDM.
@@ -81,7 +80,6 @@ enum EdmPrimitiveType : string {
     GeometryMultiPolygon = "Edm.GeometryMultiPolygon",
     GeometryCollection = "Edm.GeometryCollection"
 }
-
 /// Helper function to check if a type name is a primitive type
 bool isPrimitiveType(string typeName) {
     switch (typeName) {

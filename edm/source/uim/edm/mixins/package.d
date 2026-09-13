@@ -4,5 +4,4 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
 module uim.edm.mixins;
-
 // Mixins module for EDM - currently empty, can be extended with templates and mixins as needed

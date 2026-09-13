@@ -4,11 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
 module uim.edm.classes.structuredtype;
-
 import uim.edm;
-
 @safe:
-
 /**
  * Base class for structured types (complex and entity)
  */
@@ -90,7 +87,6 @@ abstract class EdmStructuredType : EdmType, IEdmStructuredType {
         return prop;
     }
 }
-
 /**
  * Entity type implementation
  */
@@ -116,7 +112,6 @@ class EdmEntityType : EdmStructuredType, IEdmEntityType {
         }
         return false;
     }
-
     /// Add a key property
     EdmEntityType addKey(string propertyName) {
         auto prop = cast(IEdmStructuralProperty)findProperty(propertyName);
@@ -135,7 +130,6 @@ class EdmEntityType : EdmStructuredType, IEdmEntityType {
         return this;
     }
 }
-
 /**
  * Complex type implementation
  */

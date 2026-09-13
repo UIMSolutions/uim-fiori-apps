@@ -4,11 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
 module uim.edm.classes.schema;
-
 import uim.edm;
-
 @safe:
-
 /**
  * EDM Schema implementation
  */
@@ -90,7 +87,6 @@ class EdmSchema : UIMObject, IEdmSchema {
         return cast(EdmComplexType)addComplexType(name);
     }
 }
-
 /// Factory function to create a schema
 EdmSchema createSchema(string namespace, string alias_ = null) {
     return new EdmSchema(namespace, alias_);
