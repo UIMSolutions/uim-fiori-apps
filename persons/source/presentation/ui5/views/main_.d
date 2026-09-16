@@ -1,7 +1,7 @@
 module presentation.ui5.views.main_;
 import uim.fiori;
 @safe:
-class MainView : FioriView {
+class MainView : UI5View {
     this(string path) {
         super(path);
     }

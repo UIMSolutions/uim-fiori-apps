@@ -2,7 +2,7 @@ module uim.fiori.projectmanager.presentation.ui5.views.master;
 import uim.fiori.projectmanager;
 import uim.xml;
 @safe:
-class MasterView : FioriView {
+class MasterView : UI5View {
     this(string viewPath) {
         super(viewPath);
     }

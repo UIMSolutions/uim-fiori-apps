@@ -5,7 +5,6 @@
 		xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
 		<Schema Namespace="EPM_DEVELOPER_SCENARIO_SRV" xml:lang="en"
 			xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-
 			<EntityType Name="Product" sap:content-version="1"
 				xmlns:sap="http://www.sap.com/Protocols/SAPData">
 				<Key>
@@ -60,9 +59,7 @@
 					MaxLength="255" sap:label="Product Image URL" sap:creatable="false"
 					sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
 				<NavigationProperty Name="ProductCategory" Relationship="EPM_DEVELOPER_SCENARIO_SRV.FK_ProductCategory_Product" FromRole="Product" ToRole="ProductCategory"/>
-
 			</EntityType>
-
 			<EntityType Name="ProductCategory" sap:content-version="1"
 				xmlns:sap="http://www.sap.com/Protocols/SAPData">
 				<Key>
@@ -79,7 +76,6 @@
 					sap:sortable="false" sap:filterable="false"/>
 				<NavigationProperty Name="Products" Relationship="EPM_DEVELOPER_SCENARIO_SRV.FK_ProductCategory_Product" FromRole="ProductCategory" ToRole="Product"/>
 			</EntityType>
-
 			<EntityType Name="FeaturedProduct" sap:content-version="1"
 				xmlns:sap="http://www.sap.com/Protocols/SAPData">
 				<Key>
@@ -89,7 +85,6 @@
 					MaxLength="255" sap:label="Featured Type"/>
 				<NavigationProperty Name="Product" Relationship="EPM_DEVELOPER_SCENARIO_SRV.FK_FeaturedProduct_Product" FromRole="FeaturedProduct" ToRole="Product"/>
 			</EntityType>
-
 
 			<Association Name="FK_ProductCategory_Product">
 				<End Role="Product" Type="EPM_DEVELOPER_SCENARIO_SRV.Product" Multiplicity="*"/>
@@ -103,7 +98,6 @@
 					</Dependent>
 				</ReferentialConstraint>
 			</Association>
-
 			<Association Name="FK_FeaturedProduct_Product">
 				<End Role="Product" Type="EPM_DEVELOPER_SCENARIO_SRV.Product" Multiplicity="1"/>
 				<End Role="FeaturedProduct" Type="EPM_DEVELOPER_SCENARIO_SRV.FeaturedProduct" Multiplicity="1"/>
@@ -116,7 +110,6 @@
 					</Dependent>
 				</ReferentialConstraint>
 			</Association>
-
 			<EntityContainer Name="EPM_DEVELOPER_SCENARIO_SRV"
 				m:IsDefaultEntityContainer="true">
 				<EntitySet Name="Products" EntityType="EPM_DEVELOPER_SCENARIO_SRV.Product"

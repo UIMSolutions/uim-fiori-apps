@@ -1,0 +1,26 @@
+{
+  "TileCollection": [
+    {
+      "icon": "sap-icon://hint",
+      "type": "Monitor",
+      "title": "Tiles: modern UI design"
+    },
+    {
+      "icon": "sap-icon://inbox",
+      "info": "Overdue",
+      "infoState": "Error",
+      "title": "Approve Leave Requests"
+    },
+    {
+      "icon": "sap-icon://travel-expense-report",
+      "info": "1 day ago",
+      "title": "Travel Reimbursement"
+    },
+    {
+      "icon": "sap-icon://cart",
+      "info": "Waiting for Approval",
+      "infoState": "Warning",
+      "title": "My Shopping Carts"
+    }
+  ]
+}

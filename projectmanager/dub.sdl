@@ -4,16 +4,22 @@ homepage "https://www.....de/uim/projectmanager"
 authors "Ozan Nurettin Süel"
 copyright "Copyright © 2018 - 2026, ONS"
 license "Apache-2.0"
-
-dependency "uim-framework" version="~>26.8.3"
+dependency "uim-framework" version="~>26.9.2"
 dependency "uim-fioriapps:fiori" path=".."
-
+// Release Build Configuration
+// Release Build Configuration
+buildType "release" {
+    // Für LDC (empfohlen):
+    dflags "-O3" "-release" "-strip-debug" "-link-defaultlib-shared=false" platform="ldc"
+    
+    // Für DMD:
+    // HINWEIS: DMD verlinkt Phobos auf Linux standardmäßig statisch.
+    // -defaultlib=phobos2-static wurde entfernt.
+    dflags "-O" "-release" "-inline" platform="dmd"
+}
 targetType "executable"
 targetName "uim-projectmanager"
 targetPath "build"
-
-
-
 configuration "default" {
 	targetType "executable"
 }

@@ -1,0 +1,31 @@
+{
+  "xsappname": "landscape-demo-xsapp",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.Display",
+      "description": "Display landscape"
+    },
+    {
+      "name": "$XSAPPNAME.Manage",
+      "description": "Manage landscape"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "Viewer",
+      "description": "Read access",
+      "scope-references": [
+        "$XSAPPNAME.Display"
+      ]
+    },
+    {
+      "name": "Architect",
+      "description": "Read and manage",
+      "scope-references": [
+        "$XSAPPNAME.Display",
+        "$XSAPPNAME.Manage"
+      ]
+    }
+  ]
+}

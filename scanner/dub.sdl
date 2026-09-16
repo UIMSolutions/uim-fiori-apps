@@ -1,0 +1,10 @@
+name "scanner-middleware"
+description "vibe.d middleware for handscanner ingestion, UI5 visualization and SAP GTT forwarding"
+authors "UIMSolutions"
+license "MIT"
+targetType "executable"
+sourcePaths "source"
+
+dependency "vibe-d" version="~>0.10.2"
+dependency "vibe-http" version="~>1.4.0"
+dependency "vibe-serialization" version="~>1.2.0"

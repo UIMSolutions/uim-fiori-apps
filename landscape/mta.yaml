@@ -1,0 +1,132 @@
+_schema-version: "3.3"
+ID: landscape-demo
+version: 1.0.0
+description: Application landscape map on Fiori + vibe.d OData V4
+parameters:
+  deploy_mode: html5-repo
+modules:
+- name: landscape-backend
+  type: custom
+  path: backend
+  parameters:
+    buildpack: binary_buildpack
+    command: ./landscape-backend
+    memory: 256M
+    disk-quota: 256M
+  build-parameters:
+    builder: custom
+    commands:
+    - dub build
+  provides:
+  - name: landscape-backend-api
+    properties:
+      url: ${default-url}
+  requires:
+  - name: landscape-xsuaa
+- name: landscape-frontend
+  type: html5
+  path: frontend
+  build-parameters:
+    builder: custom
+    commands:
+    - npm install
+    - npm run build
+    build-result: dist
+    supported-platforms: []
+- name: landscape-ui-deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: landscape-html5-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - name: landscape-frontend
+      artifacts:
+      - landscape-frontend.zip
+      target-path: resources/
+- name: landscape-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: landscape-destination
+    parameters:
+      content-target: true
+  - name: landscape-xsuaa
+    parameters:
+      service-key:
+        name: landscape-xsuaa-key
+  - name: landscape-html5-host
+    parameters:
+      service-key:
+        name: landscape-html5-host-key
+  - name: landscape-backend-api
+  parameters:
+    content:
+      instance:
+        existing_destinations_policy: update
+        destinations:
+        - Name: landscape_backend
+          URL: ~{landscape-backend-api/url}
+          Type: HTTP
+          ProxyType: Internet
+          Authentication: NoAuthentication
+          HTML5.DynamicDestination: true
+          HTML5.ForwardAuthToken: true
+        - Name: landscape_html5_repo_host
+          ServiceInstanceName: landscape-html5-host
+          ServiceKeyName: landscape-html5-host-key
+          sap.cloud.service: landscape.demo
+        - Name: landscape_xsuaa
+          ServiceInstanceName: landscape-xsuaa
+          ServiceKeyName: landscape-xsuaa-key
+          Authentication: OAuth2UserTokenExchange
+          sap.cloud.service: landscape.demo
+  build-parameters:
+    no-source: true
+- name: landscape-approuter
+  type: approuter.nodejs
+  path: approuter
+  parameters:
+    memory: 128M
+    disk-quota: 128M
+    keep-existing-routes: true
+  requires:
+  - name: landscape-xsuaa
+  - name: landscape-destination
+  - name: landscape-html5-runtime
+  - name: landscape-backend-api
+    group: destinations
+    properties:
+      name: landscape_backend
+      url: ~{url}
+      forwardAuthToken: true
+resources:
+- name: landscape-xsuaa
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: xsuaa
+    service-plan: application
+    service-name: landscape-xsuaa
+    path: xs-security.json
+- name: landscape-destination
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: destination
+    service-plan: lite
+    service-name: landscape-destination
+    config:
+      HTML5Runtime_enabled: true
+- name: landscape-html5-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+    service-name: landscape-html5-host
+- name: landscape-html5-runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+    service-name: landscape-html5-runtime

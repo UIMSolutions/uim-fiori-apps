@@ -2,12 +2,10 @@ sap.ui.define([
     "sap/ui/core/UIComponent"
 ], function (UIComponent) {
     "use strict";
-
     return UIComponent.extend("todo.app.Component", {
         metadata: {
             manifest: "json"
         },
-
         /**
          * Die init-Funktion wird beim Start der Komponente aufgerufen.
          */

@@ -4,7 +4,7 @@ import uim.fiori.projectmanager;
 import uim.xml;
 
 @safe:
-class AppView : FioriView {
+class AppView : UI5View {
     this(string viewPath) {
         super(viewPath);
     }

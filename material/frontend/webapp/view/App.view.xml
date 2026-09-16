@@ -1,0 +1,178 @@
+<mvc:View
+    controllerName="material.frontend.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:layout="sap.ui.layout.form">
+    <App>
+        <pages>
+            <Page title="Material Cockpit">
+                <content>
+                    <IconTabBar expandable="false">
+                        <items>
+                            <IconTabFilter key="materials" text="Materialien" icon="sap-icon://product">
+                                <VBox class="sapUiSmallMargin" renderType="Bare">
+                                    <layout:SimpleForm editable="true" layout="ResponsiveGridLayout" title="Material anlegen">
+                                        <layout:content>
+                                            <Label text="Name" />
+                                            <Input id="materialNameInput" />
+                                            <Label text="Beschreibung" />
+                                            <Input id="materialDescriptionInput" />
+                                            <Label text="Sollbestand" />
+                                            <Input id="materialTargetStockInput" type="Number" />
+                                            <Button text="Material erstellen" type="Emphasized" press="onCreateMaterial" />
+                                        </layout:content>
+                                    </layout:SimpleForm>
+                                    <Table id="materialsTable" items="{/Materials}">
+                                        <headerToolbar>
+                                            <Toolbar>
+                                                <Title text="Materialien" />
+                                            </Toolbar>
+                                        </headerToolbar>
+                                        <columns>
+                                            <Column><Text text="ID" /></Column>
+                                            <Column><Text text="Name" /></Column>
+                                            <Column><Text text="Beschreibung" /></Column>
+                                            <Column><Text text="Sollbestand" /></Column>
+                                        </columns>
+                                        <items>
+                                            <ColumnListItem>
+                                                <cells>
+                                                    <Text text="{ID}" />
+                                                    <Text text="{Name}" />
+                                                    <Text text="{Description}" />
+                                                    <ObjectNumber number="{TargetStock}" />
+                                                </cells>
+                                            </ColumnListItem>
+                                        </items>
+                                    </Table>
+                                </VBox>
+                            </IconTabFilter>
+                            <IconTabFilter key="planning" text="Planung" icon="sap-icon://calendar">
+                                <VBox class="sapUiSmallMargin" renderType="Bare">
+                                    <layout:SimpleForm editable="true" layout="ResponsiveGridLayout" title="Material planen">
+                                        <layout:content>
+                                            <Label text="Material" />
+                                            <Select id="planMaterialSelect" items="{lookup>/materials}">
+                                                <core:Item xmlns:core="sap.ui.core" key="{lookup>ID}" text="{lookup>Name}" />
+                                            </Select>
+                                            <Label text="Planungsdatum" />
+                                            <DatePicker id="planDateInput" valueFormat="yyyy-MM-dd" displayFormat="yyyy-MM-dd" />
+                                            <Label text="Geplante Menge" />
+                                            <Input id="planQuantityInput" type="Number" />
+                                            <Button text="Planung speichern" type="Emphasized" press="onCreatePlan" />
+                                        </layout:content>
+                                    </layout:SimpleForm>
+                                    <Table id="plansTable" items="{/MaterialPlans}">
+                                        <headerToolbar>
+                                            <Toolbar><Title text="Planungen" /></Toolbar>
+                                        </headerToolbar>
+                                        <columns>
+                                            <Column><Text text="ID" /></Column>
+                                            <Column><Text text="Material-ID" /></Column>
+                                            <Column><Text text="Datum" /></Column>
+                                            <Column><Text text="Menge" /></Column>
+                                        </columns>
+                                        <items>
+                                            <ColumnListItem>
+                                                <cells>
+                                                    <Text text="{ID}" />
+                                                    <Text text="{MaterialID}" />
+                                                    <Text text="{PlannedDate}" />
+                                                    <ObjectNumber number="{PlannedQuantity}" />
+                                                </cells>
+                                            </ColumnListItem>
+                                        </items>
+                                    </Table>
+                                </VBox>
+                            </IconTabFilter>
+                            <IconTabFilter key="evaluation" text="Bestandsauswertung" icon="sap-icon://business-objects-experience">
+                                <VBox class="sapUiSmallMargin" renderType="Bare">
+                                    <Toolbar>
+                                        <Title text="Bestandsauswertung" />
+                                        <ToolbarSpacer />
+                                        <Button text="Aktualisieren" press="onRefreshEvaluations" />
+                                    </Toolbar>
+                                    <Table id="evaluationsTable" items="{/StockEvaluations}">
+                                        <columns>
+                                            <Column><Text text="Material" /></Column>
+                                            <Column><Text text="Verfuegbar" /></Column>
+                                            <Column><Text text="Soll" /></Column>
+                                            <Column><Text text="Status" /></Column>
+                                        </columns>
+                                        <items>
+                                            <ColumnListItem>
+                                                <cells>
+                                                    <Text text="{MaterialName}" />
+                                                    <ObjectNumber number="{Available}" unit="Stk" />
+                                                    <ObjectNumber number="{TargetStock}" unit="Stk" />
+                                                    <ObjectStatus text="{Status}" state="{= ${Status} === 'OK' ? 'Success' : 'Error'}" />
+                                                </cells>
+                                            </ColumnListItem>
+                                        </items>
+                                    </Table>
+                                </VBox>
+                            </IconTabFilter>
+                            <IconTabFilter key="warehouses" text="Warenlager" icon="sap-icon://shipping-status">
+                                <VBox class="sapUiSmallMargin" renderType="Bare">
+                                    <layout:SimpleForm editable="true" layout="ResponsiveGridLayout" title="Warenlager zuordnen">
+                                        <layout:content>
+                                            <Label text="Material" />
+                                            <Select id="assignmentMaterialSelect" items="{lookup>/materials}">
+                                                <core:Item xmlns:core="sap.ui.core" key="{lookup>ID}" text="{lookup>Name}" />
+                                            </Select>
+                                            <Label text="Lager" />
+                                            <Select id="assignmentWarehouseSelect" items="{lookup>/warehouses}">
+                                                <core:Item xmlns:core="sap.ui.core" key="{lookup>ID}" text="{lookup>Name}" />
+                                            </Select>
+                                            <Button text="Zuordnung speichern" type="Emphasized" press="onCreateAssignment" />
+                                        </layout:content>
+                                    </layout:SimpleForm>
+                                    <HBox renderType="Bare">
+                                        <Table id="warehousesTable" width="48%" items="{/Warehouses}" class="sapUiSmallMarginEnd">
+                                            <headerToolbar>
+                                                <Toolbar><Title text="Warenlager" /></Toolbar>
+                                            </headerToolbar>
+                                            <columns>
+                                                <Column><Text text="ID" /></Column>
+                                                <Column><Text text="Name" /></Column>
+                                                <Column><Text text="Ort" /></Column>
+                                            </columns>
+                                            <items>
+                                                <ColumnListItem>
+                                                    <cells>
+                                                        <Text text="{ID}" />
+                                                        <Text text="{Name}" />
+                                                        <Text text="{Location}" />
+                                                    </cells>
+                                                </ColumnListItem>
+                                            </items>
+                                        </Table>
+                                        <Table id="assignmentsTable" width="52%" items="{/WarehouseAssignments}">
+                                            <headerToolbar>
+                                                <Toolbar><Title text="Material-Lager-Zuordnung" /></Toolbar>
+                                            </headerToolbar>
+                                            <columns>
+                                                <Column><Text text="ID" /></Column>
+                                                <Column><Text text="Material-ID" /></Column>
+                                                <Column><Text text="Lager-ID" /></Column>
+                                            </columns>
+                                            <items>
+                                                <ColumnListItem>
+                                                    <cells>
+                                                        <Text text="{ID}" />
+                                                        <Text text="{MaterialID}" />
+                                                        <Text text="{WarehouseID}" />
+                                                    </cells>
+                                                </ColumnListItem>
+                                            </items>
+                                        </Table>
+                                    </HBox>
+                                </VBox>
+                            </IconTabFilter>
+                        </items>
+                    </IconTabBar>
+                </content>
+            </Page>
+        </pages>
+    </App>
+</mvc:View>

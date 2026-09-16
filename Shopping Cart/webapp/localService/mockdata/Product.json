@@ -16,7 +16,6 @@
 		"DimensionHeight": "3",
 		"Unit": "cm",
 		"CurrencyCode": "EUR"
-
 	},
 	{
 		"ProductId": "HT-1001",
@@ -709,7 +708,7 @@
 		"SupplierName": "Printer for All",
 		"Weight": "2.3",
 		"WeightUnit": "KG",
-		"ShortDescription": "Flatbed scanner - 9.600 × 9.600 dpi - 216 x 297 mm - Hi-Speed USB - Bluetooth",
+		"ShortDescription": "Flatbed scanner - 9.600 ï¿½ 9.600 dpi - 216 x 297 mm - Hi-Speed USB - Bluetooth",
 		"Name": "Photo Scan",
 		"PictureUrl": "sap/ui/demo/mock/images/HT-1080.jpg",
 		"Status": "A",
@@ -727,7 +726,7 @@
 		"SupplierName": "Printer for All",
 		"Weight": "2.4",
 		"WeightUnit": "KG",
-		"ShortDescription": "Flatbed scanner - 9.600 × 9.600 dpi - 216 x 297 mm - SCSI for backward compatibility",
+		"ShortDescription": "Flatbed scanner - 9.600 ï¿½ 9.600 dpi - 216 x 297 mm - SCSI for backward compatibility",
 		"Name": "Power Scan",
 		"PictureUrl": "sap/ui/demo/mock/images/HT-1081.jpg",
 		"Status": "A",
@@ -1177,7 +1176,7 @@
 		"SupplierName": "Technocom",
 		"Weight": "18",
 		"WeightUnit": "KG",
-		"ShortDescription": "Optimum Hi-Resolution max. 2048 × 1536 @ 85Hz, Dot Pitch: 0.24mm",
+		"ShortDescription": "Optimum Hi-Resolution max. 2048 ï¿½ 1536 @ 85Hz, Dot Pitch: 0.24mm",
 		"Name": "Flat XXL",
 		"PictureUrl": "sap/ui/demo/mock/images/HT-1137.jpg",
 		"Status": "A",

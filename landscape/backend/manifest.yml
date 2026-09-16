@@ -1,0 +1,7 @@
+applications:
+  - name: landscape-backend
+    memory: 256M
+    disk_quota: 256M
+    command: ./landscape-backend
+    buildpacks:
+      - binary_buildpack

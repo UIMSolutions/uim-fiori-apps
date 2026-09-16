@@ -1,7 +1,7 @@
 module uim.fiori.material.presentation.ui5.views.app;
 import uim.fiori.views.view;
 @safe:
-class AppView : FioriView {
+class AppView : UI5View {
     this(string path) {
         super(path);
     }

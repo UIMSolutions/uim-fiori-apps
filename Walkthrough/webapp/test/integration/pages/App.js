@@ -3,9 +3,7 @@ sap.ui.define([
 	"sap/ui/test/actions/Press"
 ], (Opa5, Press) => {
 	"use strict";
-
 	const sViewName = "ui5.walkthrough.view.HelloPanel";
-
 	Opa5.createPageObjects({
 		onTheAppPage: {
 			actions: {
@@ -18,7 +16,6 @@ sap.ui.define([
 					});
 				}
 			},
-
 			assertions: {
 				iShouldSeeTheHelloDialog() {
 					return this.waitFor({

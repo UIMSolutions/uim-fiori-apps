@@ -2,13 +2,13 @@ module uim.fiori.landscape.presentation.ui5.views.app;
 import uim.fiori.landscape;
 
 @safe:
-class AppView : FioriView {
+class AppView : UI5View {
     this(string path) {
         super(path);
     }
 
     override void buildView() {
-        writer.addElement("mvc:View")
+        _writer.addElement("mvc:View")
             .addAttributes([
                 "controllerName": "landscape.frontend.controller.App",
                 "xmlns:mvc": "sap.ui.core.mvc",
@@ -20,6 +20,7 @@ class AppView : FioriView {
             ]);
         // addNavContainer();
         addApp();
+        _writer.endElement();
     }
 
     override void addApp(string[string] values = null, scope void delegate() @safe content = null) {
@@ -304,7 +305,7 @@ class AppView : FioriView {
                             addElement("uxap:subSections", null, {
                                 addObjectPageSubSection(null, {
                                     addElement("uxap:blocks", null, {
-                                        addNetworkGraph([
+                                        addNetwork_Graph([
                                             "id": "interfaceGraph",
                                             "orientation": "LeftRight",
                                             "nodes": "{detail>/graphNodes}",

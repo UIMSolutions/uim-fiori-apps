@@ -2,17 +2,12 @@ _schema-version: "3.2"
 ID: projectmanager
 version: 1.0.0
 description: "Dlang vibe.d OData v4 Backend mit SAPUI5 Project Manager"
-
 modules:
   - name: projectmanager-backend
     type: custom
     path: .
-    build-parameters:
-      commands: []
-      target-path: .
-      build-result: projectmanager
     parameters:
       buildpack: binary_buildpack
       command: ./projectmanager
-      memory: 128M
-      disk-quota: 256M
+      memory: 512M
+      disk-quota: 512M

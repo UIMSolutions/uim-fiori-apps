@@ -1,0 +1,9 @@
+name "project"
+description "OData V4 material service with hexagonal architecture"
+authors "UIMSolutions"
+license "Apache-2.0"
+// Targets
+targetType "executable"
+targetName "project"
+sourcePaths "source"
+dependency "uim-fioriapps:fiori" path="../.."

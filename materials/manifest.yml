@@ -1,0 +1,9 @@
+applications:
+  - name: materials
+    memory: 512M
+    disk_quota: 512M
+    command: ./materials
+    buildpacks:
+      - binary_buildpack
+    env:
+      MATERIAL_PERSISTENCE: memory

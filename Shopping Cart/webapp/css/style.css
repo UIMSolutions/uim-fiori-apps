@@ -3,7 +3,6 @@
 	padding: 0;
 	border-bottom-width: 0;
 }
-
 .sapUiDemoCart .welcomeCarouselText {
 	color: white;
 	display: block;
@@ -14,11 +13,9 @@
 	width: 100%;
 	text-shadow: 0 0 0.125rem black;
 }
-
 .productPrice {
     background-color: transparent;
 }
-
 .comparebox > div {
     width: 48%;
     margin-left: 1%;

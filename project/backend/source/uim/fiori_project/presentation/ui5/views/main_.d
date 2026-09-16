@@ -13,11 +13,11 @@ class PMMainView : MainView {
         super(initData);
     }
 
-    this(string customPath, Json initData = Json(null)) {
+    this(string customPath, Json initData = Json.emptyObject) {
         super(customPath, initData);
     }
 
-    override bool initialize(Json initData = Json(null)) {
+    override bool initialize(Json initData = Json.emptyObject) {
         if (!super.initialize(initData))
             return false;
 

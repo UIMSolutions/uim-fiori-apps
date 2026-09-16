@@ -1,0 +1,51 @@
+_schema-version: "3.3"
+ID: materials
+version: 1.0.0
+description: Material management app with UI5 frontend and vibe.d backend
+modules:
+  # ------------------- VIBE.D BACKEND -------------------
+  - name: materials-backend
+    type: binary
+    path: backend
+    parameters:
+      stack: cflinuxfs5
+      buildpack: binary_buildpack
+      command: ./materials
+      memory: 256M
+      disk-quota: 512M
+    provides:
+      - name: materials-backend-api
+        properties:
+          url: ${default-url}
+    build-parameters:
+      # Verhindert, dass MBT versucht, einen eigenen Build-Schritt für D/vibe.d auszuführen
+      no-source: false
+  # ------------------- SAP APPROUTER -------------------
+  - name: materials-approuter
+    type: nodejs
+    path: approuter
+    parameters:
+      buildpack: nodejs_buildpack
+      memory: 128M
+      disk-quota: 256M
+    requires:
+      - name: materials-backend-api
+        group: destinations
+        properties:
+          name: materials-backend-dest
+          url: ~{url}
+          forwardAuthToken: true
+      - name: materials-xsuaa
+    build-parameters:
+      # Führt npm install im approuter-Ordner durch
+      builder: custom
+      commands:
+        - npm install
+resources:
+  # ------------------- XSUAA SERVICE -------------------
+  - name: materials-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json

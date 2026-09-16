@@ -7,3 +7,5 @@ applications:
     memory: 128M
     disk_quota: 256M
     instances: 1
+  env:
+    VIBE_ENV: production

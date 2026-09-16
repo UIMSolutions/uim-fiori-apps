@@ -1,0 +1,31 @@
+{
+  "xsappname": "material-xsapp",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.Display",
+      "description": "Display material data"
+    },
+    {
+      "name": "$XSAPPNAME.Manage",
+      "description": "Create and manage materials"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "Viewer",
+      "description": "Read-only access",
+      "scope-references": [
+        "$XSAPPNAME.Display"
+      ]
+    },
+    {
+      "name": "Manager",
+      "description": "Manage and plan materials",
+      "scope-references": [
+        "$XSAPPNAME.Display",
+        "$XSAPPNAME.Manage"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scanner Middleware Monitor</title>
+  <script
+    id="sap-ui-bootstrap"
+    src="/resources/sap-ui-core.js"
+    data-sap-ui-theme="sap_horizon"
+    data-sap-ui-libs="sap.m,sap.ui.layout"
+    data-sap-ui-compatVersion="edge"
+    data-sap-ui-async="true"
+    data-sap-ui-preload="async"
+    data-sap-ui-oninit="module:sap/ui/core/ComponentSupport"></script>
+  <style>
+    html, body, #content {
+      height: 100%;
+      margin: 0;
+    }
+  </style>
+</head>
+<body class="sapUiBody" id="content">
+  <script>
+    sap.ui.getCore().attachInit(function () {
+      sap.ui.require([
+        "sap/m/App",
+        "sap/m/Page",
+        "sap/m/VBox",
+        "sap/m/HBox",
+        "sap/m/Title",
+        "sap/m/Table",
+        "sap/m/Column",
+        "sap/m/Text",
+        "sap/m/ColumnListItem",
+        "sap/m/Label",
+        "sap/m/Input",
+        "sap/m/Button",
+        "sap/m/ObjectStatus",
+        "sap/m/MessageToast",
+        "sap/m/ProgressIndicator",
+        "sap/ui/model/json/JSONModel"
+      ], function (App, Page, VBox, HBox, Title, Table, Column, Text, ColumnListItem, Label, Input, Button, ObjectStatus, MessageToast, ProgressIndicator, JSONModel) {
+        var model = new JSONModel({
+          scans: [],
+          scannerStats: [],
+          form: {
+            scannerId: "HHS-01",
+            materialNumber: "MAT-1000",
+            quantity: "1",
+            location: "WH-01"
+          }
+        });
+
+        var chartBox = new VBox({ width: "100%" });
+
+        function renderBars(stats) {
+          chartBox.removeAllItems();
+          if (!stats.length) {
+            chartBox.addItem(new Text({ text: "Noch keine Scanner-Daten vorhanden." }));
+            return;
+          }
+
+          var maxCount = stats.reduce(function (max, item) {
+            return Math.max(max, item.count);
+          }, 1);
+
+          stats.forEach(function (item) {
+            var percent = Math.round((item.count / maxCount) * 100);
+            chartBox.addItem(new VBox({
+              width: "100%",
+              items: [
+                new HBox({
+                  justifyContent: "SpaceBetween",
+                  items: [
+                    new Text({ text: item.scannerId }),
+                    new ObjectStatus({ text: item.count + " Scans" })
+                  ]
+                }),
+                new ProgressIndicator({
+                  percentValue: percent,
+                  displayValue: item.count + " Vorgaenge",
+                  state: "Success"
+                })
+              ]
+            }).addStyleClass("sapUiTinyMarginBottom"));
+          });
+        }
+
+        function computeStats(scans) {
+          var grouped = {};
+          scans.forEach(function (scan) {
+            grouped[scan.scannerId] = (grouped[scan.scannerId] || 0) + 1;
+          });
+
+          return Object.keys(grouped).map(function (key) {
+            return { scannerId: key, count: grouped[key] };
+          }).sort(function (a, b) {
+            return b.count - a.count;
+          });
+        }
+
+        function refreshData() {
+          fetch("/api/scans?limit=200")
+            .then(function (res) { return res.json(); })
+            .then(function (data) {
+              var scans = data.items || [];
+              var stats = computeStats(scans);
+              model.setProperty("/scans", scans);
+              model.setProperty("/scannerStats", stats);
+              renderBars(stats);
+            })
+            .catch(function (error) {
+              MessageToast.show("Fehler beim Laden: " + error.message);
+            });
+        }
+
+        function submitScan() {
+          var payload = {
+            scannerId: model.getProperty("/form/scannerId"),
+            materialNumber: model.getProperty("/form/materialNumber"),
+            quantity: parseInt(model.getProperty("/form/quantity"), 10) || 1,
+            location: model.getProperty("/form/location"),
+            scannedAt: new Date().toISOString()
+          };
+
+          fetch("/api/scans", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          })
+            .then(function (res) { return res.json(); })
+            .then(function (result) {
+              MessageToast.show(result.message || "Scan uebernommen");
+              refreshData();
+            })
+            .catch(function (error) {
+              MessageToast.show("Senden fehlgeschlagen: " + error.message);
+            });
+        }
+
+        var page = new Page({
+          title: "Handscanner Middleware Cockpit",
+          content: [
+            new VBox({
+              width: "100%",
+              renderType: "Bare",
+              items: [
+                new Title({ text: "Scanner Event erfassen", level: "H3" }).addStyleClass("sapUiSmallMarginTop sapUiTinyMarginBottom"),
+                new HBox({
+                  wrap: "Wrap",
+                  items: [
+                    new VBox({
+                      width: "14rem",
+                      items: [
+                        new Label({ text: "Scanner-ID" }),
+                        new Input({ value: "{/form/scannerId}" })
+                      ]
+                    }).addStyleClass("sapUiSmallMarginEnd sapUiTinyMarginBottom"),
+                    new VBox({
+                      width: "14rem",
+                      items: [
+                        new Label({ text: "Material" }),
+                        new Input({ value: "{/form/materialNumber}" })
+                      ]
+                    }).addStyleClass("sapUiSmallMarginEnd sapUiTinyMarginBottom"),
+                    new VBox({
+                      width: "10rem",
+                      items: [
+                        new Label({ text: "Menge" }),
+                        new Input({ value: "{/form/quantity}", type: "Number" })
+                      ]
+                    }).addStyleClass("sapUiSmallMarginEnd sapUiTinyMarginBottom"),
+                    new VBox({
+                      width: "12rem",
+                      items: [
+                        new Label({ text: "Lagerort" }),
+                        new Input({ value: "{/form/location}" })
+                      ]
+                    }).addStyleClass("sapUiSmallMarginEnd sapUiTinyMarginBottom"),
+                    new VBox({
+                      justifyContent: "End",
+                      items: [
+                        new Button({ text: "Scan senden", type: "Emphasized", press: submitScan })
+                      ]
+                    }).addStyleClass("sapUiTinyMarginTop")
+                  ]
+                }),
+                new Title({ text: "Graphische Scanner-Auslastung", level: "H3" }).addStyleClass("sapUiMediumMarginTop sapUiTinyMarginBottom"),
+                chartBox,
+                new Title({ text: "Letzte Scan-Ereignisse", level: "H3" }).addStyleClass("sapUiMediumMarginTop sapUiTinyMarginBottom"),
+                new Table({
+                  width: "100%",
+                  items: {
+                    path: "/scans",
+                    template: new ColumnListItem({
+                      cells: [
+                        new Text({ text: "{scannerId}" }),
+                        new Text({ text: "{materialNumber}" }),
+                        new Text({ text: "{quantity}" }),
+                        new Text({ text: "{location}" }),
+                        new Text({ text: "{scannedAt}" })
+                      ]
+                    })
+                  },
+                  columns: [
+                    new Column({ header: new Text({ text: "Scanner" }) }),
+                    new Column({ header: new Text({ text: "Material" }) }),
+                    new Column({ header: new Text({ text: "Menge" }) }),
+                    new Column({ header: new Text({ text: "Lagerort" }) }),
+                    new Column({ header: new Text({ text: "Zeitpunkt" }) })
+                  ]
+                }),
+                new Button({ text: "Aktualisieren", press: refreshData }).addStyleClass("sapUiSmallMarginTop")
+              ]
+            }).addStyleClass("sapUiMediumMargin")
+          ]
+        });
+
+        page.setModel(model);
+        new App({ pages: [page] }).placeAt("content");
+
+        refreshData();
+        setInterval(refreshData, 5000);
+      });
+    });
+  </script>
+</body>
+</html>

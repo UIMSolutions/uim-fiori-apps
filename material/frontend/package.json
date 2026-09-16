@@ -1,0 +1,14 @@
+{
+  "name": "material-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SAPUI5 OData V4 frontend for material management",
+  "scripts": {
+    "start": "ui5 serve -o index.html",
+    "build": "ui5 build --all"
+  },
+  "devDependencies": {
+    "@ui5/cli": "^4.0.17",
+    "ui5-middleware-simpleproxy": "^3.4.0"
+  }
+}

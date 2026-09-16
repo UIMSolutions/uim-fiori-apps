@@ -1,0 +1,32 @@
+<mvc:View
+    height="100%"
+    controllerName="sap.m.sample.TileContainer.Page"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page showHeader="false" enableScrolling="true">
+        <FlexBox
+            id="container"
+            wrap="Wrap"
+            class="sapUiSmallMargin"
+            items="{/Tiles}">
+            <items>
+                <GenericTile
+                    press="onTilePress"
+                    header="{Title}"
+                    subheader="{Info}"
+                    class="sapUiTinyMargin">
+                    <tileContent>
+                        <TileContent footer="{NumberUnit}">
+                            <content>
+                                <NumericContent
+                                    value="{Number}"
+                                    icon="{Icon}"
+                                    state="{InfoState}" />
+                            </content>
+                        </TileContent>
+                    </tileContent>
+                </GenericTile>
+            </items>
+        </FlexBox>
+    </Page>
+</mvc:View>

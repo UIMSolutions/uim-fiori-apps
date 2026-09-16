@@ -1,0 +1,114 @@
+<mvc:View controllerName="pm.fiori.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:layout="sap.ui.layout"
+    xmlns:micro="sap.suite.ui.microchart"
+    xmlns:pf="sap.suite.ui.commons"
+    xmlns:graph="sap.suite.ui.commons.networkgraph"
+    xmlns:gantt="sap.gantt.control"
+    xmlns:ax="sap.gantt.axistime"
+    xmlns:config="sap.gantt.config"
+    xmlns:shape="sap.gantt.shape"
+    xmlns:table="sap.ui.table">
+
+    <Page title="Projektmanagement Dashboard" class="sapUiContentPadding">
+        <content>
+            <IconTabBar id="idIconTabBar" class="sapUiResponsiveContentPadding">
+                <items>
+                    <!-- TAB 1: ProcessFlow & MicroCharts -->
+                    <IconTabFilter text="Übersicht - Status" icon="sap-icon://hint">
+                        <VBox>
+                            <Panel headerText="KPI Key Metrics (MicroCharts)" 
+                                expandable="true" 
+                                expanded="true" 
+                                class="sapUiMediumMarginBottom">
+                                <HBox class="sapUiSmallMarginBottom">
+                                    <VBox class="sapUiMediumMarginEnd">
+                                        <Label text="Projekt-Fortschritt (%)"/>
+                                        <micro:RadialMicroChart percentage="{pmModel>/metrics/actualPercent}" valueColor="Good" size="M" />
+                                    </VBox>
+                                    <VBox>
+                                        <Label text="Budget-Ausschöpfung (€)"/>
+                                        <micro:BulletMicroChart targetValue="{pmModel>/metrics/budgetTotal}" actualValueLabel="420k" targetValueLabel="550k" size="M">
+                                            <micro:actual>
+                                                <micro:BulletMicroChartData value="{pmModel>/metrics/budgetSpent}" color="Critical" />
+                                            </micro:actual>
+                                            <micro:thresholds>
+                                                <micro:BulletMicroChartData value="0" color="Good" />
+                                                <micro:BulletMicroChartData value="400000" color="Critical" />
+                                                <micro:BulletMicroChartData value="550000" color="Error" />
+                                            </micro:thresholds>
+                                        </micro:BulletMicroChart>
+                                    </VBox>
+                                </HBox>
+                            </Panel>
+
+                            <Panel headerText="Prozess-Gateways (ProcessFlow)" expandable="true" expanded="true">
+                                <pf:ProcessFlow id="processFlow" scrollable="true" nodes="{pmModel>/processFlow/nodes}" lanes="{pmModel>/processFlow/lanes}">
+                                    <pf:nodes>
+                                        <pf:ProcessFlowNode nodeId="{pmModel>id}" laneId="{pmModel>laneId}" title="{pmModel>title}" state="{pmModel>state}" children="{pmModel>children}" />
+                                    </pf:nodes>
+                                    <pf:lanes>
+                                        <pf:ProcessFlowLaneHeader laneId="{pmModel>id}" iconSrc="{pmModel>icon}" text="{pmModel>label}" position="{pmModel>position}" />
+                                    </pf:lanes>
+                                </pf:ProcessFlow>
+                            </Panel>
+                        </VBox>
+                    </IconTabFilter>
+
+                    <!-- TAB 2: NetworkGraph -->
+                    <IconTabFilter text="System-Abhängigkeiten" icon="sap-icon://connected">
+                        <Panel headerText="Architektur &amp; Modul-Netzplan" height="600px">
+                            <graph:NetworkGraph id="networkGraph" nodes="{pmModel>/networkGraph/nodes}" lines="{pmModel>/networkGraph/lines}">
+                                <graph:nodes>
+                                    <graph:Node key="{pmModel>key}" title="{pmModel>title}" group="{pmModel>group}" status="{pmModel>status}" />
+                                </graph:nodes>
+                                <graph:lines>
+                                    <graph:Line from="{pmModel>from}" to="{pmModel>to}" status="{pmModel>status}" />
+                                </graph:lines>
+                            </graph:NetworkGraph>
+                        </Panel>
+                    </IconTabFilter>
+
+                    <!-- TAB 3: GanttChartWithTable -->
+                    <IconTabFilter text="Gantt Terminplanung" icon="sap-icon://gantt-chart">
+                        <Panel headerText="Zeitliche Ablaufplanung" height="650px">
+                            <gantt:GanttChartWithTable id="ganttChart" ghostAlignment="Start">
+                                <gantt:axisTimeStrategy>
+                                    <ax:ProportionalTimeStrategy>
+                                        <ax:totalHorizon>
+                                            <config:TimeHorizon startTime="20260915000000" endTime="20261231000000" />
+                                        </ax:totalHorizon>
+                                        <ax:visibleHorizon>
+                                            <config:TimeHorizon startTime="20261001000000" endTime="20261130000000" />
+                                        </ax:visibleHorizon>
+                                    </ax:ProportionalTimeStrategy>
+                                </gantt:axisTimeStrategy>
+
+                                <gantt:table>
+                                    <table:TreeTable rows="{
+                                            path: 'pmModel>/ganttOrders',
+                                            parameters: {arrayNames: ['tasks']}
+                                        }" selectionMode="Single">
+                                        <table:columns>
+                                            <table:Column width="200px" label="Aufgabe/Phase">
+                                                <table:template>
+                                                    <Label text="{pmModel>name}" />
+                                                </table:template>
+                                            </table:Column>
+                                        </table:columns>
+                                    </table:TreeTable>
+                                </gantt:table>
+
+                                <gantt:shapes>
+                                    <shape:Task time="{pmModel>startTime}" endTime="{pmModel>endTime}" title="{pmModel>name}" type="Normal" />
+                                </gantt:shapes>
+                            </gantt:GanttChartWithTable>
+                        </Panel>
+                    </IconTabFilter>
+
+                </items>
+            </IconTabBar>
+        </content>
+    </Page>
+</mvc:View>

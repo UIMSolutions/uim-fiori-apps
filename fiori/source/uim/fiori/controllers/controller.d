@@ -1,12 +1,9 @@
 module uim.fiori.controllers.controller;
-import std.algorithm.searching : canFind;
-import std.array : appender;
-import std.file : exists, mkdirRecurse, readText, write;
-import std.path : buildPath, dirName;
-import std.regex : matchAll, regex, replaceFirst;
-import std.string : join, split;
-import uim.fiori.controllers.manifest;
-import uim.fiori.views;
+
+import uim.fiori;
+
+mixin(ShowModule!());
+
 @safe:
 struct ControllerMethod {
     string name;
@@ -172,10 +169,10 @@ ControllerConfig createEditController(string namespace, string name) {
 }
 void writeControllerFile(ControllerConfig config, string filePath) {
     ensureParentFolder(filePath);
-    write(filePath, buildController(config));
+    std.file.write(filePath, buildController(config));
 }
 string readControllerFile(string filePath) {
-    return readText(filePath);
+    return std.file.readText(filePath);
 }
 string[] extractHandlerNames(string jsControllerContent) {
     string[] methods;
@@ -248,8 +245,8 @@ void scaffoldListReportApp(
     auto controllerCfg = listReportController(appNamespace ~ ".controller", controllerName);
     writeControllerFile(controllerCfg, controllerFilePath);
     auto manifestPath = buildPath(webappRoot, "manifest.json");
-    if (exists(manifestPath)) {
-        auto content = readText(manifestPath);
+    if (std.file.exists(manifestPath)) {
+        auto content = std.file.readText(manifestPath);
         auto updated = registerControllerAndRouting(
             content,
             appNamespace,
@@ -258,7 +255,7 @@ void scaffoldListReportApp(
             routeName,
             viewName
         );
-        write(manifestPath, updated);
+        std.file.write(manifestPath, updated);
     }
 }
 unittest {

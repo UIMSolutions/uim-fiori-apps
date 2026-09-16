@@ -1,0 +1,6 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
+    displayBlock="true">
+    <f:FlexibleColumnLayout id="layout" backgroundDesign="Solid" />
+</mvc:View>

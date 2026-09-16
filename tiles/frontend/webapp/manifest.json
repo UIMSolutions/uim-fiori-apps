@@ -1,0 +1,98 @@
+{
+	"_version": "1.65.0",
+	"sap.app": {
+		"id": "sap.m.sample.TileContainer",
+		"type": "application",
+		"title": "Tiles",
+		"description": "Tiles demo with OData V4 backend",
+		"dataSources": {
+			"mainService": {
+				"uri": "/odata/v4/TileService/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "4.0"
+				}
+			}
+		},
+		"applicationVersion": {
+			"version": "1.0.0"
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "sap.m.sample.TileContainer.App",
+			"type": "XML",
+			"id": "app",
+			"async": true
+		},
+		"dependencies": {
+			"minUI5Version": "1.96.0",
+			"libs": {
+				"sap.m": {},
+				"sap.ui.core": {},
+				"sap.ui.layout": {}
+			}
+		},
+		"models": {
+			"": {
+				"dataSource": "mainService",
+				"settings": {
+					"synchronizationMode": "None",
+					"operationMode": "Server",
+					"autoExpandSelect": true
+				},
+				"type": "sap.ui.model.odata.v4.ODataModel"
+			}
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "sap.m.sample.TileContainer",
+				"controlId": "app",
+				"controlAggregation": "pages",
+				"async": true
+			},
+			"routes": [
+				{
+					"name": "tiles",
+					"pattern": "",
+					"target": "tiles"
+				},
+				{
+					"name": "detail",
+					"pattern": "tile/{tileId}",
+					"target": "detail"
+				}
+			],
+			"targets": {
+				"tiles": {
+					"viewName": "Page"
+				},
+				"detail": {
+					"viewName": "Detail"
+				}
+			}
+		},
+		"config": {
+			"sample": {
+				"stretch": true,
+				"files": [
+					"App.view.xml",
+					"Page.view.xml",
+					"Detail.view.xml",
+					"Page.controller.js",
+					"manifest.json"
+				]
+			}
+		}
+	}
+}

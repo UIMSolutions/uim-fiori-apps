@@ -3,11 +3,14 @@ module uim.fiori.views.mvc;
 import uim.fiori;
 import uim.xml;
 
+mixin(ShowModule!());
+
 @safe:
-class MvcView : FioriView {
+class MvcView : UI5View {
     protected string[string] _libs;
     protected string _controllerName;
     protected string _height = "100%";
+    protected ViewRenderer _renderer = new XMLViewRenderer();
 
     this() {
         super();
@@ -17,11 +20,11 @@ class MvcView : FioriView {
         super(initData);
     }
 
-    this(string customPath, Json initData = Json(null)) {
+    this(string customPath, Json initData = Json.emptyObject) {
         super(initData.set("path", customPath));
     }
 
-    override bool initialize(Json initData = Json(null)) {
+    override bool initialize(Json initData = Json.emptyObject) {
         if (!super.initialize(initData))
             return false;
 
@@ -41,32 +44,43 @@ class MvcView : FioriView {
         return true;
     }
 
-    override protected void buildView() {
-        // super.buildView();
-        auto attributes = _libs.dup;
-        attributes["controllerName"] = _controllerName;
-        attributes["height"] = _height;
-        _writer.addElement("mvc:View")
-            .addAttributes(attributes);
-        addApp();
-        _writer.endElement();
-
+    ViewRenderer renderer() {
+        return _renderer;
     }
 
-    override void addApp(string[string] values = null, scope void delegate() @safe content = null) {
-        super.addApp(values, { 
-        });
+    auto renderer(ViewRenderer newRenderer) {
+        _renderer = newRenderer;
+        return this;
     }
+
+    // override protected void buildView() {
+    //     // super.buildView();
+    //     auto attributes = _libs.dup;
+    //     attributes["controllerName"] = _controllerName;
+    //     attributes["height"] = _height;
+    //     _writer.addElement("mvc:View")
+    //         .addAttributes(attributes);
+    //     addApp();
+    //     _writer.endElement();
+
+    // }
+
+    // override void addApp(string[string] values = null, scope void delegate() @safe content = null) {
+    //     super.addApp(values, { 
+    //     });
+    // }
 }
 ///
 unittest {
-    auto mvcView = new MvcView();
-    assert(mvcView.initialize());
+auto mvcView = new MvcView();
+assert(mvcView.initialize());
 
-    auto renderedView = mvcView.render;
+mvcView.renderer(new XMLViewRenderer());
 
-    mvcView = new MvcView("/view/App.view.xml");
-    assert(mvcView.initialize());
-
-    renderedView = mvcView.render;
+//     auto renderedView = mvcView.render;
+// 
+//     mvcView = new MvcView("/view/App.view.xml");
+//     assert(mvcView.initialize());
+// 
+//     renderedView = mvcView.render;
 }

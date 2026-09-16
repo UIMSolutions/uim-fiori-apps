@@ -1,0 +1,31 @@
+<mvc:View
+    controllerName="taskmanager.fiori.controller.Master"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page title="Aufgaben ({tasks>/length})">
+        <subHeader>
+            <OverflowToolbar>
+                <SearchField search=".onSearch" width="100%" placeholder="Aufgaben suchen..." />
+            </OverflowToolbar>
+        </subHeader>
+        <content>
+            <List id="taskList" items="{tasks>/}">
+                <ObjectListItem
+                    title="{tasks>title}"
+                    type="Navigation"
+                    press=".onTaskPress"
+                    number="{tasks>priority}"
+                    numberState="{= ${tasks>priority} === 'High' ? 'Error' : 'None' }">
+                    <firstStatus>
+                        <ObjectStatus 
+                            text="{tasks>status}" 
+                            state="{= ${tasks>status} === 'Completed' ? 'Success' : (${tasks>status} === 'InProgress' ? 'Warning' : 'None') }" />
+                    </firstStatus>
+                    <attributes>
+                        <ObjectAttribute text="Erstellt: {tasks>createdAt}" />
+                    </attributes>
+                </ObjectListItem>
+            </List>
+        </content>
+    </Page>
+</mvc:View>

@@ -1,6 +1,9 @@
 module uim.fiori.libraries;
 
 public: 
+    import uim.fiori.libraries.library;
+    import uim.fiori.libraries.element;
+
     import uim.fiori.libraries.base;
     import uim.fiori.libraries.chart;
     import uim.fiori.libraries.collaboration;

@@ -6,3 +6,4 @@ public:
     import uim.fiori.odata;
     import uim.fiori.views;
     import uim.fiori.manifest;
+    import uim.fiori.libraries;

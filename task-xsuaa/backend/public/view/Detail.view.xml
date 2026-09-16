@@ -1,0 +1,39 @@
+<mvc:View
+    controllerName="taskmanager.fiori.controller.Detail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form">
+    <Page title="Details zu Task #{detail>/id}">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <f:SimpleForm editable="true" layout="ColumnLayout">
+                    <f:content>
+                        <Label text="Titel" />
+                        <Input value="{detail>/title}" />
+                        <Label text="Beschreibung" />
+                        <TextArea value="{detail>/description}" rows="4" />
+                        <Label text="Priorität" />
+                        <Select selectedKey="{detail>/priority}">
+                            <core:Item xmlns:core="sap.ui.core" key="Low" text="Low" />
+                            <core:Item xmlns:core="sap.ui.core" key="Medium" text="Medium" />
+                            <core:Item xmlns:core="sap.ui.core" key="High" text="High" />
+                        </Select>
+                        <Label text="Status" />
+                        <Select selectedKey="{detail>/status}">
+                            <core:Item xmlns:core="sap.ui.core" key="Open" text="Open" />
+                            <core:Item xmlns:core="sap.ui.core" key="InProgress" text="InProgress" />
+                            <core:Item xmlns:core="sap.ui.core" key="Completed" text="Completed" />
+                        </Select>
+                    </f:content>
+                </f:SimpleForm>
+            </VBox>
+        </content>
+        <footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button text="Speichern" type="Emphasized" press=".onSave" />
+                <Button text="Löschen" type="Reject" press=".onDelete" />
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

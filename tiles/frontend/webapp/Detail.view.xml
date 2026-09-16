@@ -1,0 +1,20 @@
+<mvc:View
+    controllerName="sap.m.sample.TileContainer.Page"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page title="{Title}" showNavButton="true" navButtonPress="onNavBack">
+        <content>
+            <ObjectHeader
+                title="{Title}"
+                intro="{Type}"
+                number="{Number}"
+                numberUnit="{NumberUnit}"/>
+            <MessageStrip
+                text="{Info}"
+                type="{InfoState}"
+                showIcon="true"
+                class="sapUiSmallMargin"/>
+            <Text text="{Description}" class="sapUiSmallMargin"/>
+        </content>
+    </Page>
+</mvc:View>
