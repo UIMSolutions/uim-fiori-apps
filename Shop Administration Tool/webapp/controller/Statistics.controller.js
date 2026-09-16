@@ -7,7 +7,6 @@ sap.ui.define([
 ], function (BaseController, JSONModel, VersionInfo, XMLView, oCore) {
 	"use strict";
 	return BaseController.extend("sap.ui.demo.toolpageapp.controller.Statistics", {
-
 		onInit: function () {
 			var oViewModel = new JSONModel({
 				ColumnChartData: [{v: 80}, {v: 150}, {v: 400}, {v: 200}],
@@ -18,11 +17,9 @@ sap.ui.define([
 				PieChartData2: [{v: 57}]
 			});
 			this.setModel(oViewModel, "view");
-
 			// Load charts for the current environment (D3 = OpenUI5, MicroCharts = SAPUI5)
 			VersionInfo.load().then(function (oVersionInfo) {
 				var sType = (oVersionInfo.name.startsWith("SAPUI5") ? "Micro" : "D3");
-
 				if (sType === "Micro") {
 					// For SAPUI5, we need first to load the microchart library and then create the view
 					oCore.loadLibrary("sap.suite.ui.microchart", {async: true}).then(function () {
@@ -32,7 +29,6 @@ sap.ui.define([
 					this._createView(sType);
 				}
 			}.bind(this));
-
 			this._createView = function (sType) {
 				XMLView.create({
 					id: this.getView().createId("charts"),
@@ -42,7 +38,6 @@ sap.ui.define([
 				}.bind(this));
 			};
 		},
-
 		onRefresh: function () {
 			this.byId("charts").byId("statisticsBlockLayout").invalidate();
 			this.byId("charts").byId("statisticsBlockLayout").setBusy(true);
@@ -50,6 +45,5 @@ sap.ui.define([
 				this.byId("charts").byId("statisticsBlockLayout").setBusy(false);
 			}.bind(this), 2000);
 		}
-
 	});
 });

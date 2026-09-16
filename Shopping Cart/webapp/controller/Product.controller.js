@@ -5,20 +5,16 @@ sap.ui.define([
 	BaseController,
 	formatter) {
 	"use strict";
-
 	return BaseController.extend("sap.ui.demo.cart.controller.Product", {
 		formatter : formatter,
-
 		onInit : function () {
 			var oComponent = this.getOwnerComponent();
 			this._router = oComponent.getRouter();
 			this._router.getRoute("product").attachPatternMatched(this._routePatternMatched, this);
-
 			this._router.getTarget("product").attachDisplay(function (oEvent) {
 				this.fnUpdateProduct(oEvent.getParameter("data").productId);// update the binding based on products cart selection
 			}, this);
 		},
-
 		_routePatternMatched: function(oEvent) {
 			var sId = oEvent.getParameter("arguments").productId,
 				oView = this.getView(),
@@ -51,13 +47,11 @@ sap.ui.define([
 				}
 			}.bind(this));
 		},
-
 		fnUpdateProduct: function(productId) {
 			var sPath = "/Products('" + productId + "')",
 				fnCheck = function () {
 					this._checkIfProductAvailable(sPath);
 				};
-
 			this.getView().bindElement({
 				path: sPath,
 				events: {
@@ -65,17 +59,14 @@ sap.ui.define([
 				}
 			});
 		},
-
 		_checkIfProductAvailable: function(sPath) {
 			var oModel = this.getModel();
 			var oData = oModel.getProperty(sPath);
-
 			// show not found page
 			if (!oData) {
 				this._router.getTargets().display("notFound");
 			}
 		},
-
 		/**
 		 * Navigate to the generic cart view
 		 * @param {sap.ui.base.Event} oEvent the button press event
@@ -83,7 +74,6 @@ sap.ui.define([
 		onToggleCart: function (oEvent) {
 			var bPressed = oEvent.getParameter("pressed");
 			var oEntry = this.getView().getBindingContext().getObject();
-
 			this._setLayout(bPressed ? "Three" : "Two");
 			this.getRouter().navTo(bPressed ? "productCart" : "product", {
 				id: oEntry.Category,

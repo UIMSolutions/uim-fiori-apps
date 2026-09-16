@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Personenverwaltung (Fiori)</title>
+    <script id="sap-ui-bootstrap"
+        src="https://ui5.sap.com/resources/sap-ui-core.js"
+        data-sap-ui-theme="sap_horizon"
+        data-sap-ui-libs="sap.m, sap.ui.layout"
+        data-sap-ui-resourceroots='{"personapp": "./"}'
+        data-sap-ui-async="true">
+    </script>
+    <script>
+        sap.ui.getCore().attachInit(function () {
+            sap.ui.core.mvc.XMLView.create({
+                id: "mainView", // <-- Eindeutige View-ID verhindert ID-Kollisionen
+                viewName: "personapp.Main"
+            }).then(function (oView) {
+                oView.placeAt("content");
+            });
+        });
+    </script>
+    <style>
+        html, body, #content {
+            height: 100%;
+            margin: 0;
+        }
+    </style>
+</head>
+<body class="sapUiBody" id="content"></body>
+</html>

@@ -1,7 +1,7 @@
 module adapters.odata_dto;
-
 import domain;
 import vibe.data.json; // Wichtig für @name
+import uim.fiori;
 @safe:
 // Single Entity Payload
 struct ODataEntity {
@@ -10,12 +10,10 @@ struct ODataEntity {
     string description;
     bool isCompleted;
     string createdAt;
-
     // Ordnet das JSON-Property "@odata.context" dem D-Feld odataContext zu
     @name("@odata.context") 
     string odataContext;
 }
-
 // Collection Payload
 struct ODataCollection {
     @name("@odata.context") 
@@ -23,7 +21,6 @@ struct ODataCollection {
     
     ODataEntity[] value;
 }
-
 // Helper-Funktion
 ODataEntity toOData(TodoTask TodoTask, string metaContext = "") {
     return ODataEntity(

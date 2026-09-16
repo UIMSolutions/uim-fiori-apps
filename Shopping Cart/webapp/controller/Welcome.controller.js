@@ -7,20 +7,15 @@ sap.ui.define([
 	"../model/formatter"
 ], function (BaseController, cart, JSONModel, Filter, FilterOperator, formatter) {
 	"use strict";
-
 	return BaseController.extend("sap.ui.demo.cart.controller.Welcome", {
-
 		_iCarouselTimeout: 0, // a pointer to the current timeout
 		_iCarouselLoopTime: 8000, // loop to next picture after 8 seconds
-
 		formatter: formatter,
-
 		_mFilters: {
 			Promoted: [new Filter("Type", FilterOperator.EQ, "Promoted")],
 			Viewed: [new Filter("Type", FilterOperator.EQ, "Viewed")],
 			Favorite: [new Filter("Type", FilterOperator.EQ, "Favorite")]
 		},
-
 		onInit: function () {
 			var oViewModel = new JSONModel({
 				welcomeCarouselShipping: 'sap/ui/demo/cart/img/Shipping_273087.jpg',
@@ -34,23 +29,19 @@ sap.ui.define([
 			});
 			this.getView().setModel(oViewModel, "view");
 			this.getRouter().attachRouteMatched(this._onRouteMatched, this);
-
 			// select random carousel page at start
 			var oWelcomeCarousel = this.byId("welcomeCarousel");
 			var iRandomIndex = Math.floor(Math.abs(Math.random()) * oWelcomeCarousel.getPages().length);
 			oWelcomeCarousel.setActivePage(oWelcomeCarousel.getPages()[iRandomIndex]);
 		},
-
 		/**
 		 * lifecycle hook that will initialize the welcome carousel
 		 */
 		onAfterRendering: function () {
 			this.onCarouselPageChanged();
 		},
-
 		_onRouteMatched: function (oEvent) {
 			var sRouteName = oEvent.getParameter("name");
-
 			// always display two columns for home screen
 			if (sRouteName === "home") {
 				this._setLayout("Two");
@@ -77,7 +68,6 @@ sap.ui.define([
 				}
 			}
 		},
-
 		/**
 		 * clear previous animation and initialize the loop animation of the welcome carousel
 		 */
@@ -91,7 +81,6 @@ sap.ui.define([
 				}
 			}.bind(this), this._iCarouselLoopTime);
 		},
-
 		/**
 		 * Event handler to determine which link the user has clicked
 		 * @param {sap.ui.base.Event} oEvent the press event of the link
@@ -105,14 +94,12 @@ sap.ui.define([
 				productId: sProductId
 			});
 		},
-
 		/**
 		 * Navigates to the category overview on phones
 		 */
 		onShowCategories: function () {
 			this.getRouter().navTo("categories");
 		},
-
 		/**
 		 * Event handler to determine which button was clicked
 		 * @param {sap.ui.base.Event} oEvent the button press event
@@ -123,18 +110,15 @@ sap.ui.define([
 			var oCartModel = this.getModel("cartProducts");
 			cart.addToCart(oResourceBundle, oProduct, oCartModel);
 		},
-
 		/**
 		 * Navigate to the generic cart view
 		 * @param {sap.ui.base.Event} oEvent the button press event
 		 */
 		onToggleCart: function (oEvent) {
 			var bPressed = oEvent.getParameter("pressed");
-
 			this._setLayout(bPressed ? "Three" : "Two");
 			this.getRouter().navTo(bPressed ? "cart" : "home");
 		},
-
 		/**
 		 * Select two random elements from the promoted products array
 		 * @private

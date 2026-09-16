@@ -1,0 +1,48 @@
+<mvc:View
+    controllerName="personapp.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form">
+    <Page title="Personenverwaltung (vibe.d + SAP Fiori)">
+        <content>
+            <!-- Formular zum Anlegen -->
+            <Panel headerText="Neue Person anlegen" expandable="true" expanded="true">
+                <f:SimpleForm editable="true" layout="ColumnLayout">
+                    <Label text="Name" />
+                    <Input value="{newPerson>/name}" />
+                    <Label text="E-Mail" />
+                    <Input value="{newPerson>/email}" />
+                    <Label text="Rolle" />
+                    <Input value="{newPerson>/role}" />
+                    <Button text="Speichern" type="Emphasized" press="onAddPerson" />
+                </f:SimpleForm>
+            </Panel>
+            <!-- Tabelle der Personen -->
+            <Table id="personTable" items="{persons>/}">
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <Title text="Personenliste" level="H2"/>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column><Text text="ID" /></Column>
+                    <Column><Text text="Name" /></Column>
+                    <Column><Text text="E-Mail" /></Column>
+                    <Column><Text text="Rolle" /></Column>
+                    <Column hAlign="End"><Text text="Aktion" /></Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="{persons>id}" />
+                            <ObjectIdentifier title="{persons>name}" />
+                            <Text text="{persons>email}" />
+                            <Text text="{persons>role}" />
+                            <Button icon="sap-icon://delete" type="Reject" press="onDeletePerson" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

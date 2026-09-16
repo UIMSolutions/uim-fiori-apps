@@ -26,7 +26,6 @@
                         submit=".onAddTask"
                         width="300px" />
                 </VBox>
-
                 <!-- Aufgabenliste -->
                 <List id="taskList" items="{/Tasks}">
                     <items>

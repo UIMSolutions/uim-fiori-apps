@@ -4,15 +4,11 @@ sap.ui.define([
 	"sap/ui/test/actions/Press"
 ], function (Opa5, BindingPath, Press) {
 	"use strict";
-
 	var sViewName1 = "MasterSettings";
 	var sViewName2 = "DetailSettings";
 	Opa5.createPageObjects({
-
 		onTheSettingsPage: {
-
 			actions: {
-
 				iPressTheOrderSettingsItem: function() {
 					return this.waitFor({
 						controlType: "sap.m.StandardListItem",
@@ -26,7 +22,6 @@ sap.ui.define([
 						errorMessage: "Did not find the order settings item on the master settings page"
 					});
 				},
-
 				iPressTheSaveButton: function() {
 					return this.waitFor({
 						id: "save",
@@ -37,7 +32,6 @@ sap.ui.define([
 						errorMessage: "Did not find the save button on the detail settings page"
 					});
 				},
-
 				iPressTheCancelButton: function() {
 					return this.waitFor({
 						id: "cancel",
@@ -49,7 +43,6 @@ sap.ui.define([
 					});
 				}
 			},
-
 			assertions: {
 				iShouldSeeMasterSettingsView: function () {
 					return this.waitFor({
@@ -61,7 +54,6 @@ sap.ui.define([
 						errorMessage: "The master settings view was not displayed"
 					});
 				},
-
 				iShouldSeeDetailSettingsView: function () {
 					return this.waitFor({
 						viewNamespace: "sap.ui.demo.toolpageapp.view.settings",
@@ -72,7 +64,6 @@ sap.ui.define([
 						errorMessage: "The detail settings view was not displayed"
 					});
 				},
-
 				iShouldSeeMessageToast: function() {
 					return this.waitFor({
 						//increase opa's polling because the message toast is only shown for a brief moment

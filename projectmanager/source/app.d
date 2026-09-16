@@ -1,5 +1,6 @@
 module app;
 
+import uim.fiori;
 import uim.fiori.projectmanager;
 import std.process : environment;
 
@@ -15,27 +16,27 @@ version (unittest) {
         IProjectRepository projectRepository = new MemoryProjectRepository();
         auto todoRepository = new TodoRepository();
         auto projectUsecase = new ProjectUseCase(projectRepository, todoRepository);
-
         auto projectController = new ProjectHttpController(projectUsecase);
         // auto todoController = new TodoHttpController(todoRepository);
-
         auto projectUI5Controller = new ProjectUI5Controller(projectUsecase);
-
         auto router = new URLRouter;
-        router.any("*", &handleCORS);
+        //router.any("*", &handleCORS);
         router.any("/odata/v4/*", &setODataHeaders);
-
         // REST API Routes
         // API Routen
-        projectController.addRoutes(router);
-        projectUI5Controller.addRoutes(router);
-
+        projectController.registerRoutes(router);
+        projectUI5Controller.registerRoutes(router);
+        auto appView = (new AppView("/view/App.view.xml"));
+            appView.registerRoutes(router);
+        auto masterView = new MasterView("/view/Master.view.xml");
+        masterView.registerRoutes(router);
+        auto detailView = new DetailView("/view/Detail.view.xml");
+        detailView.registerRoutes(router);
         // Route for homepage and static SAPUI5 frontend files.
         router.get("/", serveStaticFile("webapp/index.html"));
         router.get("*", serveStaticFiles("webapp/"));
         router.get("*", serveStaticFiles("public/"));
-        
-        ushort port = environment.get("PORT", "8080").to!ushort;
+        ushort port = environment.get("PORT", "8888").to!ushort;
         auto settings = new HTTPServerSettings;
         settings.port = port;
         settings.bindAddresses = ["0.0.0.0"]; // Auf allen Interfaces lauschen

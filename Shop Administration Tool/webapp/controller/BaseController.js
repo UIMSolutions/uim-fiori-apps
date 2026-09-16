@@ -3,9 +3,7 @@ sap.ui.define([
 	"sap/ui/core/UIComponent"
 ], function(Controller, UIComponent) {
 	"use strict";
-
 	return Controller.extend("sap.ui.demo.toolpageapp.controller.BaseController", {
-
 		/**
 		 * Convenience method for accessing the router.
 		 * @public
@@ -14,7 +12,6 @@ sap.ui.define([
 		getRouter : function () {
 			return UIComponent.getRouterFor(this);
 		},
-
 		/**
 		 * Convenience method for getting the view model by name.
 		 * @public
@@ -24,7 +21,6 @@ sap.ui.define([
 		getModel : function (sName) {
 			return this.getView().getModel(sName);
 		},
-
 		/**
 		 * Convenience method for setting the view model.
 		 * @public
@@ -35,7 +31,6 @@ sap.ui.define([
 		setModel : function (oModel, sName) {
 			return this.getView().setModel(oModel, sName);
 		},
-
 		/**
 		 * Returns a promises which resolves with the resource bundle value of the given key <code>sI18nKey</code>
 		 *
@@ -51,5 +46,4 @@ sap.ui.define([
 			});
 		}
 	});
-
 });

@@ -1,0 +1,17 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/persons
+persons.so
+persons.dylib
+persons.dll
+libpersons.a
+persons.a
+persons.lib
+persons-test-*
+*.exe
+*.pdb
+*.o
+*.obj
+*.lst

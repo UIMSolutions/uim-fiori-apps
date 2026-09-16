@@ -28,44 +28,32 @@ sap.ui.define([
 	mobileLibrary
 ) {
 	"use strict";
-
 	// shortcut for sap.m.PlacementType
 	var PlacementType = mobileLibrary.PlacementType;
-
 	// shortcut for sap.m.VerticalPlacementType
 	var VerticalPlacementType = mobileLibrary.VerticalPlacementType;
-
 	// shortcut for sap.m.ButtonType
 	var ButtonType = mobileLibrary.ButtonType;
-
 	return BaseController.extend("sap.ui.demo.toolpageapp.controller.App", {
-
 		_bExpanded: true,
-
 		onInit: function() {
 			this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
-
 			// if the app starts on desktop devices with small or medium screen size, collaps the side navigation
 			if (Device.resize.width <= 1024) {
 				this.onSideNavButtonPress();
 			}
-
 			Device.media.attachHandler(this._handleWindowResize, this);
 			this.getRouter().attachRouteMatched(this.onRouteChange.bind(this));
 		},
-
 		onExit: function() {
 			Device.media.detachHandler(this._handleWindowResize, this);
 		},
-
 		onRouteChange: function (oEvent) {
 			this.getModel('side').setProperty('/selectedKey', oEvent.getParameter('name'));
-
 			if (Device.system.phone) {
 				this.onSideNavButtonPress();
 			}
 		},
-
 		onUserNamePress: function(oEvent) {
 			var oSource = oEvent.getSource();
 			this.getModel("i18n").getResourceBundle().then(function(oBundle){
@@ -119,21 +107,18 @@ sap.ui.define([
 				oActionSheet.openBy(oSource);
 			}.bind(this));
 		},
-
 		onSideNavButtonPress: function() {
 			var oToolPage = this.byId("app");
 			var bSideExpanded = oToolPage.getSideExpanded();
 			this._setToggleButtonTooltip(bSideExpanded);
 			oToolPage.setSideExpanded(!oToolPage.getSideExpanded());
 		},
-
 		_setToggleButtonTooltip : function(bSideExpanded) {
 			var oToggleButton = this.byId('sideNavigationToggleButton');
 			this.getBundleText(bSideExpanded ? "expandMenuButtonText" : "collpaseMenuButtonText").then(function(sTooltipText){
 				oToggleButton.setTooltip(sTooltipText);
 			});
 		},
-
 		// Errors Pressed
 		onMessagePopoverPress: function (oEvent) {
 			var oMessagePopoverButton = oEvent.getSource();
@@ -156,7 +141,6 @@ sap.ui.define([
 				}.bind(this));
 			}
 		},
-
 		/**
 		 * Event handler for the notification button
 		 * @param {sap.ui.base.Event} oEvent the button press event
@@ -195,7 +179,6 @@ sap.ui.define([
 				oNotificationPopover.openBy(oSource);
 			}.bind(this));
 		},
-
 		/**
 		 * Factory function for the notification items
 		 * @param {string} sId The id for the item
@@ -236,7 +219,6 @@ sap.ui.define([
 			});
 			return oNotificationItem;
 		},
-
 		_createError: function (oBundle, sId, oBindingContext) {
 			var oBindingObject = oBindingContext.getObject();
 			var oLink = new Link("moreDetailsLink", {
@@ -247,7 +229,6 @@ sap.ui.define([
 					});
 				}.bind(this)
 			});
-
 			var oMessageItem = new MessageItem({
 				title: oBindingObject.title,
 				subtitle: oBindingObject.subTitle,
@@ -257,7 +238,6 @@ sap.ui.define([
 			});
 			return oMessageItem;
 		},
-
 		/**
 		 * Returns a promise which resolves with the resource bundle value of the given key <code>sI18nKey</code>
 		 *
@@ -269,7 +249,6 @@ sap.ui.define([
 		getBundleText: function(sI18nKey, aPlaceholderValues){
 			return this.getBundleTextByModel(sI18nKey, this.getModel("i18n"), aPlaceholderValues);
 		},
-
 		_handleWindowResize: function (oDevice) {
 			if ((oDevice.name === "Tablet" && this._bExpanded) || oDevice.name === "Desktop") {
 				this.onSideNavButtonPress();
@@ -279,6 +258,5 @@ sap.ui.define([
 				this._bExpanded = (oDevice.name === "Desktop");
 			}
 		}
-
 	});
 });

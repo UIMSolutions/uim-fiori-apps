@@ -14,14 +14,11 @@ sap.ui.define([
 	MessageToast
 ) {
 	"use strict";
-
 	var sCartModelName = "cartProducts";
 	var sSavedForLaterEntries = "savedForLaterEntries";
 	var sCartEntries = "cartEntries";
-
 	return BaseController.extend("sap.ui.demo.cart.controller.Cart", {
 		formatter: formatter,
-
 		onInit: function () {
 			this._oRouter = this.getRouter();
 			this._oRouter.getRoute("cart").attachPatternMatched(this._routePatternMatched, this);
@@ -31,7 +28,6 @@ sap.ui.define([
 			var oCfgModel = new JSONModel({});
 			this.getView().setModel(oCfgModel, "cfg");
 			this._toggleCfgModel();
-
 			var oEditButton = this.byId("editButton");
 			oEditButton.addEventDelegate({
 				onAfterRendering : function () {
@@ -39,7 +35,6 @@ sap.ui.define([
 				}
 			});
 		},
-
 		onExit: function () {
 			if (this._orderDialog) {
 				this._orderDialog.destroy();
@@ -48,7 +43,6 @@ sap.ui.define([
 				this._orderBusyDialog.destroy();
 			}
 		},
-
 		_routePatternMatched: function () {
 			this._setLayout("Three");
 			var oCartModel = this.getModel("cartProducts");
@@ -62,11 +56,9 @@ sap.ui.define([
 			var oEntryList = this.byId("entryList");
 			oEntryList.removeSelections();
 		},
-
 		onEditOrDoneButtonPress: function () {
 			this._toggleCfgModel();
 		},
-
 		_toggleCfgModel: function () {
 			var oCfgModel = this.getView().getModel("cfg");
 			var oData = oCfgModel.getData();
@@ -75,7 +67,6 @@ sap.ui.define([
 			var bInDelete = (bDataNoSetYet ? true : oData.inDelete);
 			var sPhoneMode = (Device.system.phone ? "None" : "SingleSelectMaster");
 			var sPhoneType = (Device.system.phone ? "Active" : "Inactive");
-
 			oCfgModel.setData({
 				inDelete: !bInDelete,
 				notInDelete: bInDelete,
@@ -84,15 +75,12 @@ sap.ui.define([
 				pageTitle: (bInDelete ? oBundle.getText("appTitle") : oBundle.getText("cartTitleEdit"))
 			});
 		},
-
 		onEntryListPress: function (oEvent) {
 			this._showProduct(oEvent.getSource());
 		},
-
 		onEntryListSelect: function (oEvent) {
 			this._showProduct(oEvent.getParameter("listItem"));
 		},
-
 		/**
 		 * Called when the "save for later" link of a product in the cart is pressed.
 		 * @public
@@ -102,7 +90,6 @@ sap.ui.define([
 			var oBindingContext = oEvent.getSource().getBindingContext(sCartModelName);
 			this._changeList(sSavedForLaterEntries, sCartEntries, oBindingContext);
 		},
-
 		/**
 		 * Called when the "Add back to basket" link of a product in the saved for later list is pressed.
 		 * @public
@@ -110,10 +97,8 @@ sap.ui.define([
 		 */
 		onAddBackToBasket: function (oEvent) {
 			var oBindingContext = oEvent.getSource().getBindingContext(sCartModelName);
-
 			this._changeList(sCartEntries, sSavedForLaterEntries, oBindingContext);
 		},
-
 		/**
 		 * Moves a product from one list to another.
 		 * @private
@@ -131,22 +116,18 @@ sap.ui.define([
 			var oListToAddItem = Object.assign({}, oModelData[sListToAddItem]);
 			var oListToDeleteItem = Object.assign({}, oModelData[sListToDeleteItem]);
 			var sProductId = oProduct.ProductId;
-
 			// find existing entry for product
 			if (oListToAddItem[sProductId] === undefined) {
 				// copy new entry
 				oListToAddItem[sProductId] = Object.assign({}, oProduct);
 			}
-
 			//Delete the saved Product from cart
 			delete oListToDeleteItem[sProductId];
 			oCartModel.setProperty("/" + sListToAddItem, oListToAddItem);
 			oCartModel.setProperty("/" + sListToDeleteItem, oListToDeleteItem);
 		},
-
 		_showProduct: function (oItem) {
 			var oEntry = oItem.getBindingContext(sCartModelName).getObject();
-
 			// close cart when showing a product on phone
 			var bCartVisible = false;
 			if (!Device.system.phone) {
@@ -160,15 +141,12 @@ sap.ui.define([
 				productId: oEntry.ProductId
 			}, !Device.system.phone);
 		},
-
 		onCartEntriesDelete: function (oEvent) {
 			this._deleteProduct(sCartEntries, oEvent);
 		},
-
 		onSaveForLaterDelete: function (oEvent) {
 			this._deleteProduct(sSavedForLaterEntries, oEvent);
 		},
-
 		/**
 		 * Helper function for the deletion of items from <code>cart</code> or <code>savedForLater</code> list.
 		 * If the delete button is pressed, a message dialog will open.
@@ -181,7 +159,6 @@ sap.ui.define([
 				oBundle = this.getResourceBundle(),
 				sEntryId = oBindingContext.getProperty("ProductId"),
 				sEntryName = oBindingContext.getProperty("Name");
-
 			// show confirmation dialog
 			MessageBox.show(oBundle.getText("cartDeleteDialogMsg"), {
 				title: oBundle.getText("cartDeleteDialogTitle"),
@@ -195,18 +172,14 @@ sap.ui.define([
 					}
 					var oCartModel = oBindingContext.getModel();
 					var oCollectionEntries = Object.assign({}, oCartModel.getData()[sCollection]);
-
 					delete oCollectionEntries[sEntryId];
-
 					// update model
 					oCartModel.setProperty("/" + sCollection, Object.assign({}, oCollectionEntries));
-
 					MessageToast.show(oBundle.getText("cartDeleteDialogConfirmDeleteMsg",
 						[sEntryName]));
 				}
 			});
 		},
-
 		/**
 		 * Called when the proceed button in the cart is pressed.
 		 * Navigates to the checkout wizard

@@ -11,7 +11,6 @@ sap.ui.define([
 	AggregationLengthEquals,
 	Properties) {
 	"use strict";
-
 	Opa5.createPageObjects({
 		onTheWelcomePage: {
 			viewName: "Welcome",
@@ -23,7 +22,6 @@ sap.ui.define([
 						errorMessage: "No Menu button found"
 					});
 				},
-
 				iPressTheProductLink: function () {
 					return this.waitFor({
 						controlType: "sap.m.ObjectIdentifier",
@@ -35,7 +33,6 @@ sap.ui.define([
 						errorMessage: "The product link was not displayed"
 					});
 				},
-
 				iPressOnTheCartButton: function () {
 					return this.waitFor({
 						controlType: "sap.m.Button",
@@ -47,7 +44,6 @@ sap.ui.define([
 						errorMessage: "The cart button was not displayed"
 					});
 				},
-
 				iPressOnTheProductSmartphoneAlphaTitle: function () {
 					this.waitFor({
 						controlType: "sap.m.ObjectIdentifier",
@@ -56,7 +52,6 @@ sap.ui.define([
 						errorMessage: "The product Smartphone Alpha was not found and could not be pressed"
 					});
 				},
-
 				iPressTheProductImage: function () {
 					return this.waitFor({
 						controlType: "sap.m.Image",
@@ -68,7 +63,6 @@ sap.ui.define([
 						errorMessage: "The product image was not displayed"
 					});
 				},
-
 				iToggleTheCart: function () {
 					return this.waitFor({
 						controlType : "sap.m.Button",
@@ -78,9 +72,7 @@ sap.ui.define([
 					});
 				}
 			},
-
 			assertions: {
-
 				iShouldSeeTheWelcomePage: function () {
 					return this.waitFor({
 						timeout: 30,
@@ -90,7 +82,6 @@ sap.ui.define([
 						errorMessage: "The welcome page was not displayed"
 					});
 				},
-
 				iShouldSeeAnAvatarButton: function () {
 					return this.waitFor({
 						controlType: "sap.m.Button",
@@ -101,7 +92,6 @@ sap.ui.define([
 						errorMessage: "There is no avatar button"
 					});
 				},
-
 				iShouldSeeTheRightAmountOfProducts: function() {
 					this.waitFor({
 						id: "promotedRow",
@@ -114,7 +104,6 @@ sap.ui.define([
 						},
 						errorMessage: "The welcome page did not show two promoted items"
 					});
-
 					 this.waitFor({
 						id: "viewedRow",
 						matchers: new AggregationLengthEquals({
@@ -126,7 +115,6 @@ sap.ui.define([
 						},
 						errorMessage: "The welcome page did not show four viewed items"
 					});
-
 					return this.waitFor({
 						id: "favoriteRow",
 						matchers: new AggregationLengthEquals({
@@ -142,5 +130,4 @@ sap.ui.define([
 			}
 		}
 	});
-
 });

@@ -7,12 +7,10 @@ sap.ui.define([
 	Common,
 	Press) {
 	"use strict";
-
 	Opa5.createPageObjects({
 		onTheDialog : {
 			baseClass: Common,
 			actions : {
-
 				iPressDeleteButtonOnTheConfirmationDialog : function () {
 					return this.waitFor({
 							controlType : "sap.m.Button",
@@ -35,9 +33,7 @@ sap.ui.define([
 					});
 				}
 			},
-
 			assertions : {
-
 				iShouldBeTakenToTheConfirmationDialog : function () {
 					return this.waitFor({
 						controlType : "sap.m.Button",
@@ -54,7 +50,6 @@ sap.ui.define([
 					});
 				}
 			}
-
 		}
 	});
 });

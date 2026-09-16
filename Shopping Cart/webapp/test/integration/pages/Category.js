@@ -17,12 +17,10 @@ sap.ui.define([
 	Properties,
 	Press) {
 	"use strict";
-
 	Opa5.createPageObjects({
 		onTheCategory : {
 			baseClass: Common,
 			viewName: "Category",
-
 			actions: {
 				iPressOnTheFirstProduct: function () {
 					return this.waitFor({
@@ -32,7 +30,6 @@ sap.ui.define([
 						errorMessage: "The product list does not contain required selection"
 					});
 				},
-
 				iPressTheFilterButton: function () {
 					this.waitFor({
 						controlType: "sap.m.Button",
@@ -41,7 +38,6 @@ sap.ui.define([
 						errorMessage: "The filter button was not found and could not be pressed"
 					});
 				},
-
 				iPressOnTheProductBlasterExtreme: function () {
 					this.waitFor({
 						controlType: "sap.m.ObjectListItem",
@@ -50,7 +46,6 @@ sap.ui.define([
 						errorMessage: "The product Blaster Extreme was not found and could not be pressed"
 					});
 				},
-
 				iSelectTheAvailabilityFilteringOption: function () {
 					this.waitFor({
 						controlType: "sap.m.StandardListItem",
@@ -81,7 +76,6 @@ sap.ui.define([
 						errorMessage: "The available check box was not found and could not be selected"
 					});
 				},
-
 				iSelectTheDiscontinuedFilter: function () {
 					this.waitFor({
 						controlType: "sap.m.StandardListItem",
@@ -100,7 +94,6 @@ sap.ui.define([
 						errorMessage: "The Technocom check box was not found and could not be selected"
 					});
 				},
-
 				iSelectTheOutOfStockFilter: function () {
 					this.waitFor({
 						controlType: "sap.m.StandardListItem",
@@ -111,7 +104,6 @@ sap.ui.define([
 						errorMessage: "The out of stock check box was not found and could not be selected"
 					});
 				},
-
 				iDeselectTheAvailableFilter: function () {
 					this.waitFor({
 						controlType: "sap.m.StandardListItem",
@@ -122,7 +114,6 @@ sap.ui.define([
 						errorMessage: "The available check box was not found and could not be deselected"
 					});
 				},
-
 				iDeselectTheDiscontinuedFilter: function () {
 					this.waitFor({
 						controlType: "sap.m.StandardListItem",
@@ -205,10 +196,8 @@ sap.ui.define([
 							oSlider[0].setValue(200).setValue2(500);
 						},
 						errorMessage: "The range slider control was not displayed and could not be scrolled"
-
 					});
 				},
-
 				iChangeThePriceFilterValues: function () {
 					this.waitFor({
 						controlType: "sap.m.RangeSlider",
@@ -217,7 +206,6 @@ sap.ui.define([
 							oSlider[0].setValue(500).setValue2(1000);
 						},
 						errorMessage: "The range slider control was not displayed and could not be scrolled"
-
 					});
 				},
 				iChangeToTheDefaultPriceFilterValues: function () {
@@ -230,10 +218,8 @@ sap.ui.define([
 							oSlider[0].fireEvent("change", {range: oSlider[0].getRange()});
 						},
 						errorMessage: "The range slider control was not displayed and could not be scrolled"
-
 					});
 				},
-
 				iFilterOnAvailability: function () {
 					this.iPressTheFilterButton();
 					this.iSelectTheAvailabilityFilteringOption();
@@ -276,7 +262,6 @@ sap.ui.define([
 					this.iDeselectTheTechnoComFilter();
 					this.iPressOkButton();
 				},
-
 				iPressOnCompareLink: function (ProductId) {
 					return this.waitFor({
 						controlType: "sap.m.ObjectAttribute",
@@ -289,9 +274,7 @@ sap.ui.define([
 					});
 				}
 			},
-
 			assertions: {
-
 				iShouldSeeTheProductList: function () {
 					return this.waitFor({
 						id: "productList",
@@ -305,7 +288,6 @@ sap.ui.define([
 						errorMessage: "The product list was not found"
 					});
 				},
-
 				iShouldBeTakenToTheFlatScreensCategory: function () {
 					return this.waitFor({
 						controlType: "sap.m.Page",
@@ -319,7 +301,6 @@ sap.ui.define([
 						errorMessage: "The flat screens category page was not found"
 					});
 				},
-
 				iShouldBeTakenToTheSpeakerCategory: function () {
 					return this.waitFor({
 						controlType: "sap.m.Page",
@@ -333,7 +314,6 @@ sap.ui.define([
 						errorMessage: "The speaker category page was not found"
 					});
 				},
-
 				iShouldSeeSomeEntriesInTheProductList: function () {
 					this.waitFor({
 						id: "productList",
@@ -360,7 +340,6 @@ sap.ui.define([
 						errorMessage: "The product list was not filtered"
 					});
 				},
-
 				iShouldSeeAFilterButton: function () {
 					this.waitFor({
 						id: "masterListFilterButton",
@@ -370,7 +349,6 @@ sap.ui.define([
 						errorMessage: "The Master list page has no filter button"
 					});
 				},
-
 				iShouldOnlySeeTheAvailableAndDiscontinuedProducts: function () {
 					this.waitFor({
 						id: "productList",
@@ -411,7 +389,6 @@ sap.ui.define([
 						errorMessage: "The category list did not show cheap and out of stock products"
 					});
 				},
-
 				iShouldSeeAnAvailabilityInfoToolbar: function () {
 					this.waitFor({
 						id: "categoryInfoToolbarTitle",
@@ -458,7 +435,6 @@ sap.ui.define([
 				iShouldTestTheFilterCount: function (iCountNumber) {
 					var sSuccessMessage = "The price filter count is correctly set up";
 					var sErrorMessage = "The price filter count doesn't correctly set up";
-
 					this.waitFor({
 						controlType: "sap.m.StandardListItem",
 						matchers: function(oControl){
@@ -482,17 +458,14 @@ sap.ui.define([
 					this.iShouldOnlySeeTheOutOfStockProducts();
 					this.iShouldSeeAnAvailabilityInfoToolbar();
 				},
-
 				iShouldOnlySeeOutOfStockAndCheapProductsWithInfoToolbar: function () {
 					this.iShouldOnlySeeOutOfStockAndCheapProducts();
 					this.iShouldSeeAnAvailabilityAndPriceInfoToolbar();
 				},
-
 				iShouldSeeAllProductsAndNoInfoToolbar: function () {
 					this.iShouldSeeAllProductsOfTheCategory();
 					this.iShouldNotSeeAnInfoToolbar();
 				},
-
 				iShouldSeeCompareLinkOnListEntry: function () {
 					this.waitFor({
 						controlType: "sap.m.ObjectAttribute",

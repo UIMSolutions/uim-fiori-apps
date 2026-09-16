@@ -1,0 +1,47 @@
+{
+  "_version": "1.12.0",
+  "sap.app": {
+    "id": "taskmanager.fiori",
+    "type": "application",
+    "title": "vibe.d Task Manager"
+  },
+  "sap.ui5": {
+    "rootView": {
+      "viewName": "taskmanager.fiori.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "app"
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.f.routing.Router",
+        "viewType": "XML",
+        "viewPath": "taskmanager.fiori.view",
+        "controlId": "layout",
+        "async": true
+      },
+      "routes": [
+        {
+          "name": "master",
+          "pattern": "",
+          "target": ["master"]
+        },
+        {
+          "name": "detail",
+          "pattern": "task/{taskId}",
+          "target": ["master", "detail"]
+        }
+      ],
+      "targets": {
+        "master": {
+          "viewName": "Master",
+          "controlAggregation": "beginColumnPages"
+        },
+        "detail": {
+          "viewName": "Detail",
+          "controlAggregation": "midColumnPages"
+        }
+      }
+    }
+  }
+}

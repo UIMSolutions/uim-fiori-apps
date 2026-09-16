@@ -6,7 +6,6 @@ sap.ui.define([
 	"../model/cart"
 ], function(Controller, MessageToast, UIComponent, History, cart) {
 	"use strict";
-
 	return Controller.extend("sap.ui.demo.cart.controller.BaseController", {
 		cart: cart,
 		/**
@@ -17,7 +16,6 @@ sap.ui.define([
 		getRouter: function () {
 			return UIComponent.getRouterFor(this);
 		},
-
 		/**
 		 * Convenience method for getting the view model by name.
 		 * @public
@@ -27,7 +25,6 @@ sap.ui.define([
 		getModel: function (sName) {
 			return this.getView().getModel(sName);
 		},
-
 		/**
 		 * Convenience method for setting the view model.
 		 * @public
@@ -38,7 +35,6 @@ sap.ui.define([
 		setModel: function (oModel, sName) {
 			return this.getView().setModel(oModel, sName);
 		},
-
 		/**
 		 * Getter for the resource bundle.
 		 * @public
@@ -47,7 +43,6 @@ sap.ui.define([
 		getResourceBundle: function () {
 			return this.getOwnerComponent().getModel("i18n").getResourceBundle();
 		},
-
 		/**
 		 * Handler for the Avatar button press event
 		 * @public
@@ -56,7 +51,6 @@ sap.ui.define([
 			var sMessage = this.getResourceBundle().getText("avatarButtonMessageToastText");
 			MessageToast.show(sMessage);
 		},
-
 		/**
 		 * React to FlexibleColumnLayout resize events
 		 * Hides navigation buttons and switches the layout as needed
@@ -65,7 +59,6 @@ sap.ui.define([
 		onStateChange: function (oEvent) {
 			var sLayout = oEvent.getParameter("layout"),
 				iColumns = oEvent.getParameter("maxColumnsCount");
-
 			if (iColumns === 1) {
 				this.getModel("appView").setProperty("/smallScreenMode", true);
 			} else {
@@ -76,7 +69,6 @@ sap.ui.define([
 				}
 			}
 		},
-
 		/**
 		 * Sets the flexible column layout to one, two, or three columns for the different scenarios across the app
 		 * @param {string} sColumns the target amount of columns
@@ -87,7 +79,6 @@ sap.ui.define([
 				this.getModel("appView").setProperty("/layout", sColumns + "Column" + (sColumns === "One" ? "" : "sMidExpanded"));
 			}
 		},
-
 		/**
 		 * Navigates back in browser history or to the home screen
 		 */
@@ -100,7 +91,6 @@ sap.ui.define([
 				this.getRouter().navTo("home");
 			}
 		},
-
 		/**
 		 * Called, when the add button of a product is pressed.
 		 * Saves the product, the i18n bundle, and the cart model and hands them to the <code>addToCart</code> function

@@ -13,20 +13,17 @@ sap.ui.define([
 	Press,
 	EnterText) {
 	"use strict";
-
 	Opa5.createPageObjects({
 		onCheckout: {
 			baseClass: Common,
 			viewName: "Checkout",
 			actions: {
-
 				iPressOnTheReturnToShopButton: function () {
 					return this.waitFor({
 						id: "returnToShopButton",
 						actions: new Press()
 					});
 				},
-
 				iPressOnTheNextStepButton: function () {
 					return this.waitFor({
 						id: "shoppingCartWizard",
@@ -36,7 +33,6 @@ sap.ui.define([
 						errorMessage: "Could not proceed to Next Step"
 					});
 				},
-
 				iPressOnDifferentAddressCheckbox: function () {
 					return this.waitFor({
 						id: "differentDeliveryAddress",
@@ -44,7 +40,6 @@ sap.ui.define([
 						errorMessage: "Could not press Different Delivery Address Checkbox"
 					});
 				},
-
 				iPressOnTheButtonInTheFooter: function () {
 					return this.waitFor({
 						id: "showPopoverButton",
@@ -52,7 +47,6 @@ sap.ui.define([
 						errorMessage: "The button is not rendered and could not be pressed"
 					});
 				},
-
 				iEnterCreditCardInformation: function (sHolderName, sNumber, sCode, sDate) {
 					return this.waitFor({
 						id: "creditCardHolderName",
@@ -81,15 +75,12 @@ sap.ui.define([
 						errorMessage: "Could not enter Text on Input with id creditCardHolderName"
 					});
 				},
-
 				iEnterWrongCreditCardInformation: function () {
 					this.iEnterCreditCardInformation("My name", "1234567891234567", "13", "01/2020");
 				},
-
 				iEnterCorrectCreditCardInformation: function () {
 					this.iEnterCreditCardInformation("My name", "1234567891234567", "123", "01/2020");
 				},
-
 				iEnterCashOnDeliveryText: function (sFirstName, sLastName, sPhone, sEmail) {
 					return this.waitFor({
 						id: "cashOnDeliveryName",
@@ -118,11 +109,9 @@ sap.ui.define([
 						errorMessage: "Could not enter Text 'cashOnDeliveryName'"
 					});
 				},
-
 				iEnterCorrectCashOnDeliveryInfo: function () {
 					this.iEnterCashOnDeliveryText("FirstName", "LastName", "+4911111111", "inf@shop.com");
 				},
-
 				iEnterInvoiceAddressText: function (sStreet, sCity, sZipCode, sCountry) {
 					return this.waitFor({
 						id: "invoiceAddressAddress",
@@ -151,7 +140,6 @@ sap.ui.define([
 						errorMessage: "Could not enter Text invoiceAddressAddress"
 					});
 				},
-
 				iEnterDeliveryAddressText: function () {
 					return this.waitFor({
 						id: "deliveryAddressAddress",
@@ -183,7 +171,6 @@ sap.ui.define([
 				iEnterInvoiceAddress: function () {
 					this.iEnterInvoiceAddressText("MyStreet.2", "MyCity", "1234", "DE");
 				},
-
 				iPressOnTheSubmitButton: function () {
 					return this.waitFor({
 						id: "submitOrder",
@@ -191,7 +178,6 @@ sap.ui.define([
 						errorMessage: "Could not submit order"
 					});
 				},
-
 				iPressOnTheYesButton: function () {
 					this.waitFor({
 						searchOpenDialogs: true,
@@ -209,7 +195,6 @@ sap.ui.define([
 					});
 					return this;
 				},
-
 				iPressOnTheEditButtonBacktoList : function () {
 					return this.waitFor({
 						id: "backtoList",
@@ -217,7 +202,6 @@ sap.ui.define([
 						errorMessage : "The BacktoList button could not be pressed"
 					});
 				},
-
 				iPressOnTheEditButtonBackToPaymentType : function () {
 					return this.waitFor({
 						id: "backToInvoiceAddress",
@@ -225,7 +209,6 @@ sap.ui.define([
 						errorMessage : "The BackToInvoiceAddress button could not be pressed"
 					});
 				},
-
 				iPressOnTheEditButtonBackToInvoiceAddress : function () {
 					return this.waitFor({
 						id: "backToPaymentType",
@@ -233,7 +216,6 @@ sap.ui.define([
 						errorMessage : "The BackToPaymentType button could not be pressed"
 					});
 				},
-
 				iPressOnTheEditButtonBackToDeliveryType: function () {
 					return this.waitFor({
 						id: "backToDeliveryType",
@@ -241,7 +223,6 @@ sap.ui.define([
 						errorMessage : "The BackToDeliveryType button could not be pressed"
 					});
 				},
-
 
 				iPressOnTheBankTransferButton : function () {
 					return this.waitFor({
@@ -251,7 +232,6 @@ sap.ui.define([
 						errorMessage: "Cannot select Bank Transfer from Payment Methods"
 					});
 				},
-
 				iPressOnTheCashOnDeliveryButton : function () {
 					return this.waitFor({
 						controlType : "sap.m.Button",
@@ -260,7 +240,6 @@ sap.ui.define([
 						errorMessage: "Cannot select Cash On Delivery from Payment Methods"
 					});
 				},
-
 				iPressOnTheExpressDeliveryButton : function () {
 					return this.waitFor({
 						controlType : "sap.m.Button",
@@ -269,7 +248,6 @@ sap.ui.define([
 						errorMessage: "Cannot select express delivery"
 					});
 				},
-
 				iPressTheCloseButton: function () {
 					return this.waitFor({
 						controlType : "sap.m.Button",
@@ -300,7 +278,6 @@ sap.ui.define([
 						}
 					});
 				},
-
 				iShouldSeeTheStep3Button: function () {
 					return this.waitFor({
 						controlType : "sap.m.Button",
@@ -325,7 +302,6 @@ sap.ui.define([
 						}
 					});
 				},
-
 				iShouldSeeTheStep5Button: function () {
 					return this.waitFor({
 						controlType : "sap.m.Button",
@@ -338,7 +314,6 @@ sap.ui.define([
 						}
 					});
 				},
-
 				iShouldSeeTheStep6Button: function () {
 					return this.waitFor({
 						controlType : "sap.m.Button",
@@ -352,7 +327,6 @@ sap.ui.define([
 						errorMessage: "Step6 buttom was not found"
 					});
 				},
-
 				iShouldGetErrorMessageTextDoesNotMatchTypeForEmailField: function (sEmailFieldValue) {
 					return this.waitFor({
 						id: "cashOnDeliveryEmail",
@@ -362,7 +336,6 @@ sap.ui.define([
 						errorMessage: "The Email field error message text does not match to the type of error (value has wrong format)."
 					});
 				},
-
 				iShouldNotSeeTheStep4Button: function (sStepId) {
 					return this.waitFor({
 						id: sStepId,
@@ -372,7 +345,6 @@ sap.ui.define([
 						errorMessage: "The" + sStepId + " button was found"
 					});
 				},
-
 				iShouldSeeTheDeliveryAddressStep: function () {
 					return this.waitFor({
 						id: "deliveryAddressStep",
@@ -390,7 +362,6 @@ sap.ui.define([
 						errorMessage: "The delivery step button was not found"
 					});
 				},
-
 				iShouldSeeTheDeliveryTypeStep: function () {
 					return this.waitFor({
 						id: "deliveryTypeStep",
@@ -399,7 +370,6 @@ sap.ui.define([
 						}
 					});
 				},
-
 				iShouldSeeTheOrderSummary: function () {
 					return this.waitFor({
 						id: "summaryPage",
@@ -408,7 +378,6 @@ sap.ui.define([
 						}
 					});
 				},
-
 				iShouldSeeExpressDelivery: function () {
 					return this.waitFor({
 						id: "selectedDeliveryMethod",
@@ -417,7 +386,6 @@ sap.ui.define([
 						}
 					});
 				},
-
 				iShouldSeeTheFooterWithTheErrorButton: function() {
 					return this.waitFor({
 						id : "wizardFooterBar",
@@ -427,7 +395,6 @@ sap.ui.define([
 						errorMessage: "Footer is not visible"
 					});
 				},
-
 				iShouldSeeTheMessagePopover: function() {
 					return this.waitFor({
 						id : "messagePopover",

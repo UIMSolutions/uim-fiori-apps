@@ -5,7 +5,6 @@ sap.ui.define([
 	var sViewName = "Home";
 	Opa5.createPageObjects({
 		onTheHomePage: {
-
 			assertions: {
 				iShouldSeeTheHomeView: function () {
 					return this.waitFor({

@@ -1,0 +1,10 @@
+<mvc:View
+    controllerName="taskmanager.fiori.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
+    displayBlock="true">
+    <f:FlexibleColumnLayout 
+        id="layout" 
+        layout="OneColumn" 
+        backgroundDesign="Solid" />
+</mvc:View>

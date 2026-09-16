@@ -5,13 +5,10 @@ sap.ui.define([
 	"sap/ui/Device"
 ], function(UIComponent, LocalStorageModel, models, Device) {
 	"use strict";
-
 	return UIComponent.extend("sap.ui.demo.cart.Component", {
-
 		metadata: {
 			manifest: "json"
 		},
-
 		/**
 		 * The component is initialized by UI5 automatically during the startup of the app and calls the init method once.
 		 * In this function, the device models are set and the router is initialized.
@@ -25,7 +22,6 @@ sap.ui.define([
 				savedForLaterEntries: {}
 			});
 			this.setModel(oCartModel, "cartProducts");
-
 			//create and set comparison model
 			var oComparisonModel = new LocalStorageModel("PRODUCT_COMPARISON", {
 				category: "",
@@ -33,16 +29,12 @@ sap.ui.define([
 				item2: ""
 			});
 			this.setModel(oComparisonModel, "comparison");
-
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
-
 			// call the base component's init function and create the App view
 			UIComponent.prototype.init.apply(this, arguments);
-
 			// initialize the router
 			this.getRouter().initialize();
-
 			// update browser title
 			this.getRouter().attachTitleChanged(function(oEvent) {
 				var sTitle = oEvent.getParameter("title");
@@ -51,7 +43,6 @@ sap.ui.define([
 				});
 			});
 		},
-
 		/**
 		 * This method can be called to determine whether the sapUiSizeCompact or sapUiSizeCozy
 		 * design mode class should be set, which influences the size appearance of some controls.

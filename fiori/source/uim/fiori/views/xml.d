@@ -1,4 +1,5 @@
 module uim.fiori.views.xml;
+
 import std.algorithm.searching : canFind;
 import std.array : Appender, appender;
 import std.file : readText, write;
@@ -14,6 +15,7 @@ private:
     string _text;
     XMLAttribute[] _attributes;
     XMLElement[] _children;
+
 public:
     this(string name) {
         _name = name;
@@ -57,6 +59,7 @@ public:
         renderInto(buf, 0, pretty, indentSize);
         return buf.data;
     }
+    
 private:
     static string makeIndent(size_t level, size_t indentSize) {
         auto buf = appender!string();

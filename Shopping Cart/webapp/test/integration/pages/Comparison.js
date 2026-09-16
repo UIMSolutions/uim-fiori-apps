@@ -15,12 +15,10 @@ sap.ui.define([
 	BindingPath,
 	I18NText) {
 	"use strict";
-
 	Opa5.createPageObjects({
 		onTheComparison: {
 			baseClass: Common,
 			viewName: "Comparison",
-
 			actions: {
 				iDeleteAProduct: function (ProductId) {
 					return this.waitFor({
@@ -52,7 +50,6 @@ sap.ui.define([
 					});
 				}
 			},
-
 			assertions: {
 				iShouldSeeAProduct: function (ProductId) {
 					return this.waitFor({
@@ -64,7 +61,6 @@ sap.ui.define([
 						errorMessage: "There is no product displayed"
 					});
 				},
-
 				iShouldSeeAPlaceholder: function () {
 					return this.waitFor({
 						controlType: "sap.m.Label",
@@ -98,12 +94,10 @@ sap.ui.define([
 						errorMessage: "Placeholder is displayed incorrectly"
 					});
 				},
-
 				iShouldSeeTwoProducts: function (productA, productB) {
 					this.iShouldSeeAProduct(productA);
 					this.iShouldSeeAProduct(productB);
 				},
-
 				iShouldSeeAProductAndAPlaceholder: function (product) {
 					this.iShouldSeeAProduct(product);
 					this.iShouldSeeAPlaceholder();

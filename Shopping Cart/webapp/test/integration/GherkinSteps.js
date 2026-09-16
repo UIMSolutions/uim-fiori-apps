@@ -4,7 +4,6 @@ sap.ui.define([
 ], function(StepDefinitions, Startup) {
 	"use strict";
 	Startup = new Startup();
-
 	return StepDefinitions.extend("GherkinWithOPA5.Steps", {
 		init: function() {
 			this.register(
@@ -19,5 +18,4 @@ sap.ui.define([
 			);
 		}
 	});
-
 });

@@ -2,13 +2,11 @@ sap.ui.define([
 	"sap/ui/core/format/NumberFormat"
 ], function (NumberFormat) {
 	"use strict";
-
 	var mStatusState = {
 		"A": "Success",
 		"O": "Warning",
 		"D": "Error"
 	};
-
 	var formatter = {
 		/**
 		 * Formats the price
@@ -25,7 +23,6 @@ sap.ui.define([
 			});
 			return numberFormat.format(sValue);
 		},
-
 		/**
 		 * Sums up the price for all products in the cart
 		 * @param {object} oCartEntries current cart entries
@@ -34,15 +31,12 @@ sap.ui.define([
 		totalPrice: function (oCartEntries) {
 			var oBundle = this.getResourceBundle(),
 				fTotalPrice = 0;
-
 			Object.keys(oCartEntries).forEach(function (sProductId) {
 				var oProduct = oCartEntries[sProductId];
 				fTotalPrice += parseFloat(oProduct.Price) * oProduct.Quantity;
 			});
-
 			return oBundle.getText("cartTotalPrice", [formatter.price(fTotalPrice)]);
 		},
-
 		/**
 		 * Returns the status text based on the product status
 		 * @param {string} sStatus product status
@@ -50,16 +44,13 @@ sap.ui.define([
 		 */
 		statusText: function (sStatus) {
 			var oBundle = this.getResourceBundle();
-
 			var mStatusText = {
 				"A": oBundle.getText("statusA"),
 				"O": oBundle.getText("statusO"),
 				"D": oBundle.getText("statusD")
 			};
-
 			return mStatusText[sStatus] || sStatus;
 		},
-
 		/**
 		 * Returns the product state based on the status
 		 * @param {string} sStatus product status
@@ -68,7 +59,6 @@ sap.ui.define([
 		statusState: function (sStatus) {
 			return mStatusState[sStatus] || "None";
 		},
-
 		/**
 		 * Returns the relative URL to a product picture
 		 * @param {string} sUrl image URL
@@ -81,7 +71,6 @@ sap.ui.define([
 				return undefined;
 			}
 		},
-
 		/**
 		 * Checks if one of the collections contains items.
 		 * @param {object} oCollection1 First array or object to check
@@ -91,10 +80,8 @@ sap.ui.define([
 		hasItems: function (oCollection1, oCollection2) {
 			var bCollection1Filled = !!(oCollection1 && Object.keys(oCollection1).length),
 				bCollection2Filled = !!(oCollection2 && Object.keys(oCollection2).length);
-
 			return bCollection1Filled || bCollection2Filled;
 		}
 	};
-
 	return formatter;
 });

@@ -8,16 +8,13 @@ sap.ui.define([
 	"use strict";
 	return BaseController.extend("sap.ui.demo.toolpageapp.controller.settings.MasterSettings", {
 		formatter: formatter,
-
 		onInit: function () {
 			var oViewModel = new JSONModel({
 					currentUser: "Administrator",
 					lastLogin: UI5Date.getInstance(Date.now() - 86400000)
 				});
-
 			this.setModel(oViewModel, "view");
 		},
-
 		onMasterPressed: function (oEvent) {
 			var oContext = oEvent.getParameter("listItem").getBindingContext("side");
 			var sPath = oContext.getPath() + "/selected";
@@ -38,26 +35,21 @@ sap.ui.define([
 				}
 			}
 		},
-
 		onSavePressed: function (oEvent) {
 			this.onGeneralButtonPress(oEvent);
 		},
-
 		onCancelPressed: function (oEvent) {
 			this.onGeneralButtonPress(oEvent);
 		},
-
 		onGeneralButtonPress: function(oEvent){
 			var sButtonText = oEvent.getSource().getText();
 			this.getBundleText("clickHandlerMessage", [sButtonText]).then(function(sMessageText){
 				MessageToast.show(sMessageText);
 			});
 		},
-
 		onNavButtonPress: function  () {
 			this.getOwnerComponent().myNavBack();
 		},
-
 		/**
 		 * Returns a promises which resolves with the resource bundle value of the given key <code>sI18nKey</code>
 		 *

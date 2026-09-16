@@ -761,7 +761,6 @@
 							</Toolbar>
 						</form:toolbar>
 					</form:SimpleForm>
-
 					<form:SimpleForm
 						editable="false"
 						layout="ResponsiveGridLayout"
@@ -791,7 +790,6 @@
 							<Text text="{/SelectedPayment}"/>
 						</form:content>
 					</form:SimpleForm>
-
 					<form:SimpleForm
 							visible="{= ${/SelectedPayment}==='Credit Card' ? true : false}"
 							editable="false"
@@ -828,7 +826,6 @@
 							<Text text="{/CreditCard/Expire}"/>
 						</form:content>
 					</form:SimpleForm>
-
 					<form:SimpleForm
 						visible="{= ${/SelectedPayment}==='Bank Transfer' ? true : false}"
 						title="{i18n>checkoutSummaryTitle3bt}"

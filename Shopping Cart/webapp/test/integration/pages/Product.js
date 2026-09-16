@@ -11,12 +11,10 @@ sap.ui.define([
 	Press,
 	Properties) {
 	"use strict";
-
 	Opa5.createPageObjects({
 		onTheProduct: {
 			baseClass: Common,
 			viewName: "Product",
-
 			actions: {
 				iPressTheBackButtonInProduct: function () {
 					return this.waitFor({
@@ -36,14 +34,12 @@ sap.ui.define([
 						errorMessage: "The press action could not be executed"
 					});
 				},
-
 				iPressOnTheProductPicture: function () {
 					return this.waitFor({
 						id : "productImage",
 						actions : new Press()
 					});
 				},
-
 				iPressTheCloseButtonOfTheLightBox: function () {
 					return this.waitFor({
 						controlType : "sap.m.Button",
@@ -61,7 +57,6 @@ sap.ui.define([
 						errorMessage : "Did not find the Close button"
 					});
 				},
-
 				iToggleTheCart: function () {
 					return this.waitFor({
 						controlType: "sap.m.Button",
@@ -71,9 +66,7 @@ sap.ui.define([
 					});
 				}
 			},
-
 			assertions: {
-
 				iShouldSeeALightBox: function () {
 					return this.waitFor({
 						id : "lightBox",
@@ -82,7 +75,6 @@ sap.ui.define([
 						}
 					});
 				},
-
 				iShouldSeeAnAvatarButton: function () {
 					return this.waitFor({
 						controlType: "sap.m.Button",
@@ -93,7 +85,6 @@ sap.ui.define([
 						errorMessage: "There is no avatar button"
 					});
 				},
-
 				iShouldSeeTheProductPage: function () {
 					return this.waitFor({
 						success: function () {
@@ -102,7 +93,6 @@ sap.ui.define([
 						errorMessage: "The product page was not displayed"
 					});
 				},
-
 				iShouldSeeTheBlasterExtremeDetailPage: function () {
 					return this.waitFor({
 						success: function () {
@@ -111,7 +101,6 @@ sap.ui.define([
 						errorMessage: "The Blaster Extreme page was not displayed"
 					});
 				},
-
 				iShouldSeeTheSmartphoneAlphaDetailPage: function () {
 					return this.waitFor({
 						success: function () {

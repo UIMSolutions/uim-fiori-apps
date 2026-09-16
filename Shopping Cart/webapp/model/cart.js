@@ -5,9 +5,7 @@ sap.ui.define([
 	MessageBox,
 	MessageToast) {
 	"use strict";
-
 	return {
-
 		/**
 		 * Checks for the status of the product that is added to the cart.
 		 * If the product is not available, a message dialog will open.
@@ -52,7 +50,6 @@ sap.ui.define([
 					break;
 			}
 		},
-
 		/**
 		 * Function that updates the cart model when a product is added to the cart.
 		 * If the product is already in the cart the quantity is increased.
@@ -66,7 +63,6 @@ sap.ui.define([
 			// find existing entry for product
 			var oCollectionEntries = Object.assign({}, oCartModel.getData()["cartEntries"]);
 			var oCartEntry =  oCollectionEntries[oProductToBeAdded.ProductId];
-
 			if (oCartEntry === undefined) {
 				// create new entry
 				oCartEntry = Object.assign({}, oProductToBeAdded);

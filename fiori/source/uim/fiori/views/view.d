@@ -6,7 +6,7 @@ import uim.xml;
 @safe:
 class FioriView {
     protected string _path;
-    protected auto writer = new OOPXMLWriter!string();
+    protected auto _writer = new OOPXMLWriter!string();
     protected string _content;
 
     this() {
@@ -39,21 +39,25 @@ class FioriView {
     }
 
     string render() {
-        writer = new OOPXMLWriter!string();
+        _writer = new OOPXMLWriter!string();
         buildView();
-        return writer.toString();
+        return _writer.toString();
     }
 
     protected void buildView() {
     }
 
     void addElement(string name, string[string] values = null, scope void delegate() @safe content = null) {
-        writer.addElement(name)
+        _writer.addElement(name)
             .addAttributes(values);
         if (content !is null) {
             content();
         }
-        writer.endElement();
+        _writer.endElement();
+    }
+
+    void addElement(string name, scope void delegate() @safe content) {
+        addElement(name, null, content);
     }
 
     void addText(string[string] values = null, scope void delegate() @safe content = null) {
@@ -84,8 +88,16 @@ class FioriView {
         addElement("VBox", values, content);
     }
 
+    void addVBox(scope void delegate() @safe content) {
+        addElement("VBox", null, content);
+    }
+
     void addHBox(string[string] values = null, scope void delegate() @safe content = null) {
         addElement("HBox", values, content);
+    }
+
+    void addHBox(scope void delegate() @safe content) {
+        addElement("HBox", null, content);
     }
 
     void addApp(string[string] values = null, scope void delegate() @safe content = null) {
@@ -184,18 +196,22 @@ class FioriView {
         addElement("ObjectIdentifier", values, content);
     }
 
-    void addNetworkGraph(string[string] values = null, scope void delegate() @safe content = null) {
+    void addNetworkLines(string[string] values = null, scope void delegate() @safe content = null) {
+        addElement("network:lines", values, content);
+    }
+
+    void addNetwork_Graph(string[string] values = null, scope void delegate() @safe content = null) {
         addElement("network:Graph", values, content);
     }
 
-    void addNetworkLines(string[string] values = null, scope void delegate() @safe content = null) {
-        addElement("network:lines", values, content);
+    void addNetworkGraph(string[string] values = null, scope void delegate() @safe content = null) {
+        addElement("graph:NetworkGraph", values, content);
     }
 
     void addNetworkLine(string[string] values = null, scope void delegate() @safe content = null) {
         addElement("network:Line", values, content);
     }
-    
+
     void addNetworkNodes(string[string] values = null, scope void delegate() @safe content = null) {
         addElement("network:nodes", values, content);
     }
@@ -207,7 +223,7 @@ class FioriView {
     void addObjectPageSection(string[string] values = null, scope void delegate() @safe content = null) {
         addElement("uxap:ObjectPageSection", values, content);
     }
-    
+
     void addObjectPageSubSection(string[string] values = null, scope void delegate() @safe content = null) {
         addElement("uxap:ObjectPageSubSection", values, content);
     }
@@ -215,4 +231,54 @@ class FioriView {
     void addObjectPageSubSections(string[string] values = null, scope void delegate() @safe content = null) {
         addElement("uxap:subSections", values, content);
     }
+
+    void addPanel(string[string] values = null, scope void delegate() @safe content = null) {
+        addElement("Panel", values, content);
+    }
+
+    void addIconTabFilter(string[string] values = null, scope void delegate() @safe content = null) {
+        addElement("IconTabFilter", values, content);
+    }
+
+    void addBulletMicroChart(string[string] values = null, scope void delegate() @safe content = null) {
+        addElement("micro:BulletMicroChart", values, content);
+    }
+
+    void addProportionalTimeStrategy(string[string] values = null, scope void delegate() @safe content = null) {
+        addElement("ax:ProportionalTimeStrategy", values, content);
+    }
+
+    void addGanttChartWithTable(string[string] values = null, scope void delegate() @safe content = null) {
+        addElement("gantt:GanttChartWithTable", values, content);
+    }
+
+    void addRadialMicroChart(string[string] values = null, scope void delegate() @safe content = null) {
+        addElement("micro:RadialMicroChart", values, content);
+    }
+
+    void addBulletMicroChartData(string[string] values = null, scope void delegate() @safe content = null) {
+        addElement("micro:BulletMicroChartData", values, content);
+    }
+
+    void addProcessFlow(string[string] values = null, scope void delegate() @safe content = null) {
+        addElement("pf:ProcessFlow", values, content);
+    }
+
+    void addProcessFlowNode(string[string] values = null, scope void delegate() @safe content = null) {
+        addElement("pf:ProcessFlowNode", values, content);
+    }
+
+    void addProcessFlowLaneHeader(string[string] values = null, scope void delegate() @safe content = null) {
+        addElement("pf:ProcessFlowLaneHeader", values, content);
+    }
+
+    void addProcessFlowNodes(string[string] values = null, scope void delegate() @safe content = null) {
+        addElement("pf:nodes", values, content);
+    }
+
+    void addProcessFlowLanes(string[string] values = null, scope void delegate() @safe content = null) {
+        addElement("pf:lanes", values, content);
+    }
+
+
 }

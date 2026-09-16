@@ -5,11 +5,9 @@ sap.ui.define([
 	"sap/ui/test/matchers/Properties"
 ], function (Opa5, Press, BindingPath, Properties) {
 	"use strict";
-
 	var sViewName = "App";
 	Opa5.createPageObjects({
 		onTheAppPage: {
-
 			actions: {
 				iPressTheErrorButton: function () {
 					return this.waitFor({
@@ -19,7 +17,6 @@ sap.ui.define([
 						errorMessage: "Did not find the error button on App page"
 					});
 				},
-
 				iPressTheErrorMessage: function () {
 					return this.waitFor({
 						controlType: "sap.m.MessageItem",
@@ -32,7 +29,6 @@ sap.ui.define([
 						errorMessage: "Did not find the error message item"
 					});
 				},
-
 				iPressTheNotificationButton: function () {
 					return this.waitFor({
 						id: "notificationButton",
@@ -41,7 +37,6 @@ sap.ui.define([
 						errorMessage: "Did not find the notification Button on the App page"
 					});
 				},
-
 				iPressTheUserButton: function () {
 					return this.waitFor({
 						id: "userButton",
@@ -50,7 +45,6 @@ sap.ui.define([
 						errorMessage: "Did not find the notification Button on the App page"
 					});
 				},
-
 				iPressTheSettingsButton: function () {
 					this.waitFor({
 						controlType: "sap.tnt.NavigationListItem",
@@ -62,9 +56,7 @@ sap.ui.define([
 						actions: new Press(),
 						errorMessage: "Did not find the settings button on the sid navigation"
 					});
-
 				},
-
 				iPressTheStatisticsButton: function () {
 					this.waitFor({
 						controlType: "sap.tnt.NavigationListItem",
@@ -94,7 +86,6 @@ sap.ui.define([
 						errorMessage: "Did not find the statistics button on the side navigation"
 					});
 				},
-
 				iPressTheUsageStatisticsButton: function () {
 					this.waitFor({
 						controlType: "sap.tnt.NavigationListItem",
@@ -133,7 +124,6 @@ sap.ui.define([
 						errorMessage: "Did not find the Usage statistics button on the side navigation"
 					});
 				},
-
 				iPressTheOrderStatisticsButton: function () {
 					this.waitFor({
 						controlType: "sap.tnt.NavigationListItem",
@@ -171,9 +161,7 @@ sap.ui.define([
 						actions: new Press(),
 						errorMessage: "Did not find the Order statistics button on the side navigation"
 					});
-
 				},
-
 				iPressTheHomeButton: function () {
 					this.waitFor({
 						controlType: "sap.tnt.NavigationListItem",
@@ -185,12 +173,9 @@ sap.ui.define([
 						actions: new Press(),
 						errorMessage: "Did not find the home button on the sid navigation"
 					});
-
 				}
 			},
-
 			assertions: {
-
 				iShouldSeeTheErrorPopover: function () {
 					this.waitFor({
 						id: "errorMessagePopover",
@@ -201,7 +186,6 @@ sap.ui.define([
 						errorMessage: "The error popover was not displayed"
 					});
 				},
-
 				iShouldSeeTheErrorMessage: function () {
 					this.waitFor({
 						id: "moreDetailsLink",
@@ -213,7 +197,6 @@ sap.ui.define([
 						errorMessage: "The error Message was not displayed"
 					});
 				},
-
 				iShouldSeeTheNotificationPopover: function () {
 					this.waitFor({
 						id: "notificationMessagePopover",
@@ -224,7 +207,6 @@ sap.ui.define([
 						errorMessage: "The notification popover was not displayed"
 					});
 				},
-
 				iShouldSeeTheUserPopover: function () {
 					this.waitFor({
 						id: "userMessageActionSheet",
@@ -235,7 +217,6 @@ sap.ui.define([
 						errorMessage: "The notification popover was not displayed"
 					});
 				},
-
 				iShouldSeeMessageToast: function() {
 					return this.waitFor({
 						//increase opa's polling because the message toast is only shown for a brief moment

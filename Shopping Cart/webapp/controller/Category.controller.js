@@ -17,13 +17,11 @@ sap.ui.define([
 	JSONModel,
 	Fragment) {
 	"use strict";
-
 	return BaseController.extend("sap.ui.demo.cart.controller.Category", {
 		formatter : formatter,
 		// Define filterPreviousValues as global variables because they need to be accessed from different functions
 		_iLowFilterPreviousValue: 0,
 		_iHighFilterPreviousValue: 5000,
-
 		onInit: function () {
 			var oViewModel = new JSONModel({
 				Suppliers: []
@@ -37,16 +35,13 @@ sap.ui.define([
 			this._oRouter.getRoute("comparison").attachMatched(this._loadCategories, this);
 			this._oRouter.getRoute("comparisonCart").attachMatched(this._loadCategories, this);
 		},
-
 		_loadCategories: function(oEvent) {
 			var bSmallScreen = this.getModel("appView").getProperty("/smallScreenMode"),
 				sRouteName = oEvent.getParameter("name");
-
 			// switch to first column in full screen mode for category route on small devices
 			if (sRouteName === "category") {
 				this._setLayout(bSmallScreen ? "One" : "Two");
 			}
-
 			var oModel = this.getModel();
 			this._loadSuppliers();
 			var oProductList = this.byId("productList");
@@ -76,7 +71,6 @@ sap.ui.define([
 				});
 			}.bind(this));
 		},
-
 		/**
 		 * Create a unique array of suppliers to be used in the supplier flter option
 		 * @private
@@ -87,7 +81,6 @@ sap.ui.define([
 				success: function (oData) {
 					var aProducts = oData.results,
 						aSuppliers = [];
-
 					aProducts.forEach(function (oProduct) {
 						aSuppliers.push(oProduct.SupplierName);
 					});
@@ -95,7 +88,6 @@ sap.ui.define([
 					var aUniqueSuppliers = aSuppliers.filter(function (sName, iIndex, aUniqueSuppliers) {
 						return aUniqueSuppliers.indexOf(sName) === iIndex;
 					}).sort();
-
 					// create the unique suppliers array as array of of objects
 					aUniqueSuppliers.map(function (sSupplierName, iIndex, aUniqueSuppliers) {
 						aUniqueSuppliers[iIndex] = {SupplierName: sSupplierName};
@@ -103,10 +95,8 @@ sap.ui.define([
 					this.getModel("view").setProperty("/Suppliers", aUniqueSuppliers);
 				}.bind(this)
 			});
-
 			this._clearComparison();
 		},
-
 		fnDataReceived: function() {
 			var oList = this.byId("productList");
 			var aListItems = oList.getItems();
@@ -117,7 +107,6 @@ sap.ui.define([
 				}
 			}.bind(this));
 		},
-
 		/**
 		 * Event handler to determine which list item is selected
 		 * @param {sap.ui.base.Event} oEvent the list select event
@@ -125,12 +114,10 @@ sap.ui.define([
 		onProductListSelect : function (oEvent) {
 			this._showProduct(oEvent);
 		},
-
 		/**
 		 * Event handler to determine which sap.m.ObjectListItem is pressed
 		 * @param {sap.ui.base.Event} oEvent the sap.m.ObjectListItem press event
 		 */
-
 
 		onProductDetails: function (oEvent) {
 			var oBindContext;
@@ -142,7 +129,6 @@ sap.ui.define([
 			var oModel = oBindContext.getModel();
 			var sCategoryId = oModel.getProperty(oBindContext.getPath()).Category;
 			var sProductId = oModel.getProperty(oBindContext.getPath()).ProductId;
-
 			// keep the cart context when showing a product
 			var bCartVisible = this.getModel("appView").getProperty("/layout").startsWith("Three");
 			this._setLayout("Two");
@@ -151,7 +137,6 @@ sap.ui.define([
 				productId: sProductId
 			}, !Device.system.phone);
 		},
-
 		/** Apply selected filters to the category list and update text and visibility of the info toolbar
 		 * @param oEvent {sap.ui.base.Event} the press event of the sap.m.Button
 		 * @private
@@ -167,7 +152,6 @@ sap.ui.define([
 				aAvailableFilters = [],
 				aPriceFilters = [],
 				aSupplierFilters = [];
-
 			// Add the slider custom filter if the user selects some values
 			if (oCustomFilter.getCustomControl().getAggregation("content")[0].getValue() !== oCustomFilter.getCustomControl().getAggregation("content")[0].getMin() ||
 				oCustomFilter.getCustomControl().getAggregation("content")[0].getValue2() !== oCustomFilter.getCustomControl().getAggregation("content")[0].getMax()) {
@@ -182,17 +166,14 @@ sap.ui.define([
 						oFilter = new Filter("Status", FilterOperator.EQ, "A");
 						aAvailableFilters.push(oFilter);
 						break;
-
 					case "OutOfStock":
 						oFilter = new Filter("Status", FilterOperator.EQ, "O");
 						aAvailableFilters.push(oFilter);
 						break;
-
 					case "Discontinued":
 						oFilter = new Filter("Status", FilterOperator.EQ, "D");
 						aAvailableFilters.push(oFilter);
 						break;
-
 					case "Price":
 						iValueLow = oItem.getCustomControl().getAggregation("content")[0].getValue();
 						iValueHigh = oItem.getCustomControl().getAggregation("content")[0].getValue2();
@@ -200,11 +181,9 @@ sap.ui.define([
 						aPriceFilters.push(oFilter);
 						oCustomKeys["priceKey"] = {Price: true};
 						break;
-
 					default:
 						oFilter = new Filter("SupplierName", FilterOperator.EQ, sFilterKey);
 						aSupplierFilters.push(oFilter);
-
 				}
 			});
 			if (aAvailableFilters.length > 0) {
@@ -237,7 +216,6 @@ sap.ui.define([
 				this.byId("categoryInfoToolbarTitle").setText("");
 			}
 		},
-
 		/**
 		 * Open the filter dialog
 		 */
@@ -259,7 +237,6 @@ sap.ui.define([
 				oDialog.open();
 			});
 		},
-
 		/**
 		 * Updates the previous slider values
 		 * @param {sap.ui.base.Event} oEvent the press event of the sap.m.Button
@@ -271,7 +248,6 @@ sap.ui.define([
 			this._iHighFilterPreviousValue = oSlider.getValue2();
 			this._applyFilter(oEvent);
 		},
-
 		/**
 		 * Sets the slider values to the previous ones
 		 * Updates the filter count
@@ -286,7 +262,6 @@ sap.ui.define([
 				oCustomFilter.setFilterCount(0);
 			}
 		},
-
 		/**
 		 * Updates filter count if there is a change in one of the slider values
 		 * @param {sap.ui.base.Event} oEvent the change event of the sap.m.RangeSlider
@@ -302,7 +277,6 @@ sap.ui.define([
 				oCustomFilter.setFilterCount(0);
 			}
 		},
-
 		/**
 		 * Reset the price custom filter
 		 */
@@ -313,7 +287,6 @@ sap.ui.define([
 			oSlider.setValue2(oSlider.getMax());
 			oCustomFilter.setFilterCount(0);
 		},
-
 		/**
 		 * Navigation to comparison view
 		 * @param {sap.ui.base.Event} oEvent the press event of the link text in sap.m.ObjectListItem

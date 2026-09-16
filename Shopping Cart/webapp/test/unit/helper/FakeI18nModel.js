@@ -6,14 +6,11 @@ sap.ui.define([
 	formatMessage) {
 	"use strict";
 
-
 	return Model.extend("test.unit.helper.FakeI18nModel", {
-
 		constructor : function (mTexts) {
 			Model.call(this);
 			this.mTexts = mTexts || {};
 		},
-
 		getResourceBundle : function () {
 			return {
 				getText : function (sTextName) {
@@ -21,7 +18,5 @@ sap.ui.define([
 				}.bind(this)
 			};
 		}
-
 	});
-
 });

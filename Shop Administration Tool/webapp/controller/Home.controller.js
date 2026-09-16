@@ -7,7 +7,6 @@ sap.ui.define([
 	"use strict";
 	return BaseController.extend("sap.ui.demo.toolpageapp.controller.Home", {
 		formatter: formatter,
-
 		onInit: function () {
 			var oViewModel = new JSONModel({
 				isPhone : Device.system.phone

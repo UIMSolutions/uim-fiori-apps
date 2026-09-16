@@ -1,7 +1,10 @@
 module uim.fiori.views.fiori;
+
 import std.algorithm.searching : canFind;
 import uim.fiori.views.xml;
+
 @safe:
+
 enum string NsMvc = "sap.ui.core.mvc";
 enum string NsCore = "sap.ui.core";
 enum string NsM = "sap.m";

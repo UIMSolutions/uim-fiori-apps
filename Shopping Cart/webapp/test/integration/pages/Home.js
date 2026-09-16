@@ -11,7 +11,6 @@ sap.ui.define([
 	AggregationFilled,
 	Press) {
 	"use strict";
-
 	Opa5.createPageObjects({
 		onHome : {
 			viewName : "Home",
@@ -24,7 +23,6 @@ sap.ui.define([
 						errorMessage : "The category list does not contain required selection"
 					});
 				},
-
 				iPressOnTheSpeakerCategory : function () {
 					return this.waitFor({
 						controlType : "sap.m.StandardListItem",
@@ -34,7 +32,6 @@ sap.ui.define([
 					});
 				}
 			},
-
 			assertions: {
 				iShouldSeeTheCategoryList : function () {
 					return this.waitFor({
@@ -44,7 +41,6 @@ sap.ui.define([
 						}
 					});
 				},
-
 				iShouldSeeSomeEntriesInTheCategoryList : function () {
 					return this.waitFor({
 						id : "categoryList",
