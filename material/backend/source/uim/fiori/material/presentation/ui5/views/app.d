@@ -5,7 +5,7 @@ class AppView : UI5View {
     this(string path) {
         super(path);
     }
-    override void buildView() {
+    override UI5Element[] buildView() {
         writer.addElement("mvc:View")
             .addAttributes([
                 "controllerName": "material.frontend.controller.App",

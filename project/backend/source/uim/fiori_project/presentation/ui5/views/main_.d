@@ -39,7 +39,7 @@ class PMMainView : MainView {
         return true;
     }
 
-    override protected void buildView() {
+    override protected UI5Element[]  id buildView() {
         // super.buildView();
         auto attributes = _libs.dup;
         attributes["controllerName"] = _controllerName;

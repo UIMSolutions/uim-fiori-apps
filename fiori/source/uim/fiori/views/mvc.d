@@ -8,9 +8,9 @@ mixin(ShowModule!());
 @safe:
 class MvcView : UI5View {
     protected string[string] _libs;
+    protected UI5Library[] _libraries;
     protected string _controllerName;
     protected string _height = "100%";
-    protected ViewRenderer _renderer = new XMLViewRenderer();
 
     this() {
         super();
@@ -21,14 +21,13 @@ class MvcView : UI5View {
     }
 
     this(string customPath, Json initData = Json.emptyObject) {
-        super(initData.set("path", customPath));
+        super(customPath, initData);
     }
 
     override bool initialize(Json initData = Json.emptyObject) {
         if (!super.initialize(initData))
             return false;
 
-        _path = initData.getString("path", "/view/App.view.xml");
         _controllerName = initData.getString("controllerName", "my.app.controller.App");
         _height = initData.getString("height", "100%");
         if (initData.hasKey("libs") && initData["libs"].isObject) {
@@ -44,26 +43,18 @@ class MvcView : UI5View {
         return true;
     }
 
-    ViewRenderer renderer() {
-        return _renderer;
+    override protected UI5Element[] buildView() {
+        // // super.buildView();
+        // auto attributes = _libs.dup;
+        // attributes["controllerName"] = _controllerName;
+        // attributes["height"] = _height;
+        // _writer.addElement("mvc:View")
+        //     .addAttributes(attributes);
+        // addApp();
+        // _writer.endElement();
+
+        return null;
     }
-
-    auto renderer(ViewRenderer newRenderer) {
-        _renderer = newRenderer;
-        return this;
-    }
-
-    // override protected void buildView() {
-    //     // super.buildView();
-    //     auto attributes = _libs.dup;
-    //     attributes["controllerName"] = _controllerName;
-    //     attributes["height"] = _height;
-    //     _writer.addElement("mvc:View")
-    //         .addAttributes(attributes);
-    //     addApp();
-    //     _writer.endElement();
-
-    // }
 
     // override void addApp(string[string] values = null, scope void delegate() @safe content = null) {
     //     super.addApp(values, { 
@@ -72,15 +63,17 @@ class MvcView : UI5View {
 }
 ///
 unittest {
-auto mvcView = new MvcView();
-assert(mvcView.initialize());
+    writeln("Initializing MvcView...");
+    auto mvcView = new MvcView();
+    assert(mvcView.initialize());
 
-mvcView.renderer(new XMLViewRenderer());
+    mvcView.renderer(new XMLViewRenderer());
+    writeln(mvcView.render);
 
-//     auto renderedView = mvcView.render;
-// 
-//     mvcView = new MvcView("/view/App.view.xml");
-//     assert(mvcView.initialize());
-// 
-//     renderedView = mvcView.render;
+    //     auto renderedView = mvcView.render;
+    // 
+    //     mvcView = new MvcView("/view/App.view.xml");
+    //     assert(mvcView.initialize());
+    // 
+    //     renderedView = mvcView.render;
 }

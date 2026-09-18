@@ -5,83 +5,86 @@ import uim.fiori;
 mixin(ShowModule!());
 
 @safe:
-class UI5Element {
-    this() {
+struct UI5Element {
+    string tag;
+    string[string] attributes;
+    UI5Element[] children;
 
-    }
-
-    this(string tag, string[string] attributes = null, UI5Element[] children = null) {
-        this._tag = tag;
-        this._attributes = attributes;
-        this._children = children;
-    }
-
-    this(string tag, UI5Element[] children) {
-        this._tag = tag;
-        this._children = children;
-    }
-
-    protected string _tag;
-    string tag() {
-        return _tag;
-    }
-
-    protected string[string] _attributes;
-    string[string] attributes() {
-        return _attributes;
-    }
-
-    protected UI5Element[] _children;
-    UI5Element[] children() {
-        return _children;
-    }
     UI5Element add(UI5Element child) {
-        if (this._children is null) {
-            this._children = [child];
-        } else {
-            this._children ~= child;
-        }
+        this.children ~= child;
         return this;
     }
 
     string render() {
-        string result = "<" ~ this._tag;
-        if (this._attributes != null) {
-            foreach (string attr; this._attributes) {
-                result ~= " " ~ attr;
-            }
+        string result = "<" ~ tag;
+        foreach (key, value; attributes) {
+            result ~= " " ~ key ~ "=\"" ~ value ~ "\"";
         }
         result ~= ">";
-        if (this._children != null) {
-            foreach (UI5Element child; this._children) {
-                result ~= child.render();
-            }
+        foreach (child; children) {
+            result ~= child.render();
         }
-        result ~= "</" ~ this._tag ~ ">";
+        result ~= "</" ~ tag ~ ">";
         return result;
     }
+
+    Json toJson() const {
+        Json jAttributes = Json.emptyObject;
+        foreach(key, value; attributes) {
+            jAttributes[key] = value;
+        }
+
+        return Json.emptyObject
+            .set("tag", tag)
+            .set("attributes", jAttributes)
+            .set("children", children.map!(child => child.toJson()).array.toJson);
+    }
 }
+///
 unittest {
-    void testRender() {
-        UI5Element child = new UI5Element("child");
-        UI5Element parent = new UI5Element("parent", null, [child]);
-        assert(parent.render() == "<parent><child></child></parent>");
-    }
+    UI5Element element;
+    element.tag = "div";
+    element.attributes = ["id": "testDiv"];
+    element.children = [UI5Element("span", ["id": "testSpan"], null)];
 
-    void testRenderWithAttributes() {
-        UI5Element child = new UI5Element("child");
-        UI5Element parent = new UI5Element("parent", ["class": "\"parent-class\""], [child]);
-        assert(parent.render() == "<parent class=\"parent-class\"><child></child></parent>");
-    }
+    assert(element.tag == "div");
+    assert(element.attributes["id"] == "testDiv");
+    assert(element.children.length == 1);
+    assert(element.children[0].tag == "span");
+    assert(element.children[0].attributes["id"] == "testSpan");
 
-    void testRenderWithoutChildren() {
-        UI5Element parent = new UI5Element("parent", ["class": "\"parent-class\""]);
-        assert(parent.render() == "<parent class=\"parent-class\"></parent>");
-    }
+    element.add(UI5Element("p", ["id": "testP"], null));
+    assert(element.children.length == 2);
+    assert(element.children[1].tag == "p");
+    assert(element.children[1].attributes["id"] == "testP");
+}
 
-    void testAll() {
-        testRender();
-        testRenderWithAttributes();
-        testRenderWithoutChildren();
-    }
+string createElement(string tag) {
+    return 
+    `struct ` ~ tag ~ ` {
+        static UI5Element opCall(string[string] values = null, UI5Element[] content = null) {
+            return Element("` ~ tag ~ `", values, content);
+        }
+
+        static UI5Element opCall(UI5Element[] content) {
+            return ` ~ tag ~ `(null, content);
+        }
+    }`;
+}
+
+string createElementWithText(string tag) {
+    return 
+    `struct ` ~ tag ~ ` {
+        static UI5Element opCall(string[string] values = null, UI5Element[] content = null) {
+            return Element("` ~ tag ~ `", values, content);
+        }
+
+        static UI5Element opCall(UI5Element[] content) {
+            return ` ~ tag ~ `(null, content);
+        }
+
+        static UI5Element opCall(string text) {
+            return ` ~ tag ~ `(["text": text]);
+        }
+    }`;
 }

@@ -7,7 +7,7 @@ class AppView : UI5View {
         super(path);
     }
 
-    override void buildView() {
+    override UI5Element[] buildView() {
         _writer.addElement("mvc:View")
             .addAttributes([
                 "controllerName": "landscape.frontend.controller.App",

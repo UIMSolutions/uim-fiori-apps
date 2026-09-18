@@ -83,6 +83,9 @@ class XMLViewRenderer : ViewRenderer {
     }
 
     override string renderElement(UI5Element element) {
+        if (element == UI5Element.init)
+            return "";
+
         string result = "<" ~ element.tag;
         if (element.attributes != null) {
             foreach (string key, string value; element.attributes) {
@@ -99,23 +102,14 @@ class XMLViewRenderer : ViewRenderer {
         return result;
     }
 
-    override string render() {
-        auto result = "<mvc:View";
-        if (_controllerName != "") {
-            result ~= " controllerName=\"" ~ _controllerName ~ "\"";
-        }
-        if (libs().length > 0) {
-            result ~= " " ~ libs().byKeyValue.map!(kv => kv.key ~ "=\"" ~ kv.value ~ "\"").join(
-                " ");
-        }
-        result ~= ">";
-
-        foreach (element; _elements) {
+    override string render(UI5Element[] _elements) {
+        auto result = "";
+        foreach (UI5Element element; _elements) {
             result ~= renderElement(element);
         }
-        result ~= "</mvc:View>";
         return (shouldPrettyPrint) ? prettyPrint(result) : result;
     }
+
 }
 ///
 unittest {
@@ -133,17 +127,19 @@ unittest {
     renderer.height("200px");
     assert(renderer.height() == "200px");
 
-    writeln(renderer.render());
+    writeln(renderer.render([UI5Element("elementName")]));
 
     renderer.pretty(true);
-    writeln(renderer.render());
+    writeln(renderer.render([UI5Element("elementName")]));
 
-    renderer.addElement(new UI5Element("elementName"));
-    writeln(renderer.render());
+    renderer.addElement(UI5Element("elementName"));
+    writeln(renderer.render([UI5Element("elementName")]));
 
-    renderer.addElement((new UI5Element("elementName2")).add(new UI5Element("childOfElementName2")));
-    writeln(renderer.render());
+    renderer.addElement((UI5Element("elementName2")).add(UI5Element("childOfElementName2")));
+    writeln(renderer.render([UI5Element("elementName2").add(UI5Element("childOfElementName2"))]));
 
-    renderer.addElement((new UI5Element("elementName3", ["class":"element-class"])).add(new UI5Element("childOfElementName3")));
-    writeln(renderer.render());
+    renderer.addElement((UI5Element("elementName3", ["class": "element-class"])).add(
+            UI5Element("childOfElementName3")));
+    writeln(renderer.render([UI5Element("elementName3", ["class": "element-class"]).add(
+            UI5Element("childOfElementName3"))]));
 }

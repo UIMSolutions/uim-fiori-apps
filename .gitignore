@@ -53,3 +53,8 @@ fiori/build/fiori-test-default
 hallo/hello-test-application
 hello-xsuaa/hello
 hello-xsuaa/backend/hello-xsuaa
+address/address_manager-test-application
+edm/edm-test-default
+projectmanager/projectmanager
+projectmanager/mta_archives/projectmanager_1.0.0.mtar
+tiles/backend/tiles_backend

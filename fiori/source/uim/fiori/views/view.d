@@ -5,12 +5,11 @@ import uim.xml;
 
 @safe:
 class UI5View {
-
     protected string _path;
-    protected UI5Element[] _elements;
+    // protected UI5Element rootElement;
     protected bool _isStatic;
-
-    protected string _content;
+    protected string _cache;
+    protected ViewRenderer _renderer;
 
     this() {
         initialize();
@@ -21,25 +20,39 @@ class UI5View {
     }
 
     this(string customPath, Json initData = Json.emptyObject) {
-        _path = customPath;
-        initialize(initData);
+        initialize(initData.set("path", customPath));
     }
 
     bool initialize(Json initData = Json.emptyObject) {
+        _renderer = new XMLViewRenderer();
+        if (initData.getString("renderer") == "XML")
+            _renderer = new XMLViewRenderer();
+
+        _path = initData.getString("path", "/view/UI5.view.xml");
+
         return true;
+    }
+
+    ViewRenderer renderer() {
+        return _renderer;
+    }
+
+    auto renderer(ViewRenderer newRenderer) {
+        _renderer = newRenderer;
+        return this;
+    }
+
+    void handler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        if (_isStatic && _cache.length == 0) {
+            _cache = render();
+        }
+
+        auto resBody = _isStatic ? _cache : render();
+        res.writeBody(resBody, "application/xml");
     }
 
     void registerRoutes(URLRouter router) {
         router.get(_path, &handler);
-    }
-
-    void handler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        if (_isStatic && _content.length == 0) {
-            _content = render();
-        }
-
-        auto resBody = _isStatic ? _content : render();
-        res.writeBody(resBody, "application/xml");
     }
 
     string escapeXML(string input) {
@@ -48,33 +61,30 @@ class UI5View {
         return escapeXML(input);
     }
 
-    protected string[] valuesToAttributes(string[string] values) {
-        if (values is null)
-            return null;
+    protected string renderAttributes(string[string] attributes) {    
+        return attributes.byKeyValue.map!(kv => kv.key ~ "=\"" ~ escapeXML(kv.value) ~ "\"").array.join(" ");
+    }
 
-        string[] attributes;
-        foreach (key, value; values) {
-            attributes ~= key ~ "=\"" ~ escapeXML(value) ~ "\"";
-        }
-        return attributes;
+    protected UI5Element[] buildView() {
+        return null;
+    }
+
+    protected string renderElement(UI5Element element) {    
+        return "<" ~ element.tag ~ " " ~ renderAttributes(element.attributes) ~ ">" ~ renderElements(element.children) ~ "</" ~ element.tag ~ ">";
     }
 
     protected string renderElements(UI5Element[] elements) {
         auto rendered = appender!string;
         foreach (element; elements) {
-            rendered.put(element.render());
+            rendered.put(renderElement(element));
         }
         return rendered.data;
     }
 
     string render() {
-        _elements = [];
-        buildView();
-        return renderElements(_elements);
+        return renderer.render(buildView());
     }
 
-    protected void buildView() {
-    }
 
 //     void addElement(string name, string[string] values = null, scope void delegate() @safe content = null) {
 //         UI5Element element = new UI5Element(name, valuesToAttributes(values));
@@ -148,18 +158,6 @@ class UI5View {
 //         addElement("ColumnListItem", values, content);
 //     }
 
-//     void addToolbar(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("Toolbar", values, content);
-//     }
-
-//     void addTitle(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("Title", values, content);
-//     }
-
-//     void addTitle(string text) {
-//         addTitle(["text": text]);
-//     }
-
 //     void addColumn(string[string] values = null, scope void delegate() @safe content = null) {
 //         addElement("Column", values, content);
 //     }
@@ -176,37 +174,7 @@ class UI5View {
 //         });
 //     }
 
-//     void addColumns(string[] columns) {
-//         addColumns(columns.map!(column => ["text": column]).array);
-//     }
 
-//     void addSelect(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("Select", values, content);
-//     }
-
-//     void addDatePicker(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("DatePicker", values, content);
-//     }
-
-//     void addHeaderToolbar(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("HeaderToolbar", values, content);
-//     }
-
-//     void addLayoutContent(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("LayoutContent", values, content);
-//     }
-
-//     void addObjectNumber(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("ObjectNumber", values, content);
-//     }
-
-//     void addToolbarSpacer(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("ToolbarSpacer", values, content);
-//     }
-
-//     void addObjectStatus(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("ObjectStatus", values, content);
-//     }
 
 //     void addCoreItem(string[string] values = null, scope void delegate() @safe content = null) {
 //         addElement("core:Item", values, content);
@@ -308,23 +276,25 @@ class UI5View {
 //         addElement("pf:lanes", values, content);
 //     }
 }
-// ///
-// unittest {
-//     auto view = new class UI5View {
-//         override void buildView() {
-//             addText("Hello World");
-//         }
-//     };
-//     assert(view !is null);
-//     // assert(view.render() !is null);
+///
+unittest {
+    SAPMLibrary lib = new SAPMLibrary();
+    auto view = new class UI5View {
+        override UI5Element[] buildView() {
+            return [lib.Text("Hello World")];
+        }
+    };
+    assert(view !is null);
+    // assert(view.render() !is null);
 
-//     assert(view.render().canFind("Hello World"));
+    assert(view.render().canFind("Hello World"));
 
-//     view.addElement("Text1");
-//     view.addElement("Text2", ["text": "Hello World"]);
-//     view.addElement("Text3", ["text": "Hello World"], null);
-//     view.addElement("Text4", ["text": "Hello World"], {
-//         view.addText("Hello World");
-//     });
-//     view.addElement("Text5", { view.addText("Hello World"); });
-// }
+    // view.addElement("Text1");
+    // view.addElement("Text2", ["text": "Hello World"]);
+    // view.addElement("Text3", ["text": "Hello World"], null);
+    // view.addElement("Text4", ["text": "Hello World"], {
+        // view.addText("Hello World");
+    // });
+    // view.addElement("Text5", { view.addText("Hello World"); });
+    // writeln(view.render());
+}

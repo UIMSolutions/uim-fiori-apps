@@ -68,30 +68,35 @@ class ViewRenderer {
         return this;
     }
 
-    string render() {
+    string renderElement(UI5Element element) {
         return "";
     }
+
     
-    string renderElement(UI5Element element ) {
-        return "";
+    string render(UI5Element[] _elements) {
+        auto result = "";
+        foreach (UI5Element element; _elements) {
+            result ~= renderElement(element);
+        }
+        return result;
     }
 }
 ///
 unittest {
-    auto renderer = new ViewRenderer();
-    assert(renderer.libs().length == 0);
-    assert(renderer.controllerName() == "");
-    assert(renderer.height() == "100%");
-
-    renderer.libs(["a":"lib1", "b":"lib2"]);
-    assert(renderer.libs().length == 2);
-
-    renderer.controllerName("NewController");
-    assert(renderer.controllerName() == "NewController");
-
-    renderer.height("200px");
-    assert(renderer.height() == "200px");
-
-    renderer.addElement(new UI5Element("elementName"));
-    assert(renderer.elements().length == 1);
+    // auto renderer = new ViewRenderer();
+    // assert(renderer.libs().length == 0);
+    // assert(renderer.controllerName() == "");
+    // assert(renderer.height() == "100%");
+    // 
+    // renderer.libs(["a":"lib1", "b":"lib2"]);
+    // assert(renderer.libs().length == 2);
+    // 
+    // renderer.controllerName("NewController");
+    // assert(renderer.controllerName() == "NewController");
+    // 
+    // renderer.height("200px");
+    // assert(renderer.height() == "200px");
+    // 
+    // renderer.addElement(new UI5Element("elementName"));
+    // assert(renderer.elements().length == 1);
 }

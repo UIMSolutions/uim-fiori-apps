@@ -40,16 +40,17 @@ class XAppView : MvcView {
         return true;
     }
 
-    override protected void buildView() {
-        // // super.buildView();
-        // auto attributes = _libs.dup;
-        // attributes["controllerName"] = _controllerName;
-        // attributes["height"] = "100%";
-        // _writer.addElement("mvc:View")
-        //     .addAttributes(attributes);
-        // _writer.endElement();
+    // override protected UI5Element[] buildView() {
+    //     // // super.buildView();
+    //     // auto attributes = _libs.dup;
+    //     // attributes["controllerName"] = _controllerName;
+    //     // attributes["height"] = "100%";
+    //     // _writer.addElement("mvc:View")
+    //     //     .addAttributes(attributes);
+    //     // _writer.endElement();
 
-    }
+    //     return null;
+    // }
 
     // override void addApp() {
     //     writer.addElement("SplitApp")
@@ -59,10 +60,12 @@ class XAppView : MvcView {
 }
 ///
 unittest {
-    // auto appView = new XAppView();
-    // assert(appView.initialize());
+    writeln("Initializing XAppView...");
 
-    // auto renderedView = appView.render;
+    auto appView = new XAppView();
+    assert(appView.initialize());
+
+    auto renderedView = appView.render;
     // assert(renderedView.canFind(`controllerName="my.app.controller.App"`));
 
     // appView = new XAppView("/A/B");
@@ -71,4 +74,5 @@ unittest {
     // renderedView = appView.render;
     // assert(renderedView.canFind(`controllerName="my.app.controller.App"`));
 
+    writeln(renderedView);
 }
