@@ -112,7 +112,7 @@ class SAPMLibrary : UI5Library {
     mixin(createElement("Input"));
     mixin(createElement("InputBase"));
     mixin(createElement("InputListItem"));
-    mixin(createElement("Label"));
+    mixin(createElementWithText("Label"));
     mixin(createElement("LightBox"));
     mixin(createElement("LightBoxItem"));
     mixin(createElement("Link"));

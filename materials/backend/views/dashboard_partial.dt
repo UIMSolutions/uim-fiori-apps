@@ -1,0 +1,25 @@
+div.flex.flex-col.gap-6
+    div
+        h1.text-3xl.font-bold Willkommen zurück!
+        p.text-base-content Übersicht über Ihre aktuellen KPIs.
+    
+    // Das Grid-System ordnet die Karten auf großen Bildschirmen nebeneinander an
+    div.grid.grid-cols-1.grid-cols-3.gap-6
+        
+        // Karte 1: Aktive Kunden
+        div.stat.bg-base-100.rounded-xl.shadow-sm.border.border-base-300
+            div.stat-title Aktive Kunden
+            div.stat-value.text-primary 1,240
+            div.stat-desc +12% im letzten Monat
+        
+        // Karte 2: Offene Rechnungen
+        div.stat.bg-base-100.rounded-xl.shadow-sm.border.border-base-300
+            div.stat-title Offene Rechnungen
+            div.stat-value.text-secondary 45
+            div.stat-desc 5 dringend überfällig
+        
+        // Karte 3: Server Uptime
+        div.stat.bg-base-100.rounded-xl.shadow-sm.border.border-base-300
+            div.stat-title Server Uptime
+            div.stat-value 99.9%
+            div.stat-desc vibe.d asynchroner Modus

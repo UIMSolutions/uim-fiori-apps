@@ -1,0 +1,27 @@
+div.flex.flex-col.gap-6
+    div.flex.justify-between.items-center
+        div
+            h1.text-3xl.font-bold Kundenverwaltung
+            p.text-base-content Verwalten Sie Ihre Firmenkontakte
+        button.btn.btn-primary + Kunde anlegen
+    
+    // DaisyUI Datentabelle
+    div.overflow-x-auto.bg-base-100.rounded-xl.shadow-sm.border.border-base-300
+        table.table.w-full
+            thead
+                tr
+                    th ID
+                    th Unternehmen
+                    th Status
+                    th Aktion
+            tbody
+                tr
+                    td 1
+                    td Cyberspace Ltd.
+                    td: span.badge.badge-success Aktiv
+                    td: button.btn.btn-ghost.btn-xs Details
+                tr
+                    td 2
+                    td Acme Corp.
+                    td: span.badge.badge-warning Inaktiv
+                    td: button.btn.btn-ghost.btn-xs Details

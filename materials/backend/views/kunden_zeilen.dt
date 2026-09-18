@@ -1,0 +1,5 @@
+- foreach(k; neueKunden)
+    tr.bg-blue-50
+        td= k.id
+        td= k.name
+        td.text-green-600= k.status

@@ -1,0 +1,24 @@
+extends layout
+
+block content
+    div.flex.flex-col.gap-6
+        div
+            h1.text-3xl.font-bold Willkommen zurück!
+            p.text-base-content Übersicht über Ihre aktuellen KPIs.
+        
+        // Grid für Statistik-Karten
+        div.grid.grid-cols-1.grid-cols-3.gap-6
+            div.stat.bg-base-100.rounded-xl.box.shadow-sm.border.border-base-300
+                div.stat-title Aktive Kunden
+                div.stat-value.text-primary 1,240
+                div.stat-desc +12% im letzten Monat
+            
+            div.stat.bg-base-100.rounded-xl.box.shadow-sm.border.border-base-300
+                div.stat-title Offene Rechnungen
+                div.stat-value.text-secondary 45
+                div.stat-desc 5 dringend überfällig
+            
+            div.stat.bg-base-100.rounded-xl.box.shadow-sm.border.border-base-300
+                div.stat-title Server Uptime
+                div.stat-value 99.9%
+                div.stat-desc vibe.d asynchroner Modus

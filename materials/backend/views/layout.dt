@@ -1,0 +1,57 @@
+doctype html
+html(data-theme="corporate")
+    head
+        title Business Portal
+        meta(charset="utf-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        // htmx und CSS einbinden
+        // 1. htmx von unpkg laden (mit exaktem Paketnamen)
+        script(src="https://unpkg.com/htmx.org@1.9.2")
+
+        // 1. DaisyUI direkt über das jsDelivr-CDN laden
+        link(href="https://cdn.jsdelivr.net/npm/daisyui@5", rel="stylesheet", type="text/css")
+
+        // 2. Den neuen Tailwind v4 Browser-Compiler laden (Wichtig!)
+        script(src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4")
+            
+    body.bg-base-200.h-screen.flex.flex-col.overflow-hidden
+        
+        // 1. OBERE NAVIGATIONSLEISTE (Navbar)
+        div.navbar.bg-base-100.border-b.border-base-300.z-10.shadow-sm
+            div.flex-1
+                a.btn.btn-ghost.text-xl.font-bold.text-primary ERP System
+            div.flex-none.gap-2.px-4
+                div.dropdown.dropdown-end
+                    div.btn.btn-ghost.btn-circle.avatar(tabindex="0")
+                        div.w-10.rounded-full.bg-neutral.text-neutral-content.flex.items-center.justify-content-center
+                            span.text-xs Admin
+                    ul.p-2.shadow.menu.dropdown-content.bg-base-100.rounded-box.w-52(tabindex="0")
+                        li: a Profil
+                        li: a.text-error Abmelden
+
+        // HAUPTBEREICH (Sidebar + Content)
+        div.flex.flex-1.overflow-hidden
+            
+            // 2. LINKER SIDEBAR-BEREICH
+            div.w-64.bg-base-100.border-r.border-base-300.flex.flex-col.justify-between
+                ul.menu.p-4.w-full.gap-1
+                    li.menu-title Administration
+                    li
+                        // htmx lädt den Inhalt per GET in das Hauptfenster (#main-content)
+                        a.active(hx-get="/web/dashboard", hx-target="#main-content", hx-push-url="true") 
+                            span Dashboard
+                    li
+                        a(hx-get="/web/kunden", hx-target="#main-content", hx-push-url="true") 
+                            span Kundenverwaltung
+                    li
+                        a(hx-get="/web/einstellungen", hx-target="#main-content", hx-push-url="true") 
+                            span Einstellungen
+                
+                div.p-4.text-xs.text-base-content.border-t.border-base-300
+                    p Vibe.d Server aktiv
+
+            // 3. DYNAMISCHER INHALTSBEREICH (Main Content)
+            // Hier injiziert htmx die geladenen Seiten-Inhalte
+            main#main-content.flex-1.overflow-y-auto.p-8
+                // Hier wird der initiale Inhalt beim ersten Seitenaufruf eingefügt
+                block content
