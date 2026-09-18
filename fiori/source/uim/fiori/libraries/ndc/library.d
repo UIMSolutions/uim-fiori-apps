@@ -7,6 +7,7 @@ mixin(ShowModule!());
 @safe:
 class SAPNDCLibrary : UI5Library {
     private static SAPNDCLibrary _instance;
+    static string prefix = "ndc";
 
     this() {
         super("SAP NDC Library", "sap.ndc");
@@ -31,5 +32,16 @@ class SAPNDCLibrary : UI5Library {
             _instance = new SAPNDCLibrary();
         }
         return _instance;
+    }
+
+    struct Element {
+        static UI5Element opCall(string tag, string[string] values = null, UI5Element[] content = null) {
+            return UI5Element(SAPNDCLibrary.prefix.length == 0 ? tag
+                    : SAPNDCLibrary.prefix ~ ":" ~ tag, values, content);
+        }
+
+        static UI5Element opCall(string tag, UI5Element[] content) {
+            return SAPNDCLibrary.Element(tag, null, content);
+        }
     }
 }

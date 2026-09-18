@@ -5,7 +5,7 @@ sap.ui.define([
 ], function (Controller, JSONModel, MessageToast) {
     "use strict";
 
-    return Controller.extend("pm.fiori.controller.Main", {
+    return Controller.extend("pm.fiori.controller.App", {
         onInit: function () {
             var oModel = new JSONModel();
             

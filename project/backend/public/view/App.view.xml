@@ -1,4 +1,4 @@
-<mvc:View controllerName="pm.fiori.controller.Main"
+<mvc:View controllerName="pm.fiori.controller.App"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:layout="sap.ui.layout"

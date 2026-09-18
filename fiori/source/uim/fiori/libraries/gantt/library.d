@@ -7,6 +7,7 @@ mixin(ShowModule!());
 @safe:
 class SAPGanttLibrary : UI5Library {
     private static SAPGanttLibrary _instance;
+    private static string prefix = "gantt";
 
     this() {
         super("SAP Gantt Library", "sap.gantt");
@@ -31,5 +32,16 @@ class SAPGanttLibrary : UI5Library {
             _instance = new SAPGanttLibrary();
         }
         return _instance;
+    }
+
+    struct Element {
+        static UI5Element opCall(string tag, string[string] values = null, UI5Element[] content = null) {
+            return UI5Element(SAPGanttLibrary.prefix.length == 0 ? tag
+                    : SAPGanttLibrary.prefix ~ ":" ~ tag, values, content);
+        }
+
+        static UI5Element opCall(string tag, UI5Element[] content) {
+            return SAPGanttLibrary.Element(tag, null, content);
+        }
     }
 }

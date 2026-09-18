@@ -7,8 +7,8 @@ import uim.xml;
 class UI5View {
     protected string _path;
     // protected UI5Element rootElement;
-    protected bool _isStatic;
-    protected string _cache;
+    protected bool _isStatic = false;
+    protected string _cache = "";
     protected ViewRenderer _renderer;
 
     this() {
@@ -20,6 +20,7 @@ class UI5View {
     }
 
     this(string customPath, Json initData = Json.emptyObject) {
+        _renderer = new XMLViewRenderer();
         initialize(initData.set("path", customPath));
     }
 
@@ -43,11 +44,14 @@ class UI5View {
     }
 
     void handler(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        writeln("UI5View:Handling request for path: " ~ _path);
+        writeln("UI5View:isStatic: ", _isStatic);
         if (_isStatic && _cache.length == 0) {
             _cache = render();
         }
 
         auto resBody = _isStatic ? _cache : render();
+        writeln("UI5View:Response body: " ~ resBody);
         res.writeBody(resBody, "application/xml");
     }
 
@@ -66,6 +70,8 @@ class UI5View {
     }
 
     protected UI5Element[] buildView() {
+        writeln("UI5View:Building view for path: " ~ _path);
+
         return null;
     }
 
@@ -82,9 +88,13 @@ class UI5View {
     }
 
     string render() {
-        return renderer.render(buildView());
-    }
+        writeln("UI5View:Rendering view at path: " ~ _path);
+        writeln("UI5View:Calling buildView for path: " ~ _path);
 
+        auto view = buildView();
+        writeln("UI5View:Built view for UI5Elements: ", view.length);
+        return renderer.render(view);
+    }
 
 //     void addElement(string name, string[string] values = null, scope void delegate() @safe content = null) {
 //         UI5Element element = new UI5Element(name, valuesToAttributes(values));
@@ -98,98 +108,16 @@ class UI5View {
 //         addElement(name, null, content);
 //     }
 
-//     void addText(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("Text", values, content);
-//     }
-
-//     void addText(string text) {
-//         addText(["text": text]);
-//     }
-
-//     void addLabel(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("Label", values, content);
-//     }
-
-//     void addLabel(string text) {
-//         addLabel(["text": text]);
-//     }
-
-//     void addButton(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("Button", values, content);
-//     }
-
-//     void addInput(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("Input", values, content);
-//     }
-
-//     void addVBox(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("VBox", values, content);
-//     }
-
-//     void addVBox(scope void delegate() @safe content) {
-//         addElement("VBox", null, content);
-//     }
-
-//     void addHBox(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("HBox", values, content);
-//     }
-
-//     void addHBox(scope void delegate() @safe content) {
-//         addElement("HBox", null, content);
-//     }
-
-//     void addApp(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("App", values, content);
-//     }
-
-//     void addPage(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("Page", values, content);
-//     }
-
-//     void addTable(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("Table", values, content);
-//     }
-
 //     void addSimpleForm(string[string] values = null, scope void delegate() @safe content = null) {
 //         addElement("layout:SimpleForm", values, content);
 //     }
-
-//     void addColumnListItem(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("ColumnListItem", values, content);
-//     }
-
-//     void addColumn(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("Column", values, content);
-//     }
-
-//     void addColumns(string[string][] columns) {
-//         addElement("columns", null, {
-//             foreach (column; columns) {
-//                 string text = column["text"];
-//                 column.remove("text");
-//                 addColumn(column, { addText([
-//                         "text": text
-//                     ]); });
-//             }
-//         });
-//     }
-
-
 
 //     void addCoreItem(string[string] values = null, scope void delegate() @safe content = null) {
 //         addElement("core:Item", values, content);
 //     }
 
-//     void addIconTabBar(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("IconTabBar", values, content);
-//     }
-
 //     void addCells(string[string] values = null, scope void delegate() @safe content = null) {
 //         addElement("cells", values, content);
-//     }
-
-//     void addObjectIdentifier(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("ObjectIdentifier", values, content);
 //     }
 
 //     void addNetworkLines(string[string] values = null, scope void delegate() @safe content = null) {
@@ -228,9 +156,6 @@ class UI5View {
 //         addElement("uxap:subSections", values, content);
 //     }
 
-//     void addPanel(string[string] values = null, scope void delegate() @safe content = null) {
-//         addElement("Panel", values, content);
-//     }
 
 //     void addIconTabFilter(string[string] values = null, scope void delegate() @safe content = null) {
 //         addElement("IconTabFilter", values, content);

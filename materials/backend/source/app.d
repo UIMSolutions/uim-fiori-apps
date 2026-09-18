@@ -19,7 +19,7 @@ void main() {
     auto controller = new MaterialODataController(service);
     controller.registerRoutes(router);
 
-    auto appView = new XAppView("/view/App.view.xml");
+    auto appView = new AppView("/view/App.view.xml");
     appView.registerRoutes(router);
     // appView.render();
     // router.get("/", serveStaticFiles("public/index.html"));
@@ -37,7 +37,7 @@ void main() {
     router.get("/web/kunden", &portal.kunden);
 
     auto settings = new HTTPServerSettings();
-    settings.port = to!ushort(environment.get("PORT", "8080"));
+    settings.port = to!ushort(environment.get("PORT", "8181"));
     settings.bindAddresses = ["0.0.0.0"];
 
     writeln("Starting HTTP server...");

@@ -7,6 +7,7 @@ mixin(ShowModule!());
 @safe:
 class SAPTNTLibrary : UI5Library {
     private static SAPTNTLibrary _instance;
+    private static string prefix = "tnt";
 
     this() {
         super("SAP TNT Library", "sap.tnt");
@@ -31,5 +32,16 @@ class SAPTNTLibrary : UI5Library {
             _instance = new SAPTNTLibrary();
         }
         return _instance;
+    }
+
+    struct Element {
+        static UI5Element opCall(string tag, string[string] values = null, UI5Element[] content = null) {
+            return UI5Element(SAPTNTLibrary.prefix.length == 0 ? tag
+                    : SAPTNTLibrary.prefix ~ ":" ~ tag, values, content);
+        }
+
+        static UI5Element opCall(string tag, UI5Element[] content) {
+            return SAPTNTLibrary.Element(tag, null, content);
+        }
     }
 }

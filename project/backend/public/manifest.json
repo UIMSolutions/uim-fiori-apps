@@ -18,10 +18,10 @@
   },
   "sap.ui5": {
     "rootView": {
-      "viewName": "pm.fiori.view.Main",
+      "viewName": "pm.fiori.view.App",
       "type": "XML",
       "async": true,
-      "id": "mainView"
+      "id": "appView"
     },
     "dependencies": {
       "minUI5Version": "1.108.0",

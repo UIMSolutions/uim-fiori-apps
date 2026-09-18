@@ -3,6 +3,13 @@ import uim.fiori.landscape;
 
 @safe:
 class AppView : UI5View {
+    SAPMLibrary m = new SAPMLibrary();
+    SAPMvcLibrary mvc = new SAPMvcLibrary();
+    SAPUxapLibrary uxap = new SAPUxapLibrary();
+    SAPSuiteLibrary suite = new SAPSuiteLibrary();
+    SAPGraphLibrary graph = new SAPGraphLibrary();
+    SAPGanttLibrary gantt = new SAPGanttLibrary();
+
     this(string path) {
         super(path);
     }

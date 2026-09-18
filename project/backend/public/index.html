@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>SAP Fiori PM Dashboard (vibe.d)</title>
-    <script id="sap-ui-bootstrap"
-        src="https://ui5.sap.com/resources/sap-ui-core.js"
-        data-sap-ui-theme="sap_horizon"
-        data-sap-ui-resourceroots='{"pm.fiori": "./"}'
-        data-sap-ui-compatVersion="edge"
-        data-sap-ui-async="true"
+    <script id="sap-ui-bootstrap" src="https://ui5.sap.com/resources/sap-ui-core.js" data-sap-ui-theme="sap_horizon"
+        data-sap-ui-resourceroots='{"pm.fiori": "./"}' data-sap-ui-compatVersion="edge" data-sap-ui-async="true"
         data-sap-ui-oninit="module:sap/ui/core/ComponentSupport">
     </script>
+    <style>
+        html,
+        body,
+        #content {
+            height: 100%;
+            margin: 0;
+        }
+    </style>
 </head>
+
 <body class="sapUiBody" id="content">
-    <div data-sap-ui-component 
-         data-name="pm.fiori" 
-         data-id="container" 
-         data-settings='{"id" : "pm.fiori"}'></div>
+    <div data-sap-ui-component data-name="pm.fiori" data-id="container" data-settings='{"id" : "pm.fiori"}'
+        style="height: 100%;"></div>
 </body>
+
 </html>

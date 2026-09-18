@@ -6,7 +6,6 @@ import uim.xml;
 @safe:
 class XAppView : MvcView {
     protected string _appId;
-    protected string[string] _libs;
 
     this() {
         super();

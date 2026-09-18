@@ -44,6 +44,7 @@ class MvcView : UI5View {
     }
 
     override protected UI5Element[] buildView() {
+        writeln("MvcView:Building view for controller: " ~ _controllerName);
         // // super.buildView();
         // auto attributes = _libs.dup;
         // attributes["controllerName"] = _controllerName;

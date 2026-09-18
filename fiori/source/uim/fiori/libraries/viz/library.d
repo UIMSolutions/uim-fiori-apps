@@ -7,6 +7,7 @@ mixin(ShowModule!());
 @safe:
 class SAPVizLibrary : UI5Library {
     private static SAPVizLibrary _instance;
+    private static string prefix = "viz";
 
     this() {
         super("SAP Viz Library", "sap.viz");
@@ -31,5 +32,16 @@ class SAPVizLibrary : UI5Library {
             _instance = new SAPVizLibrary();
         }
         return _instance;
+    }
+
+        struct Element {
+        static UI5Element opCall(string tag, string[string] values = null, UI5Element[] content = null) {
+            return UI5Element(SAPVizLibrary.prefix.length == 0 ? tag
+                    : SAPVizLibrary.prefix ~ ":" ~ tag, values, content);
+        }
+
+        static UI5Element opCall(string tag, UI5Element[] content) {
+            return SAPVizLibrary.Element(tag, null, content);
+        }
     }
 }

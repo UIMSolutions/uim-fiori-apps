@@ -138,7 +138,7 @@ void main() {
     router.registerRestInterface(new PMBackendAPI());
 
     // Statisches File Server Routing für die SAPUI5 Frontend Assets
-    auto view = new PMMainView("/view/Mail.view.xml");
+    auto view = new AppView("/view/App.view.xml");
     view.registerRoutes(router);
     router.get("*", serveStaticFiles("public/"));
 

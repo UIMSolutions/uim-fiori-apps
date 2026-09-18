@@ -3,7 +3,7 @@ module uim.fiori.materials.presentation.ui5.views.app;
 import uim.fiori.materials;
 
 @safe:
-class AppView : UI5View {
+class AppView : MvcView {
   SAPMLibrary m = new SAPMLibrary();
 
   this(string path) {
@@ -11,9 +11,10 @@ class AppView : UI5View {
     m.prefix = "";
   }
 
-  override UI5Element[] buildView() {
+  override protected UI5Element[] buildView() {
+    writeln("AppView:Building view for path: " ~ _path);
     return [
-      UI5Element("mvc.View", [
+      UI5Element("mvc:View", [
           "controllerName": "material.frontend.controller.App",
           "xmlns:mvc": "sap.ui.core.mvc",
           "xmlns": "sap.m",
@@ -51,14 +52,12 @@ class AppView : UI5View {
             ])
           ]),
         m.Element("content", [
-            m.IconTabBar([
-              addIconTabBar()
-            ])
+            addIconTabBar()
           ])
       ]);
   }
 
-  UI5Element addIconTabBar(string[string] values = null, scope void delegate() @safe content = null) {
+  UI5Element addIconTabBar() {
     return m.IconTabBar(["expandable": "false"], [
         m.Element("items", [
             m.IconTabFilter([
@@ -68,8 +67,8 @@ class AppView : UI5View {
             ],
             [
               m.VBox(["class": "sapUiSmallMargin", "renderType": "Bare"], [
-                // addMaterialForm(),
-                // addMaterialsTable()
+                addMaterialForm(),
+                addMaterialsTable()
               ])
             ]),
             m.IconTabFilter([
@@ -79,8 +78,8 @@ class AppView : UI5View {
             ],
             [
               m.VBox(["class": "sapUiSmallMargin", "renderType": "Bare"], [
-                // addPlanningForm(),
-                // addPlanningTable()
+                addPlanningForm(),
+                addPlanningTable()
               ])
             ]),
             m.IconTabFilter([
@@ -90,8 +89,8 @@ class AppView : UI5View {
             ],
             [
               m.VBox(["class": "sapUiSmallMargin", "renderType": "Bare"], [
-                // addSupplierForm(),
-                // addSuppliersTable()
+                addSupplierForm(),
+                addSuppliersTable()
               ])
             ]),
             m.IconTabFilter([
@@ -101,8 +100,8 @@ class AppView : UI5View {
             ],
             [
               m.VBox(["class": "sapUiSmallMargin", "renderType": "Bare"], [
-                // addEvaluationToolbar(),
-                // addEvaluationsTable()
+                addEvaluationToolbar(),
+                addEvaluationsTable()
               ])
             ]),
             m.IconTabFilter([
@@ -112,9 +111,9 @@ class AppView : UI5View {
             ],
             [
               m.VBox(["class": "sapUiSmallMargin", "renderType": "Bare"], [
-                // addWarehouseForm(),
+                addWarehouseForm(),
                 m.HBox(["renderType": "Bare"], [
-                  // addWarehousesTable(),
+                  addWarehousesTable(),
                   m.Table([
                     "id": "assignmentsTable",
                     "width": "52%",
@@ -147,8 +146,8 @@ class AppView : UI5View {
       ]);
   }
 
-  void addMaterialForm() {
-    m.Element("layout:SimpleForm", [
+  UI5Element addMaterialForm() {
+    return m.Element("layout:SimpleForm", [
         "editable": "true",
         "layout": "ResponsiveGridLayout",
         "title": "{i18n>materialCreate}"
@@ -179,8 +178,8 @@ class AppView : UI5View {
       ]);
   }
 
-  void addSupplierForm() {
-    m.Element("layout:SimpleForm", [
+  UI5Element addSupplierForm() {
+    return m.Element("layout:SimpleForm", [
         "editable": "true",
         "layout": "ResponsiveGridLayout",
         "title": "{i18n>supplierCreate}"
@@ -211,8 +210,8 @@ class AppView : UI5View {
       ]);
   }
 
-  void addPlanningForm() {
-    m.Element("layout:SimpleForm", [
+  UI5Element addPlanningForm() {
+    return m.Element("layout:SimpleForm", [
         "editable": "true",
         "layout": "ResponsiveGridLayout",
         "title": "{i18n>materialPlanning}"
@@ -255,8 +254,8 @@ class AppView : UI5View {
       ]);
   }
 
-  void addMaterialsTable() {
-    m.Table([
+  UI5Element addMaterialsTable() {
+    return m.Table([
         "id": "materialsTable",
         "items": "{/Materials}"
       ], [
@@ -293,223 +292,233 @@ class AppView : UI5View {
       ]);
   }
 
-  // void addSuppliersTable() {
-  //   m.Table([
-  //       "id": "suppliersTable",
-  //       "items": "{/Suppliers}"
-  //     ], {
-  //     _writer.addElement(
-  //       "headerToolbar");
-  //     m.Toolbar(null, { m.Title(
-  //       "{i18n>suppliers}"); });
-  //     _writer.endElement(); // headerToolbar
-  //     m.Columns([
-  //       "{i18n>id}",
-  //       "{i18n>name}",
-  //       "{i18n>contactInfo}",
-  //       "{i18n>description}"
-  //     ]);
-  //     _writer.addElement(
-  //       "items");
-  //     m.ColumnListItem(
-  //       [
-  //         "type": "Active"
-  //       ], {
-  //       m.Element("cells", null, {
-  //         m.Text(
-  //         "{ID}");
-  //         m.Text(
-  //         "{Name}");
-  //         m.Text(
-  //         "{ContactInfo}");
-  //         m.Text(
-  //         "{Description}");
-  //       });
-  //     });
-  //     _writer.endElement(); // items
-  //   });
-  // }
+  UI5Element addSuppliersTable() {
+    return m.Table([
+        "id": "suppliersTable",
+        "items": "{/Suppliers}"
+      ], [
+        m.Element(
+          "headerToolbar", [
+            m.Toolbar([
+              m.Title(
+              "{i18n>suppliers}")
+            ])
+          ]), // headerToolbar
+        m.Columns([
+          "{i18n>id}",
+          "{i18n>name}",
+          "{i18n>contactInfo}",
+          "{i18n>description}"
+        ]),
+        m.Element("items", [
+            m.ColumnListItem(
+            [
+              "type": "Active"
+            ], [
+              m.Element("cells", [
+                m.Text(
+                "{ID}"),
+                m.Text(
+                "{Name}"),
+                m.Text(
+                "{ContactInfo}"),
+                m.Text(
+                "{Description}")
+              ])
+            ])
+          ])
+      ]);
+  }
 
-  // void addPlanningTable() {
-  //   m.Table([
-  //       "id": "plansTable",
-  //       "items": "{/MaterialPlans}"
-  //     ], {
-  //     m.Element("headerToolbar", null, {
-  //       m.Toolbar(null, { m.Title(
-  //       "{i18n>planning}"); });
-  //     });
-  //     m.Columns([
-  //       "{i18n>id}",
-  //       "{i18n>materialId}",
-  //       "{i18n>planningDate}",
-  //       "{i18n>plannedQuantity}"
-  //     ]);
-  //     m.Element("items", null, {
-  //       m.ColumnListItem(null, {
-  //         m.Element("cells", null, {
-  //           m.Text(
-  //           "{ID}");
-  //           m.Text(
-  //           "{MaterialID}");
-  //           m.Text(
-  //           "{PlannedDate}");
-  //           m.ObjectNumber([
-  //             "number": "{PlannedQuantity}"
-  //           ]);
-  //         });
-  //       });
-  //     });
-  //   });
-  // }
+  UI5Element addPlanningTable() {
+    return m.Table([
+        "id": "plansTable",
+        "items": "{/MaterialPlans}"
+      ], [
+        m.Element("headerToolbar", [
+            m.Toolbar([m.Title(
+              "{i18n>planning}")])
+          ]), // headerToolbar
+        m.Columns([
+          "{i18n>id}",
+          "{i18n>materialId}",
+          "{i18n>planningDate}",
+          "{i18n>plannedQuantity}"
+        ]),
+        m.Element("items", [
+            m.ColumnListItem([
+              "type": "Active"
+            ], [
+              m.Element("cells", [
+                m.Text(
+                "{ID}"),
+                m.Text(
+                "{MaterialID}"),
+                m.Text(
+                "{PlannedDate}"),
+                m.ObjectNumber([
+                  "number": "{PlannedQuantity}"
+                ])
+              ])
+            ])
+          ])
+      ]);
+  }
 
-  // void addWarehouseForm() {
-  //   m.Element("layout:SimpleForm", [
-  //     "editable": "true",
-  //     "layout": "ResponsiveGridLayout",
-  //     "title": "{i18n>assignWarehouse}"
-  //   ], {
-  //     m.Element("layout:content", null, {
-  //       m.Label(
-  //         "{i18n>warehouse}");
-  //       m.Select(
-  //         [
-  //           "id": "warehouseSelect",
-  //           "items": "{lookup>/warehouses}"
-  //         ], {
-  //         m.Element("core:Item", [
-  //           "key": "{lookup>ID}",
-  //           "text": "{lookup>Name}"
-  //         ]);
-  //       });
-  //       m.Label(
-  //         "{i18n>storage}");
-  //       m.Select([
-  //         "id": "assignmentWarehouseSelect",
-  //         "items": "{lookup>/warehouses}"
-  //       ], {
-  //         m.Element("core:Item", [
-  //             "key": "{lookup>ID}",
-  //             "text": "{lookup>Name}"
-  //           ]);
-  //       });
-  //       m.Button([
-  //         "text": "{i18n>saveAssignment}",
-  //         "type": "Emphasized",
-  //         "press": "onCreateAssignment"
-  //       ]);
-  //     });
-  //   });
-  // }
+  UI5Element addWarehouseForm() {
+    return m.Element("layout:SimpleForm", [
+        "editable": "true",
+        "layout": "ResponsiveGridLayout",
+        "title": "{i18n>assignWarehouse}"
+      ],
+      [
+        m.Element("layout:content", [
+            m.Label(
+            "{i18n>warehouse}"),
+            m.Select(
+            [
+              "id": "warehouseSelect",
+              "items": "{lookup>/warehouses}"
+            ], [
+              m.Element("core:Item", [
+                "key": "{lookup>ID}",
+                "text": "{lookup>Name}"
+              ])
+            ]),
+            m.Label(
+            "{i18n>storage}"),
+            m.Select([
+              "id": "assignmentWarehouseSelect",
+              "items": "{lookup>/warehouses}"
+            ],
+            [
+              m.Element("core:Item", [
+                "key": "{lookup>ID}",
+                "text": "{lookup>Name}"
+              ])
+            ]),
+            m.Button([
+              "text": "{i18n>saveAssignment}",
+              "type": "Emphasized",
+              "press": "onCreateAssignment"
+            ])
+          ])
+      ]);
+  }
 
-  // void addWarehousesTable() {
-  //   m.Table([
-  //     "id": "warehousesTable",
-  //     "width": "48%",
-  //     "items": "{/Warehouses}",
-  //     "class": "sapUiSmallMarginEnd"
-  //   ], {
-  //     m.Element("headerToolbar", null, {
-  //       m.Toolbar(null, { m.Title(
-  //         "{i18n>warehouses}"); });
-  //     });
-  //     m.Columns([
-  //         "{i18n>id}",
-  //         "{i18n>name}",
-  //         "{i18n>location}"
-  //       ]);
-  //     m.Element("items", null, {
-  //       m.ColumnListItem(null, {
-  //         m.Element("cells", null, {
-  //           m.Text(
-  //           "{ID}");
-  //           m.Text(
-  //           "{Name}");
-  //           m.Text(
-  //           "{Location}");
-  //         });
-  //       });
-  //     });
-  //   });
-  // }
+  UI5Element addWarehousesTable() {
+    return m.Table([
+      "id": "warehousesTable",
+      "width": "48%",
+      "items": "{/Warehouses}",
+      "class": "sapUiSmallMarginEnd"
+    ], [
+      m.Element("headerToolbar", [
+          m.Toolbar([
+              m.Title(
+              "{i18n>warehouses}")
+            ])
+        ]),
+      m.Columns([
+          "{i18n>id}",
+          "{i18n>name}",
+          "{i18n>location}"
+        ]),
+      m.Element("items", [
+          m.ColumnListItem([
+            m.Element("cells", [
+                m.Text(
+                "{ID}"),
+                m.Text(
+                "{Name}"),
+                m.Text(
+                "{Location}")
+              ])
+          ])
+        ])
+    ]);
+  }
 
-  // void addAssignmentsTable() {
-  //   m.Table([
-  //     "id": "assignmentsTable",
-  //     "width": "52%",
-  //     "items": "{/WarehouseAssignments}"
-  //   ], {
-  //     m.Element("headerToolbar", null, {
-  //       m.Toolbar(null, { m.Title("{i18n>materialWarehouseAssignment}"); });
-  //     });
-  //     m.Columns([
-  //         "{i18n>id}",
-  //         "{i18n>materialId}",
-  //         "{i18n>warehouseId}"
-  //       ]);
-  //     m.Element("items", null, {
-  //       m.ColumnListItem(null, {
-  //         m.Element("cells", null, {
-  //           m.Text(
-  //           "{ID}");
-  //           m.Text(
-  //           "{MaterialID}");
-  //           m.Text(
-  //           "{WarehouseID}");
-  //         });
-  //       });
-  //     });
-  //   });
-  // }
+  UI5Element addAssignmentsTable() {
+    return m.Table([
+      "id": "assignmentsTable",
+      "width": "52%",
+      "items": "{/WarehouseAssignments}"
+    ], [
+      m.Element("headerToolbar", [
+          m.Toolbar([
+              m.Title(
+              "{i18n>materialWarehouseAssignment}")
+            ])
+        ]),
+      m.Columns([
+          "{i18n>id}",
+          "{i18n>materialId}",
+          "{i18n>warehouseId}"
+        ]),
+      m.Element("items", [
+          m.ColumnListItem([
+            m.Element("cells", [
+                m.Text(
+                "{ID}"),
+                m.Text(
+                "{MaterialID}"),
+                m.Text(
+                "{WarehouseID}")
+              ])
+          ])
+        ])
+    ]);
+  }
 
-  // void addEvaluationToolbar() {
-  //   m.Toolbar(null, {
-  //     m.Title(
-  //       "{i18n>stockEvaluation}");
-  //     m.ToolbarSpacer();
-  //     m.Button(
-  //       [
-  //         "text": "{i18n>refresh}",
-  //         "press": "onRefreshEvaluations"
-  //       ]);
-  //   });
-  // }
+  UI5Element addEvaluationToolbar() {
+    return m.Toolbar([
+      m.Title(
+        "{i18n>stockEvaluation}"),
+      m.ToolbarSpacer(),
+      m.Button(
+        [
+          "text": "{i18n>refresh}",
+          "press": "onRefreshEvaluations"
+        ])
+    ]);
+  }
 
-  // void addEvaluationsTable() {
-  //   m.Table([
-  //       "id": "evaluationsTable",
-  //       "items": "{/StockEvaluations}"
-  //     ], {
-  //     m.Columns([
-  //       "{i18n>material}",
-  //       "{i18n>available}",
-  //       "{i18n>target}",
-  //       "{i18n>status}"
-  //     ]);
-  //     m.Element("items", null, {
-  //       m.ColumnListItem(null, {
-  //         m.Element("cells", null, {
-  //           m.Text(
-  //           "{MaterialName}");
-  //           m.ObjectNumber(
-  //           [
-  //             "number": "{Available}",
-  //             "unit": "Stk"
-  //           ]);
-  //           m.ObjectNumber(
-  //           [
-  //             "number": "{TargetStock}",
-  //             "unit": "Stk"
-  //           ]);
-  //           addObjectStatus([
-  //             "text": "{Status}",
-  //             "state": "{= ${Status} === 'OK' ? 'Success' : 'Error'}"
-  //           ]);
-  //         });
-  //       });
-  //     });
-  //   });
-  // }
+  UI5Element addEvaluationsTable() {
+    return m.Table([
+        "id": "evaluationsTable",
+        "items": "{/StockEvaluations}"
+      ], [
+        m.Columns([
+          "{i18n>material}",
+          "{i18n>available}",
+          "{i18n>target}",
+          "{i18n>status}"
+        ]),
+        m.Element("items", [
+            m.ColumnListItem([
+              m.Element("cells", [
+                m.Text(
+                "{MaterialName}"),
+                m.ObjectNumber(
+                [
+                  "number": "{Available}",
+                  "unit": "Stk"
+                ]),
+                m.ObjectNumber(
+                [
+                  "number": "{TargetStock}",
+                  "unit": "Stk"
+                ]),
+                m.ObjectStatus([
+                  "text": "{Status}",
+                  "state": "{= ${Status} === 'OK' ? 'Success' : 'Error'}"
+                ])
+              ])
+            ])
+          ])
+      ]);
+  }
 }
 ///
 unittest {

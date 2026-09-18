@@ -7,6 +7,7 @@ mixin(ShowModule!());
 @safe:
 class SAPUXAPLibrary : UI5Library {
     private static SAPUXAPLibrary _instance;
+    static string prefix = "uxap";
 
     this() {
         super("SAP UXAP Library", "sap.uxap");
@@ -31,5 +32,16 @@ class SAPUXAPLibrary : UI5Library {
             _instance = new SAPUXAPLibrary();
         }
         return _instance;
+    }
+
+        struct Element {
+        static UI5Element opCall(string tag, string[string] values = null, UI5Element[] content = null) {
+            return UI5Element(SAPUXAPLibrary.prefix.length == 0 ? tag
+                    : SAPUXAPLibrary.prefix ~ ":" ~ tag, values, content);
+        }
+
+        static UI5Element opCall(string tag, UI5Element[] content) {
+            return SAPUXAPLibrary.Element(tag, null, content);
+        }
     }
 }

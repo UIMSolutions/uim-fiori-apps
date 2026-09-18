@@ -7,6 +7,7 @@ mixin(ShowModule!());
 @safe:
 class SAPOVPLibrary : UI5Library {
     private static SAPOVPLibrary _instance;
+    private static string prefix = "ovp";
 
     this() {
         super("SAP OVP Library", "sap.ovp");
@@ -31,5 +32,16 @@ class SAPOVPLibrary : UI5Library {
             _instance = new SAPOVPLibrary();
         }
         return _instance;
+    }
+
+    struct Element {
+        static UI5Element opCall(string tag, string[string] values = null, UI5Element[] content = null) {
+            return UI5Element(SAPOVPLibrary.prefix.length == 0 ? tag
+                    : SAPOVPLibrary.prefix ~ ":" ~ tag, values, content);
+        }
+
+        static UI5Element opCall(string tag, UI5Element[] content) {
+            return SAPOVPLibrary.Element(tag, null, content);
+        }
     }
 }

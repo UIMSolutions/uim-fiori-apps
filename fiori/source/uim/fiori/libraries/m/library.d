@@ -56,15 +56,15 @@ class SAPMLibrary : UI5Library {
 
     struct Columns {
         static UI5Element opCall(string[string] values = null, UI5Element[] content = null) {
-            return Element("Columns", values, content);
+            return Element("columns", values, content);
         }
 
         static UI5Element opCall(UI5Element[] content) {
-            return Element("Columns", null, content);
+            return Element("columns", null, content);
         }
 
         static UI5Element opCall(string[] cols) {
-            return Columns(cols.map!(col => Element("Column", ["text": col])).array);
+            return Columns(cols.map!(col => Element("Column", [Text(col)])).array);
         }
     }
 
