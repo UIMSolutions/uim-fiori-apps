@@ -1,0 +1,35 @@
+<mvc:View controllerName="my.app.controller.components.Labels" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive Label Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="Labels provide descriptive text for UI controls and support required indicators." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Label Variations" class="sapUiMediumMarginBottom">
+            <VBox class="sapUiSmallMargin" spacing="1rem">
+                <HBox alignItems="Center">
+                    <Label text="Standard Label:" class="sapUiTinyMarginEnd" />
+                    <Input placeholder="Enter text..." />
+                </HBox>
+                
+                <HBox alignItems="Center">
+                    <Label text="Required Label:" required="true" class="sapUiTinyMarginEnd" />
+                    <Input placeholder="Mandatory field..." />
+                </HBox>
+
+                <HBox alignItems="Center">
+                    <Label text="Wrapped Long Text Label Example that spans multiple lines:" wrapping="true" width="200px" class="sapUiTinyMarginEnd" />
+                    <Input placeholder="Aligned to wrapped label..." />
+                </HBox>
+            </VBox>
+        </Panel>
+
+        <Button text="Toggle Required State" type="Emphasized" press="onToggleRequired" />
+    </VBox>
+</mvc:View>

@@ -1,0 +1,5 @@
+<mvc:View controllerName="my.app.controller.SubDetail" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
+    <Page id="subDynamicPage" showNavButton="true" navButtonPress="onCloseSubDetail">
+        <!-- Dynamic fragments will be injected here -->
+    </Page>
+</mvc:View>

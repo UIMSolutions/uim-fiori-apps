@@ -8,19 +8,28 @@ sap.ui.define([
         metadata: { manifest: "json" },
 
         init: function () {
+            // 1. Call the base class init first
             UIComponent.prototype.init.apply(this, arguments);
 
-            var oRouter = this.getRouter();
+            // 2. Create and set the FCL layout model
             var oLayoutModel = new JSONModel({ layout: "OneColumn" });
-            
             this.setModel(oLayoutModel, "fclLayout");
 
-            oRouter.attachRouteMatched(function (oEvent) {
-                var sLayout = oEvent.getParameter("arguments").layout;
-                oLayoutModel.setProperty("/layout", sLayout || "OneColumn");
-            }, this);
+            // 3. Get the router safely using UI5's built-in helper
+            var oRouter = this.getRouter();
+            
+            if (oRouter) {
+                // Attach the layout switcher to route changes
+                oRouter.attachRouteMatched(function (oEvent) {
+                    var sLayout = oEvent.getParameter("arguments").layout;
+                    oLayoutModel.setProperty("/layout", sLayout || "OneColumn");
+                }, this);
 
-            oRouter.initialize();
+                // Initialize the router
+                oRouter.initialize();
+            } else {
+                console.error("Router could not be initialized. Check your manifest.json routing configuration.");
+            }
         }
     });
 });

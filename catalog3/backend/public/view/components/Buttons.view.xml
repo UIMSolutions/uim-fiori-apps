@@ -1,11 +1,27 @@
-<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
-    <VBox class="sapUiSmallMargin">
-        <Title text="Standard Buttons" class="sapUiSmallMarginBottom"/>
-        <HBox wrap="Wrap">
-            <Button text="Default" class="sapUiTinyMarginEnd" />
-            <Button text="Emphasized" type="Emphasized" class="sapUiTinyMarginEnd" />
-            <Button text="Reject" type="Reject" class="sapUiTinyMarginEnd" />
-            <Button text="Accept" type="Accept" />
-        </HBox>
+<mvc:View controllerName="my.app.controller.components.Buttons" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive Button Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="This view was dynamically loaded into the third column via XMLView.create()." 
+            type="Success" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Button States" class="sapUiMediumMarginBottom">
+            <VBox class="sapUiSmallMargin">
+                <HBox wrap="Wrap" class="sapUiSmallMarginBottom">
+                    <Button text="Default Button" press="onButtonPress" class="sapUiTinyMarginEnd" />
+                    <Button text="Emphasized" type="Emphasized" press="onButtonPress" class="sapUiTinyMarginEnd" />
+                    <Button text="Accept" type="Accept" press="onButtonPress" class="sapUiTinyMarginEnd" />
+                    <Button text="Reject" type="Reject" press="onButtonPress" />
+                </HBox>
+            </VBox>
+        </Panel>
+
+        <Label id="feedbackLabel" text="Status: Ready for interaction" design="Bold" />
     </VBox>
 </mvc:View>

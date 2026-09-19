@@ -6,10 +6,17 @@ struct ComponentItem {
     string description;
 }
 
+struct NamespaceItem {
+    string id;
+    string name;
+    string description;
+    ComponentItem[] components;
+}
+
 void main() {
     auto router = new URLRouter;
     
-    router.get("/api/components", &getComponents);
+    router.get("/api/components", &getNamespaces);
     router.get("*", serveStaticFiles("public/"));
 
     auto settings = new HTTPServerSettings;
@@ -21,10 +28,26 @@ void main() {
     runApplication();
 }
 
-void getComponents(HTTPServerRequest req, HTTPServerResponse res) {
-    ComponentItem[] items = [
-        ComponentItem("buttons", "Buttons", "sap.m.Button and layouts"),
-        ComponentItem("inputs", "Inputs", "Forms and data entry")
+void getNamespaces(HTTPServerRequest req, HTTPServerResponse res) {
+    NamespaceItem[] namespaces = [
+        NamespaceItem(
+            "sap_m", 
+            "sap.m (Main Library)", 
+            "Controls for mobile and desktop applications",
+            [
+                ComponentItem("buttons", "Buttons", "sap.m.Button and layouts"),
+                ComponentItem("inputs", "Inputs", "sap.m.Input and related controls"),
+                ComponentItem("labels", "Labels", "sap.m.Label and related controls"),
+            ]
+        ),
+            NamespaceItem(
+                "sap_ui_layout", 
+                "sap.ui.layout", 
+                "Forms, grids, and layout containers",
+                [
+                    ComponentItem("grids", "Grid Layout", "CSS Grid structures")
+                ]
+        )
     ];
-    res.writeJsonBody(items);
+    res.writeJsonBody(namespaces);
 }

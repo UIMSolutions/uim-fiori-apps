@@ -1,0 +1,12 @@
+<mvc:View controllerName="my.app.controller.App" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns:f="sap.f" 
+    xmlns="sap.m" 
+    displayBlock="true">
+    
+    <!-- Wrapping the FCL inside an App control forces 100% screen height -->
+    <App id="app">
+        <f:FlexibleColumnLayout id="fcl" layout="{fclLayout>/layout}" />
+    </App>
+    
+</mvc:View>

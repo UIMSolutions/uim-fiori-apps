@@ -7,11 +7,7 @@
     },
     "sap.ui": {
         "technology": "UI5",
-        "deviceTypes": {
-            "desktop": true,
-            "tablet": true,
-            "phone": true
-        }
+        "deviceTypes": { "desktop": true, "tablet": true, "phone": true }
     },
     "sap.ui5": {
         "rootView": {
@@ -43,12 +39,12 @@
                     "target": ["master"]
                 },
                 {
-                    "pattern": "namespace/{namespaceId}/{layout}",
+                    "pattern": "component/{componentId}/{layout}",
                     "name": "detail",
                     "target": ["master", "detailContainer"]
                 },
                 {
-                    "pattern": "namespace/{namespaceId}/component/{componentId}/{layout}",
+                    "pattern": "component/{componentId}/subitem/{subItemId}/{layout}",
                     "name": "subDetail",
                     "target": ["master", "detailContainer", "subDetail"]
                 }

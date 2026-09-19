@@ -1,0 +1,25 @@
+<mvc:View controllerName="my.app.controller.components.Buttons" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
+    <VBox class="sapUiSmallMargin">
+        <Title text="Standard Buttons" class="sapUiSmallMarginBottom"/>
+        
+        <HBox wrap="Wrap" class="sapUiMediumMarginBottom">
+            <Button text="Default" class="sapUiTinyMarginEnd" />
+            <Button text="Emphasized" type="Emphasized" class="sapUiTinyMarginEnd" />
+            <Button text="Reject" type="Reject" class="sapUiTinyMarginEnd" />
+            <Button text="Accept" type="Accept" />
+        </HBox>
+
+        <List headerText="Component Documentation">
+            <StandardListItem 
+                title="Events" 
+                description="View button interaction events" 
+                type="Navigation" 
+                press="onDrillDown" />
+            <StandardListItem 
+                title="Properties" 
+                description="View visual configuration options" 
+                type="Navigation" 
+                press="onDrillDown" />
+        </List>
+    </VBox>
+</mvc:View>

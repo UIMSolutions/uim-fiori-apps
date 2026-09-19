@@ -1,0 +1,5 @@
+<mvc:View controllerName="my.app.controller.DetailContainer" xmlns="sap.m" xmlns:f="sap.f" xmlns:mvc="sap.ui.core.mvc">
+    <Page id="dynamicPage" showNavButton="true" navButtonPress="onClose">
+        <!-- Dynamic component view mounts here -->
+    </Page>
+</mvc:View>

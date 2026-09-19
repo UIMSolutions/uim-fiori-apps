@@ -1,0 +1,7 @@
+<mvc:View controllerName="my.app.controller.Master" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
+    <Page title="UI5 Components">
+        <List id="componentList" items="{/}" mode="SingleSelectMaster" selectionChange="onSelect">
+            <StandardListItem title="{title}" description="{description}" type="Navigation" />
+        </List>
+    </Page>
+</mvc:View>

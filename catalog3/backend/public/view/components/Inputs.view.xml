@@ -1,0 +1,34 @@
+<mvc:View controllerName="my.app.controller.components.Inputs" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive Input Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="Inputs allow users to enter, edit, and clear text input within forms." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Input Variations" class="sapUiMediumMarginBottom">
+            <f:SimpleForm xmlns:f="sap.ui.layout.form" editable="true" layout="ResponsiveGridLayout">
+                <f:content>
+                    <Label text="Standard Input" />
+                    <Input placeholder="Type something..." liveChange="onLiveChange" />
+
+                    <Label text="Password Field" />
+                    <Input type="Password" value="SecretPassword123" />
+
+                    <Label text="Value Help Enabled" />
+                    <Input showValueHelp="true" placeholder="Click icon..." />
+
+                    <Label text="Disabled State" />
+                    <Input value="Read-only data" enabled="false" />
+                </f:content>
+            </f:SimpleForm>
+        </Panel>
+
+        <Label id="outputLabel" text="Live Value: (none)" design="Bold" />
+    </VBox>
+</mvc:View>
