@@ -12,6 +12,24 @@
         data-sap-ui-async="true"
         data-sap-ui-frameOptions="trusted">
     </script>
+
+    <!-- 2. Mount the Component explicitly -->
+    <script>
+        sap.ui.getCore().attachInit(function() {
+            sap.ui.require([
+                "sap/ui/core/ComponentContainer"
+            ], function(ComponentContainer) {
+                new ComponentContainer({
+                    name: "my.app",
+                    settings : {
+                        id : "appRoot"
+                    },
+                    async: true,
+                    height: "100%" /* <--- ADD THIS LINE */
+                }).placeAt("content"); 
+            });
+        });
+    </script>
 </head>
 <body class="sapUiBody sapUiSizeCompact" id="content">
     <div data-sap-ui-component data-name="my.app" data-id="container" data-settings='{"id" : "app"}'></div>
