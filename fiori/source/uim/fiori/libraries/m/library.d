@@ -52,7 +52,20 @@ class SAPMLibrary : UI5Library {
     mixin(createElement("CheckBox"));
     mixin(createElement("ColorPalette"));
     mixin(createElement("ColorPalettePopover"));
-    mixin(createElement("Column"));
+
+    struct Column {
+        static UI5Element opCall(string[string] values = null, UI5Element[] content = null) {
+            return Element("Column", values, content);
+        }
+
+        static UI5Element opCall(UI5Element[] content) {
+            return Element("Column", null, content);
+        }
+
+        static UI5Element opCall(string text) {
+            return Column([Text(text)]);
+        }
+    }
 
     struct Columns {
         static UI5Element opCall(string[string] values = null, UI5Element[] content = null) {

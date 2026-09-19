@@ -10,7 +10,7 @@ class SAPGraphLibrary : UI5Library {
     static string prefix = "graph";
 
     this() {
-        super("SAP Graph Library", "sap.graph");
+        super("SAP Graph Library", "sap.suite.ui.commons.networkgraph.Graph");
     }
 
     this(string name, string namespace, string version_ = "", string description = "", string author = "", string license = "", string homepage = "") {

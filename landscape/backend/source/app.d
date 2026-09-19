@@ -11,7 +11,7 @@ void main() {
     router.any("*", &enableCORS);
     controller.registerRoutes(router);
 
-    auto appView = new AppView("/view/App.view.xml");
+    auto appView = new App2View("/view/App.view.xml");
     appView.registerRoutes(router);
     router.get("/resources/*", serveStaticFiles("/home/oz/DEV/D/UIM2026/SAP/uim-fiori-apps/public/sapui5-sdk-1.151.0/"));
     router.get("/", &showIndex);
