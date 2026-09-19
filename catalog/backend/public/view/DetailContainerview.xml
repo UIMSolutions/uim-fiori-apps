@@ -1,0 +1,5 @@
+<mvc:View controllerName="my.app.namespace.controller.DetailContainer" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
+    <Page id="dynamicPage" title="Component Test" showNavButton="true" navButtonPress="onNavBack">
+        <!-- The specific component view (e.g., ButtonsView.view.xml) will be injected here -->
+    </Page>
+</mvc:View>

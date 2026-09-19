@@ -1,0 +1,59 @@
+{
+    "_version": "1.32.0",
+    "sap.app": {
+        "id": "my.app",
+        "type": "application",
+        "title": "UI5 Explorer"
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "deviceTypes": { "desktop": true, "tablet": true, "phone": true }
+    },
+    "sap.ui5": {
+        "rootView": {
+            "viewName": "my.app.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "appRoot"
+        },
+        "dependencies": {
+            "minUI5Version": "1.108.0",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.m": {},
+                "sap.f": {}
+            }
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.f.routing.Router",
+                "viewType": "XML",
+                "viewPath": "my.app.view",
+                "controlId": "fcl",
+                "async": true
+            },
+            "routes": [
+                {
+                    "pattern": "",
+                    "name": "master",
+                    "target": ["master"]
+                },
+                {
+                    "pattern": "component/{componentId}/{layout}",
+                    "name": "detail",
+                    "target": ["master", "detailContainer"]
+                }
+            ],
+            "targets": {
+                "master": {
+                    "viewName": "Master",
+                    "controlAggregation": "beginColumnPages"
+                },
+                "detailContainer": {
+                    "viewName": "DetailContainer",
+                    "controlAggregation": "midColumnPages"
+                }
+            }
+        }
+    }
+}

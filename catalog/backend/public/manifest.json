@@ -1,0 +1,29 @@
+"sap.ui5": {
+  "routing": {
+    "config": {
+      "routerClass": "sap.m.routing.Router",
+      "viewType": "XML",
+      "viewPath": "my.app.namespace.view",
+      "controlId": "appContainer",
+      "controlAggregation": "detailPages",
+      "bypassed": { "target": ["notFound"] },
+      "async": true
+    },
+    "routes": [
+      {
+        "pattern": "",
+        "name": "master",
+        "target": ["master"]
+      },
+      {
+        "pattern": "component/{componentId}",
+        "name": "detail",
+        "target": ["detailContainer"]
+      }
+    ],
+    "targets": {
+      "master": { "viewName": "Master", "controlAggregation": "masterPages" },
+      "detailContainer": { "viewName": "DetailContainer" }
+    }
+  }
+}
