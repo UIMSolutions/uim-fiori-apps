@@ -1,0 +1,38 @@
+<mvc:View controllerName="my.app.controller.components.ExpandableTexts" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive ExpandableText Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="ExpandableText automatically truncates long text blocks and provides a 'More / Less' toggle link to keep UI layouts clean and readable." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Text Truncation &amp; Expansion Variations" class="sapUiMediumMarginBottom">
+            <VBox class="sapUiSmallMargin" spacing="1.5rem">
+                <!-- Short Text (Will not truncate) -->
+                <VBox>
+                    <Label text="Short Text (Below Max Limit):" design="Bold" class="sapUiTinyMarginBottom" />
+                    <ExpandableText 
+                        text="This is a brief piece of feedback that fits entirely within the standard view bounds without requiring any truncation." 
+                        maxCharacters="100" />
+                </VBox>
+
+                <!-- Long Description Text (Will truncate) -->
+                <VBox>
+                    <Label text="Long Descriptive Text (Exceeds Max Limit):" design="Bold" class="sapUiTinyMarginBottom" />
+                    <ExpandableText 
+                        id="myExpandableText"
+                        text="SAPUI5 provides powerful controls designed for enterprise application scaling. The ExpandableText control is specifically optimized for user reviews, comments, and long-form descriptions where vertical screen real estate is constrained. Users can easily click the 'More' link to review full details or collapse the text block back down when finished reading." 
+                        maxCharacters="120" 
+                        overflowPressed="onOverflowPressed" />
+                </VBox>
+            </VBox>
+        </Panel>
+
+        <Label id="expandableStatusLabel" text="Status: Ready" design="Bold" />
+    </VBox>
+</mvc:View>

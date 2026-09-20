@@ -2,9 +2,10 @@ sap.ui.define(
   [
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/UIComponent",
+    "sap/ui/core/mvc/XMLView",
     "sap/m/MessageToast",
   ],
-  function (Controller, UIComponent, MessageToast) {
+  function (Controller, UIComponent, XMLView, MessageToast) {
     "use strict";
 
     // Map URL parameter keys to target XML view names under my/app/view/components/
@@ -12,6 +13,26 @@ sap.ui.define(
       avatars: "Avatars", // Maps to my.app.view.components.Avatars
       buttons: "Buttons",
       inputs: "Inputs",
+      labels: "Labels",
+      bars: "Bars",
+      breadcrumbs: "Breadcrumbs",
+      checkboxes: "Checkboxes",
+      carousels: "Carousels",
+      expandabletexts: "ExpandableTexts",
+      menus: "Menus",
+      pdfviewers: "PdfViewers",
+      generictiles: "GenericTiles",
+      datepickers: "DatePickers",
+      lists: "Lists",
+      trees: "Trees",
+      feedcontents: "FeedContents",
+      images: "Images",
+      objectnumbers: "ObjectNumbers",
+      wizards: "Wizards",
+      newscontents: "NewsContents",
+      slidetiles: "SlideTiles",
+      tilecontents: "TileContents",
+      wheelsliders: "WheelSliders",
       // Add additional component mappings here as needed
     };
 
@@ -34,7 +55,7 @@ sap.ui.define(
           : "";
 
         var sViewName = mComponentViews[sComponentKey];
-        var oPageContainer = this.byId("componentDisplayPage"); // Direkter Zugriff auf die Page
+        var oPageContainer = this.byId("componentDisplayPage");
 
         if (!oPageContainer) {
           console.error(
@@ -43,30 +64,35 @@ sap.ui.define(
           return;
         }
 
-        // 1. Alte Inhalte sicher löschen
+        // Alte Inhalte sicher löschen
         oPageContainer.destroyContent();
 
         if (sViewName) {
-            console.log("Loading view for component key:", sComponentKey);
-            console.log("Resolved view name:", sViewName);
-            console.log("Page container found:", !!oPageContainer);
-            
-          // 2. Neue Komponente dynamisch laden und einfügen
-          this.load({
-            name: "my.app.view.components." + sViewName,
-            type: "XML",
+          console.log(
+            "Try to load view for component: my.app.view.components." +
+              sViewName,
+          );
+
+          // KORREKT: XMLView.create statt this.load
+          XMLView.create({
+            viewName: "my.app.view.components." + sViewName,
           })
             .then(function (oView) {
-              oPageContainer.addContent(oView); // Fügt die View zur Page hinzu
+              oPageContainer.addContent(oView);
+              console.log("Successfully rendered component view: " + sViewName);
             })
             .catch(function (oError) {
-              console.error("Fehler beim Laden der View: " + sViewName, oError);
-              MessageToast.show("Fehler beim Laden der Komponente.");
+              console.error(
+                "Failed to load view for component: " + sViewName,
+                oError,
+              );
+              MessageToast.show("Error loading component view.");
             });
         } else {
-          MessageToast.show(
-            "Ausgewählte Komponente ist noch nicht zugeordnet.",
+          console.warn(
+            "No view mapping registered for key: '" + sComponentKey + "'",
           );
+          MessageToast.show("Selected component view is not yet mapped.");
         }
       },
       onCloseSubDetail: function () {

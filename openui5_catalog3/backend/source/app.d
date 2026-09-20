@@ -36,17 +36,19 @@ void getNamespaces(HTTPServerRequest req, HTTPServerResponse res) {
             "sap.m (Main Library)",
             "Controls for mobile and desktop applications",
             [
-                ComponentItem("buttons", "Button", "sap.m.Button and layouts"),
-                ComponentItem("labels", "Label", "sap.m.Label text descriptors"),
-                ComponentItem("inputs", "Input", "sap.m.Input text fields"),
-                ComponentItem("bars", "Bar", "sap.m.Bar toolbars and containers"),
-                ComponentItem("checkboxes", "CheckBox", "sap.m.CheckBox selection options"),
                 ComponentItem("avatars", "Avatar", "sap.m.Avatar profile and image wrappers"),
+                ComponentItem("bars", "Bar", "sap.m.Bar toolbars and containers"),
+                ComponentItem("breadcrumbs", "Breadcrumb", "sap.m.Breadcrumb navigation component"),
+                ComponentItem("buttons", "Button", "sap.m.Button and layouts"),
                 ComponentItem("carousels", "Carousel", "sap.m.Carousel slide container"),
+                ComponentItem("checkboxes", "CheckBox", "sap.m.CheckBox selection options"),
+                ComponentItem("datePickers", "Date Picker", "sap.m.DatePicker calendar input control"),
+                ComponentItem("expandableTexts", "Expandable Text", "sap.m.ExpandableText for truncating and expanding long text blocks"),
+                ComponentItem("genericTiles", "Generic Tile", "sap.m.GenericTile dashboard cards"),
+                ComponentItem("inputs", "Input", "sap.m.Input text fields"),
+                ComponentItem("labels", "Label", "sap.m.Label text descriptors"),
                 ComponentItem("menus", "Menu", "sap.m.Menu and MenuButton options"),
                 ComponentItem("pdfViewers", "PDF Viewer", "sap.m.PDFViewer document container"),
-                ComponentItem("genericTiles", "Generic Tile", "sap.m.GenericTile dashboard cards"),
-                ComponentItem("datePickers", "Date Picker", "sap.m.DatePicker calendar input control"),
                 ComponentItem("lists", "List", "sap.m.List item collection display"),
                 ComponentItem("trees", "Tree", "sap.m.Tree hierarchical node display"),
                 ComponentItem("feedContents", "Feed Content", "sap.m.FeedContent update snippets"),
@@ -55,7 +57,8 @@ void getNamespaces(HTTPServerRequest req, HTTPServerResponse res) {
                 ComponentItem("wizards", "Wizard", "sap.m.Wizard multi-step guided workflows"),
                 ComponentItem("newsContents", "News Content", "sap.m.NewsContent headlines and summaries"),
                 ComponentItem("slideTiles", "Slide Tile", "sap.m.SlideTile rotating dashboard cards"),
-                ComponentItem("tileContents", "Tile Content", "sap.m.TileContent dashboard wrapper container")
+                ComponentItem("tileContents", "Tile Content", "sap.m.TileContent dashboard wrapper container"),
+                ComponentItem("wheelSliders", "Wheel Slider", "sap.m.WheelSlider interactive numerical control")
             ]
         ),
         NamespaceItem(

@@ -1,30 +1,29 @@
 <mvc:View controllerName="my.app.controller.components.Breadcrumbs" 
     xmlns:mvc="sap.ui.core.mvc" 
-    xmlns="sap.uxap"
-    xmlns:m="sap.m">
+    xmlns="sap.m">
     
-    <m:VBox class="sapUiMediumMargin">
-        <m:Title text="Interactive BreadCrumbs Testbed" class="sapUiSmallMarginBottom" />
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive Breadcrumbs Testbed" class="sapUiSmallMarginBottom" />
         
-        <m:MessageStrip 
-            text="BreadCrumbs enable users to navigate back up the hierarchical path of pages or workspace folders." 
+        <MessageStrip 
+            text="Breadcrumbs allow users to navigate back up the hierarchical path of pages or workspace folders in an application." 
             type="Information" 
             showIcon="true" 
             class="sapUiMediumMarginBottom" />
 
-        <m:Panel headerText="Navigation Path Trail" class="sapUiMediumMarginBottom">
-            <m:VBox class="sapUiSmallMargin">
-                <BreadCrumbs id="myBreadCrumbsx">
+        <Panel headerText="Hierarchical Navigation Trail" class="sapUiMediumMarginBottom">
+            <VBox class="sapUiSmallMargin" spacing="1rem">
+                <Breadcrumbs id="myBreadcrumbs" itemClicked="onBreadcrumbClicked">
                     <links>
-                        <m:Link text="Home Dashboard" press="onLinkPress" />
-                        <m:Link text="Component Explorer" press="onLinkPress" />
-                        <m:Link text="sap.uxap Library" press="onLinkPress" />
-                        <m:Link text="BreadCrumbs Control" press="onLinkPress" />
+                        <Link text="Workspace Home" press="onLinkPress" />
+                        <Link text="Component Explorer" press="onLinkPress" />
+                        <Link text="sap.m Library" press="onLinkPress" />
+                        <Link text="Breadcrumbs Control" press="onLinkPress" />
                     </links>
-                </BreadCrumbs>
-            </m:VBox>
-        </m:Panel>
+                </Breadcrumbs>
+            </VBox>
+        </Panel>
 
-        <m:Label id="breadCrumbsStatusLabelx" text="Status: Click any crumb link above" design="Bold" />
-    </m:VBox>
+        <Label id="breadcrumbsStatusLabel" text="Status: Ready (Click any breadcrumb link above)" design="Bold" />
+    </VBox>
 </mvc:View>

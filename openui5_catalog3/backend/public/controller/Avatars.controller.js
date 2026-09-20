@@ -1,11 +1,10 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/core/mvc/XMLView",
     "sap/m/MessageToast"
-], function (Controller, XMLView, MessageToast) {
+], function (Controller, MessageToast) {
     "use strict";
 
-    return Controller.extend("my.app.controller.components.Avatars", {
+    return Controller.extend("my.app.controller.Avatars", {
         onAvatarPress: function (oEvent) {
             var oAvatar = oEvent.getSource();
             var sInfo = oAvatar.getInitials() || oAvatar.getSrc() || oAvatar.getIcon() || "Avatar";

@@ -1,0 +1,65 @@
+<mvc:View controllerName="my.app.controller.components.Avatars" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive Avatar Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="Avatar controls represent users or entities, supporting image sources, text initials, icons, customizable shapes (circle/square), and sizes from extra small to extra large." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Avatar Sizes, Shapes &amp; Content Types" class="sapUiMediumMarginBottom">
+            <VBox class="sapUiSmallMargin" spacing="1rem">
+                <!-- Size & Shape Variations -->
+                <HBox alignItems="Center" wrap="Wrap" spacing="2rem">
+                    <VBox alignItems="Center">
+                        <Avatar 
+                            src="https://sapui5.hana.ondemand.com/test-resources/sap/ui/demokit/images/john_doe.jpg" 
+                            displaySize="XL" 
+                            shape="Circle" 
+                            press="onAvatarPress"
+                            class="sapUiTinyMarginBottom" />
+                        <Label text="XL Circle (Image)" />
+                    </VBox>
+
+                    <VBox alignItems="Center">
+                        <Avatar 
+                            displayInitials="JD" 
+                            displaySize="L" 
+                            shape="Square" 
+                            backgroundColor="Accent1"
+                            press="onAvatarPress"
+                            class="sapUiTinyMarginBottom" />
+                        <Label text="L Square (Initials)" />
+                    </VBox>
+
+                    <VBox alignItems="Center">
+                        <Avatar 
+                            src="sap-icon://employee" 
+                            displaySize="M" 
+                            shape="Circle" 
+                            backgroundColor="Accent3"
+                            press="onAvatarPress"
+                            class="sapUiTinyMarginBottom" />
+                        <Label text="M Circle (Icon)" />
+                    </VBox>
+
+                    <VBox alignItems="Center">
+                        <Avatar 
+                            displayInitials="UX" 
+                            displaySize="S" 
+                            shape="Square" 
+                            press="onAvatarPress"
+                            class="sapUiTinyMarginBottom" />
+                        <Label text="S Square (Initials)" />
+                    </VBox>
+                </HBox>
+            </VBox>
+        </Panel>
+
+        <Label id="avatarStatusLabel" text="Status: Ready (Click any avatar above)" design="Bold" />
+    </VBox>
+</mvc:View>

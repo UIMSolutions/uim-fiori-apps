@@ -1,0 +1,36 @@
+<mvc:View controllerName="my.app.controller.components.WheelSliders" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive Slider Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="The Slider control enables users to adjust numerical values along a continuous or stepped range spectrum." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Numerical Range Slider Workspace" class="sapUiMediumMarginBottom">
+            <VBox class="sapUiSmallMargin" spacing="1rem">
+                <HBox alignItems="Center" justifyContent="SpaceBetween" width="100%">
+                    <Label text="Adjust Volume / Level:" />
+                    <ObjectNumber id="sliderValueDisplay" number="50" unit="Units" emphasized="true" />
+                </HBox>
+
+                <!-- Slider Control -->
+                <Slider 
+                    id="mySlider"
+                    min="0" 
+                    max="100" 
+                    step="1" 
+                    value="50" 
+                    width="100%" 
+                    liveChange="onSliderLiveChange"
+                    change="onSliderChange" />
+            </VBox>
+        </Panel>
+
+        <Label id="sliderStatusLabel" text="Status: Ready (Drag the slider handle)" design="Bold" />
+    </VBox>
+</mvc:View>
