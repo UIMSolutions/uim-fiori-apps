@@ -26,11 +26,9 @@
                 "sap.ui.core": {},
                 "sap.m": {},
                 "sap.f": {},
-                "sap.suite.ui.commons": {},
                 "sap.ui.table": {},
                 "sap.ui.layout": {},
-                "sap.uxap": {},
-                "sap.suite.ui.microchart": {}
+                "sap.uxap": {}
             }
         },
         "routing": {
@@ -56,6 +54,11 @@
                     "pattern": "namespace/{namespaceId}/component/{componentId}/{layout}",
                     "name": "subDetail",
                     "target": ["master", "detailContainer", "subDetail"]
+                },
+                {
+                    "pattern": "namespace/{namespaceId}/component/{componentId}/avatars/{layout}",
+                    "name": "avatars",
+                    "target": ["master", "detailContainer", "subDetail", "avatars"]
                 }
             ],
             "targets": {
@@ -69,6 +72,10 @@
                 },
                 "subDetail": {
                     "viewName": "SubDetail",
+                    "controlAggregation": "endColumnPages"
+                },
+                "avatars": {
+                    "viewName": "Avatars",
                     "controlAggregation": "endColumnPages"
                 }
             }

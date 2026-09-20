@@ -6,35 +6,60 @@
         <Title text="Interactive Avatar Testbed" class="sapUiSmallMarginBottom" />
         
         <MessageStrip 
-            text="Avatars display user profiles, initials, icons, or product images with configurable sizes and shapes." 
+            text="Avatar controls represent users or entities, supporting image sources, text initials, icons, customizable shapes (circle/square), and sizes from extra small to extra large." 
             type="Information" 
             showIcon="true" 
             class="sapUiMediumMarginBottom" />
 
-        <Panel headerText="Avatar Variations &amp; Sizes" class="sapUiMediumMarginBottom">
-            <HBox alignItems="Center" wrap="Wrap" class="sapUiSmallMargin">
-                <VBox alignItems="Center" class="sapUiMediumMarginEnd">
-                    <Avatar initials="JD" displaySize="L" press="onAvatarPress" class="sapUiTinyMarginBottom" />
-                    <Label text="Large Initials" />
-                </VBox>
-                
-                <VBox alignItems="Center" class="sapUiMediumMarginEnd">
-                    <Avatar icon="sap-icon://employee" displaySize="M" backgroundColor="Accent6" press="onAvatarPress" class="sapUiTinyMarginBottom" />
-                    <Label text="Medium Icon" />
-                </VBox>
+        <Panel headerText="Avatar Sizes, Shapes &amp; Content Types" class="sapUiMediumMarginBottom">
+            <VBox class="sapUiSmallMargin" spacing="1rem">
+                <!-- Size & Shape Variations -->
+                <HBox alignItems="Center" wrap="Wrap" spacing="2rem">
+                    <VBox alignItems="Center">
+                        <Avatar 
+                            src="https://sapui5.hana.ondemand.com/test-resources/sap/ui/demokit/images/john_doe.jpg" 
+                            displaySize="XL" 
+                            shape="Circle" 
+                            press="onAvatarPress"
+                            class="sapUiTinyMarginBottom" />
+                        <Label text="XL Circle (Image)" />
+                    </VBox>
 
-                <VBox alignItems="Center" class="sapUiMediumMarginEnd">
-                    <Avatar initials="AS" displaySize="S" shape="Square" press="onAvatarPress" class="sapUiTinyMarginBottom" />
-                    <Label text="Square Initials" />
-                </VBox>
+                    <VBox alignItems="Center">
+                        <Avatar 
+                            displayInitials="JD" 
+                            displaySize="L" 
+                            shape="Square" 
+                            backgroundColor="Accent1"
+                            press="onAvatarPress"
+                            class="sapUiTinyMarginBottom" />
+                        <Label text="L Square (Initials)" />
+                    </VBox>
 
-                <VBox alignItems="Center">
-                    <Avatar src="https://sapui5.hana.ondemand.com/test-resources/sap/ui/demokit/images/john_doe.jpg" displaySize="L" press="onAvatarPress" class="sapUiTinyMarginBottom" />
-                    <Label text="Image Source" />
-                </VBox>
-            </HBox>
+                    <VBox alignItems="Center">
+                        <Avatar 
+                            src="sap-icon://employee" 
+                            displaySize="M" 
+                            shape="Circle" 
+                            backgroundColor="Accent3"
+                            press="onAvatarPress"
+                            class="sapUiTinyMarginBottom" />
+                        <Label text="M Circle (Icon)" />
+                    </VBox>
+
+                    <VBox alignItems="Center">
+                        <Avatar 
+                            displayInitials="UX" 
+                            displaySize="S" 
+                            shape="Square" 
+                            press="onAvatarPress"
+                            class="sapUiTinyMarginBottom" />
+                        <Label text="S Square (Initials)" />
+                    </VBox>
+                </HBox>
+            </VBox>
         </Panel>
 
-        <Label id="avatarStatusLabel" text="Status: Click an avatar to test interaction" design="Bold" />
+        <Label id="avatarStatusLabel" text="Status: Ready (Click any avatar above)" design="Bold" />
     </VBox>
 </mvc:View>

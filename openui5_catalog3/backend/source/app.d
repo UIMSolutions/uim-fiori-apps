@@ -17,6 +17,7 @@ void main() {
     auto router = new URLRouter;
 
     router.get("/api/components", &getNamespaces);
+    router.get("/resources/*", serveStaticFiles("/home/oz/DEV/D/UIM2026/SAP/uim-fiori-apps/public/openui5-sdk-1.148.8/"));
     router.get("*", serveStaticFiles("public/"));
 
     auto settings = new HTTPServerSettings;
@@ -35,11 +36,11 @@ void getNamespaces(HTTPServerRequest req, HTTPServerResponse res) {
             "sap.m (Main Library)",
             "Controls for mobile and desktop applications",
             [
-                ComponentItem("buttons", "Buttons", "sap.m.Button and layouts"),
-                ComponentItem("labels", "Labels", "sap.m.Label text descriptors"),
-                ComponentItem("inputs", "Inputs", "sap.m.Input text fields"),
-                ComponentItem("bars", "Bars", "sap.m.Bar toolbars and containers"),
-                ComponentItem("checkboxes", "Checkbox", "sap.m.CheckBox selection options"),
+                ComponentItem("buttons", "Button", "sap.m.Button and layouts"),
+                ComponentItem("labels", "Label", "sap.m.Label text descriptors"),
+                ComponentItem("inputs", "Input", "sap.m.Input text fields"),
+                ComponentItem("bars", "Bar", "sap.m.Bar toolbars and containers"),
+                ComponentItem("checkboxes", "CheckBox", "sap.m.CheckBox selection options"),
                 ComponentItem("avatars", "Avatar", "sap.m.Avatar profile and image wrappers"),
                 ComponentItem("carousels", "Carousel", "sap.m.Carousel slide container"),
                 ComponentItem("menus", "Menu", "sap.m.Menu and MenuButton options"),
@@ -58,30 +59,12 @@ void getNamespaces(HTTPServerRequest req, HTTPServerResponse res) {
             ]
         ),
         NamespaceItem(
-            "sap_suite_ui_commons",
-            "sap.suite.ui.commons",
-            "Charts, network graphs, and analytical utilities",
-            [
-                ComponentItem("graphs", "Network Graph", "sap.suite.ui.commons.networkgraph relational structures")
-            ]
-        ),
-        NamespaceItem(
             "sap_ui_table",
             "sap.ui.table",
             "Complex tabular controls with advanced grouping and aggregation",
             [
                 ComponentItem("analyticalTables", "Analytical Table", "sap.ui.table.AnalyticalTable dataset controls")
             ]
-        ),
-        NamespaceItem(
-          "sap_suite_ui_microchart", 
-          "sap.suite.ui.microchart", 
-          "Compact micro charts for dashboards and analytics",
-          [
-                ComponentItem("areaMicroCharts", "Area Micro Chart", "sap.suite.ui.microchart.AreaMicroChart trends"),
-                ComponentItem("bulletMicroCharts", "Bullet Micro Chart", "sap.suite.ui.microchart.BulletMicroChart comparisons"),
-                ComponentItem("lineMicroCharts", "Line Micro Chart", "sap.suite.ui.microchart.LineMicroChart comparisons"),
-           ]
         ),
         NamespaceItem(
             "sap_ui_layout",

@@ -5,16 +5,17 @@ sap.ui.define([
     "use strict";
 
     return Controller.extend("my.app.controller.components.Avatars", {
-        
-        onInit: function () {
-            console.log("Avatars component view initialized successfully.");
-        },
-
         onAvatarPress: function (oEvent) {
-            var sDetails = oEvent.getSource().getInitials() || oEvent.getSource().getSrc() || "Icon Avatar";
-            MessageToast.show("Avatar clicked: " + sDetails);
-            this.byId("avatarStatusLabel").setText("Status: Interacted with avatar (" + sDetails + ")");
-        }
+            var oAvatar = oEvent.getSource();
+            var sInfo = oAvatar.getInitials() || oAvatar.getSrc() || oAvatar.getIcon() || "Avatar";
+            var sMsg = "Clicked avatar: " + sInfo;
+            
+            var oLabel = this.byId("avatarStatusLabel");
+            if (oLabel) {
+                oLabel.setText("Status: " + sMsg);
+            }
 
+            MessageToast.show(sMsg);
+        }
     });
 });
