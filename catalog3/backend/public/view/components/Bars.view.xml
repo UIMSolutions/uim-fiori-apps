@@ -1,0 +1,43 @@
+<mvc:View controllerName="my.app.controller.components.Bars" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive Bar Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="Bars are container controls used to display toolbars, headers, and footers with flexible content alignments." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Header Bar Example" class="sapUiMediumMarginBottom">
+            <Bar>
+                <contentLeft>
+                    <Button icon="sap-icon://nav-back" press="onBarAction" />
+                    <Label text="Library View" />
+                </contentLeft>
+                <contentMiddle>
+                    <Title text="Document Title" />
+                </contentMiddle>
+                <contentRight>
+                    <Button icon="sap-icon://action" press="onBarAction" />
+                </contentRight>
+            </Bar>
+        </Panel>
+
+        <Panel headerText="Subheader Bar with Search &amp; Filter" class="sapUiMediumMarginBottom">
+            <Bar design="SubHeader">
+                <contentLeft>
+                    <SearchField placeholder="Filter bar items..." width="250px" liveChange="onBarLiveChange" />
+                </contentLeft>
+                <contentRight>
+                    <Button text="Sort" icon="sap-icon://sort" press="onBarAction" />
+                    <Button text="Filter" icon="sap-icon://filter" press="onBarAction" />
+                </contentRight>
+            </Bar>
+        </Panel>
+
+        <Label id="barStatusLabel" text="Bar Status: Ready" design="Bold" />
+    </VBox>
+</mvc:View>

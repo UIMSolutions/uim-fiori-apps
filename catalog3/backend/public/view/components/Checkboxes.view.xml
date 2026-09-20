@@ -1,0 +1,25 @@
+<mvc:View controllerName="my.app.controller.components.Checkboxes" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive CheckBox Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="CheckBoxes allow users to select single or multiple options from a set, or toggle options on and off." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="CheckBox Variations" class="sapUiMediumMarginBottom">
+            <VBox class="sapUiSmallMargin">
+                <CheckBox text="Unchecked (Default)" selected="false" select="onCheckBoxSelect" />
+                <CheckBox text="Pre-checked Option" selected="true" select="onCheckBoxSelect" />
+                <CheckBox text="Disabled CheckBox" selected="true" editable="false" />
+                <CheckBox text="CheckBox with Warning State" selected="false" valueState="Warning" select="onCheckBoxSelect" />
+            </VBox>
+        </Panel>
+
+        <Label id="checkboxStatusLabelx" text="Status: No checkbox toggled yet" design="Bold" />
+    </VBox>
+</mvc:View>

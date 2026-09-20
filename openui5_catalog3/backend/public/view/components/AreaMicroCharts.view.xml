@@ -1,0 +1,41 @@
+<mvc:View controllerName="my.app.controller.components.AreaMicroCharts" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m"
+    xmlns:microchart="sap.suite.ui.microchart">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive Area Micro Chart Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="AreaMicroCharts display compact trend lines and progress, ideal for dashboard headers and analytical cards." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Revenue Trend Chart" class="sapUiMediumMarginBottom" width="100%">
+            <microchart:AreaMicroChart
+                width="100%"
+                height="160px"
+                minXValue="0"
+                maxXValue="6"
+                minYValue="0"
+                maxYValue="100"
+                press="onChartPress">
+                <microchart:chart>
+                    <microchart:AreaMicroChartItem>
+                        <microchart:points>
+                            <microchart:AreaMicroChartPoint x="0" y="20"/>
+                            <microchart:AreaMicroChartPoint x="1" y="45"/>
+                            <microchart:AreaMicroChartPoint x="2" y="30"/>
+                            <microchart:AreaMicroChartPoint x="3" y="70"/>
+                            <microchart:AreaMicroChartPoint x="4" y="60"/>
+                            <microchart:AreaMicroChartPoint x="5" y="85"/>
+                            <microchart:AreaMicroChartPoint x="6" y="90"/>
+                        </microchart:points>
+                    </microchart:AreaMicroChartItem>
+                </microchart:chart>
+            </microchart:AreaMicroChart>
+        </Panel>
+
+    </VBox>
+</mvc:View>

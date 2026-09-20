@@ -1,0 +1,35 @@
+<mvc:View controllerName="my.app.controller.components.DatePickers" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive DatePicker Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="DatePicker allows users to select calendar dates either by typing or by choosing from a popup calendar control." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Date Selection Variations" class="sapUiMediumMarginBottom">
+            <VBox class="sapUiSmallMargin" spacing="1rem" width="100%">
+                <VBox>
+                    <Label text="Standard Date Picker (Default Format)" labelFor="defaultDatePicker" />
+                    <DatePicker id="defaultDatePicker" placeholder="Select date..." change="onDateChange" width="100%" />
+                </VBox>
+
+                <VBox>
+                    <Label text="Custom Display Format (yyyy/MM/dd)" labelFor="customDatePicker" />
+                    <DatePicker id="customDatePicker" displayFormat="yyyy/MM/dd" valueFormat="yyyy-MM-dd" placeholder="2026-09-19" change="onDateChange" width="100%" />
+                </VBox>
+
+                <VBox>
+                    <Label text="Disabled / Read-Only Date Picker" labelFor="disabledDatePicker" />
+                    <DatePicker id="disabledDatePicker" value="2026-01-01" enabled="false" width="100%" />
+                </VBox>
+            </VBox>
+        </Panel>
+
+        <Label id="dateStatusLabel" text="Status: No date selected yet" design="Bold" />
+    </VBox>
+</mvc:View>

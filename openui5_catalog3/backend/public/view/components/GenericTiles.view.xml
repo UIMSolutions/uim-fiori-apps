@@ -1,0 +1,38 @@
+<mvc:View controllerName="my.app.controller.components.GenericTiles" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive GenericTile Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="GenericTiles display compact key performance indicators, numerical values, and status updates on dashboards." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Dashboard Tile Variations" class="sapUiMediumMarginBottom">
+            <HBox wrap="Wrap" class="sapUiSmallMargin" spacing="1rem">
+                <!-- Standard Numeric Tile -->
+                <GenericTile header="Project Health" subheader="Sprint 24" press="onTilePress" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                    <tileContent>
+                        <TileContent>
+                            <NumericContent value="94" scale="%" indicator="Up" valueColor="Good" />
+                        </TileContent>
+                    </tileContent>
+                </GenericTile>
+
+                <!-- Wide Critical Tile -->
+                <GenericTile header="Pending Approvals" subheader="Action Required" frameType="TwoByOne" press="onTilePress" class="sapUiTinyMarginBottom">
+                    <tileContent>
+                        <TileContent>
+                            <NumericContent value="12" valueColor="Critical" />
+                        </TileContent>
+                    </tileContent>
+                </GenericTile>
+            </HBox>
+        </Panel>
+
+        <Label id="tileStatusLabel" text="Status: Ready" design="Bold" />
+    </VBox>
+</mvc:View>

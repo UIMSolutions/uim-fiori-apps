@@ -1,0 +1,7 @@
+{
+    "name": "ui5-vibe-explorer",
+    "description": "UI5 Component Explorer with Vibe.d",
+    "dependencies": {
+        "vibe-d": "~>0.10.3"
+    }
+}

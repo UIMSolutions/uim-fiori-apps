@@ -1,0 +1,32 @@
+<mvc:View controllerName="my.app.controller.components.Menus" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive Menu Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="Menu controls provide a structured list of selectable items, typically embedded inside a MenuButton or triggered via context actions." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Menu Button &amp; Popup Menu" class="sapUiMediumMarginBottom">
+            <VBox class="sapUiSmallMargin" spacing="1rem">
+                <MenuButton text="Options Menu" icon="sap-icon://menu2">
+                    <menu>
+                        <Menu itemSelected="onMenuItemSelected">
+                            <items>
+                                <MenuItem text="Refresh Data" icon="sap-icon://refresh" key="refresh" />
+                                <MenuItem text="Download Report" icon="sap-icon://download" key="download" />
+                                <MenuItem text="Settings" icon="sap-icon://action-settings" key="settings" />
+                            </items>
+                        </Menu>
+                    </menu>
+                </MenuButton>
+            </VBox>
+        </Panel>
+
+        <Label id="menuStatusLabel" text="Status: No menu item selected yet" design="Bold" />
+    </VBox>
+</mvc:View>

@@ -1,0 +1,42 @@
+<mvc:View controllerName="my.app.controller.components.NewsContents" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive NewsContent Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="NewsContent displays news-style headlines and subtitle information, commonly embedded within a GenericTile dashboard card." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="News Card Variations" class="sapUiMediumMarginBottom">
+            <HBox wrap="Wrap" class="sapUiSmallMargin" spacing="1rem">
+                <!-- Standard News Tile -->
+                <GenericTile header="Global Tech Insights" press="onTilePress" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                    <tileContent>
+                        <TileContent>
+                            <NewsContent 
+                                contentText="SAPUI5 Latest Releases Feature Enhanced Fiori 3 Layout Controls" 
+                                subheader="TechNews • 2 hours ago" />
+                        </TileContent>
+                    </tileContent>
+                </GenericTile>
+
+                <!-- Market Update Tile -->
+                <GenericTile header="Market Update" press="onTilePress" class="sapUiTinyMarginBottom">
+                    <tileContent>
+                        <TileContent>
+                            <NewsContent 
+                                contentText="Cloud Infrastructure Revenue Surges in Q3 Fiscal Year Report" 
+                                subheader="Financial Times • Just now" />
+                        </TileContent>
+                    </tileContent>
+                </GenericTile>
+            </HBox>
+        </Panel>
+
+        <Label id="newsStatusLabel" text="Status: Ready" design="Bold" />
+    </VBox>
+</mvc:View>

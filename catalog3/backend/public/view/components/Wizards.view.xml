@@ -1,0 +1,59 @@
+<mvc:View controllerName="my.app.controller.components.Wizards" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m"
+    xmlns:form="sap.ui.layout.form">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive Wizard Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="Wizard controls guide users through sequential steps to complete complex processes or forms." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Multi-Step Workflow Process" class="sapUiMediumMarginBottom">
+            <Wizard id="myWizard" complete="onWizardCompleted" width="100%" class="sapUiResponsivePadding--header">
+                <!-- Step 1: General Information -->
+                <WizardStep id="step1" title="General Info" validated="true">
+                    <MessageStrip text="Step 1: Enter basic details for the item." type="Information" class="sapUiSmallMarginBottom" />
+                    <form:SimpleForm editable="true" layout="ResponsiveGridLayout">
+                        <Label text="Item Name" required="true" />
+                        <Input id="inputName" value="Sample Component" liveChange="onInputChange" placeholder="Enter name..." />
+                        
+                        <Label text="Category" />
+                        <Select id="selectCategory">
+                            <items>
+                                <core:Item xmlns:core="sap.ui.core" key="sap_m" text="sap.m Library" />
+                                <core:Item xmlns:core="sap.ui.core" key="sap_ui_layout" text="Layouts" />
+                            </items>
+                        </Select>
+                    </form:SimpleForm>
+                </WizardStep>
+
+                <!-- Step 2: Configuration Options -->
+                <WizardStep id="step2" title="Configuration" validated="true">
+                    <MessageStrip text="Step 2: Configure feature settings and parameters." type="Information" class="sapUiSmallMarginBottom" />
+                    <form:SimpleForm editable="true" layout="ResponsiveGridLayout">
+                        <Label text="Enable Notifications" />
+                        <Switch id="switchNotifications" state="true" />
+
+                        <Label text="Priority Level" />
+                        <Slider value="75" width="100%" />
+                    </form:SimpleForm>
+                </WizardStep>
+
+                <!-- Step 3: Review and Submit -->
+                <WizardStep id="step3" title="Review &amp; Complete" validated="true">
+                    <MessageStrip text="Step 3: Review your configurations before finalizing." type="Information" class="sapUiSmallMarginBottom" />
+                    <VBox class="sapUiSmallMargin">
+                        <Title text="Summary of Choices" level="H4" class="sapUiTinyMarginBottom" />
+                        <Text text="Everything is ready for deployment. Click 'Finish' below to submit." />
+                    </VBox>
+                </WizardStep>
+            </Wizard>
+        </Panel>
+
+        <Label id="wizardStatusLabel" text="Status: Wizard step 1 active" design="Bold" />
+    </VBox>
+</mvc:View>

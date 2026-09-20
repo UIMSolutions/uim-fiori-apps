@@ -1,0 +1,40 @@
+<mvc:View controllerName="my.app.controller.components.Avatars" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive Avatar Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="Avatars display user profiles, initials, icons, or product images with configurable sizes and shapes." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Avatar Variations &amp; Sizes" class="sapUiMediumMarginBottom">
+            <HBox alignItems="Center" wrap="Wrap" class="sapUiSmallMargin">
+                <VBox alignItems="Center" class="sapUiMediumMarginEnd">
+                    <Avatar initials="JD" displaySize="L" press="onAvatarPress" class="sapUiTinyMarginBottom" />
+                    <Label text="Large Initials" />
+                </VBox>
+                
+                <VBox alignItems="Center" class="sapUiMediumMarginEnd">
+                    <Avatar icon="sap-icon://employee" displaySize="M" backgroundColor="Accent6" press="onAvatarPress" class="sapUiTinyMarginBottom" />
+                    <Label text="Medium Icon" />
+                </VBox>
+
+                <VBox alignItems="Center" class="sapUiMediumMarginEnd">
+                    <Avatar initials="AS" displaySize="S" shape="Square" press="onAvatarPress" class="sapUiTinyMarginBottom" />
+                    <Label text="Square Initials" />
+                </VBox>
+
+                <VBox alignItems="Center">
+                    <Avatar src="https://sapui5.hana.ondemand.com/test-resources/sap/ui/demokit/images/john_doe.jpg" displaySize="L" press="onAvatarPress" class="sapUiTinyMarginBottom" />
+                    <Label text="Image Source" />
+                </VBox>
+            </HBox>
+        </Panel>
+
+        <Label id="avatarStatusLabel" text="Status: Click an avatar to test interaction" design="Bold" />
+    </VBox>
+</mvc:View>

@@ -1,0 +1,16 @@
+<mvc:View controllerName="my.app.controller.Master" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
+    <Page title="UI5 Libraries">
+        <content>
+            <!-- Search field added above the list -->
+            <SearchField 
+                id="searchField" 
+                placeholder="Search libraries..." 
+                liveChange="onSearch" 
+                class="sapUiSmallMargin" />
+
+            <List id="namespaceList" items="{/}" mode="SingleSelectMaster" selectionChange="onSelectNamespace">
+                <StandardListItem title="{name}" description="{description}" type="Navigation" />
+            </List>
+        </content>
+    </Page>
+</mvc:View>

@@ -1,0 +1,32 @@
+<mvc:View controllerName="my.app.controller.components.ObjectPageHeaders" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.uxap"
+    xmlns:m="sap.m">
+    
+    <m:VBox class="sapUiMediumMargin">
+        <m:Title text="Interactive ObjectPageHeader Testbed" class="sapUiSmallMarginBottom" />
+        
+        <m:MessageStrip 
+            text="ObjectPageHeader provides a structured top banner for business object details, displaying titles, key-value indicators, and actions." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <m:Panel headerText="Header Banner Showcase" class="sapUiMediumMarginBottom">
+            <ObjectPageHeader 
+                id="myObjectPageHeader"
+                objectTitle="Senior Software Engineer"
+                objectSubtitle="Core Architecture &amp; UI5 Tooling"
+                markFavorite="true"
+                markFlagged="false"
+                showMarkers="true">
+                <actions>
+                    <m:Button text="Edit Profile" type="Emphasized" press="onActionPress" />
+                    <m:Button icon="sap-icon://action" press="onActionPress" />
+                </actions>
+            </ObjectPageHeader>
+        </m:Panel>
+
+        <m:Label id="headerStatusLabel" text="Status: Ready (Interact with header actions)" design="Bold" />
+    </m:VBox>
+</mvc:View>

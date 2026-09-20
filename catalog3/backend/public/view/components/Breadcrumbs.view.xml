@@ -1,0 +1,30 @@
+<mvc:View controllerName="my.app.controller.components.Breadcrumbs" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.uxap"
+    xmlns:m="sap.m">
+    
+    <m:VBox class="sapUiMediumMargin">
+        <m:Title text="Interactive BreadCrumbs Testbed" class="sapUiSmallMarginBottom" />
+        
+        <m:MessageStrip 
+            text="BreadCrumbs enable users to navigate back up the hierarchical path of pages or workspace folders." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <m:Panel headerText="Navigation Path Trail" class="sapUiMediumMarginBottom">
+            <m:VBox class="sapUiSmallMargin">
+                <BreadCrumbs id="myBreadCrumbsx">
+                    <links>
+                        <m:Link text="Home Dashboard" press="onLinkPress" />
+                        <m:Link text="Component Explorer" press="onLinkPress" />
+                        <m:Link text="sap.uxap Library" press="onLinkPress" />
+                        <m:Link text="BreadCrumbs Control" press="onLinkPress" />
+                    </links>
+                </BreadCrumbs>
+            </m:VBox>
+        </m:Panel>
+
+        <m:Label id="breadCrumbsStatusLabelx" text="Status: Click any crumb link above" design="Bold" />
+    </m:VBox>
+</mvc:View>

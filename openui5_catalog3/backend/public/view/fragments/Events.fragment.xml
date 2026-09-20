@@ -1,0 +1,42 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <VBox class="sapUiMediumMargin">
+        
+        <MessageStrip 
+            text="The primary interaction for a Button is the 'press' event." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiSmallMarginBottom"/>
+            
+        <Title text="Supported Events" class="sapUiSmallMarginBottom" level="H3"/>
+        
+        <Table id="eventsTable" class="sapUiSmallMarginBottom">
+            <columns>
+                <Column width="30%"><Text text="Event" /></Column>
+                <Column><Text text="Description" /></Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <ObjectIdentifier title="press" />
+                        <Text text="Fired when the user clicks or taps on the control." />
+                    </cells>
+                </ColumnListItem>
+                <ColumnListItem>
+                    <cells>
+                        <ObjectIdentifier title="tap" />
+                        <Text text="(Deprecated) Replaced by 'press' to support both mouse and touch interfaces natively." />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        
+        <Panel headerText="Live Event Test" class="sapUiTopMargin">
+            <VBox>
+                <Text text="Click the button to trigger an event handled by the SubDetail controller:" class="sapUiSmallMarginBottom"/>
+                <!-- This press event routes directly to SubDetail.controller.js -->
+                <Button text="Trigger 'press' Event" type="Emphasized" press="onTestButtonPress" icon="sap-icon://touch" />
+            </VBox>
+        </Panel>
+
+    </VBox>
+</core:FragmentDefinition>

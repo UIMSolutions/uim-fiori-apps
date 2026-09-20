@@ -1,0 +1,5 @@
+<mvc:View controllerName="my.app.controller.SubDetail" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
+    <Page id="componentDisplayPage" showNavButton="true" navButtonPress="onCloseSubDetail">
+        <!-- The actual UI5 Component test view mounts here -->
+    </Page>
+</mvc:View>

@@ -1,0 +1,34 @@
+<mvc:View controllerName="my.app.controller.components.LineMicroCharts" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m"
+    xmlns:microchart="sap.suite.ui.microchart">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive Line Micro Chart Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="LineMicroCharts display a series of coordinate values as a continuous trend line, utilizing LineMicroChartData and LineMicroChartPoint." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Continuous Trend Line" class="sapUiMediumMarginBottom" width="100%">
+            <microchart:LineMicroChart 
+                size="Responsive"
+                press="onChartPress">
+                <microchart:lines>
+                    <microchart:LineMicroChartData color="Good">
+                        <microchart:points>
+                            <microchart:LineMicroChartPoint x="0" y="10" />
+                            <microchart:LineMicroChartPoint x="1" y="25" />
+                            <microchart:LineMicroChartPoint x="2" y="18" />
+                            <microchart:LineMicroChartPoint x="3" y="40" />
+                            <microchart:LineMicroChartPoint x="4" y="35" />
+                            <microchart:LineMicroChartPoint x="5" y="60" />
+                        </microchart:points>
+                    </microchart:LineMicroChartData>
+                </microchart:lines>
+            </microchart:LineMicroChart>
+        </Panel>
+    </VBox>
+</mvc:View>

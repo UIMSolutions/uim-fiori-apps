@@ -1,0 +1,39 @@
+<mvc:View controllerName="my.app.controller.components.Carousels" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive Carousel Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="Carousel controls allow users to flip through a series of content cards, images, or child elements horizontally." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Sliding Content Container" class="sapUiMediumMarginBottom">
+            <Carousel id="myCarousel" height="280px" pageChanged="onPageChanged">
+                <pages>
+                    <VBox class="sapUiMediumMargin" alignItems="Center" justifyContent="Center">
+                        <Title text="Slide 1: Overview" class="sapUiSmallMarginBottom" />
+                        <Image src="https://sapui5.hana.ondemand.com/test-resources/sap/ui/demokit/images/john_doe.jpg" width="120px" height="120px" class="sapUiSmallMarginBottom" />
+                        <Text text="Welcome to the first slide of the carousel testbed." />
+                    </VBox>
+                    <VBox class="sapUiMediumMargin" alignItems="Center" justifyContent="Center">
+                        <Title text="Slide 2: Features" class="sapUiSmallMarginBottom" />
+                        <core:Icon src="sap-icon://arriving" size="3rem" class="sapUiSmallMarginBottom" />
+                        <Text text="Flip through multiple pieces of content seamlessly." />
+                    </VBox>
+                    <VBox class="sapUiMediumMargin" alignItems="Center" justifyContent="Center">
+                        <Title text="Slide 3: Summary" class="sapUiSmallMarginBottom" />
+                        <core:Icon src="sap-icon://accept" size="3rem" class="sapUiSmallMarginBottom" />
+                        <Text text="You've reached the final slide of this carousel." />
+                    </VBox>
+                </pages>
+            </Carousel>
+        </Panel>
+
+        <Label id="carouselStatusLabel" text="Status: Ready (Slide 1 active)" design="Bold" />
+    </VBox>
+</mvc:View>

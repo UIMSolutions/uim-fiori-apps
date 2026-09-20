@@ -1,0 +1,7 @@
+<mvc:View controllerName="my.app.controller.DetailContainer" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
+    <Page id="namespacePage" showNavButton="true" navButtonPress="onNavBack">
+        <List id="componentList" items="{components}" mode="SingleSelectMaster" selectionChange="onSelectComponent">
+            <StandardListItem title="{title}" description="{description}" type="Navigation" />
+        </List>
+    </Page>
+</mvc:View>

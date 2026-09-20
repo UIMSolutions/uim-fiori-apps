@@ -1,0 +1,28 @@
+<mvc:View controllerName="my.app.controller.components.PdfViewers" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive PDFViewer Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="PDFViewer embeds and displays PDF files directly within Fiori applications with built-in printing and downloading options." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Embedded Document Viewer" class="sapUiMediumMarginBottom">
+            <PDFViewer 
+                id="myPdfViewer"
+                source="https://sapui5.hana.ondemand.com/test-resources/sap/m/demokit/sample/PDFViewer/pdf/sample.pdf"
+                title="Sample SAPUI5 Specification"
+                height="450px"
+                width="100%"
+                showDownloadButton="true"
+                loaded="onPdfLoaded">
+            </PDFViewer>
+        </Panel>
+
+        <Label id="pdfStatusLabel" text="Status: Loading document..." design="Bold" />
+    </VBox>
+</mvc:View>

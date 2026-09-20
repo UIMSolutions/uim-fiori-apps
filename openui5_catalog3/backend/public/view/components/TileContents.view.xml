@@ -1,0 +1,38 @@
+<mvc:View controllerName="my.app.controller.components.TileContents" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive TileContent Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="TileContent acts as a content wrapper for GenericTiles, supporting custom footers, state indicators, and diverse embedded content types." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Tile Content Wrapper Showcase" class="sapUiMediumMarginBottom">
+            <HBox wrap="Wrap" class="sapUiSmallMargin">
+                <!-- TileContent with NumericContent and Footer -->
+                <GenericTile header="Server Performance" subheader="Cluster A" press="onTilePress" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                    <tileContent>
+                        <TileContent footer="Updated 1 min ago" unit="Load">
+                            <NumericContent value="88" scale="%" indicator="Up" valueColor="Warning" />
+                        </TileContent>
+                    </tileContent>
+                </GenericTile>
+
+                <!-- TileContent with Footer Status -->
+                <GenericTile header="Database Latency" subheader="Primary Node" press="onTilePress" class="sapUiTinyMarginBottom">
+                    <tileContent>
+                        <TileContent footer="Optimal (&lt; 20ms)" unit="ms">
+                            <NumericContent value="14" valueColor="Good" />
+                        </TileContent>
+                    </tileContent>
+                </GenericTile>
+            </HBox>
+        </Panel>
+
+        <Label id="tileContentStatusLabel" text="Status: Ready" design="Bold" />
+    </VBox>
+</mvc:View>

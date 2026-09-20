@@ -1,0 +1,56 @@
+<mvc:View controllerName="my.app.controller.components.AnalyticalTables" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m"
+    xmlns:table="sap.ui.table">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive Table Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="sap.ui.table.Table is optimized for large client-side datasets with built-in sorting, resizing, and multi-selection." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Sales Records Table" class="sapUiMediumMarginBottom">
+            <table:Table 
+                id="salesTable"
+                rows="{/salesData}" 
+                selectionMode="MultiToggle"
+                class="sapUiSmallMarginBottom">
+                
+                <table:columns>
+                    <table:Column sortProperty="Region" filterProperty="Region">
+                        <Label text="Region" />
+                        <table:template>
+                            <Text text="{Region}" />
+                        </table:template>
+                    </table:Column>
+                    
+                    <table:Column sortProperty="Manager" filterProperty="Manager">
+                        <Label text="Manager" />
+                        <table:template>
+                            <Text text="{Manager}" />
+                        </table:template>
+                    </table:Column>
+                    
+                    <table:Column sortProperty="Product" filterProperty="Product">
+                        <Label text="Product" />
+                        <table:template>
+                            <Text text="{Product}" />
+                        </table:template>
+                    </table:Column>
+                    
+                    <table:Column sortProperty="Revenue" filterProperty="Revenue">
+                        <Label text="Revenue" />
+                        <table:template>
+                            <ObjectNumber number="{Revenue}" unit="USD" />
+                        </table:template>
+                    </table:Column>
+                </table:columns>
+            </table:Table>
+        </Panel>
+
+        <Button text="Show Selected Rows" type="Emphasized" press="onSelectionAction" />
+    </VBox>
+</mvc:View>

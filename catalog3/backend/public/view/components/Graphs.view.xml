@@ -1,0 +1,37 @@
+<mvc:View controllerName="my.app.controller.components.Graphs" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m"
+    xmlns:graph="sap.suite.ui.commons.networkgraph">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive Network Graph Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="NetworkGraph visualizes nodes and connection lines to represent system architectures, process flows, and relationships." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Architecture Relationship Map" class="sapUiMediumMarginBottom">
+            <graph:Graph 
+                id="networkGraph"
+                height="400px"
+                nodes="{/nodes}"
+                lines="{/lines}">
+                <graph:nodes>
+                    <graph:Node 
+                        key="{key}" 
+                        title="{title}" 
+                        icon="{icon}" />
+                </graph:nodes>
+                <graph:lines>
+                    <graph:Line 
+                        from="{from}" 
+                        to="{to}" />
+                </graph:lines>
+            </graph:Graph>
+        </Panel>
+
+        <Button text="Highlight Backend Node" type="Emphasized" press="onHighlightNode" />
+    </VBox>
+</mvc:View>

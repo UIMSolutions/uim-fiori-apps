@@ -1,0 +1,33 @@
+<mvc:View controllerName="my.app.controller.components.Trees" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive Tree Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="Tree controls display hierarchical data structures with expandable and collapsible parent-child nodes." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Hierarchical Navigation" class="sapUiMediumMarginBottom">
+            <Tree 
+                id="myTree"
+                items="{/nodes}"
+                mode="SingleSelectMaster"
+                selectionChange="onNodeSelected"
+                width="100%"
+                height="350px"
+                class="sapUiSmallMarginBottom">
+                <items>
+                    <StandardTreeItem 
+                        title="{title}" 
+                        icon="{icon}" />
+                </items>
+            </Tree>
+        </Panel>
+
+        <Label id="treeStatusLabel" text="Status: Ready (Select a node)" design="Bold" />
+    </VBox>
+</mvc:View>

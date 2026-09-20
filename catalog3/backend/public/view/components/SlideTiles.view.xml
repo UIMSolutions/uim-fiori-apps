@@ -1,0 +1,47 @@
+<mvc:View controllerName="my.app.controller.components.SlideTiles" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive SlideTile Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="SlideTile containers allow multiple GenericTiles to rotate or slide automatically within a single dashboard slot." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Rotating Dashboard Container" class="sapUiMediumMarginBottom">
+            <HBox wrap="Wrap" class="sapUiSmallMargin" spacing="1rem">
+                <!-- SlideTile cycling through KPI and News tiles -->
+                <SlideTile transitionInterval="5000" class="sapUiTinyMarginBottom">
+                    <tiles>
+                        <GenericTile header="Q3 Revenue Summary" subheader="Target Met" press="onTilePress">
+                            <tileContent>
+                                <TileContent>
+                                    <NumericContent value="1.4M" scale="EUR" indicator="Up" valueColor="Good" />
+                                </TileContent>
+                            </tileContent>
+                        </GenericTile>
+                        <GenericTile header="System Status" subheader="Active Nodes" press="onTilePress">
+                            <tileContent>
+                                <TileContent>
+                                    <NumericContent value="99.9" scale="%" valueColor="Good" />
+                                </TileContent>
+                            </tileContent>
+                        </GenericTile>
+                        <GenericTile header="Active Incidents" subheader="Support Queue" press="onTilePress">
+                            <tileContent>
+                                <TileContent>
+                                    <NumericContent value="3" valueColor="Critical" />
+                                </TileContent>
+                            </tileContent>
+                        </GenericTile>
+                    </tiles>
+                </SlideTile>
+            </HBox>
+        </Panel>
+
+        <Label id="slideTileStatusLabel" text="Status: Ready (Tiles rotate every 5 seconds)" design="Bold" />
+    </VBox>
+</mvc:View>

@@ -1,0 +1,34 @@
+<mvc:View controllerName="my.app.controller.components.BulletMicroCharts" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m"
+    xmlns:microchart="sap.suite.ui.microchart">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive Bullet Micro Chart Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="BulletMicroCharts compare a single measure against a target value and quantitative status ranges (Good, Critical, Error)." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Performance vs Target Benchmark" class="sapUiMediumMarginBottom" width="100%">
+            <microchart:BulletMicroChart 
+                size="Responsive"
+                targetValue="80"
+                minValue="0"
+                maxValue="100"
+                press="onChartPress">
+                <microchart:actual>
+                    <microchart:BulletMicroChartData value="75" color="Good" />
+                </microchart:actual>
+                <microchart:thresholds>
+                    <microchart:BulletMicroChartData value="50" color="Critical" />
+                    <microchart:BulletMicroChartData value="90" color="Error" />
+                </microchart:thresholds>
+            </microchart:BulletMicroChart>
+        </Panel>
+
+        <Label text="Status: Ready" design="Bold" />
+    </VBox>
+</mvc:View>

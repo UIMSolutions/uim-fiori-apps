@@ -1,0 +1,35 @@
+<mvc:View controllerName="my.app.controller.components.ImageEditors" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m"
+    xmlns:imageeditor="sap.suite.ui.commons.imageeditor">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive ImageEditor Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="The ImageEditor control enables users to load, rotate, crop, zoom, and modify raster graphics inside Fiori applications." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Raster Graphic Workspace" class="sapUiMediumMarginBottom">
+            <VBox class="sapUiSmallMargin" spacing="1rem">
+                <HBox spacing="1rem" alignItems="Center">
+                    <Button text="Rotate Left" icon="sap-icon://rotate" press="onRotateLeft" />
+                    <Button text="Rotate Right" icon="sap-icon://redo" press="onRotateRight" />
+                    <Button text="Zoom to Fit" icon="sap-icon://full-screen" press="onZoomToFit" />
+                </HBox>
+
+                <!-- ImageEditor Component Container -->
+                <imageeditor:ImageEditor 
+                    id="myImageEditor"
+                    src="https://sapui5.hana.ondemand.com/test-resources/sap/ui/demokit/images/john_doe.jpg"
+                    width="100%"
+                    height="400px"
+                    loaded="onImageLoaded" />
+            </VBox>
+        </Panel>
+
+        <Label id="editorStatusLabel" text="Status: Loading image editor..." design="Bold" />
+    </VBox>
+</mvc:View>

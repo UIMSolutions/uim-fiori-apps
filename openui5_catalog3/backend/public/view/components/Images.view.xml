@@ -1,0 +1,45 @@
+<mvc:View controllerName="my.app.controller.components.Images" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive Image Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="Image controls display graphical content with support for custom dimensions, scaling, density-aware sources, and click events." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Graphic Display Variations" class="sapUiMediumMarginBottom">
+            <VBox class="sapUiSmallMargin" spacing="1rem">
+                <HBox alignItems="Center" wrap="Wrap" spacing="2rem">
+                    <VBox alignItems="Center">
+                        <Image 
+                            src="https://sapui5.hana.ondemand.com/test-resources/sap/ui/demokit/images/john_doe.jpg" 
+                            width="100px" 
+                            height="100px" 
+                            press="onImagePress"
+                            tooltip="Clickable Profile Image"
+                            class="sapUiTinyMarginBottom" />
+                        <Label text="Fixed Size (100x100)" />
+                    </VBox>
+
+                    <VBox alignItems="Center">
+                        <Image 
+                            src="https://sapui5.hana.ondemand.com/test-resources/sap/ui/demokit/images/demos/A.png" 
+                            width="80px" 
+                            height="80px" 
+                            decorative="false"
+                            press="onImagePress"
+                            tooltip="Letter Demo Image"
+                            class="sapUiTinyMarginBottom" />
+                        <Label text="Interactive Letter Badge" />
+                    </VBox>
+                </HBox>
+            </VBox>
+        </Panel>
+
+        <Label id="imageStatusLabel" text="Status: Ready (Click an image)" design="Bold" />
+    </VBox>
+</mvc:View>

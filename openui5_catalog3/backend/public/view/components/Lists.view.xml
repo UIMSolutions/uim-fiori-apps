@@ -1,0 +1,42 @@
+<mvc:View controllerName="my.app.controller.components.Lists" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive List Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="Lists are widely used to display collections of items, supporting features like multi-selection, search filtering, and navigation indicators." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Task / Item Collection" class="sapUiMediumMarginBottom">
+            <List 
+                id="itemList"
+                items="{/items}"
+                mode="MultiSelect"
+                growing="true"
+                growingThreshold="5"
+                class="sapUiSmallMarginBottom">
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <Title text="Project Tasks" level="H3" />
+                        <ToolbarSpacer />
+                        <Button text="Delete Selected" press="onDeleteSelected" type="Reject" />
+                    </OverflowToolbar>
+                </headerToolbar>
+                <items>
+                    <StandardListItem 
+                        title="{title}" 
+                        description="{description}" 
+                        icon="{icon}" 
+                        info="{status}"
+                        infoState="{state}" />
+                </items>
+            </List>
+        </Panel>
+
+        <Label id="listStatusLabel" text="Status: Ready" design="Bold" />
+    </VBox>
+</mvc:View>

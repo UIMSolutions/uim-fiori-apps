@@ -1,0 +1,36 @@
+<mvc:View controllerName="my.app.controller.components.Grids" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m"
+    xmlns:layout="sap.ui.layout">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive Grid Layout Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="Grid layouts divide available horizontal space into a 12-column grid system, allowing flexible responsive positioning." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="12-Column Responsive Grid" class="sapUiMediumMarginBottom">
+            <layout:Grid defaultSpan="L6 M6 S12" hSpacing="1" vSpacing="1">
+                <layout:content>
+                    <VBox class="sapUiTinyPadding" backgroundDesign="Solid">
+                        <Title text="Block A (Half Width)" level="H5" />
+                        <Text text="Span is set to 6 columns on Large and Medium screens, expanding to full width on Small screens." />
+                    </VBox>
+                    <VBox class="sapUiTinyPadding" backgroundDesign="Solid">
+                        <Title text="Block B (Half Width)" level="H5" />
+                        <Text text="Side-by-side positioning automatically wraps cleanly based on screen dimensions." />
+                    </VBox>
+                    <VBox class="sapUiTinyPadding" backgroundDesign="Solid">
+                        <Title text="Block C (Full Span Example)" level="H5" layoutData="&lt;layout:GridData span=&quot;L12 M12 S12&quot; /&gt;" />
+                        <Text text="This block explicitly spans all 12 columns across the entire row width." />
+                    </VBox>
+                </layout:content>
+            </layout:Grid>
+        </Panel>
+
+        <Button text="Trigger Grid Action" type="Emphasized" press="onGridAction" />
+    </VBox>
+</mvc:View>

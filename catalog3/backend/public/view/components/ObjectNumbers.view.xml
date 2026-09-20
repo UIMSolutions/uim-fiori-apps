@@ -1,0 +1,40 @@
+<mvc:View controllerName="my.app.controller.components.ObjectNumbers" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive ObjectNumber Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="ObjectNumber displays numerical values along with optional units or currency codes, supporting state coloring for business documents." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Numerical Formatting Variations" class="sapUiMediumMarginBottom">
+            <VBox class="sapUiSmallMargin">
+                <HBox alignItems="Center" justifyContent="SpaceBetween" width="100%">
+                    <Label text="Standard Revenue:" />
+                    <ObjectNumber number="12500.50" unit="EUR" emphasized="true" />
+                </HBox>
+
+                <HBox alignItems="Center" justifyContent="SpaceBetween" width="100%">
+                    <Label text="Critical Deficit Count:" />
+                    <ObjectNumber number="-42.00" unit="PCS" state="Error" emphasized="false" />
+                </HBox>
+
+                <HBox alignItems="Center" justifyContent="SpaceBetween" width="100%">
+                    <Label text="Target Achievement Rate:" />
+                    <ObjectNumber number="98.5" unit="%" state="Success" emphasized="true" />
+                </HBox>
+
+                <HBox alignItems="Center" justifyContent="SpaceBetween" width="100%">
+                    <Label text="Pending Processing:" />
+                    <ObjectNumber number="5" unit="Items" state="Warning" />
+                </HBox>
+            </VBox>
+        </Panel>
+
+        <Label id="objectNumberStatusLabel" text="Status: Ready" design="Bold" />
+    </VBox>
+</mvc:View>

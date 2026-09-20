@@ -1,0 +1,46 @@
+<mvc:View controllerName="my.app.controller.components.FeedContents" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m">
+    
+    <VBox class="sapUiMediumMargin">
+        <Title text="Interactive FeedContent Testbed" class="sapUiSmallMarginBottom" />
+        
+        <MessageStrip 
+            text="FeedContent displays a single feed item, news snippet, or social update summary, commonly embedded inside dashboard tiles." 
+            type="Information" 
+            showIcon="true" 
+            class="sapUiMediumMarginBottom" />
+
+        <Panel headerText="Feed Content Showcase" class="sapUiMediumMarginBottom">
+            <HBox wrap="Wrap" class="sapUiSmallMargin" spacing="1rem">
+                <!-- Standard Feed Update Tile -->
+                <GenericTile header="Project Update" press="onTilePress" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                    <tileContent>
+                        <TileContent>
+                            <FeedContent 
+                                contentText="New Vibe.d backend route successfully mapped and integrated." 
+                                subheader="Today, 3:45 PM" 
+                                value="v1.2"
+                                valueColor="Good" />
+                        </TileContent>
+                    </tileContent>
+                </GenericTile>
+
+                <!-- Warning Notification Tile -->
+                <GenericTile header="System Alert" press="onTilePress" class="sapUiTinyMarginBottom">
+                    <tileContent>
+                        <TileContent>
+                            <FeedContent 
+                                contentText="Scheduled maintenance window approaching for production server." 
+                                subheader="Tomorrow, 02:00 AM" 
+                                value="Alert"
+                                valueColor="Critical" />
+                        </TileContent>
+                    </tileContent>
+                </GenericTile>
+            </HBox>
+        </Panel>
+
+        <Label id="feedStatusLabel" text="Status: Ready" design="Bold" />
+    </VBox>
+</mvc:View>
