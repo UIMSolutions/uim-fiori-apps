@@ -1,0 +1,48 @@
+<mvc:View
+    controllerName="ea.architecture.manager.controller.Home"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page title="Enterprise Architecture Launchpad">
+        <content>
+            <HBox class="sapUiSmallMargin">
+                <!-- Tile 1: Architekturbausteine -->
+                <GenericTile 
+                    header="Architekturbausteine" 
+                    subheader="Verwaltung + Overview" 
+                    press=".onNavigateTo('architecture')"
+                    class="sapUiTinyMarginEnd">
+                    <tileContent>
+                        <TileContent>
+                            <ImageContent src="sap-icon://building" />
+                        </TileContent>
+                    </tileContent>
+                </GenericTile>
+
+                <!-- Tile 2: Lösungsbausteine -->
+                <GenericTile 
+                    header="Lösungsbausteine" 
+                    subheader="Systeme + Software" 
+                    press=".onNavigateTo('solution')"
+                    class="sapUiTinyMarginEnd">
+                    <tileContent>
+                        <TileContent>
+                            <ImageContent src="sap-icon://system-technologies" />
+                        </TileContent>
+                    </tileContent>
+                </GenericTile>
+
+                <!-- Tile 3: Schnittstellen -->
+                <GenericTile 
+                    header="Schnittstellen" 
+                    subheader="APIs &amp; Integrationen" 
+                    press=".onNavigateTo('interface')">
+                    <tileContent>
+                        <TileContent>
+                            <ImageContent src="sap-icon://connected" />
+                        </TileContent>
+                    </tileContent>
+                </GenericTile>
+            </HBox>
+        </content>
+    </Page>
+</mvc:View>

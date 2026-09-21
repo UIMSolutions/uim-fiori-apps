@@ -1,0 +1,41 @@
+<mvc:View
+    controllerName="ea.architecture.manager.controller.InterfaceMasterDetail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
+    xmlns="sap.m">
+    <f:FlexibleColumnLayout id="fcl">
+        <!-- Master Column -->
+        <f:beginColumnPages>
+            <Page title="Schnittstellen">
+                <headerContent>
+                    <Button icon="sap-icon://home" press=".onNavHome" />
+                </headerContent>
+                <content>
+                    <List id="masterList" items="{vibeApi>/buildingblocks?type=Interface}" itemPress=".onListItemPress">
+                        <StandardListItem 
+                            title="{vibeApi>name}" 
+                            description="{vibeApi>id}" 
+                            type="Navigation" />
+                    </List>
+                </content>
+            </Page>
+        </f:beginColumnPages>
+
+        <!-- Detail Column -->
+        <f:midColumnPages>
+            <Page title="Details" id="detailPage">
+                <content>
+                    <ObjectHeader
+                        title="{detailModel>/name}"
+                        number="{detailModel>/id}"
+                        numberUnit="Status: {detailModel>/status}">
+                        <attributes>
+                            <ObjectAttribute title="Typ" text="{detailModel>/type}" />
+                            <ObjectAttribute title="Beschreibung" text="{detailModel>/description}" />
+                        </attributes>
+                    </ObjectHeader>
+                </content>
+            </Page>
+        </f:midColumnPages>
+    </f:FlexibleColumnLayout>
+</mvc:View>
