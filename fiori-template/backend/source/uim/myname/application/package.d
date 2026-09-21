@@ -6,6 +6,8 @@
 module uim.myname.application;
 
 public:
-    import uim.myname.application.services;
+    import uim.myname.application.dtos;
     import uim.myname.application.helpers;
+    import uim.myname.application.services;
     import uim.myname.application.usecases;
+    import uim.myname.application.adapters;

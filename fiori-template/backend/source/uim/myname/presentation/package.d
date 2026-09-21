@@ -6,3 +6,8 @@
 module uim.myname.presentation;
 
 public:
+    import uim.myname.presentation.http;
+    import uim.myname.presentation.rest;
+    import uim.myname.presentation.odata;
+    import uim.myname.presentation.web;
+    import uim.myname.presentation.ui5;

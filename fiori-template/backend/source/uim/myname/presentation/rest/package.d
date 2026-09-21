@@ -4,3 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.myname.presentation.rest;
+
+public:
+    import uim.myname.presentation.rest.interfaces;
+    import uim.myname.presentation.rest.services;

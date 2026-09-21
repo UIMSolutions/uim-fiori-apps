@@ -8,3 +8,4 @@ module uim.myname.presentation.web;
 public:
     import uim.myname.presentation.web.controllers;
     import uim.myname.presentation.web.views;
+    import uim.myname.presentation.web.models;

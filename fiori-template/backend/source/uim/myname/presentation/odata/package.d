@@ -4,3 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.myname.presentation.odata;
+
+public:
+    import uim.myname.presentation.odata.controllers;
+    import uim.myname.presentation.odata.views;
