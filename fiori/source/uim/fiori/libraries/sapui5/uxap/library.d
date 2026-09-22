@@ -1,11 +1,11 @@
-module uim.fiori.libraries.uxap.library;
+module uim.fiori.libraries.sapui5.uxap.library;
 
 import uim.fiori;
 
 mixin(ShowModule!());
 
 @safe:
-class SAPUxapLibrary : UI5Library {
+class SAPUxapLibrary : SAPUI5Library {
     private static SAPUxapLibrary _instance;
     static string prefix = "uxap";
 

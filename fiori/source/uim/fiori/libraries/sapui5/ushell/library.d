@@ -1,11 +1,11 @@
-module uim.fiori.libraries.ushell.library;
+module uim.fiori.libraries.sapui5.ushell.library;
 
 import uim.fiori;
 
 mixin(ShowModule!());
 
 @safe:
-class SAPUShellLibrary : UI5Library {
+class SAPUShellLibrary : SAPUI5Library {
     private static SAPUShellLibrary _instance;
 
     this() {

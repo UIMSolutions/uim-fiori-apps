@@ -1,11 +1,11 @@
-module uim.fiori.libraries.ovp.library;
+module uim.fiori.libraries.sapui5.ovp.library;
 
 import uim.fiori;
 
 mixin(ShowModule!());
 
 @safe:
-class SAPOVPLibrary : UI5Library {
+class SAPOVPLibrary : SAPUI5Library {
     private static SAPOVPLibrary _instance;
     private static string prefix = "ovp";
 

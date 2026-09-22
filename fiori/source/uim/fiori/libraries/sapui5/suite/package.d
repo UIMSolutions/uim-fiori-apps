@@ -1,4 +1,4 @@
-module uim.fiori.libraries.suite;
+module uim.fiori.libraries.sapui5.suite;
 
 public:
-    import uim.fiori.libraries.suite.library;
+    import uim.fiori.libraries.sapui5.suite.library;

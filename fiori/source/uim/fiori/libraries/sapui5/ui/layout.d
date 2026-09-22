@@ -1,11 +1,11 @@
-module uim.fiori.libraries.ui.layout;
+module uim.fiori.libraries.sapui5.ui.layout;
 
 import uim.fiori;
 
 mixin(ShowModule!());
 
 @safe:
-class SAPLayoutLibrary : UI5Library {
+class SAPLayoutLibrary : SAPUI5Library {
     private static SAPLayoutLibrary _instance;
     private static string prefix = "layout";
 

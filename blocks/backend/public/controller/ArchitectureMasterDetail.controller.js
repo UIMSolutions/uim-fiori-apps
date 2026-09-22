@@ -1,50 +1,47 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel"
-], function (Controller, JSONModel) {
+    "sap/ui/model/json/JSONModel",
+    "sap/f/library"
+], function (Controller, JSONModel, fLibrary) {
     "use strict";
+
+    // 3. LayoutType aus der Library extrahieren
+    var LayoutType = fLibrary.LayoutType;
 
     return Controller.extend("ea.architecture.manager.controller.ArchitectureMasterDetail", {
         onInit: function () {
-            // var oRouter = this.getOwnerComponent().getRouter();
-            // oRouter.getRoute("architecture").attachPatternMatched(this._onRouteMatched, this);
+            // 1. Daten direkt vom vibe.d Backend holen (inkl. Filter für Architekturbausteine)
+            var sUrl = "http://localhost:8080/api/buildingblocks?type=Architecture";
+            var oMasterModel = new JSONModel();
             
-            // this.getView().setModel(new JSONModel({}), "detailModel");
+            oMasterModel.loadData(sUrl).then(function () {
+                console.log("Daten erfolgreich von vibe.d geladen:", oMasterModel.getData());
+            }).catch(function (oError) {
+                console.error("Fehler beim Laden der Daten von vibe.d:", oError);
+            });
 
-            // Leeres Modell für die Detail-Ansicht initialisieren
+            // Model an die View binden
+            this.getView().setModel(oMasterModel, "masterData");
+
+            // 2. Leeres Detail-Model initialisieren
             var oDetailModel = new JSONModel({});
-            this.getView().setModel(oDetailModel, "detailModel");
-        },
-
-        _onRouteMatched: function () {
-            // Lade nur Architekturbausteine vom vibe.d Backend
-            var oMasterModel = new JSONModel("http://localhost:8080/api/buildingblocks?type=Architecture");
-            this.getView().setModel(oMasterModel, "architectureModel");
+            this.getView().setModel(oDetailModel, "detailData");
         },
 
         onListItemPress: function (oEvent) {
-            // var oSelectedItem = oEvent.getSource();
-            // var oContext = oSelectedItem.getBindingContext("architectureModel");
-            
-            // var oFCL = this.byId("fcl");
-            // oFCL.setLayout(sap.f.LayoutType.TwoColumnsExpanded);
+            // Ausgewähltes Element ermitteln
+            var oItem = oEvent.getParameter("listItem") || oEvent.getSource();
+            var oContext = oItem.getBindingContext("masterData");
 
-            // this.getView().getModel("detailModel").setData(oContext.getObject());
-
-            // 1. Das angeklickte Item und dessen Daten-Kontext ermitteln
-            var oSelectedItem = oEvent.getParameter("listItem") || oEvent.getSource();
-            var oContext = oSelectedItem.getBindingContext("vibeApi");
-            
             if (oContext) {
-                // 2. Daten des gewählten Bausteins holen
-                var oSelectedData = oContext.getObject();
+                var oSelectedObject = oContext.getObject();
 
-                // 3. Daten in das detailModel schreiben
-                this.getView().getModel("detailModel").setData(oSelectedData);
+                // Daten in das Detail-Model schreiben
+                this.getView().getModel("detailData").setData(oSelectedObject);
 
-                // 4. Layout auf 2 Spalten erweitern (Master + Detail)
+                // Layout auf 2 Spalten erweitern
                 var oFCL = this.byId("fcl");
-                oFCL.setLayout("TwoColumnsExpanded");
+                oFCL.setLayout(LayoutType.TwoColumnsExpanded);
             }
         },
 

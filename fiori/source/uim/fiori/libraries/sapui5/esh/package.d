@@ -1,4 +1,4 @@
-module uim.fiori.libraries.esh;
+module uim.fiori.libraries.sapui5.esh;
 
 public:
-    import uim.fiori.libraries.esh.library; 
+    import uim.fiori.libraries.sapui5.esh.library; 

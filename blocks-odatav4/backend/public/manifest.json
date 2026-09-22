@@ -1,0 +1,88 @@
+{
+  "_version": "1.32.0",
+  "sap.app": {
+    "id": "ea.architecture.manager",
+    "type": "application",
+    "dataSources": {
+      "mainService": {
+        "uri": "http://127.0.0.1:8080/odata/v4/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui5": {
+    "rootView": {
+      "viewName": "ea.architecture.manager.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "app"
+    },
+    "dependencies": {
+      "minUI5Version": "1.108.0",
+      "libs": {
+        "sap.m": {},
+        "sap.f": {}
+      }
+    },
+    "models": {
+      "": {
+        "dataSource": "mainService",
+        "type": "sap.ui.model.odata.v4.ODataModel",
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "groupId": "$direct"
+        }
+      }
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "viewPath": "ea.architecture.manager.view",
+        "controlId": "appControl",
+        "controlAggregation": "pages",
+        "async": true
+      },
+      "routes": [
+        {
+          "name": "home",
+          "pattern": "",
+          "target": "launchpad"
+        },
+        {
+          "name": "architecture",
+          "pattern": "architecture",
+          "target": "architectureMasterDetail"
+        },
+        {
+          "name": "solution",
+          "pattern": "solution",
+          "target": "solutionMasterDetail"
+        },
+        {
+          "name": "interface",
+          "pattern": "interface",
+          "target": "interfaceMasterDetail"
+        }
+      ],
+      "targets": {
+        "launchpad": {
+          "viewName": "Home"
+        },
+        "architectureMasterDetail": {
+          "viewName": "ArchitectureMasterDetail"
+        },
+        "solutionMasterDetail": {
+          "viewName": "SolutionMasterDetail"
+        },
+        "interfaceMasterDetail": {
+          "viewName": "InterfaceMasterDetail"
+        }
+      }
+    }
+  }
+}

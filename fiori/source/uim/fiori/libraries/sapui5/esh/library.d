@@ -1,11 +1,11 @@
-module uim.fiori.libraries.esh.library;
+module uim.fiori.libraries.sapui5.esh.library;
 
 import uim.fiori;
 
 mixin(ShowModule!());
 
 @safe:
-class SAPESHLibrary : UI5Library {
+class SAPESHLibrary : SAPUI5Library {
     private static SAPESHLibrary _instance;
 
     this() {

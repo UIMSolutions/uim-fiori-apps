@@ -1,11 +1,11 @@
-module uim.fiori.libraries.tnt.library;
+module uim.fiori.libraries.sapui5.tnt.library;
 
 import uim.fiori;
 
 mixin(ShowModule!());
 
 @safe:
-class SAPTNTLibrary : UI5Library {
+class SAPTNTLibrary : SAPUI5Library {
     private static SAPTNTLibrary _instance;
     private static string prefix = "tnt";
 

@@ -1,0 +1,147 @@
+<mvc:View 
+    controllerName="ea.architecture.manager.controller.SolutionMasterDetail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+
+    <f:FlexibleColumnLayout id="fcl" layout="OneColumn">
+
+        <!-- MASTER SPALTE -->
+        <f:beginColumnPages>
+            <Page title="Solution Blocks">
+                <headerContent>
+                    <Button icon="sap-icon://home" press=".onNavHome" tooltip="Hauptmenü" />
+                </headerContent>
+                <content>
+                    <List 
+                        id="masterList" 
+                        items="{/SolutionBlocks}" 
+                        mode="SingleSelectMaster" 
+                        selectionChange=".onListItemPress">
+                        <ObjectListItem 
+                            title="{path: 'Title', targetType: 'string'}" 
+                            number="v{path: 'Version', targetType: 'string'}" 
+                            intro="{path: 'Name', targetType: 'string'}">
+                            <attributes>
+                                <ObjectAttribute 
+                                    title="ID" 
+                                    text="{path: 'ID', targetType: 'string'}" />
+                                <ObjectAttribute 
+                                    title="Verantwortliche" 
+                                    text="{path: 'Responsibles', targetType: 'string'}" />
+                            </attributes>
+                        </ObjectListItem>
+                    </List>
+                </content>
+            </Page>
+        </f:beginColumnPages>
+
+        <!-- DETAIL SPALTE -->
+        <f:midColumnPages>
+            <Page id="detailPage" title="Solution Block Details">
+                <content>
+                    <!-- Header -->
+                    <ObjectHeader
+                        title="{path: 'Title', targetType: 'string'}"
+                        number="v{path: 'Version', targetType: 'string'}"
+                        intro="{path: 'Name', targetType: 'string'}">
+                        <attributes>
+                            <ObjectAttribute 
+                                title="Verantwortliche" 
+                                text="{path: 'Responsibles', targetType: 'string'}" />
+                            <ObjectAttribute 
+                                title="Gültigkeit" 
+                                text="{path: 'ValidFrom', targetType: 'string'} bis {path: 'ValidUntil', targetType: 'string'}" />
+                        </attributes>
+                    </ObjectHeader>
+
+                    <!-- Details SimpleForm -->
+                    <form:SimpleForm 
+                        editable="false" 
+                        layout="ColumnLayout"
+                        title="Eigenschaften &amp; Gültigkeit"
+                        class="sapUiResponsiveMargin">
+                        <form:content>
+                            <Label text="ID" />
+                            <Text text="{path: 'ID', targetType: 'string'}" />
+
+                            <Label text="Name" />
+                            <Text text="{path: 'Name', targetType: 'string'}" />
+
+                            <Label text="Titel" />
+                            <Text text="{path: 'Title', targetType: 'string'}" />
+
+                            <Label text="Beschreibung" />
+                            <Text text="{path: 'Description', targetType: 'string'}" />
+
+                            <Label text="Gültig von" />
+                            <Text text="{path: 'ValidFrom', targetType: 'string'}" />
+
+                            <Label text="Gültig bis" />
+                            <Text text="{path: 'ValidUntil', targetType: 'string'}" />
+
+                            <Label text="Version" />
+                            <Text text="{path: 'Version', targetType: 'string'}" />
+
+                            <Label text="Datum" />
+                            <Text text="{path: 'Date', targetType: 'string'}" />
+
+                            <Label text="Verantwortliche" />
+                            <Text text="{path: 'Responsibles', targetType: 'string'}" />
+
+                            <Label text="Zusatzinformationen" />
+                            <Text text="{path: 'AdditionalInfo', targetType: 'string'}" />
+                        </form:content>
+                    </form:SimpleForm>
+
+                    <!-- PANEL: DEPENDS ON SOLUTION BLOCKS -->
+                    <Panel 
+                        headerText="Abhängig von anderen Solution Blocks" 
+                        expandable="true" 
+                        expanded="true"
+                        width="auto"
+                        class="sapUiResponsiveMargin">
+                        <content>
+                            <Table 
+                                items="{
+                                    path: 'DependsOnSolutionBlocks',
+                                    templateShareable: false
+                                }" 
+                                noDataText="Dieser Solution Block besitzt keine aktiven Abhängigkeiten."
+                                mode="None">
+                                <columns>
+                                    <Column width="120px">
+                                        <Text text="Block ID" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="Ziel-Solution Block" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="Kopplungsart" />
+                                    </Column>
+                                    <Column width="120px" hAlign="End">
+                                        <Text text="Kritizität" />
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem type="Navigation" press=".onDependencyPress">
+                                        <cells>
+                                            <ObjectIdentifier title="{path: 'ID', targetType: 'string'}" />
+                                            <Text text="{path: 'Name', targetType: 'string'}" />
+                                            <Text text="{path: 'Type', targetType: 'string'}" />
+                                            <Text text="{path: 'Criticality', targetType: 'string'}" />
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </content>
+                    </Panel>
+
+                </content>
+            </Page>
+        </f:midColumnPages>
+
+    </f:FlexibleColumnLayout>
+</mvc:View>

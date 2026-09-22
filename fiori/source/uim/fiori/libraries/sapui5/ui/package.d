@@ -1,7 +1,7 @@
-module uim.fiori.libraries.ui;
+module uim.fiori.libraries.sapui5.ui;
 
 public:
-    import uim.fiori.libraries.ui.library;
-    import uim.fiori.libraries.ui.form;
-    import uim.fiori.libraries.ui.grid;
-    import uim.fiori.libraries.ui.layout;
+    import uim.fiori.libraries.sapui5.ui.library;
+    import uim.fiori.libraries.sapui5.ui.form;
+    import uim.fiori.libraries.sapui5.ui.grid;
+    import uim.fiori.libraries.sapui5.ui.layout;

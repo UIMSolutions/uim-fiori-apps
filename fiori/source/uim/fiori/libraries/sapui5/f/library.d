@@ -1,11 +1,11 @@
-module uim.fiori.libraries.f.library;
+module uim.fiori.libraries.sapui5.f.library;
 
 import uim.fiori;
 
 mixin(ShowModule!());
 
 @safe:
-class SAPFLibrary : UI5Library {
+class SAPFLibrary : SAPUI5Library {
     private static SAPFLibrary _instance;
     static string prefix = "f";
 

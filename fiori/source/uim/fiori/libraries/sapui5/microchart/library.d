@@ -1,11 +1,11 @@
-module uim.fiori.libraries.microchart.library;
+module uim.fiori.libraries.sapui5.microchart.library;
 
 import uim.fiori;
 
 mixin(ShowModule!());
 
 @safe:
-class SAPMicrochartLibrary : UI5Library {
+class SAPMicrochartLibrary : SAPUI5Library {
     private static SAPMicrochartLibrary _instance;
     static string prefix = "micro";
 

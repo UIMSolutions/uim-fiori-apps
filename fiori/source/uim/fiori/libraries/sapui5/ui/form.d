@@ -1,11 +1,11 @@
-module uim.fiori.libraries.ui.form;
+module uim.fiori.libraries.sapui5.ui.form;
 
 import uim.fiori;
 
 mixin(ShowModule!());
 
 @safe:
-class SAPUIFormLibrary : UI5Library {
+class SAPUIFormLibrary : SAPUI5Library {
     private static SAPUIFormLibrary _instance;
     private static string prefix = "form";
 

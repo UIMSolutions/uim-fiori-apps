@@ -1,11 +1,11 @@
-module uim.fiori.libraries.ndc.library;
+module uim.fiori.libraries.sapui5.ndc.library;
 
 import uim.fiori;
 
 mixin(ShowModule!());
 
 @safe:
-class SAPNDCLibrary : UI5Library {
+class SAPNDCLibrary : SAPUI5Library {
     private static SAPNDCLibrary _instance;
     static string prefix = "ndc";
 

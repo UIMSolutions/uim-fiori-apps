@@ -1,0 +1,151 @@
+<mvc:View 
+    controllerName="ea.architecture.manager.controller.ArchitectureMasterDetail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+
+    <f:FlexibleColumnLayout id="fcl" layout="OneColumn">
+
+        <!-- =================================================== -->
+        <!-- MASTER SPALTE (Begin Column)                        -->
+        <!-- =================================================== -->
+        <f:beginColumnPages>
+            <Page title="Architekturbausteine">
+                <headerContent>
+                    <Button icon="sap-icon://home" press=".onNavHome" tooltip="Hauptmenü" />
+                </headerContent>
+                <content>
+                    <List 
+                        id="masterList" 
+                        items="{/ArchitectureBlocks}" 
+                        mode="SingleSelectMaster" 
+                        selectionChange=".onListItemPress">
+                        <ObjectListItem 
+                            title="{Name}" 
+                            number="v{Version}" 
+                            intro="{Modul}">
+                            <attributes>
+                                <ObjectAttribute 
+                                    title="ID" 
+                                    text="{path: 'ID', targetType: 'string'}" />
+                                <ObjectAttribute 
+                                    title="Verantwortlich" 
+                                    text="{path: 'Responsible', targetType: 'string'}" />
+                            </attributes>
+                        </ObjectListItem>
+                    </List>
+                </content>
+            </Page>
+        </f:beginColumnPages>
+
+        <!-- =================================================== -->
+        <!-- DETAIL SPALTE (Mid Column)                          -->
+        <!-- =================================================== -->
+        <f:midColumnPages>
+            <Page id="detailPage" title="Baustein-Details">
+                <content>
+                    <!-- Header Übersicht -->
+                    <ObjectHeader
+                        title="{Name}"
+                        number="Version {Version}"
+                        intro="{Modul}">
+                        <attributes>
+                            <ObjectAttribute 
+                                title="Verantwortlich" 
+                                text="{path: 'Responsible', targetType: 'string'}" />
+                            <ObjectAttribute 
+                                title="Erstellt/Geändert am" 
+                                text="{path: 'Date', targetType: 'string'}" />
+                        </attributes>
+                    </ObjectHeader>
+
+                    <!-- Stamm- & Detaildaten (SimpleForm) -->
+                    <form:SimpleForm 
+                        editable="false" 
+                        layout="ColumnLayout"
+                        title="Eigenschaften &amp; Zuordnungen"
+                        class="sapUiResponsiveMargin">
+                        <form:content>
+                            <Label text="ID" />
+                            <Text text="{ID}" />
+
+                            <Label text="Name" />
+                            <Text text="{Name}" />
+
+                            <Label text="Verantwortlich" />
+                            <Text text="{Responsible}" />
+
+                            <Label text="Version" />
+                            <Text text="{Version}" />
+
+                            <Label text="Modul" />
+                            <Text text="{Modul}" />
+
+                            <Label text="Service" />
+                            <Text text="{Service}" />
+
+                            <Label text="Produkt" />
+                            <Text text="{Product}" />
+
+                            <Label text="Datum" />
+                            <Text text="{Date}" />
+
+                            <Label text="Beschreibung" />
+                            <Text text="{Description}" />
+
+                            <Label text="Zusatzinformationen" />
+                            <Text text="{AdditionalInfo}" />
+                        </form:content>
+                    </form:SimpleForm>
+
+                    <!-- PANEL: ABHÄNGIG VON ANDEREN ARCHITEKTURBAUSTEINEN -->
+                    <Panel 
+                        headerText="Abhängig von anderen Architekturbausteinen" 
+                        expandable="true" 
+                        expanded="true"
+                        width="auto"
+                        class="sapUiResponsiveMargin">
+                        <content>
+                            <Table 
+                                items="{
+                                    path: 'DependsOn',
+                                    templateShareable: false
+                                }"
+                                noDataText="Dieser Baustein besitzt keine aktiven Abhängigkeiten."
+                                mode="None">
+                                <columns>
+                                    <Column width="120px">
+                                        <Text text="Baustein-ID" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="Ziel-Baustein" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="Kopplungsart" />
+                                    </Column>
+                                    <Column width="120px" hAlign="End">
+                                        <Text text="Kritizität" />
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem type="Navigation" press=".onDependencyPress">
+                                        <cells>
+                                            <ObjectIdentifier title="{path: 'ID', targetType: 'string'}" />
+                                            <Text text="{path: 'Name', targetType: 'string'}" />
+                                            <Text text="{path: 'Type', targetType: 'string'}" />
+                                            <Text text="{path: 'Criticality', targetType: 'string'}" />
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </content>
+                    </Panel>
+
+                </content>
+            </Page>
+        </f:midColumnPages>
+
+    </f:FlexibleColumnLayout>
+</mvc:View>

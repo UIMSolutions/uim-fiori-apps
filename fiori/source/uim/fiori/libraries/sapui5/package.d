@@ -1,5 +1,8 @@
 module uim.fiori.libraries.sapui5;
 
+public:
+    import uim.fiori.libraries.sapui5.library;
+
     import uim.fiori.libraries.sapui5.core;
     import uim.fiori.libraries.sapui5.chart;
     import uim.fiori.libraries.sapui5.collaboration;
@@ -21,3 +24,4 @@ module uim.fiori.libraries.sapui5;
     import uim.fiori.libraries.sapui5.ushell;
     import uim.fiori.libraries.sapui5.uxap;
     import uim.fiori.libraries.sapui5.viz;
+    import uim.fiori.libraries.sapui5.vk;

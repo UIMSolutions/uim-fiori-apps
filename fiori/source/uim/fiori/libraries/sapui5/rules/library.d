@@ -1,11 +1,11 @@
-module uim.fiori.libraries.rules.library;
+module uim.fiori.libraries.sapui5.rules.library;
 
 import uim.fiori;
 
 mixin(ShowModule!());
 
 @safe:
-class SAPRulesLibrary : UI5Library {
+class SAPRulesLibrary : SAPUI5Library {
     private static SAPRulesLibrary _instance;
 
     this() {

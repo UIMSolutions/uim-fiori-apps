@@ -1,16 +1,16 @@
-module uim.fiori.libraries.viz.library;
+module uim.fiori.libraries.sapui5.vk.library;
 
 import uim.fiori;
 
 mixin(ShowModule!());
 
 @safe:
-class SAPVizLibrary : UI5Library {
-    private static SAPVizLibrary _instance;
-    private static string prefix = "viz";
+class SAPVkLibrary : SAPUI5Library {
+    private static SAPVkLibrary _instance;
+    private static string prefix = "vk";
 
     this() {
-        super("SAP Viz Library", "sap.viz");
+        super("SAP Vk Library", "sap.vk");
     }
 
     this(string name, string namespace, string version_ = "", string description = "", string author = "", string license = "", string homepage = "") {
@@ -21,27 +21,27 @@ class SAPVizLibrary : UI5Library {
         if (!super.initialize(initData))
             return false;
 
-        _description = "SAPUI5 library with controls specialized for the Viz library in SAP Fiori apps.";
+        _description = "SAPUI5 library with controls specialized for the Vk library in SAP Fiori apps.";
 
         // Implement the initialization logic here
         return true;
     }
 
-    static SAPVizLibrary instance() {
+    static SAPVkLibrary instance() {
         if (_instance is null) {
-            _instance = new SAPVizLibrary();
+            _instance = new SAPVkLibrary();
         }
         return _instance;
     }
 
         struct Element {
         static UI5Element opCall(string tag, string[string] values = null, UI5Element[] content = null) {
-            return UI5Element(SAPVizLibrary.prefix.length == 0 ? tag
-                    : SAPVizLibrary.prefix ~ ":" ~ tag, values, content);
+            return UI5Element(SAPVkLibrary.prefix.length == 0 ? tag
+                    : SAPVkLibrary.prefix ~ ":" ~ tag, values, content);
         }
 
         static UI5Element opCall(string tag, UI5Element[] content) {
-            return SAPVizLibrary.Element(tag, null, content);
+            return SAPVkLibrary.Element(tag, null, content);
         }
     }
 }

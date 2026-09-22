@@ -1,6 +1,6 @@
-module uim.fiori.libraries.m;
+module uim.fiori.libraries.sapui5.m;
 
 public:
-    import uim.fiori.libraries.m.library;
-    import uim.fiori.libraries.m.table;
-    import uim.fiori.libraries.m.columnmenu;
+    import uim.fiori.libraries.sapui5.m.library;
+    import uim.fiori.libraries.sapui5.m.table;
+    import uim.fiori.libraries.sapui5.m.columnmenu;

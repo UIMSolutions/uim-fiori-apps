@@ -1,11 +1,11 @@
-module uim.fiori.libraries.collaboration.library;
+module uim.fiori.libraries.sapui5.collaboration.library;
 
 import uim.fiori;
 
 mixin(ShowModule!());
 
 @safe:
-class SAPCollaborationLibrary : UI5Library {
+class SAPCollaborationLibrary : SAPUI5Library {
     private static SAPCollaborationLibrary _instance;
 
     this() {

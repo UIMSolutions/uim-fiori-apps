@@ -1,4 +1,4 @@
-module uim.fiori.libraries.insights;
+module uim.fiori.libraries.sapui5.insights;
 
 public:
-    import uim.fiori.libraries.insights.library;
+    import uim.fiori.libraries.sapui5.insights.library;

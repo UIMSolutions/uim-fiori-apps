@@ -1,4 +1,4 @@
-module uim.fiori.libraries.ushell;
+module uim.fiori.libraries.sapui5.ushell;
 
 public:
-    import uim.fiori.libraries.ushell.library;
+    import uim.fiori.libraries.sapui5.ushell.library;

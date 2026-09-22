@@ -1,11 +1,11 @@
-module uim.fiori.libraries.gantt.library;
+module uim.fiori.libraries.sapui5.gantt.library;
 
 import uim.fiori;
 
 mixin(ShowModule!());
 
 @safe:
-class SAPGanttLibrary : UI5Library {
+class SAPGanttLibrary : SAPUI5Library {
     private static SAPGanttLibrary _instance;
     private static string prefix = "gantt";
 

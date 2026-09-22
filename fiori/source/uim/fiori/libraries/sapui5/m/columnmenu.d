@@ -1,11 +1,11 @@
-module uim.fiori.libraries.m.columnmenu;
+module uim.fiori.libraries.sapui5.m.columnmenu;
 
 import uim.fiori;
 
 mixin(ShowModule!());
 
 @safe:
-class SAPMColumnMenuLibrary : UI5Library {
+class SAPMColumnMenuLibrary : SAPUI5Library {
     private static SAPMColumnMenuLibrary _instance;
     private static string prefix = "ColumnMenu";
 

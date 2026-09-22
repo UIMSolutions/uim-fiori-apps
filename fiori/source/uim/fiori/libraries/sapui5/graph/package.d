@@ -1,4 +1,4 @@
-module uim.fiori.libraries.graph;
+module uim.fiori.libraries.sapui5.graph;
 
 public:
-    import uim.fiori.libraries.graph.library;
+    import uim.fiori.libraries.sapui5.graph.library;

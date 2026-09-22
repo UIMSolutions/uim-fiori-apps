@@ -1,4 +1,4 @@
-module uim.fiori.libraries.tnt;
+module uim.fiori.libraries.sapui5.tnt;
 
 public:
-    import uim.fiori.libraries.tnt.library;
+    import uim.fiori.libraries.sapui5.tnt.library;

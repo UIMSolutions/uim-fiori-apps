@@ -1,11 +1,11 @@
-module uim.fiori.libraries.commons.library;
+module uim.fiori.libraries.sapui5.commons.library;
 
 import uim.fiori;
 
 mixin(ShowModule!());
 
 @safe:
-class SAPCommonsLibrary : UI5Library {
+class SAPCommonsLibrary : SAPUI5Library {
     private static SAPCommonsLibrary _instance;
     private static string prefix = "commons";
 

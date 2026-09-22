@@ -5,7 +5,7 @@ import uim.fiori;
 mixin(ShowModule!());
 
 @safe:
-class SAPCoreLibrary : UI5Library {
+class SAPCoreLibrary : SAPUI5Library {
     private static SAPCoreLibrary _instance;
     static string prefix = "core";
 

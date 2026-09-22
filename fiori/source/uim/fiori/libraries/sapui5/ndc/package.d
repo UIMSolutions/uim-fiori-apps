@@ -1,4 +1,4 @@
-module uim.fiori.libraries.ndc;
+module uim.fiori.libraries.sapui5.ndc;
 
 public:
-    import uim.fiori.libraries.ndc.library;
+    import uim.fiori.libraries.sapui5.ndc.library;

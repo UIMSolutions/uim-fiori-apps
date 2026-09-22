@@ -1,11 +1,11 @@
-module uim.fiori.libraries.m.table;
+module uim.fiori.libraries.sapui5.m.table;
 
 import uim.fiori;
 
 mixin(ShowModule!());
 
 @safe:
-class SAPMTableLibrary : UI5Library {
+class SAPMTableLibrary : SAPUI5Library {
     private static SAPMTableLibrary _instance;
     private static string prefix = "mtable";
 

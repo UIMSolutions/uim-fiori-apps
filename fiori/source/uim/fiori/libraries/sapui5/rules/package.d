@@ -1,4 +1,4 @@
-module uim.fiori.libraries.rules;
+module uim.fiori.libraries.sapui5.rules;
 
 public:
-    import uim.fiori.libraries.rules.library;
+    import uim.fiori.libraries.sapui5.rules.library;

@@ -1,16 +1,16 @@
-module uim.fiori.libraries.graph.library;
+module uim.fiori.libraries.sapui5.graph.library;
 
 import uim.fiori;
 
 mixin(ShowModule!());
 
 @safe:
-class SAPGraphLibrary : UI5Library {
+class SAPGraphLibrary : SAPUI5Library {
     private static SAPGraphLibrary _instance;
     static string prefix = "graph";
 
     this() {
-        super("SAP Graph Library", "sap.suite.ui.commons.networkgraph.Graph");
+        super("SAP Graph Library", "sap.ui.commons.networkgraph.Graph");
     }
 
     this(string name, string namespace, string version_ = "", string description = "", string author = "", string license = "", string homepage = "") {

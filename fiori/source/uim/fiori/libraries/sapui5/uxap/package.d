@@ -1,4 +1,4 @@
-module uim.fiori.libraries.uxap;
+module uim.fiori.libraries.sapui5.uxap;
 
 public:
-    import uim.fiori.libraries.uxap.library;
+    import uim.fiori.libraries.sapui5.uxap.library;

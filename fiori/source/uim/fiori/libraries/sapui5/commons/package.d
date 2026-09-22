@@ -1,4 +1,4 @@
-module uim.fiori.libraries.commons;
+module uim.fiori.libraries.sapui5.commons;
 
 public:
-    import uim.fiori.libraries.commons.library;
+    import uim.fiori.libraries.sapui5.commons.library;

@@ -1,11 +1,11 @@
-module uim.fiori.libraries.ui.grid;
+module uim.fiori.libraries.sapui5.ui.grid;
 
 import uim.fiori;
 
 mixin(ShowModule!());
 
 @safe:
-class SAPUIGridLibrary : UI5Library {
+class SAPUIGridLibrary : SAPUI5Library {
     private static SAPUIGridLibrary _instance;
     private static string prefix = "grid";
 

@@ -1,11 +1,11 @@
-module uim.fiori.libraries.insights.library;
+module uim.fiori.libraries.sapui5.insights.library;
 
 import uim.fiori;
 
 mixin(ShowModule!());
 
 @safe:
-class SAPInsightsLibrary : UI5Library {
+class SAPInsightsLibrary : SAPUI5Library {
     private static SAPInsightsLibrary _instance;
 
     this() {

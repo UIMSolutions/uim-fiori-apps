@@ -3,39 +3,46 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:f="sap.f"
     xmlns="sap.m">
-    <f:FlexibleColumnLayout id="fcl">
-        <!-- Master Column -->
+    <f:FlexibleColumnLayout id="fcl" layout="OneColumn">
+        
+        <!-- MASTER SPALTE -->
         <f:beginColumnPages>
             <Page title="Architekturbausteine">
                 <headerContent>
                     <Button icon="sap-icon://home" press=".onNavHome" />
                 </headerContent>
                 <content>
-                    <List id="masterList" items="{architectureModel>/}" itemPress=".onListItemPress">
+                    <List 
+                        id="masterList" 
+                        items="{masterData>/}" 
+                        mode="SingleSelectMaster"
+                        selectionChange=".onListItemPress"
+                        itemPress=".onListItemPress">
                         <StandardListItem 
-                            title="{architectureModel>name}" 
-                            description="{architectureModel>id}" 
+                            title="{masterData>name}" 
+                            description="{masterData>id}" 
                             type="Navigation" />
                     </List>
                 </content>
             </Page>
         </f:beginColumnPages>
 
-        <!-- Detail Column -->
+        <!-- DETAIL SPALTE -->
         <f:midColumnPages>
-            <Page title="Details" id="detailPage">
+            <Page title="Details">
                 <content>
                     <ObjectHeader
-                        title="{detailModel>/name}"
-                        number="{detailModel>/id}"
-                        numberUnit="Status: {detailModel>/status}">
+                        title="{detailData>/name}"
+                        number="{detailData>/id}"
+                        numberUnit="Status: {detailData>/status}">
                         <attributes>
-                            <ObjectAttribute title="Typ" text="{detailModel>/type}" />
-                            <ObjectAttribute title="Beschreibung" text="{detailModel>/description}" />
+                            <ObjectAttribute title="Typ" text="{detailData>/type}" />
+                            <ObjectAttribute title="Beschreibung" text="{detailData>/description}" />
                         </attributes>
                     </ObjectHeader>
                 </content>
             </Page>
         </f:midColumnPages>
+
     </f:FlexibleColumnLayout>
 </mvc:View>

@@ -1,4 +1,4 @@
-module uim.fiori.libraries.gantt;
+module uim.fiori.libraries.sapui5.gantt;
 
 public:
-    import uim.fiori.libraries.gantt.library;
+    import uim.fiori.libraries.sapui5.gantt.library;

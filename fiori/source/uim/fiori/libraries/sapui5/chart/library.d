@@ -1,11 +1,11 @@
-module uim.fiori.libraries.chart.library;
+module uim.fiori.libraries.sapui5.chart.library;
 
 import uim.fiori;
 
 mixin(ShowModule!());
 
 @safe:
-class SAPChartLibrary : UI5Library {
+class SAPChartLibrary : SAPUI5Library {
     private static SAPChartLibrary _instance;
 
     this() {

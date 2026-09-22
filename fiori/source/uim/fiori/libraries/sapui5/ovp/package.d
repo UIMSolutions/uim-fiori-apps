@@ -1,4 +1,4 @@
-module uim.fiori.libraries.ovp;
+module uim.fiori.libraries.sapui5.ovp;
 
 public:
-    import uim.fiori.libraries.ovp.library;
+    import uim.fiori.libraries.sapui5.ovp.library;

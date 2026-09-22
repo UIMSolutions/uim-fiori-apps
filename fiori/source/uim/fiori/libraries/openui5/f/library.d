@@ -5,7 +5,7 @@ import uim.fiori;
 mixin(ShowModule!());
 
 @safe:
-class OpenUi5FLibrary : UI5Library {
+class OpenUi5FLibrary : OpenUI5Library {
     private static OpenUi5FLibrary _instance;
     static string prefix = "f";
 

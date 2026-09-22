@@ -1,4 +1,4 @@
-module uim.fiori.libraries.collaboration;
+module uim.fiori.libraries.sapui5.collaboration;
 
 public:
-    import uim.fiori.libraries.collaboration.library;
+    import uim.fiori.libraries.sapui5.collaboration.library;

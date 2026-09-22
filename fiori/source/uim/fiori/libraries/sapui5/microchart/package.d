@@ -1,4 +1,4 @@
-module uim.fiori.libraries.microchart;
+module uim.fiori.libraries.sapui5.microchart;
 
 public:
-    import uim.fiori.libraries.microchart.library;
+    import uim.fiori.libraries.sapui5.microchart.library;
