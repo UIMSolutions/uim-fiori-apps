@@ -6,5 +6,3 @@
 module uim.fiori_blocks.presentation.odata;
 
 public:
-    import uim.fiori_blocks.presentation.odata.controllers;
-    import uim.fiori_blocks.presentation.odata.views;

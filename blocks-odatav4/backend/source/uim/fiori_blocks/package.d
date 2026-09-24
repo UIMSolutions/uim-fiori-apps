@@ -6,6 +6,8 @@
 module uim.fiori_blocks;
 
 public:
+    import uim.fiori;
+    
     import uim.fiori_blocks.application;
     import uim.fiori_blocks.domain;
     import uim.fiori_blocks.infrastructure;

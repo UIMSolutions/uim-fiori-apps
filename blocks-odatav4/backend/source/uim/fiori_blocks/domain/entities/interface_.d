@@ -19,4 +19,16 @@ struct InterfaceBlock {
             .set("Description", Description)
             .set("Status", Status);
     }
+
+    static InterfaceBlock fromJson(Json json) {
+        auto block = InterfaceBlock();
+
+        block.ID = json.getString("");
+        block.Name = json.getString("");
+        block.Type = json.getString(""); // Architecture, Solution, Interfae
+        block.Description = json.getString("");
+        block.Status = json.getString("");
+
+        return block; 
+    }
 }

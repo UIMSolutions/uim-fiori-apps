@@ -17,4 +17,14 @@ struct Dependency {
             .set("Type", Type)
             .set("Criticality", Criticality);
     }
+
+    static Dependency fromJson(Json json) {
+        auto dependency = Dependency();
+        dependency.ID = json.getString("ID", "");
+        dependency.Name = json.getString("Name", "");
+        dependency.Type = json.getString("Type", "");
+        dependency.Criticality = json.getString("Criticality", "");
+
+        return dependency;
+    }
 }
