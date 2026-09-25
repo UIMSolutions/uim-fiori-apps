@@ -7,6 +7,7 @@ module uim.fiori_blocks.presentation.odata;
 
 public:
     import uim.fiori_blocks.presentation.odata.controller;
+    import uim.fiori_blocks.presentation.odata.base;
     import uim.fiori_blocks.presentation.odata.architecture;
     import uim.fiori_blocks.presentation.odata.interfaces;
     import uim.fiori_blocks.presentation.odata.solution;

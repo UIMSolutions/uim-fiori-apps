@@ -1,0 +1,161 @@
+<mvc:View 
+    controllerName="uim.fiori_blocks.controller.BaseMasterDetail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+
+    <f:FlexibleColumnLayout id="fcl" layout="OneColumn">
+
+        <!-- =================================================== -->
+        <!-- MASTER SPALTE (Begin Column)                        -->
+        <!-- =================================================== -->
+        <f:beginColumnPages>
+            <Page title="Base Blocks">
+                <headerContent>
+                    <Button icon="sap-icon://home" press=".onNavHome" tooltip="Hauptmenü" />
+                </headerContent>
+                <content>
+                    <List 
+                        id="masterList" 
+                        items="{/BaseBlocks}" 
+                        mode="SingleSelectMaster" 
+                        selectionChange=".onListItemPress">
+                        <ObjectListItem 
+                            title="{path: 'Name', targetType: 'string'}" 
+                            number="v{path: 'Version', targetType: 'string'}">
+                            <attributes>
+                                <ObjectAttribute 
+                                    title="ID" 
+                                    text="{path: 'ID', targetType: 'string'}" />
+                                <ObjectAttribute 
+                                    title="Verantwortlich" 
+                                    text="{path: 'Responsible', targetType: 'string'}" />
+                            </attributes>
+                        </ObjectListItem>
+                    </List>
+                </content>
+            </Page>
+        </f:beginColumnPages>
+
+        <!-- =================================================== -->
+        <!-- DETAIL SPALTE (Mid Column)                          -->
+        <!-- =================================================== -->
+        <f:midColumnPages>
+            <Page id="detailPage" title="Base Block Details">
+                <content>
+                    <!-- Header -->
+                    <ObjectHeader
+                        title="{path: 'Name', targetType: 'string'}"
+                        number="v{path: 'Version', targetType: 'string'}">
+                        <attributes>
+                            <ObjectAttribute 
+                                title="Verantwortlich" 
+                                text="{path: 'Responsible', targetType: 'string'}" />
+                            <ObjectAttribute 
+                                title="Datum" 
+                                text="{path: 'Date', targetType: 'string'}" />
+                        </attributes>
+                    </ObjectHeader>
+
+                    <!-- Stammdaten (SimpleForm) -->
+                    <form:SimpleForm 
+                        editable="false" 
+                        layout="ColumnLayout"
+                        title="Eigenschaften"
+                        class="sapUiResponsiveMargin">
+                        <form:content>
+                            <Label text="ID" />
+                            <Text text="{path: 'ID', targetType: 'string'}" />
+
+                            <Label text="Name" />
+                            <Text text="{path: 'Name', targetType: 'string'}" />
+
+                            <Label text="Verantwortlich" />
+                            <Text text="{path: 'Responsible', targetType: 'string'}" />
+
+                            <Label text="Version" />
+                            <Text text="{path: 'Version', targetType: 'string'}" />
+
+                            <Label text="Datum" />
+                            <Text text="{path: 'Date', targetType: 'string'}" />
+
+                            <Label text="Beschreibung" />
+                            <Text text="{path: 'Description', targetType: 'string'}" />
+                        </form:content>
+                    </form:SimpleForm>
+
+                    <!-- PANEL 1: ADDITIONAL INFORMATION (string[] Collection) -->
+                    <Panel 
+                        headerText="Zusatzinformationen" 
+                        expandable="true" 
+                        expanded="true"
+                        width="auto"
+                        class="sapUiResponsiveMargin">
+                        <content>
+                            <List 
+                                items="{
+                                    path: 'AdditionalInformation',
+                                    templateShareable: false
+                                }"
+                                noDataText="Keine Zusatzinformationen vorhanden.">
+                                <StandardListItem title="{path: '', targetType: 'string'}" icon="sap-icon://hint" />
+                            </List>
+                        </content>
+                    </Panel>
+
+                    <!-- PANEL 2: DEPENDENCIES (DependsOn) -->
+                    <Panel 
+                        headerText="Abhängigkeiten (Depends On)" 
+                        expandable="true" 
+                        expanded="true"
+                        width="auto"
+                        class="sapUiResponsiveMargin">
+                        <content>
+                            <Table 
+                                items="{
+                                    path: 'DependsOn',
+                                    templateShareable: false
+                                }" 
+                                noDataText="Keine aktiven Abhängigkeiten."
+                                mode="None">
+                                <columns>
+                                    <Column width="120px">
+                                        <Text text="Block ID" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="Name" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="Typ" />
+                                    </Column>
+                                    <Column width="120px" hAlign="End">
+                                        <Text text="Kritizität" />
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem type="Navigation" press=".onDependencyPress">
+                                        <cells>
+                                            <ObjectIdentifier title="{path: 'ID', targetType: 'string'}" />
+                                            <Text text="{path: 'Name', targetType: 'string'}" />
+                                            <Text text="{path: 'Type', targetType: 'string'}" />
+                                            <ObjectStatus 
+                                                text="{path: 'Criticality', targetType: 'string'}" 
+                                                state="{
+                                                    path: 'Criticality',
+                                                    formatter: '.formatCriticalityState'
+                                                }" />
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </content>
+                    </Panel>
+
+                </content>
+            </Page>
+        </f:midColumnPages>
+
+    </f:FlexibleColumnLayout>
+</mvc:View>

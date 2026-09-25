@@ -7,6 +7,7 @@ module uim.fiori_blocks.domain.entities;
 
 public:
     import uim.fiori_blocks.domain.entities.architecture;
+    import uim.fiori_blocks.domain.entities.base;
     import uim.fiori_blocks.domain.entities.dependency;
     import uim.fiori_blocks.domain.entities.interface_;
     import uim.fiori_blocks.domain.entities.solution;

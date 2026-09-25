@@ -5,7 +5,19 @@
     <Page title="Enterprise Architecture Launchpad">
         <content>
             <HBox class="sapUiSmallMargin">
-                
+
+                <GenericTile 
+                    header="Grundbausteine" 
+                    subheader="Verwaltung &amp; Overview" 
+                    press=".onNavigateTo('base')"
+                    class="sapUiTinyMarginEnd">
+                    <tileContent>
+                        <TileContent>
+                            <ImageContent src="sap-icon://product" />
+                        </TileContent>
+                    </tileContent>
+                </GenericTile>
+
                 <GenericTile 
                     header="Architekturbausteine" 
                     subheader="Verwaltung &amp; Overview" 

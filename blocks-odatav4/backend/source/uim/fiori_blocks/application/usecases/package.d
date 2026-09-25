@@ -6,7 +6,8 @@
 module uim.fiori_blocks.application.usecases;
 
 public:
-    import uim.fiori_blocks.application.usecases.solution;
     import uim.fiori_blocks.application.usecases.architecture;
+    import uim.fiori_blocks.application.usecases.base;
     import uim.fiori_blocks.application.usecases.interface_;
+    import uim.fiori_blocks.application.usecases.solution;
     import uim.fiori_blocks.application.usecases.usecase;

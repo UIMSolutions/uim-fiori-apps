@@ -43,7 +43,7 @@ class BlockRepository(T) {
         return _blocks.values();
     }
 
-    T find(string id) {
+    T findById(string id) {
         return exists(id) ? _blocks[id] : T.init;
     }
 

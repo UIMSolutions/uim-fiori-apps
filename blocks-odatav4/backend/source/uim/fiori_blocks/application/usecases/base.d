@@ -1,13 +1,13 @@
-module uim.fiori_blocks.application.usecases.solution;
+module uim.fiori_blocks.application.usecases.base;
 
 import uim.fiori_blocks;
 
 mixin(ShowModule!());
 
 @safe:
-class ManageSolutionUseCase : ManageBlockUseCase!SolutionBlock {
+class ManageBaseUseCase : ManageBlockUseCase!BaseBlock {
 
-  this(SolutionRepository repository) {
+  this(BaseRepository repository) {
     super(repository);
   }
 

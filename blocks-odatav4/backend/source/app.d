@@ -3,7 +3,6 @@ import uim.fiori_blocks;
 
 @safe:
 
-
 // OData v4 Response Wrapper
 struct ODataResponse(T) {
     T value;
@@ -16,6 +15,20 @@ void getMetadata(HTTPServerRequest req, HTTPServerResponse res) {
 <edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
   <edmx:DataServices>
     <Schema Namespace="EAModel" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        
+        <EntityType Name="BaseBlock">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="ID" Type="Edm.String" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" />
+        <Property Name="Responsible" Type="Edm.String" />
+        <Property Name="Version" Type="Edm.String" />
+        <Property Name="Date" Type="Edm.String" />
+        <Property Name="Description" Type="Edm.String" />
+        <Property Name="AdditionalInformation" Type="Collection(Edm.String)" />
+      </EntityType>
+      
       <EntityType Name="ArchitectureBlock">
         <Key>
           <PropertyRef Name="ID" />
@@ -89,7 +102,7 @@ void getInterfaceBlockById(HTTPServerRequest req, HTTPServerResponse res) {
     }
 
     auto interfaces = new InterfaceRepository;
-    auto match = interfaces36.findById(rawId);
+    auto match = interfaces.findById(rawId);
 
     res.contentType = "application/json;odata.metadata=minimal;charset=utf-8";
     res.headers["OData-Version"] = "4.0";
@@ -132,7 +145,11 @@ void getInterfaceBlockByIdOrAll(HTTPServerRequest req, HTTPServerResponse res) {
         writeln("No specific ID provided, returning all Interface blocks");
 
         auto interfaces = new InterfaceRepository;
-        auto filtered = interfaces.findAll.filter!(b => b.Type == "Interface").map!(b => b.toJson).array.toJson;
+        auto filtered = interfaces.findAll
+            .filter!(b => b.Type == "Interface")
+            .map!(b => b.toJson)
+            .array
+            .toJson;
         res.headers["OData-Version"] = "4.0";
         res.contentType = "application/json;odata.metadata=minimal;charset=utf-8";
         res.writeJsonBody(Json.emptyObject.set("value", filtered));

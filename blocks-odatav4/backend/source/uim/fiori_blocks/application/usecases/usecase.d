@@ -54,7 +54,7 @@ class ManageBlockUseCase(T) {
       if (repository is null)
         return T.init;
 
-      return repository.find(id);
+      return repository.findById(id);
     }
 
     T[] listBlocks() {
@@ -69,7 +69,7 @@ class ManageBlockUseCase(T) {
       // Implementation for updating a block
       if (!data.hasKey("ID")) return;
 
-      auto block = repository.find(data.getString("ID"));
+      auto block = repository.findById(data.getString("ID"));
 
     }
 
