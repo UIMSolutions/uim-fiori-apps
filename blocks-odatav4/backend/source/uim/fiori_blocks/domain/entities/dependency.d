@@ -10,6 +10,10 @@ struct Dependency {
     string Type;         // z.B. "Uses API", "Requires DB", "Event Trigger"
     string Criticality;  // z.B. "High", "Medium", "Low"
 
+    bool isNull() const {
+        return ID.length == 0;
+    }
+
     Json toJson() const {
         return Json.emptyObject
             .set("ID", ID)
@@ -27,4 +31,5 @@ struct Dependency {
 
         return dependency;
     }
+
 }

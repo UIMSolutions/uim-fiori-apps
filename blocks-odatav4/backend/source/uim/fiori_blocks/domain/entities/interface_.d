@@ -11,6 +11,10 @@ struct InterfaceBlock {
     string Description;
     string Status;
 
+    bool isNull() const {
+        return ID.length == 0;
+    }
+
     Json toJson() const {
         return Json.emptyObject
             .set("ID", ID)

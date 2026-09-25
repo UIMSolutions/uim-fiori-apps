@@ -6,9 +6,18 @@ mixin(ShowModule!());
 
 @safe:
 class ManageBlockUseCase(T) {
-  protected Repository!T _repository;
 
-  this(Repository!T repository) {
+  this(BlockRepository!T repository) {
+    this._repository = repository;
+  }
+
+
+  protected BlockRepository!T _repository;
+  BlockRepository!T repository() {
+    return this._repository;
+  }
+
+  void repository(BlockRepository!T repository) {
     this._repository = repository;
   }
 
@@ -21,7 +30,7 @@ class ManageBlockUseCase(T) {
       if (repository is null)
         return false;
 
-      return repository.existsById(id);
+      return repository.exists(id);
     }
 
     bool hasAllBlocks(string[] ids) {
@@ -29,7 +38,7 @@ class ManageBlockUseCase(T) {
       if (repository is null)
         return false;
 
-      return repository.existsAllId(ids);
+      return repository.existsAll(ids);
     }
 
     bool hasAnyBlock(string[] ids) {
@@ -37,7 +46,7 @@ class ManageBlockUseCase(T) {
       if (repository is null)
         return false;
 
-      return repository.existsAnyId(ids);
+      return repository.existsAny(ids);
     }
 
     // Implementation for getting the exported block
@@ -45,7 +54,7 @@ class ManageBlockUseCase(T) {
       if (repository is null)
         return T.init;
 
-      return repository.findById(id);
+      return repository.find(id);
     }
 
     T[] listBlocks() {
@@ -60,7 +69,7 @@ class ManageBlockUseCase(T) {
       // Implementation for updating a block
       if (!data.hasKey("ID")) return;
 
-      auto block = repository.findById(data["ID"]);
+      auto block = repository.find(data.getString("ID"));
 
     }
 
@@ -74,6 +83,6 @@ class ManageBlockUseCase(T) {
       if (repository is null)
         return;
 
-      repository.removeById(id);
+      repository.remove(id);
     }
 }

@@ -89,7 +89,7 @@ void getInterfaceBlockById(HTTPServerRequest req, HTTPServerResponse res) {
     }
 
     auto interfaces = new InterfaceRepository;
-    auto match = interfaces.findById(rawId);
+    auto match = interfaces36.findById(rawId);
 
     res.contentType = "application/json;odata.metadata=minimal;charset=utf-8";
     res.headers["OData-Version"] = "4.0";

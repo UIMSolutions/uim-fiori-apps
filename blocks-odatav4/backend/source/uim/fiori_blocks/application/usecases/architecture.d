@@ -7,14 +7,14 @@ mixin(ShowModule!());
 @safe:
 class ManageArchitectureUseCase : ManageBlockUseCase!ArchitectureBlock {
   this(ArchitectureRepository repository) {
-    this._repository = repository;
+    super(repository);
   }
 
-  void createBlock(Json data) {
+  override void createBlock(Json data) {
     // Implementation for creating a block
   }
-
-  void updateBlock(Json data) {
+  
+  override void updateBlock(Json data) {
     // Implementation for updating a block
   }
 

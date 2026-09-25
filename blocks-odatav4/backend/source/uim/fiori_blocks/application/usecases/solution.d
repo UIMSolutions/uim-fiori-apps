@@ -5,18 +5,24 @@ import uim.fiori_blocks;
 mixin(ShowModule!());
 
 @safe:
-class ManageSolutionUseCase {
+class ManageSolutionUseCase : ManageBlockUseCase!SolutionBlock {
 
   this(SolutionRepository repository) {
-    this._repository = repository;
+    super(repository);
   }
 
-  void createBlock(Json data) {
+  override void createBlock(Json data) {
     // Implementation for creating a block
   }
 
-  void updateBlock(Json data) {
+  override void updateBlock(Json data) {
     // Implementation for updating a block
+    if (!data.hasKey("ID"))
+      return;
+
+    auto block = repository.find(data.getString("ID"));
+    if (block.isNull)
+      return;
   }
 
 }

@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.fiori_blocks.infrastructure.repositories.repository;
 
 import uim.fiori_blocks;
@@ -10,32 +15,40 @@ class BlockRepository(T) {
     this() {
     }
     
-    bool existsById(string id) {
+    bool exists(string id) {
         return id in _blocks ? true : false;
     }
 
+    bool existsAll(string[] ids) {
+        return ids.all!(id => exists(id));
+    }
+
+    bool existsAny(string[] ids) {
+        return ids.any!(id => exists(id));
+    }
+
     bool existsAll(T[] blocks) {
-        return blocks.all!(block => existsById(block.ID));
+        return blocks.all!(block => exists(block.ID));
     }
 
     bool existsAny(T[] blocks) {
-        return blocks.any!(block => existsById(block.ID));
+        return blocks.any!(block => exists(block.ID));
     }
 
     bool exists(T block) {
-        return existsById(block.ID);
+        return exists(block.ID);
     }
 
     T[] findAll() {
         return _blocks.values();
     }
 
-    T findById(string id) {
-        return existsById(id) ? _blocks[id] : T.init;
+    T find(string id) {
+        return exists(id) ? _blocks[id] : T.init;
     }
 
     void update(T block) {
-        if (existsById(block.ID)) {
+        if (exists(block.ID)) {
             _blocks[block.ID] = block;
         }
     }
@@ -52,11 +65,11 @@ class BlockRepository(T) {
         _blocks[block.ID] = block;
     }
 
-    void removeById(string[] ids) {
-        ids.each!(id => removeById(id));
+    void remove(string[] ids) {
+        ids.each!(id => remove(id));
     }
 
-    void removeById(string id) {
+    void remove(string id) {
         _blocks.remove(id);
     }
 

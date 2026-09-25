@@ -18,6 +18,10 @@ struct ArchitectureBlock {
 
     Dependency[] DependsOn;
 
+    bool isNull() const {
+        return ID.length == 0;
+    }
+
     Json toJson() const {
         return Json.emptyObject
             .set("ID", ID)
@@ -50,4 +54,5 @@ struct ArchitectureBlock {
 
         return block;
     }
+
 }
