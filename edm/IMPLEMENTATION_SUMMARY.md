@@ -9,7 +9,7 @@ edm/
 ├── dub.sdl                          # Package configuration
 ├── README.md                        # Comprehensive documentation
 ├── source/uim/edm/
-│   ├── package.d                    # Main module  
+│   ├── package.d                    # Main module 
 │   ├── enumerations/
 │   │   ├── package.d
 │   │   ├── primitivetypes.d         # EDM primitive types (Int32, String, Date, etc.)
