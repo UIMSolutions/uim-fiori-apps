@@ -10,7 +10,7 @@
 
         <!-- MASTER SPALTE -->
         <f:beginColumnPages>
-            <Page title="Solution Blocks">
+            <Page title="Lösungsbausteine">
                 <headerContent>
                     <Button icon="sap-icon://home" press=".onNavHome" tooltip="Hauptmenü" />
                 </headerContent>
@@ -40,7 +40,7 @@
 
         <!-- DETAIL SPALTE -->
         <f:midColumnPages>
-            <Page id="detailPage" title="Solution Block Details">
+            <Page id="detailPage" title="Lösungsbaustein Details">
                 <content>
                     <!-- Header -->
                     <ObjectHeader

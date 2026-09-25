@@ -9,10 +9,10 @@ class BaseRepository : BlockRepository!BaseBlock {
         _blocks["SB-01"] = BaseBlock("BB-01", "SAP S/4HANA Finance", "Finance Base", "1.0", "2024-01-01", "S/4HANA", [
             "Dies und jenes"
         ], [
-                Dependency("SB-02", "SAP S/4HANA Sales", "REST API Call", "High"),
-                Dependency("SB-03", "SAP S/4HANA Procurement", "REST API Call", "Medium")
+                Dependency("BB-02", "SAP S/4HANA Sales", "REST API Call", "High"),
+                Dependency("BB-03", "SAP S/4HANA Procurement", "REST API Call", "Medium")
             ]);
-        _blocks["SB-02"] = BaseBlock("SB-02", "SAP S/4HANA Sales", "Sales Base", "1.0", "2024-01-01", "S/4HANA", [
+        _blocks["BB-02"] = BaseBlock("BB-02", "SAP S/4HANA Sales", "Sales Base", "1.0", "2024-01-01", "S/4HANA", [
             ]);
 
     }
@@ -22,18 +22,20 @@ unittest {
     import uim.fiori_blocks.infrastructure.repositories.solution;
 
     auto repo = new BaseRepository();
-    auto block1 = BaseBlock("BB-01", "SAP S/4HANA Finance", "Finance Base", "Haupt-ERP Finanzmodul", "2024-01-01", "2026-12-31", "1.0", "2024-01-01", "Zusätzliche Informationen", "Max Mustermann", [
-                Dependency("SB-02", "SAP S/4HANA Sales", "REST API Call", "High"),
-                Dependency("SB-03", "SAP S/4HANA Procurement", "REST API Call", "Medium")
+        auto block1 = BaseBlock("BB-01", "SAP S/4HANA Finance", "Finance Base", "1.0", "2024-01-01", "S/4HANA", [
+            "Dies und jenes"
+        ], [
+                Dependency("BB-02", "SAP S/4HANA Sales", "REST API Call", "High"),
+                Dependency("BB-03", "SAP S/4HANA Procurement", "REST API Call", "Medium")
             ]);
-    auto block2 = BaseBlock("SB-02", "SAP S/4HANA Sales", "Sales Base", "Haupt-ERP Vertriebsmodul", "2024-01-01", "2026-12-31", "1.0", "2024-01-01", "Zusätzliche Informationen", "Jane Doe", [
+        auto block2 = BaseBlock("BB-02", "SAP S/4HANA Sales", "Sales Base", "1.0", "2024-01-01", "S/4HANA", [
             ]);
 
     repo.save(block1);
     repo.save(block2);
     
     void testBaseRepository() {
-        assert(repo.exists("SB-01"));
+        assert(repo.exists("BB-01"));
         assert(!repo.exists("NON-EXISTENT"));
     }
 
@@ -43,38 +45,38 @@ unittest {
     }
 
     void testBaseRepositoryHasBlock() {
-        assert(repo.exists("SB-01"));
+        assert(repo.exists("BB-01"));
         assert(!repo.exists("NON-EXISTENT"));
     }
 
     void testBaseRepositoryHasAllBlocks() {
-        assert(repo.existsAll(["SB-01", "SB-02"]));
-        assert(!repo.existsAll(["SB-01", "NON-EXISTENT"]));
+        assert(repo.existsAll(["BB-01", "BB-02"]));
+        assert(!repo.existsAll(["BB-01", "NON-EXISTENT"]));
     }
 
     void testBaseRepositoryHasAnyBlock() {
-        assert(repo.existsAny(["SB-01", "NON-EXISTENT"]));
+        assert(repo.existsAny(["BB-01", "NON-EXISTENT"]));
         assert(!repo.existsAny(["NON-EXISTENT", "ANOTHER-NON-EXISTENT"]));
     }
 
     void testBaseRepositoryGetBlock() {
-        auto block = repo.find("SB-01");
+        auto block = repo.find("BB-01");
         assert(!block.isNull);
         auto nonExistentBlock = repo.find("NON-EXISTENT");
         assert(nonExistentBlock.isNull);
     }
 
     void testBaseRepositoryDeleteBlock() {
-        assert(repo.exists("SB-02"));
-        repo.remove("SB-02");
-        assert(!repo.exists("SB-02"));
+        assert(repo.exists("BB-02"));
+        repo.remove("BB-02");
+        assert(!repo.exists("BB-02"));
     }
 
     void testBaseRepositoryAddBlock() {
-        auto newBlock = BaseBlock("SB-03", "SAP S/4HANA Procurement", "Procurement Base", "Haupt-ERP Beschaffungsmodul", "2024-01-01", "2026-12-31", "1.0", "2024-01-01", "Zusätzliche Informationen", "John Doe", [
+        auto newBlock = BaseBlock("BB-03", "SAP S/4HANA Procurement", "Procurement Base", "Haupt-ERP Beschaffungsmodul", "2024-01-01", "2026-12-31", "1.0", "2024-01-01", "Zusätzliche Informationen", "John Doe", [
             ]);
         repo.save(newBlock);
-        assert(repo.exists("SB-03"));
+        assert(repo.exists("BB-03"));
     }
 
     void testAll() {

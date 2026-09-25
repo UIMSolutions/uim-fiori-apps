@@ -44,7 +44,7 @@
         <!-- DETAIL SPALTE (Mid Column)                          -->
         <!-- =================================================== -->
         <f:midColumnPages>
-            <Page id="detailPage" title="Baustein-Details">
+            <Page id="detailPage" title="Architekturbaustein Details">
                 <content>
                     <!-- Header Übersicht -->
                     <ObjectHeader

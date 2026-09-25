@@ -11,3 +11,4 @@ public:
     import uim.fiori_blocks.presentation.odata.architecture;
     import uim.fiori_blocks.presentation.odata.interfaces;
     import uim.fiori_blocks.presentation.odata.solution;
+    import uim.fiori_blocks.presentation.odata.batch;

@@ -34,8 +34,15 @@
         "settings": {
           "synchronizationMode": "None",
           "operationMode": "Server",
-          "groupId": "$direct"
+          "autoExpandSelect": true,
+          "updateGroupId": "$auto"
         }
+      },
+      "resources": {
+        "js": [
+          { "uri": "thirdparty/docx.js" },
+          { "uri": "thirdparty/FileSaver.js" }
+        ]
       }
     },
     "routing": {

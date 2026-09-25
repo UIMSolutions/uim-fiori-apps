@@ -1,5 +1,4 @@
-<mvc:View 
-    controllerName="uim.fiori_blocks.controller.BaseMasterDetail"
+<mvc:View controllerName="ea.architecture.manager.controller.BaseMasterDetail"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:f="sap.f"
     xmlns:form="sap.ui.layout.form"
@@ -12,26 +11,16 @@
         <!-- MASTER SPALTE (Begin Column)                        -->
         <!-- =================================================== -->
         <f:beginColumnPages>
-            <Page title="Base Blocks">
+            <Page title="Grundbausteine">
                 <headerContent>
                     <Button icon="sap-icon://home" press=".onNavHome" tooltip="Hauptmenü" />
                 </headerContent>
                 <content>
-                    <List 
-                        id="masterList" 
-                        items="{/BaseBlocks}" 
-                        mode="SingleSelectMaster" 
-                        selectionChange=".onListItemPress">
-                        <ObjectListItem 
-                            title="{path: 'Name', targetType: 'string'}" 
-                            number="v{path: 'Version', targetType: 'string'}">
+                    <List id="masterList" items="{/BaseBlocks}" mode="SingleSelectMaster" selectionChange=".onListItemPress">
+                        <ObjectListItem title="{path: 'Name', targetType: 'string'}" number="v{path: 'Version', targetType: 'string'}">
                             <attributes>
-                                <ObjectAttribute 
-                                    title="ID" 
-                                    text="{path: 'ID', targetType: 'string'}" />
-                                <ObjectAttribute 
-                                    title="Verantwortlich" 
-                                    text="{path: 'Responsible', targetType: 'string'}" />
+                                <ObjectAttribute title="ID" text="{path: 'ID', targetType: 'string'}" />
+                                <ObjectAttribute title="Verantwortlich" text="{path: 'Responsible', targetType: 'string'}" />
                             </attributes>
                         </ObjectListItem>
                     </List>
@@ -43,83 +32,67 @@
         <!-- DETAIL SPALTE (Mid Column)                          -->
         <!-- =================================================== -->
         <f:midColumnPages>
-            <Page id="detailPage" title="Base Block Details">
+            <Page id="detailPage" title="Grundbaustein Details">
+                <headerContent>
+                    <!-- Aktions-Buttons -->
+                    <Button id="btnEdit" icon="sap-icon://edit" text="Bearbeiten" type="Emphasized" press=".onEditPress" />
+                    <Button id="btnSave" icon="sap-icon://save" text="Speichern" type="Accept" visible="false" press=".onSavePress" />
+                    <Button id="btnCancel" icon="sap-icon://cancel" text="Abbrechen" visible="false" press=".onCancelPress" />
+                    <Button id="btnDelete" icon="sap-icon://delete" type="Reject" tooltip="Löschen" press=".onDeletePress" />
+                    <Button id="btnPrint" icon="sap-icon://print" tooltip="Drucken" press=".onPrintPress" />
+                    <Button id="btnExportExcel" icon="sap-icon://excel-attachment" tooltip="Export nach Excel" press=".onExportExcelPress" />
+                    <Button id="btnExportWord" icon="sap-icon://doc-attachment" tooltip="Export nach Word" press=".onExportWordPress" />
+                    <Button id="btnExportWordDocx" icon="sap-icon://document-text" tooltip="Export als echte DOCX" press=".onExportDocxPress" />
+                </headerContent>
                 <content>
                     <!-- Header -->
-                    <ObjectHeader
-                        title="{path: 'Name', targetType: 'string'}"
-                        number="v{path: 'Version', targetType: 'string'}">
+                    <ObjectHeader title="{path: 'Name', targetType: 'string'}" number="v{path: 'Version', targetType: 'string'}">
                         <attributes>
-                            <ObjectAttribute 
-                                title="Verantwortlich" 
-                                text="{path: 'Responsible', targetType: 'string'}" />
-                            <ObjectAttribute 
-                                title="Datum" 
-                                text="{path: 'Date', targetType: 'string'}" />
+                            <ObjectAttribute title="Verantwortlich" text="{path: 'Responsible', targetType: 'string'}" />
+                            <ObjectAttribute title="Datum" text="{path: 'Date', targetType: 'string'}" />
                         </attributes>
                     </ObjectHeader>
 
-                    <!-- Stammdaten (SimpleForm) -->
-                    <form:SimpleForm 
-                        editable="false" 
-                        layout="ColumnLayout"
-                        title="Eigenschaften"
-                        class="sapUiResponsiveMargin">
+                    <!-- Stammdaten Formular -->
+                    <form:SimpleForm id="detailForm" editable="false" layout="ColumnLayout" title="Eigenschaften" class="sapUiResponsiveMargin">
                         <form:content>
                             <Label text="ID" />
                             <Text text="{path: 'ID', targetType: 'string'}" />
 
                             <Label text="Name" />
-                            <Text text="{path: 'Name', targetType: 'string'}" />
+                            <Text text="{path: 'Name', targetType: 'string'}" visible="{= !${ui>/isEditMode} }" />
+                            <Input value="{Name}" visible="{ui>/isEditMode}" />
 
                             <Label text="Verantwortlich" />
-                            <Text text="{path: 'Responsible', targetType: 'string'}" />
+                            <Text text="{path: 'Responsible', targetType: 'string'}" visible="{= !${ui>/isEditMode} }" />
+                            <Input value="{Responsible}" visible="{ui>/isEditMode}" />
 
                             <Label text="Version" />
-                            <Text text="{path: 'Version', targetType: 'string'}" />
+                            <Text text="{path: 'Version', targetType: 'string'}" visible="{= !${ui>/isEditMode} }" />
+                            <Input value="{Version}" visible="{ui>/isEditMode}" />
 
                             <Label text="Datum" />
-                            <Text text="{path: 'Date', targetType: 'string'}" />
+                            <Text text="{path: 'Date', targetType: 'string'}" visible="{= !${ui>/isEditMode} }" />
+                            <DatePicker value="{Date}" valueFormat="yyyy-MM-dd" displayFormat="medium" visible="{ui>/isEditMode}" />
 
                             <Label text="Beschreibung" />
-                            <Text text="{path: 'Description', targetType: 'string'}" />
+                            <Text text="{path: 'Description', targetType: 'string'}" visible="{= !${ui>/isEditMode} }" />
+                            <TextArea value="{Description}" rows="3" visible="{ui>/isEditMode}" />
                         </form:content>
                     </form:SimpleForm>
 
-                    <!-- PANEL 1: ADDITIONAL INFORMATION (string[] Collection) -->
-                    <Panel 
-                        headerText="Zusatzinformationen" 
-                        expandable="true" 
-                        expanded="true"
-                        width="auto"
-                        class="sapUiResponsiveMargin">
+                    <!-- Panels für Zusatzinformationen und Abhängigkeiten analog belassen -->
+                    <Panel headerText="Zusatzinformationen" expandable="true" expanded="true" width="auto" class="sapUiResponsiveMargin">
                         <content>
-                            <List 
-                                items="{
-                                    path: 'AdditionalInformation',
-                                    templateShareable: false
-                                }"
-                                noDataText="Keine Zusatzinformationen vorhanden.">
-                                <StandardListItem title="{path: '', targetType: 'string'}" icon="sap-icon://hint" />
+                            <List items="{path: 'AdditionalInformation', templateShareable: false}" noDataText="Keine Zusatzinformationen vorhanden.">
+                                <StandardListItem title="{path: '', targetType: 'any'}" icon="sap-icon://hint" />
                             </List>
                         </content>
                     </Panel>
 
-                    <!-- PANEL 2: DEPENDENCIES (DependsOn) -->
-                    <Panel 
-                        headerText="Abhängigkeiten (Depends On)" 
-                        expandable="true" 
-                        expanded="true"
-                        width="auto"
-                        class="sapUiResponsiveMargin">
+                    <Panel headerText="Abhängigkeiten (Depends On)" expandable="true" expanded="true" width="auto" class="sapUiResponsiveMargin">
                         <content>
-                            <Table 
-                                items="{
-                                    path: 'DependsOn',
-                                    templateShareable: false
-                                }" 
-                                noDataText="Keine aktiven Abhängigkeiten."
-                                mode="None">
+                            <Table items="{path: 'DependsOn', templateShareable: false}" noDataText="Keine aktiven Abhängigkeiten." mode="None">
                                 <columns>
                                     <Column width="120px">
                                         <Text text="Block ID" />
@@ -137,15 +110,10 @@
                                 <items>
                                     <ColumnListItem type="Navigation" press=".onDependencyPress">
                                         <cells>
-                                            <ObjectIdentifier title="{path: 'ID', targetType: 'string'}" />
-                                            <Text text="{path: 'Name', targetType: 'string'}" />
-                                            <Text text="{path: 'Type', targetType: 'string'}" />
-                                            <ObjectStatus 
-                                                text="{path: 'Criticality', targetType: 'string'}" 
-                                                state="{
-                                                    path: 'Criticality',
-                                                    formatter: '.formatCriticalityState'
-                                                }" />
+                                            <ObjectIdentifier title="{path: 'ID', targetType: 'any'}" />
+                                            <Text text="{path: 'Name', targetType: 'any'}" />
+                                            <Text text="{path: 'Type', targetType: 'any'}" />
+                                            <ObjectStatus text="{path: 'Criticality', targetType: 'any'}" state="{path: 'Criticality', targetType: 'any', formatter: '.formatCriticalityState'}" />
                                         </cells>
                                     </ColumnListItem>
                                 </items>

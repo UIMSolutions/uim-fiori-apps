@@ -26,7 +26,7 @@
 
         <!-- DETAIL SPALTE -->
         <f:midColumnPages>
-            <Page title="Details" id="detailPage">
+            <Page title="Schnittstellenbaustein Details" id="detailPage">
                 <content>
                     <!-- OData v4 Context Binding in der Detailansicht -->
                     <ObjectHeader title="{Name}" number="{ID}" numberUnit="Status: {Status}">
