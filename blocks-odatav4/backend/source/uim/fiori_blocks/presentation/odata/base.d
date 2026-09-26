@@ -136,9 +136,80 @@ class BaseODataController : ODataController {
     return true;
   }
 
-  /// GET /Entities (Alle Entitäten als JSON abrufen)
-  Json getEntitiesJson() {
-    auto blocks = _useCase.listBlocks();
-    return blocks.map!(block => block.toJson).array.toJson;
+  BatchResponseItem response(BatchRequestItem item) {
+    // Implement the logic to handle the batch request for BaseBlocks
+    // This is a placeholder implementation and should be replaced with actual logic
+    auto response = BatchResponseItem(item.id, 200, Json.emptyObject);
+
+    switch (item.method) {
+    case "GET":
+      // Handle GET request
+      auto urlParts = item.url.split("?");
+      if (urlParts.length > 0) {
+        auto path = urlParts[0];
+        writeln("ODataRouter: URL path: ", path);
+        auto query = urlParts.length > 1 ? urlParts[1] : "";
+        writeln("ODataRouter: URL query: ", query);
+
+        if (path == "BaseBlocks") {
+          writeln("ODataRouter: Handling GET request for BaseBlocks entity set");
+          response.body = Json.emptyObject
+            .set("@odata.context", "$metadata#"~path)
+            .set("value", _useCase.listBlocks().map!(block => block.toJson).array.toJson); // Handle GET request for BaseBlocks entity set
+          return response;
+        }
+
+        if (path.startsWith("BaseBlocks(")) {
+          writeln("ODataRouter: Handling GET request for a single BaseBlocks entity");
+          auto subParts = path.split("/");
+          writeln("ODataRouter: URL sub-parts: ", subParts);
+          auto entity = subParts[0];
+          auto idStart = entity.indexOf('(') + 1;
+          auto idEnd = entity.indexOf(')');
+          auto id = entity[idStart .. idEnd].replace("'", "").strip;
+          writeln("ODataRouter: Extracted ID from URL: ", id);
+          auto block = _useCase.getBlock(id);
+          writeln("ODataRouter: Retrieved block: ", block);
+          if (block.isNull) {
+            response.body = Json.emptyObject;
+            return response;
+          }
+
+          if (subParts.length == 1) {
+            writeln("ODataRouter: Handling GET request for the DependsOn relationship of a single BaseBlocks entity");
+            response.body = Json.emptyObject
+                .set("@odata.context", "$metadata#"~path)
+                .set("value", block.DependsOn.map!(block => block.toJson).array.toJson); // Handle GET request for BaseBlocks entity set
+              return response;
+          }
+
+          if (subParts.length > 1) {
+            writeln("ODataRouter: Handling GET request for a relationship of a single BaseBlocks entity");
+            if (subParts[1] == "DependsOn") {
+              response.body = Json.emptyObject
+                .set("@odata.context", "$metadata#"~path)
+                .set("value", block.DependsOn.map!(block => block.toJson).array.toJson); // Handle GET request for BaseBlocks entity set
+              return response;
+            }
+          }
+        }
+      }
+      break;
+    case "POST":
+      // Handle POST request
+      break;
+    case "PATCH":
+      // Handle PATCH request
+      break;
+    case "DELETE":
+      // Handle DELETE request
+      break;
+    default:
+      // Handle unknown method
+      break;
+    }
+
+    return response;
+
   }
 }

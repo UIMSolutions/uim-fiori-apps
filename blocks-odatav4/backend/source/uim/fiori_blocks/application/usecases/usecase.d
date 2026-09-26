@@ -55,10 +55,13 @@ class ManageBlockUseCase(T) {
 
     // Implementation for getting the exported block
     T getBlock(string id) {
+      writeln("ManageBlockUseCase: Getting block with ID: ", id);
       if (repository is null)
         return T.init;
 
-      return repository.findById(id);
+      auto block = repository.findById(id);
+      writeln("ManageBlockUseCase: Retrieved block: ", block);
+      return block;
     }
 
     T[] listBlocks() {

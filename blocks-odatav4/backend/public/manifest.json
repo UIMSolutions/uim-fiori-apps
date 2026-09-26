@@ -61,22 +61,102 @@
           "target": "launchpad"
         },
         {
-          "name": "base",
+          "name": "base_show",
           "pattern": "base",
           "target": "baseMasterDetail"
         },
         {
-          "name": "architecture",
+          "name": "base_edit",
+          "pattern": "base",
+          "target": "baseMasterDetail"
+        },
+        {
+          "name": "base_import",
+          "pattern": "base",
+          "target": "baseMasterDetail"
+        },
+        {
+          "name": "base_export",
+          "pattern": "base",
+          "target": "baseMasterDetail"
+        },
+        {
+          "name": "base_analyze",
+          "pattern": "base",
+          "target": "baseMasterDetail"
+        },
+        {
+          "name": "architecture_show",
           "pattern": "architecture",
           "target": "architectureMasterDetail"
         },
         {
-          "name": "solution",
+          "name": "architecture_edit",
+          "pattern": "architecture",
+          "target": "architectureMasterDetail"
+        },
+        {
+          "name": "architecture_import",
+          "pattern": "architecture",
+          "target": "architectureMasterDetail"
+        },
+        {
+          "name": "architecture_export",
+          "pattern": "architecture",
+          "target": "architectureMasterDetail"
+        },
+        {
+          "name": "architecture_analyze",
+          "pattern": "architecture",
+          "target": "architectureMasterDetail"
+        },
+        {
+          "name": "solution_show",
           "pattern": "solution",
           "target": "solutionMasterDetail"
         },
         {
-          "name": "interface",
+          "name": "solution_edit",
+          "pattern": "solution",
+          "target": "solutionMasterDetail"
+        },
+        {
+          "name": "solution_import",
+          "pattern": "solution",
+          "target": "solutionMasterDetail"
+        },
+        {
+          "name": "solution_export",
+          "pattern": "solution",
+          "target": "solutionMasterDetail"
+        },
+        {
+          "name": "solution_analyze",
+          "pattern": "solution",
+          "target": "solutionMasterDetail"
+        },
+        {
+          "name": "interface_show",
+          "pattern": "interface",
+          "target": "interfaceMasterDetail"
+        },
+        {
+          "name": "interface_edit",
+          "pattern": "interface",
+          "target": "interfaceMasterDetail"
+        },
+        {
+          "name": "interface_import",
+          "pattern": "interface",
+          "target": "interfaceMasterDetail"
+        },
+        {
+          "name": "interface_export",
+          "pattern": "interface",
+          "target": "interfaceMasterDetail"
+        },
+        {
+          "name": "interface_analyze",
           "pattern": "interface",
           "target": "interfaceMasterDetail"
         }

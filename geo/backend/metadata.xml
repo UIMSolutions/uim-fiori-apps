@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:DataServices>
+    <Schema Namespace="GeoService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="Location">
+        <Key><PropertyRef Name="ID"/></Key>
+        <Property Name="ID" Type="Edm.String" Nullable="false" MaxLength="40"/>
+        <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="200"/>
+        <Property Name="Longitude" Type="Edm.Double" Nullable="false"/>
+        <Property Name="Latitude" Type="Edm.Double" Nullable="false"/>
+        <Property Name="Category" Type="Edm.String" Nullable="false" MaxLength="60"/>
+        <Property Name="CreatedAt" Type="Edm.DateTimeOffset" Nullable="false" Precision="6"/>
+      </EntityType>
+      <EntityContainer Name="Container">
+        <EntitySet Name="Locations" EntityType="GeoService.Location"/>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

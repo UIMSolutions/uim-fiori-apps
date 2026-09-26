@@ -1,0 +1,40 @@
+{
+  "_version": "1.65.0",
+  "sap.app": {
+    "id": "geo.fiori",
+    "type": "application",
+    "title": "Standorte",
+    "dataSources": {
+      "geoService": {
+        "uri": "/odata/v4/geo/",
+        "type": "OData",
+        "settings": { "odataVersion": "4.0" }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": { "desktop": true, "tablet": true, "phone": true }
+  },
+  "sap.ui5": {
+    "rootView": { "viewName": "geo.fiori.view.App", "type": "XML", "async": true, "id": "app" },
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": { "sap.ui.core": {}, "sap.m": {}, "sap.ui.vbm": {} }
+    },
+    "models": {
+      "": {
+        "dataSource": "geoService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "groupId": "$auto",
+          "updateGroupId": "$auto"
+        }
+      },
+      "view": { "type": "sap.ui.model.json.JSONModel" }
+    }
+  }
+}

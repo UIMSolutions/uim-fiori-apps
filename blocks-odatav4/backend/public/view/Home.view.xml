@@ -1,59 +1,133 @@
-<mvc:View
-    controllerName="ea.architecture.manager.controller.Home"
+<mvc:View controllerName="ea.architecture.manager.controller.Home"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
-    <Page title="Enterprise Architecture Launchpad">
+    xmlns="sap.m"
+    xmlns:f="sap.f">
+    <Page title="Enterprise Architecture Launchpad" class="sapUiContentPadding">
+        <subHeader>
+            <OverflowToolbar>
+                <Label text="Springe zu:" class="sapUiTinyMarginEnd" />
+                <Button text="Grundbausteine" type="Transparent" press=".onScrollToGroup('groupBase')" />
+                <Button text="Architekturbausteine" type="Transparent" press=".onScrollToGroup('groupArchitecture')" />
+                <Button text="Lösungsbausteine" type="Transparent" press=".onScrollToGroup('groupSolution')" />
+                <Button text="Schnittstellenbausteine" type="Transparent" press=".onScrollToGroup('groupInterface')" />
+            </OverflowToolbar>
+        </subHeader>
         <content>
-            <HBox class="sapUiSmallMargin">
+            <VBox class="sapUiContentPadding">
 
-                <GenericTile 
-                    header="Grundbausteine" 
-                    subheader="Verwaltung &amp; Overview" 
-                    press=".onNavigateTo('base')"
-                    class="sapUiTinyMarginEnd">
-                    <tileContent>
-                        <TileContent>
-                            <ImageContent src="sap-icon://product" />
-                        </TileContent>
-                    </tileContent>
-                </GenericTile>
+                <!-- Gruppe 1: Grundbausteine -->
+                <VBox id="groupBase" class="sapUiSmallMarginBottom">
+                    <Title text="Grundbausteine" level="H2" titleStyle="H3" class="sapUiTinyMarginBottom" />
 
-                <GenericTile 
-                    header="Architekturbausteine" 
-                    subheader="Verwaltung &amp; Overview" 
-                    press=".onNavigateTo('architecture')"
-                    class="sapUiTinyMarginEnd">
-                    <tileContent>
-                        <TileContent>
-                            <ImageContent src="sap-icon://building" />
-                        </TileContent>
-                    </tileContent>
-                </GenericTile>
+                    <f:GridContainer snapToRow="true">
+                        <f:layout>
+                            <f:GridContainerSettings rowSize="11rem" columnSize="11rem" gap="1rem" />
+                        </f:layout>
+                        <f:items>
+                            <GenericTile header="Anzeigen" subheader="Übersicht" frameType="OneByOne" press=".onNavigateTo('base', 'show')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://display" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Bearbeiten" subheader="Pflege &amp; Zuordnung" frameType="OneByOne" press=".onNavigateTo('base', 'edit')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://edit" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Importieren" subheader="Datei-Upload" frameType="OneByOne" press=".onNavigateTo('base', 'import')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://upload" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Exportieren" subheader="Datenexport" frameType="OneByOne" press=".onNavigateTo('base', 'export')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://download" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Analysieren" subheader="KPIs &amp; Reporting" frameType="OneByOne" press=".onNavigateTo('base', 'analyze')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://business-objects-experience" /></TileContent></tileContent>
+                            </GenericTile>
+                        </f:items>
+                    </f:GridContainer>
+                </VBox>
 
-                <GenericTile 
-                    header="Lösungsbausteine" 
-                    subheader="Systeme &amp; Software" 
-                    press=".onNavigateTo('solution')"
-                    class="sapUiTinyMarginEnd">
-                    <tileContent>
-                        <TileContent>
-                            <ImageContent src="sap-icon://system-technologies" />
-                        </TileContent>
-                    </tileContent>
-                </GenericTile>
+                <!-- Gruppe 2: Architekturbausteine -->
+                <VBox id="groupArchitecture" class="sapUiSmallMarginBottom">
+                    <Title text="Architekturbausteine" level="H2" titleStyle="H3" class="sapUiTinyMarginBottom" />
 
-                <GenericTile 
-                    header="Schnittstellen" 
-                    subheader="APIs &amp; Integrationen" 
-                    press=".onNavigateTo('interface')">
-                    <tileContent>
-                        <TileContent>
-                            <ImageContent src="sap-icon://connected" />
-                        </TileContent>
-                    </tileContent>
-                </GenericTile>
+                    <f:GridContainer snapToRow="true">
+                        <f:layout>
+                            <f:GridContainerSettings rowSize="11rem" columnSize="11rem" gap="1rem" />
+                        </f:layout>
+                        <f:items>
+                            <GenericTile header="Anzeigen" subheader="Übersicht" frameType="OneByOne" press=".onNavigateTo('architecture', 'show')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://display" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Bearbeiten" subheader="Pflege &amp; Zuordnung" frameType="OneByOne" press=".onNavigateTo('architecture', 'edit')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://edit" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Importieren" subheader="Datei-Upload" frameType="OneByOne" press=".onNavigateTo('architecture', 'import')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://upload" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Exportieren" subheader="Datenexport" frameType="OneByOne" press=".onNavigateTo('architecture', 'export')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://download" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Analysieren" subheader="KPIs &amp; Reporting" frameType="OneByOne" press=".onNavigateTo('architecture', 'analyze')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://business-objects-experience" /></TileContent></tileContent>
+                            </GenericTile>
+                        </f:items>
+                    </f:GridContainer>
+                </VBox>
 
-            </HBox>
+                <!-- Gruppe 3: Lösungsbausteine -->
+                <VBox id="groupSolution" class="sapUiSmallMarginBottom">
+                    <Title text="Lösungsbausteine" level="H2" titleStyle="H3" class="sapUiTinyMarginBottom" />
+
+                    <f:GridContainer snapToRow="true">
+                        <f:layout>
+                            <f:GridContainerSettings rowSize="11rem" columnSize="11rem" gap="1rem" />
+                        </f:layout>
+                        <f:items>
+                            <GenericTile header="Anzeigen" subheader="Übersicht" frameType="OneByOne" press=".onNavigateTo('solution', 'show')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://display" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Bearbeiten" subheader="Pflege &amp; Zuordnung" frameType="OneByOne" press=".onNavigateTo('solution', 'edit')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://edit" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Importieren" subheader="Datei-Upload" frameType="OneByOne" press=".onNavigateTo('solution', 'import')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://upload" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Exportieren" subheader="Datenexport" frameType="OneByOne" press=".onNavigateTo('solution', 'export')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://download" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Analysieren" subheader="KPIs &amp; Reporting" frameType="OneByOne" press=".onNavigateTo('solution', 'analyze')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://business-objects-experience" /></TileContent></tileContent>
+                            </GenericTile>
+                        </f:items>
+                    </f:GridContainer>
+                </VBox>
+
+                <!-- Gruppe 4: Schnittstellenbausteine -->
+                <VBox id="groupInterface" class="sapUiSmallMarginBottom">
+                    <Title text="Schnittstellenbausteine" level="H2" titleStyle="H3" class="sapUiTinyMarginBottom" />
+
+                    <f:GridContainer snapToRow="true">
+                        <f:layout>
+                            <f:GridContainerSettings rowSize="11rem" columnSize="11rem" gap="1rem" />
+                        </f:layout>
+                        <f:items>
+                            <GenericTile header="Anzeigen" subheader="Übersicht" frameType="OneByOne" press=".onNavigateTo('interface', 'show')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://display" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Bearbeiten" subheader="Pflege &amp; Zuordnung" frameType="OneByOne" press=".onNavigateTo('interface', 'edit')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://edit" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Importieren" subheader="Datei-Upload" frameType="OneByOne" press=".onNavigateTo('interface', 'import')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://upload" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Exportieren" subheader="Datenexport" frameType="OneByOne" press=".onNavigateTo('interface', 'export')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://download" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Analysieren" subheader="KPIs &amp; Reporting" frameType="OneByOne" press=".onNavigateTo('interface', 'analyze')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://business-objects-experience" /></TileContent></tileContent>
+                            </GenericTile>
+                        </f:items>
+                    </f:GridContainer>
+                </VBox>
+
+            </VBox>
         </content>
     </Page>
 </mvc:View>

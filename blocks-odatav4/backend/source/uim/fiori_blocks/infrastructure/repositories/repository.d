@@ -44,7 +44,10 @@ class BlockRepository(T) {
     }
 
     T findById(string id) {
-        return exists(id) ? _blocks[id] : T.init;
+        writeln("BlockRepository: Finding block with ID: ", id);
+        auto block = exists(id) ? _blocks[id] : T.init;
+        writeln("BlockRepository: Retrieved block: ", block);
+        return block;
     }
 
     void update(T block) {

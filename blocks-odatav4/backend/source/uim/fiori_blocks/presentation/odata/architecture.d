@@ -94,65 +94,96 @@ class ArchitectureOdataController : OdataController {
 }
 
 class ArchitectureODataController : ODataController {
-    protected ManageArchitectureUseCase _useCase;
+  protected ManageArchitectureUseCase _useCase;
 
-    this(ManageArchitectureUseCase useCase) {
-      this._useCase = useCase;
+  this(ManageArchitectureUseCase useCase) {
+    this._useCase = useCase;
+  }
+
+  /// GET /EntitySet mit optionaler $expand Option
+  Json getEntitySet(string entitySetName, string expand = "") {
+    if (entitySetName != "ArchitectureBlocks") {
+      return Json.emptyArray;
     }
 
-    /// GET /EntitySet mit optionaler $expand Option
-    Json getEntitySet(string entitySetName, string expand = "") {
-      if (entitySetName != "ArchitectureBlocks") {
-        return Json.emptyArray;
+    auto blocks = _useCase.listBlocks();
+    return blocks.map!(block => block.toJson).array.toJson;
+  }
+
+  /// GET /EntitySet('1001') (Einzel-Entität abfragen)
+  Json getEntity(string entitySetName, string id, string expand = "") {
+    if (entitySetName != "ArchitectureBlocks") {
+      return Json.emptyObject;
+    }
+
+    auto block = _useCase.getBlock(id);
+    return block.isNull ? Json.emptyObject : block.toJson;
+  }
+
+  /// POST /EntitySet (Entität erstellen)
+  Json createEntity(string entitySetName, Json payload) {
+    if (entitySetName != "ArchitectureBlocks") {
+      return Json.emptyObject;
+    }
+
+    auto block = _useCase.createBlock(payload);
+    return block.toJson;
+  }
+
+  /// PATCH /EntitySet('1001') (Entität teilweise aktualisieren)
+  Json updateEntity(string entitySetName, string id, Json payload) {
+    if (entitySetName != "ArchitectureBlocks") {
+      return Json.emptyObject;
+    }
+
+    auto block = _useCase.updateBlock(payload.set("ID", id));
+    return block.isNull ? Json.emptyObject : block.toJson;
+  }
+
+  /// DELETE /EntitySet('1001') (Entität löschen)
+  bool deleteEntity(string entitySetName, string id) {
+    if (entitySetName != "ArchitectureBlocks") {
+      return false;
+    }
+
+    _useCase.deleteBlock(id);
+    return true;
+  }
+
+  BatchResponseItem response(BatchRequestItem item) {
+    // Implement the logic to handle the batch request for ArchitectureBlocks
+    // This is a placeholder implementation and should be replaced with actual logic
+    auto response = BatchResponseItem(item.id, 200, Json.emptyObject);
+
+    switch (item.method) {
+    case "GET":
+      // Handle GET request
+      auto urlParts = item.url.split("?");
+      if (urlParts.length > 0) {
+        auto path = urlParts[0];
+        auto query = urlParts.length > 1 ? urlParts[1] : "";
+
+        if (path == "ArchitectureBlocks") {
+          response.body = Json.emptyObject
+            .set("@odata.context", "$metadata#ArchitectureBlocks")
+            .set("value", _useCase.listBlocks().map!(block => block.toJson).array.toJson); // Handle GET request for ArchitectureBlocks entity set
+        }
       }
-      
-      auto blocks = _useCase.listBlocks();
-      return blocks.map!(block => block.toJson).array.toJson;
+      break;
+    case "POST":
+      // Handle POST request
+      break;
+    case "PATCH":
+      // Handle PATCH request
+      break;
+    case "DELETE":
+      // Handle DELETE request
+      break;
+    default:
+      // Handle unknown method
+      break;
     }
 
-    /// GET /EntitySet('1001') (Einzel-Entität abfragen)
-    Json getEntity(string entitySetName, string id, string expand = "") {
-      if (entitySetName != "ArchitectureBlocks") {
-        return Json.emptyObject;
-      }
-
-      auto block = _useCase.getBlock(id);
-      return block.isNull ? Json.emptyObject : block.toJson;
-    }
-    
-    /// POST /EntitySet (Entität erstellen)
-    Json createEntity(string entitySetName, Json payload) {
-      if (entitySetName != "ArchitectureBlocks") {
-        return Json.emptyObject;
-      }
-
-      auto block = _useCase.createBlock(payload);
-      return block.toJson;
-    }
-    
-    /// PATCH /EntitySet('1001') (Entität teilweise aktualisieren)
-    Json updateEntity(string entitySetName, string id, Json payload) {
-      if (entitySetName != "ArchitectureBlocks") {
-        return Json.emptyObject;
-      }
-
-      auto block = _useCase.updateBlock(payload.set("ID", id));
-      return block.isNull ? Json.emptyObject : block.toJson;
-    }
-    
-    /// DELETE /EntitySet('1001') (Entität löschen)
-    bool deleteEntity(string entitySetName, string id) {
-      if (entitySetName != "ArchitectureBlocks") {
-        return false;
-      }
-
-      _useCase.deleteBlock(id);
-      return true;
-    }
-    
-    /// GET /Entities (Alle Entitäten als JSON abrufen)
-    Json getEntitiesJson() {
-      auto blocks = _useCase.listBlocks();
-      return blocks.map!(block => block.toJson).array.toJson;
-    } 
+    return response;
+  }
 }

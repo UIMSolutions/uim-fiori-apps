@@ -6,7 +6,7 @@ import uim.fiori_blocks;
 
 class BaseRepository : BlockRepository!BaseBlock {
     this() {
-        _blocks["SB-01"] = BaseBlock("BB-01", "SAP S/4HANA Finance", "Finance Base", "1.0", "2024-01-01", "S/4HANA", [
+        _blocks["BB-01"] = BaseBlock("BB-01", "SAP S/4HANA Finance", "Finance Base", "1.0", "2024-01-01", "S/4HANA", [
             "Dies und jenes"
         ], [
                 Dependency("BB-02", "SAP S/4HANA Sales", "REST API Call", "High"),

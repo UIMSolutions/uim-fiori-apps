@@ -3,21 +3,21 @@ import uim.fiori;
 
 @safe:
 interface ODataController {
-    /// GET /EntitySet mit optionaler $expand Option
+    /// GET /EntitySet with optional $expand option
     Json getEntitySet(string entitySetName, string expand = "");
 
-    /// GET /EntitySet('1001') (Einzel-Entität abfragen)
+    /// GET /EntitySet('1001') (Retrieve a single entity)
     Json getEntity(string entitySetName, string id, string expand = "");
     
-    /// POST /EntitySet (Entität erstellen)
+    /// POST /EntitySet (Create an entity)
     Json createEntity(string entitySetName, Json payload);
     
-    /// PATCH /EntitySet('1001') (Entität teilweise aktualisieren)
+    /// PATCH /EntitySet('1001') (Partially update an entity)
     Json updateEntity(string entitySetName, string id, Json payload);
     
-    /// DELETE /EntitySet('1001') (Entität löschen)
+    /// DELETE /EntitySet('1001') (Delete an entity)
     bool deleteEntity(string entitySetName, string id);
     
-    /// GET /Entities (Alle Entitäten als JSON abrufen)
-    Json getEntitiesJson();
+    // Handle batch request and generate appropriate response
+    BatchResponseItem response(BatchRequestItem item);
 }

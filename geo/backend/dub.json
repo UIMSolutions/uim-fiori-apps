@@ -1,0 +1,11 @@
+{
+  "name": "geo-backend",
+  "description": "Geschützter OData-V4-Service mit PostgreSQL",
+  "authors": ["Ihr Name"],
+  "license": "MIT",
+  "targetType": "executable",
+  "dependencies": {
+    "vibe-d": "~>0.10.3",
+    "vibe-d-postgresql": "~>3.2.1"
+  }
+}

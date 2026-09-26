@@ -1,0 +1,24 @@
+applications:
+  - name: fiori-vibed-geo-router
+    path: approuter
+    memory: 256M
+    random-route: true
+    buildpacks: [nodejs_buildpack]
+    services:
+      - geo-xsuaa
+    env:
+      destinations: >
+        [{"name":"geo-backend","url":"http://geo-backend.apps.internal:8080","forwardAuthToken":true}]
+
+  - name: fiori-vibed-geo-backend
+    path: backend
+    memory: 256M
+    disk_quota: 1G
+    routes:
+      - route: geo-backend.apps.internal
+    health-check-type: http
+    health-check-http-endpoint: /health
+    command: ./geo-backend
+    services:
+      - geo-xsuaa
+      - geo-postgresql

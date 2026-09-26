@@ -1,0 +1,16 @@
+{
+  "xsappname": "geo-fiori-prod",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    { "name": "$XSAPPNAME.View", "description": "Standorte anzeigen" },
+    { "name": "$XSAPPNAME.Edit", "description": "Standorte verwalten" }
+  ],
+  "role-templates": [
+    { "name": "Viewer", "description": "Lesender Zugriff", "scope-references": ["$XSAPPNAME.View"] },
+    { "name": "Editor", "description": "Schreibender Zugriff", "scope-references": ["$XSAPPNAME.View", "$XSAPPNAME.Edit"] }
+  ],
+  "role-collections": [
+    { "name": "GeoViewer", "description": "Geo-Anwendung lesen", "role-template-references": ["$XSAPPNAME.Viewer"] },
+    { "name": "GeoEditor", "description": "Geo-Anwendung verwalten", "role-template-references": ["$XSAPPNAME.Editor"] }
+  ]
+}

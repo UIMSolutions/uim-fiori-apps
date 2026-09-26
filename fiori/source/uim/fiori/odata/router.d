@@ -21,8 +21,7 @@ class ODataRouter {
                 .id);
         BatchResponseItem response;
         response.id = item.id;
-        auto pController = item.entitySet in controllers;
-        if (!pController) {
+        if (item.entitySet !in controllers) {
             response.status = 404;
             response.body = Json([
                 "error": Json([
@@ -31,33 +30,34 @@ class ODataRouter {
             ]);
             return response;
         }
-        auto controller = *pController;
+
+        auto controller = controllers[item.entitySet];
         string method = item.method.toUpper();
-        if (method == "POST") {
-            try {
-                Json created = controller.createEntity(item.entitySet, item.body);
-                response.status = 201;
-                response.headers["content-type"] = "application/json;odata.metadata=minimal";
-                if ("Id" in created) {
-                    response.headers["location"] = item.entitySet ~ "('" ~ created["ID"].get!string ~ "')";
-                }
-                response.body = created;
-            } catch (Exception e) {
-                response.status = 400;
-                response.body = Json(["error": Json(["message": Json(e.msg)])]);
-            }
-        } else if (method == "GET") {
-            try {
-                Json res = controller.getEntitySet(item.entitySet);
-                response.status = 200;
-                response.headers["content-type"] = "application/json;odata.metadata=minimal";
-                response.body = res;
-            } catch (Exception e) {
-                response.status = 400;
-                response.body = Json(["error": Json(["message": Json(e.msg)])]);
-            }
-        }
-        return response;
+        // if (method == "POST") {
+        //     try {
+        //         Json created = controller.createEntity(item.entitySet, item.body);
+        //         response.status = 201;
+        //         response.headers["content-type"] = "application/json;odata.metadata=minimal";
+        //         if ("Id" in created) {
+        //             response.headers["location"] = item.entitySet ~ "('" ~ created["ID"].get!string ~ "')";
+        //         }
+        //         response.body = created;
+        //     } catch (Exception e) {
+        //         response.status = 400;
+        //         response.body = Json(["error": Json(["message": Json(e.msg)])]);
+        //     }
+        // } else if (method == "GET") {
+        //     try {
+        //         Json res = controller.getEntitySet(item.entitySet);
+        //         response.status = 200;
+        //         response.headers["content-type"] = "application/json;odata.metadata=minimal";
+        //         response.body = res;
+        //     } catch (Exception e) {
+        //         response.status = 400;
+        //         response.body = Json(["error": Json(["message": Json(e.msg)])]);
+        //     }
+        // }
+        return controller.response(item);
     }
 
     protected void handleBatch(HTTPServerRequest req, HTTPServerResponse res) {
@@ -91,8 +91,8 @@ class ODataRouter {
         Json subRes = Json.emptyObject
             .set("id", "1")
             .set("status", 200)
-            .set("headers", headers)
-            .set("body", controllers["Addresses"].getEntitiesJson());
+            .set("headers", headers);
+            // .set("body", controllers["Addresses"].getEntitiesSet());
         arr.appendArrayElement(subRes);
         rootRes["responses"] = arr;
         res.contentType = "application/json;odata.metadata=minimal;charset=utf-8";
@@ -127,17 +127,39 @@ class ODataRouter {
         res.statusCode = 200;
         res.headers["OData-Version"] = "4.0";
         res.contentType = "multipart/mixed; boundary=" ~ resBoundary;
+
+        // 4. Parse the multipart batch request
+        auto batchItems = parseMultipartBatch(reqBody, incomingBoundary);
+        writeln("ODataRouter: Parsed multipart batch request successfully.");
+        writeln("ODataRouter: Number of batch items parsed: ", batchItems.length);
+
+        // 5. Prepare the response for the multipart batch request
+        writeln("ODataRouter: Preparing multipart batch response.");
         // Aufbau des Multipart-Antwort-Bodys mit allen Pflicht-Headern (incl. Content-ID)
-        string body = "--" ~ resBoundary ~ "\r\n";
-        body ~= "Content-Type: application/http\r\n";
-        body ~= "Content-Transfer-Encoding: binary\r\n";
-        body ~= "Content-ID: 1\r\n\r\n"; // Wichtig für SAPUI5 Zuordnung
-        body ~= "HTTP/1.1 200 OK\r\n";
-        body ~= "Content-Type: application/json;odata.metadata=minimal;charset=utf-8\r\n";
-        body ~= "OData-Version: 4.0\r\n\r\n";
-        // Daten als JSON-String einbetten
-        body ~= controllers["Addresses"].getEntitiesJson().toString() ~ "\r\n";
-        body ~= "--" ~ resBoundary ~ "--\r\n";
+
+        // Embed the JSON data for the batch response
+        string body = "";
+        foreach (i, item; batchItems) {
+            writeln("ODataRouter: Batch item details: ", item);
+            writeln("ODataRouter: Request url: ", item.url);
+            writeln("ODataRouter: Request method: ", item.method);
+            writeln("ODataRouter: Request entitySet: ", item.entitySet);
+            writeln("ODataRouter: Processing batch item ", i, " for entity set: ", item.entitySet);
+            BatchResponseItem itemResponse = executeBatchItem(item);
+
+            body ~= "--" ~ resBoundary ~ "\r\n";
+            body ~= "Content-Type: application/http\r\n";
+            body ~= "Content-Transfer-Encoding: binary\r\n";
+            body ~= "Content-ID: 1\r\n\r\n"; // Wichtig für SAPUI5 Zuordnung
+            body ~= "HTTP/1.1 200 OK\r\n";
+            body ~= "Content-Type: application/json;odata.metadata=minimal;charset=utf-8\r\n";
+            body ~= "OData-Version: 4.0\r\n\r\n";
+            body ~= itemResponse.body.toPrettyString ~ "\r\n";
+        }
+
+        if (batchItems.length > 0) {
+            body ~= "--" ~ resBoundary ~ "--\r\n";
+        }
         res.writeBody(body);
     }
 

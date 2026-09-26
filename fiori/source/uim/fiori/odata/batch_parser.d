@@ -105,6 +105,13 @@ Content-Type: application/json
 }
 
 BatchRequestItem parseMultipartBatchPart(string bodyText, string boundary, ref int autoId, string[] lines, size_t i, string[] partsLine) {
+    writeln("parseMultipartBatchPart: Parsing multipart batch part with autoId: ", autoId);
+    writeln("parseMultipartBatchPart: Parsing multipart batch part with boundary: ", boundary);
+    writeln("parseMultipartBatchPart: Parsing multipart batch part starting at line index: ", i);
+    writeln("parseMultipartBatchPart: Parsing multipart batch part with lines: ", lines);
+    writeln("parseMultipartBatchPart: Parsing multipart batch part with partsLine: ", partsLine);
+    writeln("parseMultipartBatchPart: Parsing multipart batch part with autoId: ", autoId);
+    
     BatchRequestItem item;
     item.id = autoId++.to!string;
     item.method = partsLine[0];
@@ -113,13 +120,22 @@ BatchRequestItem parseMultipartBatchPart(string bodyText, string boundary, ref i
     string cleanUrl = item.url.startsWith("/") ? item.url[1 .. $] : item.url;
     auto slashIdx = cleanUrl.indexOf('/');
     item.entitySet = slashIdx != -1 ? cleanUrl[0 .. slashIdx] : cleanUrl;
+    if (item.entitySet.canFind("?")) {
+        item.entitySet = item.entitySet.split("?")[0];
+    }
+    if (item.entitySet.canFind("(")) {
+        item.entitySet = item.entitySet.split("(")[0];
+    }
+    writeln("parseMultipartBatchPart: Determined entity set: ", item.entitySet);
     // Body extrahieren und Boundary-Reste herausfiltern
     if (i + 1 < lines.length) {
         string rawJson = lines[i + 1 .. $].join("\n").strip;
+        writeln("parseMultipartBatchPart: Extracted raw JSON: ", rawJson);  
         if (rawJson.length > 0) {
             try {
                 item.body = parseJsonString(rawJson);
             } catch (Exception e) {
+                writeln("parseMultipartBatchPart: Failed to parse JSON: ", e.msg);
             }
         }
     }
