@@ -1,5 +1,6 @@
 module uim.fiori.odata.router;
 import uim.fiori;
+
 @safe:
 class ODataRouter {
     public string cachedMetadata;
@@ -63,6 +64,7 @@ class ODataRouter {
         writeln("ODataRouter: Handling OData batch request: ", req.method, " ", req.requestURL);
         string contentType = req.headers.get("Content-Type", "");
         writeln("ODataRouter: Batch request Content-Type: ", contentType);
+
         if (contentType.canFind("application/json")) {
             handleJsonBatch(req, res);
         } else if (contentType.canFind("multipart/mixed")) {
@@ -97,12 +99,15 @@ class ODataRouter {
         res.headers["OData-Version"] = "4.0";
         res.writeJsonBody(rootRes);
     }
-    /// Handler für klassisches OData v4 Multipart Batch (multipart/mixed)
+
+    /// Handler for OData v4 Multipart Batch (multipart/mixed)
     protected void handleMultipartBatch(HTTPServerRequest req, HTTPServerResponse res, string contentType) {
         writeln("ODataRouter: Handling multipart/mixed batch request with Content-Type: ", contentType);
+
         // 1. Request Body als UTF-8 lesen
         string reqBody = req.bodyReader.readAllUTF8();
-        // Boundary aus dem Incoming-Header ermitteln
+
+        // 2. Extract the boundary from the incoming Content-Type header if present
         string incomingBoundary = "";
         if (contentType.canFind("boundary=")) {
             auto parts = contentType.split("boundary=");
@@ -113,22 +118,11 @@ class ODataRouter {
         }
         string resBoundary = "batchresponse_" ~ (incomingBoundary.length > 0 ? incomingBoundary
                 : "12345");
-        // 3. Content-ID aus dem Request extrahieren (falls von UI5 mitgeschickt)
-        string contentId = "1";
-        if (reqBody.canFind("Content-ID:")) {
-            writeln("ODataRouter: Found Content-ID in request body, extracting...");
-            auto cidIdx = reqBody.indexOf("Content-ID:");
-            if (cidIdx != -1) {
-                auto rest = reqBody[cidIdx + 11 .. $];
-                ptrdiff_t endLine = rest.indexOf("\r\n");
-                if (endLine == -1)
-                    endLine = rest.indexOf("\n");
-                if (endLine != -1) {
-                    import std.string : strip;
-                    contentId = rest[0 .. endLine].strip();
-                }
-            }
-        }
+
+        // 3. Extract the Content-ID from the request body if present
+        string contentId = getContentId(reqBody, "1");
+
+        /// Extracted Content-ID from the request body if present successfully
         writeln("ODataRouter: Extracted Content-ID from request: ", contentId);
         res.statusCode = 200;
         res.headers["OData-Version"] = "4.0";
@@ -212,4 +206,35 @@ class ODataRouter {
     //     </edmx:DataServices>
     // </edmx:Edmx>`;
     //     }
+}
+
+string getContentId(string reqBody, string defaultContentId) {
+    string contentId = defaultContentId;
+    if (reqBody.canFind("Content-ID:")) {
+        writeln("ODataRouter: Found Content-ID in request body, extracting...");
+        auto cidIdx = reqBody.indexOf("Content-ID:");
+        if (cidIdx != -1) {
+            auto rest = reqBody[cidIdx + 11 .. $];
+            ptrdiff_t endLine = rest.indexOf("\r\n");
+            if (endLine == -1)
+                endLine = rest.indexOf("\n");
+            if (endLine != -1) {
+                import std.string : strip;
+
+                contentId = rest[0 .. endLine].strip();
+            }
+        }
+    }
+    return contentId;
+}
+///
+unittest {
+    string reqBody = "Content-ID: 42\r\nSome other content";
+    string defaultContentId = "1";
+    string extractedContentId = getContentId(reqBody, defaultContentId);
+    assert(extractedContentId == "42");
+
+    reqBody = "No Content-ID here";
+    extractedContentId = getContentId(reqBody, defaultContentId);
+    assert(extractedContentId == "1");
 }

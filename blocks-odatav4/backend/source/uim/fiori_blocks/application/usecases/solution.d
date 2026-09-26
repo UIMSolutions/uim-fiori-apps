@@ -11,18 +11,26 @@ class ManageSolutionUseCase : ManageBlockUseCase!SolutionBlock {
     super(repository);
   }
 
-  override void createBlock(Json data) {
+  override SolutionBlock createBlock(Json data) {
     // Implementation for creating a block
+    auto block = SolutionBlock();
+    // block.updateFromJson(data);
+    // repository.save(block);
+    return SolutionBlock.fromJson(data);
   }
 
-  override void updateBlock(Json data) {
+  override SolutionBlock updateBlock(Json data) {
     // Implementation for updating a block
     if (!data.hasKey("ID"))
-      return;
+      return SolutionBlock.init;
 
     auto block = repository.findById(data.getString("ID"));
     if (block.isNull)
-      return;
+      return SolutionBlock.init;
+
+    // block.updateFromJson(data);
+    repository.save(block);
+    return block;
   }
 
 }

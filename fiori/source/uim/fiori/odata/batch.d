@@ -1,5 +1,7 @@
 module uim.fiori.odata.batch;
+
 import uim.fiori;
+
 @safe:
 
 /// Repräsentiert eine einzelne Operation innerhalb eines Batch-Requests
@@ -28,6 +30,7 @@ unittest {
     assert(item.body.getString("Name") == "New Product");
     assert(item.headers["Content-Type"] == "application/json");
 }
+
 /// Repräsentiert die Antwort auf eine einzelne Batch-Operation
 struct BatchResponseItem {
     string id;

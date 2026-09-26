@@ -20,7 +20,6 @@ class BaseOdataController : OdataController {
 
   override void registerRoutes(URLRouter router) {
     router.get("/odata/v4/BaseBlocks*", &getBaseBlockByIdOrAll);
-    router.post("/odata/v4/$batch", &handleBaseBlockBatch);
 
     // router.get("/api/v1/configs", &handleList);
     // router.get("/api/v1/configs/*", &handleGet);
@@ -77,5 +76,69 @@ class BaseOdataController : OdataController {
     auto response = match.toJson.set("@odata.context", "$metadata#BaseBlocks/$entity");
     writeln("Response JSON for single Base block: ", response);
     res.writeJsonBody(response);
+  }
+}
+
+class BaseODataController : ODataController {
+  protected ManageBaseUseCase _useCase;
+
+  this(ManageBaseUseCase useCase) {
+    this._useCase = useCase;
+  }
+
+  /// GET /EntitySet mit optionaler $expand Option
+  Json getEntitySet(string entitySetName, string expand = "") {
+    if (entitySetName != "BaseBlocks") {
+      return Json.emptyArray;
+    }
+
+    auto blocks = _useCase.listBlocks();
+    return blocks.map!(block => block.toJson).array.toJson;
+  }
+
+  /// GET /EntitySet('1001') (Einzel-Entität abfragen)
+  Json getEntity(string entitySetName, string id, string expand = "") {
+    if (entitySetName != "BaseBlocks") {
+      return Json.emptyObject;
+    }
+
+    auto block = _useCase.getBlock(id);
+    return block.isNull ? Json.emptyObject : block.toJson;
+  }
+
+  /// POST /EntitySet (Entität erstellen)
+  Json createEntity(string entitySetName, Json payload) {
+    if (entitySetName != "BaseBlocks") {
+      return Json.emptyObject;
+    }
+
+    auto block = _useCase.createBlock(payload);
+    return block.toJson;
+  }
+
+  /// PATCH /EntitySet('1001') (Entität teilweise aktualisieren)
+  Json updateEntity(string entitySetName, string id, Json payload) {
+    if (entitySetName != "BaseBlocks") {
+      return Json.emptyObject;
+    }
+
+    auto block = _useCase.updateBlock(payload.set("ID", id));
+    return block.isNull ? Json.emptyObject : block.toJson;
+  }
+
+  /// DELETE /EntitySet('1001') (Entität löschen)
+  bool deleteEntity(string entitySetName, string id) {
+    if (entitySetName != "BaseBlocks") {
+      return false;
+    }
+
+    _useCase.deleteBlock(id);
+    return true;
+  }
+
+  /// GET /Entities (Alle Entitäten als JSON abrufen)
+  Json getEntitiesJson() {
+    auto blocks = _useCase.listBlocks();
+    return blocks.map!(block => block.toJson).array.toJson;
   }
 }

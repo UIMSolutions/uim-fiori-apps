@@ -24,9 +24,75 @@ class MaterialODataController {
 private:
     MaterialApplicationService _service;
 
+    string delegate(string reqBody)[string] batchRoutines;
+
 public:
     this(MaterialApplicationService service) {
         _service = service;
+
+        batchRoutines = [
+            "GET Materials": &getMaterials,
+            "GET MaterialPlans": &getMaterialPlans,
+            "GET StockEvaluations": &getStockEvaluations,
+            "GET Warehouses": &getWarehouses,
+            "GET Suppliers": &getSuppliers,
+            "GET WarehouseAssignments": &getWarehouseAssignments
+        ];
+    }
+
+    string getMaterials(string body) {
+        writeln("ODataRouter: Detected GET /Materials request.");
+        auto materials = _service.listMaterials();
+        Json result = Json.emptyObject;
+        result["@odata.context"] = "$metadata#Materials(ID,Name,Description,TargetStock)";
+        result["value"] = buildMaterialArray(materials, false, false, [
+            ], []);
+        return result.toPrettyString;
+    }
+
+    string getMaterialPlans(string body) {
+        writeln("ODataRouter: Detected GET /MaterialPlans request.");
+        auto plans = _service.listPlans();
+        Json result = Json.emptyObject;
+        result["@odata.context"] = "$metadata#MaterialPlans(ID,MaterialID,PlannedQuantity,PlannedDate)";
+        result["value"] = buildMaterialPlanArray(plans);
+        return result.toPrettyString;
+    }
+
+    string getSuppliers(string body) {
+        writeln("ODataRouter: Detected GET /Suppliers request.");
+        auto suppliers = _service.listSuppliers(); // not implemented
+        Json result = Json.emptyObject;
+        result["@odata.context"] = "$metadata#Suppliers(ID,Name,ContactInfo,Description)";
+        result["value"] = buildSupplierArray(suppliers);
+        return result.toPrettyString;
+    }
+
+    string getWarehouseAssignments(string body) {
+        writeln("ODataRouter: Detected GET /WarehouseAssignments request.");
+        auto assignments = _service.listAssignments();
+        Json result = Json.emptyObject;
+        result["@odata.context"] = "$metadata#WarehouseAssignments(ID,MaterialID,WarehouseID)";
+        result["value"] = buildWarehouseAssignmentArray(assignments);
+        return result.toPrettyString;
+    }
+
+    string getWarehouses(string body) {
+        writeln("ODataRouter: Detected GET /Warehouses request.");
+        auto warehouses = _service.listWarehouses();
+        Json result = Json.emptyObject;
+        result["@odata.context"] = "$metadata#Warehouses(ID,Name,Location)";
+        result["value"] = buildWarehouseArray(warehouses);
+        return result.toPrettyString;
+    }
+    
+    string getStockEvaluations(string body) {
+        writeln("ODataRouter: Detected GET /StockEvaluations request.");
+        auto evaluations = _service.listStockEvaluations();
+        Json result = Json.emptyObject;
+        result["@odata.context"] = "$metadata#StockEvaluations(ID,MaterialID,OnHand,Reserved,Available,TargetStock,Status)";
+        result["value"] = buildStockEvaluationArray(evaluations);
+        return result.toPrettyString;
     }
 
     void registerRoutes(URLRouter router) {
@@ -185,7 +251,8 @@ public:
     /// Handler für klassisches OData v4 Multipart Batch (multipart/mixed)
     protected void handleMultipartBatch(HTTPServerRequest req, HTTPServerResponse res, string contentType) {
         writeln("ODataRouter: Handling multipart/mixed batch request with Content-Type: ", contentType);
-        // Boundary aus dem Incoming-Header ermitteln
+
+        // Extract the boundary from the Content-Type header if present
         string incomingBoundary = "";
         if (contentType.canFind("boundary=")) {
             auto parts = contentType.split("boundary=");
@@ -194,29 +261,19 @@ public:
             }
             writeln("ODataRouter: Incoming batch boundary: ", incomingBoundary);
         }
+
         string resBoundary = "batchresponse_" ~ (incomingBoundary.length > 0 ? incomingBoundary
                 : "12345");
-        // 1. Request Body als UTF-8 lesen
+
+        // 1. Read the request body as UTF-8 string
         string reqBody = req.bodyReader.readAllUTF8();
         writeln("ODataRouter: Incoming multipart/mixed batch request body: \n", reqBody);
-        // 3. Content-ID aus dem Request extrahieren (falls von UI5 mitgeschickt)
-        string contentId = "1";
-        if (reqBody.canFind("Content-ID:")) {
-            writeln("ODataRouter: Found Content-ID in request body, extracting...");
-            auto cidIdx = reqBody.indexOf("Content-ID:");
-            if (cidIdx != -1) {
-                auto rest = reqBody[cidIdx + 11 .. $];
-                ptrdiff_t endLine = rest.indexOf("\r\n");
-                if (endLine == -1)
-                    endLine = rest.indexOf("\n");
-                if (endLine != -1) {
-                    import std.string : strip;
 
-                    contentId = rest[0 .. endLine].strip();
-                }
-            }
-        }
+        // 3. Extract the Content-ID from the request body if present (sent by UI5)
+        string contentId = getContentId(reqBody, "1");
         writeln("ODataRouter: Extracted Content-ID from request: ", contentId);
+
+        // Use the extracted Content-ID for the response part
         res.statusCode = 200;
         res.headers["OData-Version"] = "4.0";
         res.contentType = "multipart/mixed; boundary=" ~ resBoundary;
@@ -240,55 +297,15 @@ public:
                 body ~= "Content-Type: application/json;odata.metadata=minimal;charset=utf-8\r\n";
                 body ~= "OData-Version: 4.0\r\n\r\n";
                 writeln("ODataRouter: Detected GET request in single request part.");
-                if (singleRequest.canFind("GET Materials")) {
-                    writeln("ODataRouter: Detected GET /Materials request.");
-                    auto materials = _service.listMaterials();
-                    Json result = Json.emptyObject;
-                    result["@odata.context"] = "$metadata#Materials(ID,Name,Description,TargetStock)";
-                    result["value"] = buildMaterialArray(materials, false, false, [
-                        ], []);
-                    body ~= result.toPrettyString;
+
+                foreach (name, func; batchRoutines) {
+                    if (singleRequest.canFind(name)) {
+                        writeln("ODataRouter: Found routine in single request part: ", name);
+
+                        body ~= func(singleRequest);
+                    }
                 }
-                if (singleRequest.canFind("GET MaterialPlans")) {
-                    writeln("ODataRouter: Detected GET /MaterialPlans request.");
-                    auto plans = _service.listPlans();
-                    Json result = Json.emptyObject;
-                    result["@odata.context"] = "$metadata#MaterialPlans(ID,MaterialID,PlannedQuantity,PlannedDate)";
-                    result["value"] = buildMaterialPlanArray(plans);
-                    body ~= result.toPrettyString;
-                }
-                if (singleRequest.canFind("GET Suppliers")) {
-                    writeln("ODataRouter: Detected GET /Suppliers request.");
-                    auto suppliers = _service.listSuppliers(); // not implemented
-                    Json result = Json.emptyObject;
-                    result["@odata.context"] = "$metadata#Suppliers(ID,Name,ContactInfo,Description)";
-                    result["value"] = buildSupplierArray(suppliers);
-                    body ~= result.toPrettyString;
-                }
-                if (singleRequest.canFind("GET WarehouseAssignments")) {
-                    writeln("ODataRouter: Detected GET /WarehouseAssignments request.");
-                    auto assignments = _service.listAssignments();
-                    Json result = Json.emptyObject;
-                    result["@odata.context"] = "$metadata#WarehouseAssignments(ID,MaterialID,WarehouseID)";
-                    result["value"] = buildWarehouseAssignmentArray(assignments);
-                    body ~= result.toPrettyString;
-                }
-                if (singleRequest.canFind("GET Warehouses")) {
-                    writeln("ODataRouter: Detected GET /Warehouses request.");
-                    auto warehouses = _service.listWarehouses();
-                    Json result = Json.emptyObject;
-                    result["@odata.context"] = "$metadata#Warehouses(ID,Name,Location)";
-                    result["value"] = buildWarehouseArray(warehouses);
-                    body ~= result.toPrettyString;
-                }
-                if (singleRequest.canFind("GET StockEvaluations")) {
-                    writeln("ODataRouter: Detected GET /StockEvaluations request.");
-                    auto evaluations = _service.listStockEvaluations();
-                    Json result = Json.emptyObject;
-                    result["@odata.context"] = "$metadata#StockEvaluations(ID,MaterialID,OnHand,Reserved,Available,TargetStock,Status)";
-                    result["value"] = buildStockEvaluationArray(evaluations);
-                    body ~= result.toPrettyString;
-                }
+
             }
             if (singleRequest.canFind("POST ")) {
                 writeln("ODataRouter: Detected POST request.");
@@ -322,7 +339,7 @@ public:
     void getMaterials(HTTPServerRequest req, HTTPServerResponse res) {
         // void getMaterials(HTTPServerRequest req, HTTPServerResponse res) {
         Material[] materials = applyMaterialQueryOptions(req, _service.listMaterials());
-        
+
         // Wichtig: Context + value Wrapper
         auto payload = ODataResponse!Material(
             "$metadata#Materials(Description,ID,Name,TargetStock)",
@@ -332,26 +349,26 @@ public:
         res.headers["Content-Type"] = "application/json;odata.metadata=minimal";
         res.writeJsonBody(payload);
     }
-        // auto page = applyPaging(req, filtered);
-        // auto expand = getQueryOption(req, "$expand").toLower();
-        // auto includeAssignments = expand.canFind("assignments");
-        // auto includeWarehouse = expand.canFind("warehouse");
-        // auto assignments = _service.listAssignments();
-        // auto warehouses = _service.listWarehouses();
-        // writeCollectionResponse(
-        //     req,
-        //     res,
-        //     "Materials(ID,Name,TargetStock,Description)",
-        //     buildMaterialArray(
-        //         page.values,
-        //         includeAssignments,
-        //         includeWarehouse,
-        //         assignments,
-        //         warehouses
-        // ),
-        // page.hasNext,
-        // page.nextSkip
-        // );
+    // auto page = applyPaging(req, filtered);
+    // auto expand = getQueryOption(req, "$expand").toLower();
+    // auto includeAssignments = expand.canFind("assignments");
+    // auto includeWarehouse = expand.canFind("warehouse");
+    // auto assignments = _service.listAssignments();
+    // auto warehouses = _service.listWarehouses();
+    // writeCollectionResponse(
+    //     req,
+    //     res,
+    //     "Materials(ID,Name,TargetStock,Description)",
+    //     buildMaterialArray(
+    //         page.values,
+    //         includeAssignments,
+    //         includeWarehouse,
+    //         assignments,
+    //         warehouses
+    // ),
+    // page.hasNext,
+    // page.nextSkip
+    // );
 
     void postMaterial(HTTPServerRequest req, HTTPServerResponse res) {
         auto body = req.json;
@@ -838,7 +855,7 @@ private:
             auto desc = orderBy.length > 1 && orderBy[1].toLower() == "desc";
             if (field == "name") {
                 sort!((a, b) => a.name < b.name)(result);
-            } 
+            }
             if (desc) {
                 reverse(result);
             }

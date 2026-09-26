@@ -8,10 +8,8 @@ struct ODataResponse(T) {
     T value;
 }
 
-void getMetadata(HTTPServerRequest req, HTTPServerResponse res) {
-    res.contentType = "application/xml;charset=utf-8";
-    res.headers["OData-Version"] = "4.0";
-    res.writeBody(`<?xml version="1.0" encoding="utf-8"?>
+string getMetadata() {
+    return `<?xml version="1.0" encoding="utf-8"?>
 <edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
   <edmx:DataServices>
     <Schema Namespace="EAModel" xmlns="http://docs.oasis-open.org/odata/ns/edm">
@@ -92,7 +90,7 @@ void getMetadata(HTTPServerRequest req, HTTPServerResponse res) {
       </EntityContainer>
     </Schema>
   </edmx:DataServices>
-</edmx:Edmx>`);
+</edmx:Edmx>`;
 }
 
 // POST /odata/v4/$batch (Fallback Handler für UI5 Batch Requests)
@@ -112,33 +110,61 @@ void main() {
     auto router = new URLRouter;
 
     // CORS Header setzen
-    router.any("*", (req, res) {
-        res.headers["Access-Control-Allow-Origin"] = "*";
-        res.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS";
-        res.headers["Access-Control-Allow-Headers"] = "Content-Type, OData-Version, OData-MaxVersion";
-        if (req.method == HTTPMethod.OPTIONS) {
-            res.writeBody("");
-            return;
-        }
-    });
+    // router.any("*", (req, res) {
+    //     res.headers["Access-Control-Allow-Origin"] = "*";
+    //     res.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS";
+    //     res.headers["Access-Control-Allow-Headers"] = "Content-Type, OData-Version, OData-MaxVersion";
+    //     if (req.method == HTTPMethod.OPTIONS) {
+    //         res.writeBody("");
+    //         return;
+    //     }
+    // });
 
     // router.registerWebInterface(new ODataService);
-    router.get("/odata/v4/$metadata", &getMetadata);
+    // router.get("/odata/v4/$metadata", &getMetadata);
 
-    auto batch = new BatchOdataController(new ManageBaseUseCase(new BaseRepository));
-    batch.registerRoutes(router);
+    auto odataRouter = new ODataRouter();
+    odataRouter.cachedMetadata = getMetadata();
 
-    auto base = new BaseOdataController(new ManageBaseUseCase(new BaseRepository));
-    base.registerRoutes(router);
+    // Register OData controllers
+    auto architectureOData = new ArchitectureODataController(new ManageArchitectureUseCase(new ArchitectureRepository));
+    odataRouter.registerController("ArchitectureBlocks", architectureOData);
 
-    auto architecture = new ArchitectureOdataController(new ManageArchitectureUseCase(new ArchitectureRepository));
-    architecture.registerRoutes(router);
+    auto baseOData = new BaseODataController(new ManageBaseUseCase(new BaseRepository));
+    odataRouter.registerController("BaseBlocks", baseOData);
 
-    auto solution = new SolutionOdataController(new ManageSolutionUseCase(new SolutionRepository));
-    solution.registerRoutes(router);
+    auto solutionOData = new SolutionODataController(new ManageSolutionUseCase(new SolutionRepository));
+    odataRouter.registerController("SolutionBlocks", solutionOData);
 
-    auto interface_ = new InterfaceOdataController(new ManageInterfaceUseCase(new InterfaceRepository));
-    interface_.registerRoutes(router);
+    auto interfaceOData = new InterfaceODataController(new ManageInterfaceUseCase(new InterfaceRepository));
+    odataRouter.registerController("InterfaceBlocks", interfaceOData);
+
+    /// Activate CORS and OData routes
+    router.any("*", &enableCORS);
+
+    // Register OData routes under /api/v4
+    odataRouter.registerRoutes(router, "/odata/v4");
+
+    // Serve static files at the end
+    router.get("*", serveStaticFiles("public/"));
+
+	foreach (route; router.getAllRoutes) {
+		writefln("%-7s %s", route.method, route.pattern);
+	}
+	writeln("--------------------------");
+    // auto base = new BaseOdataController(new ManageBaseUseCase(new BaseRepository));
+    // base.registerRoutes(router);
+
+    // auto architecture = new ArchitectureOdataController(
+    //     new ManageArchitectureUseCase(new ArchitectureRepository));
+    // architecture.registerRoutes(router);
+
+    // auto solution = new SolutionOdataController(new ManageSolutionUseCase(new SolutionRepository));
+    // solution.registerRoutes(router);
+
+    // auto interface_ = new InterfaceOdataController(
+    //     new ManageInterfaceUseCase(new InterfaceRepository));
+    // interface_.registerRoutes(router);
 
     router.post("/odata/v4/$batch", &postBatch);
     router.get("*", serveStaticFiles("public/"));

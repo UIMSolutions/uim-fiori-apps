@@ -10,12 +10,14 @@ class ManageArchitectureUseCase : ManageBlockUseCase!ArchitectureBlock {
     super(repository);
   }
 
-  override void createBlock(Json data) {
+  override ArchitectureBlock createBlock(Json data) {
     // Implementation for creating a block
+    return ArchitectureBlock.fromJson(data);
   }
   
-  override void updateBlock(Json data) {
+  override ArchitectureBlock updateBlock(Json data) {
     // Implementation for updating a block
+    return ArchitectureBlock.fromJson(data);
   }
 
 }

@@ -116,3 +116,76 @@ class InterfaceOdataController : OdataController {
     }
   }
 }
+
+
+class InterfaceODataController : ODataController {
+  protected ManageInterfaceUseCase _useCase;
+
+  this(ManageInterfaceUseCase useCase) {
+    this._useCase = useCase;
+  }
+
+  /// GET /EntitySet mit optionaler $expand Option
+  Json getEntitySet(string entitySetName, string expand = "") {
+    if (entitySetName != "InterfaceBlocks") {
+      return Json.emptyArray;
+    }
+
+    auto blocks = _useCase.listBlocks();
+    return blocks.map!(block => block.toJson).array.toJson;
+  }
+
+  /// GET /EntitySet('1001') (Einzel-Entität abfragen)
+  Json getEntity(string entitySetName, string id, string expand = "") {
+    if (entitySetName != "InterfaceBlocks") {
+      return Json.emptyObject;
+    }
+
+    auto block = _useCase.getBlock(id);
+    return block.isNull ? Json.emptyObject : block.toJson;
+  }
+
+  /// POST /EntitySet (Entität erstellen)
+  Json createEntity(string entitySetName, Json payload) {
+    if (entitySetName != "InterfaceBlocks") {
+      return Json.emptyObject;
+    }
+
+    auto block = _useCase.createBlock(payload);
+    return block.toJson;
+  }
+
+  /// PATCH /EntitySet('1001') (Entität teilweise aktualisieren)
+  Json updateEntity(string entitySetName, string id, Json payload) {
+    if (entitySetName != "InterfaceBlocks") {
+      return Json.emptyObject;
+    }
+
+    auto block = _useCase.updateBlock(payload.set("ID", id));
+    if (block.isNull) {
+      return Json.emptyObject;
+    }
+
+    return block.toJson;
+  }
+
+  /// DELETE /EntitySet('1001') (Entität löschen)
+  bool deleteEntity(string entitySetName, string id) {
+    if (entitySetName != "InterfaceBlocks") {
+      return false;
+    }
+
+    _useCase.deleteBlock(id);
+    return true;
+  }
+
+  /// GET /Entities (Alle Entitäten als JSON abrufen)
+  Json getEntitiesJson() {
+    auto blocks = _useCase.listBlocks();
+    auto jsonArray = Json.emptyArray;
+    foreach (block; blocks) {
+      // jsonArray.add(block.toJson);
+    }
+    return jsonArray;
+  }
+}

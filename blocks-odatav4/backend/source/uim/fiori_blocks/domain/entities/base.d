@@ -30,4 +30,19 @@ struct BaseBlock {
         .set("AdditionalInformation", AdditionalInformation.map!(info => Json(info)).array.toJson)
         .set("DependsOn", DependsOn.map!(d => d.toJson).array.toJson);
     }
+
+    static BaseBlock fromJson(Json data) {
+        auto block = BaseBlock();
+        block.ID = data.getString("ID", "");
+        block.Name = data.getString("Name", "");
+        block.Responsible = data.getString("Responsible", "");
+        block.Version = data.getString("Version", "");
+        block.Date = data.getString("Date", "");
+        block.Description = data.getString("Description", "");
+
+        block.AdditionalInformation = data.getArray("AdditionalInformation").map!(info => info.getString).array;
+        block.DependsOn = data.getArray("DependsOn").map!(d => Dependency.fromJson(d)).array;
+
+        return block    ;
+    }
 }

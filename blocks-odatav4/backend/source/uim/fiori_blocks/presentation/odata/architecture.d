@@ -92,3 +92,67 @@ class ArchitectureOdataController : OdataController {
   }
 
 }
+
+class ArchitectureODataController : ODataController {
+    protected ManageArchitectureUseCase _useCase;
+
+    this(ManageArchitectureUseCase useCase) {
+      this._useCase = useCase;
+    }
+
+    /// GET /EntitySet mit optionaler $expand Option
+    Json getEntitySet(string entitySetName, string expand = "") {
+      if (entitySetName != "ArchitectureBlocks") {
+        return Json.emptyArray;
+      }
+      
+      auto blocks = _useCase.listBlocks();
+      return blocks.map!(block => block.toJson).array.toJson;
+    }
+
+    /// GET /EntitySet('1001') (Einzel-Entität abfragen)
+    Json getEntity(string entitySetName, string id, string expand = "") {
+      if (entitySetName != "ArchitectureBlocks") {
+        return Json.emptyObject;
+      }
+
+      auto block = _useCase.getBlock(id);
+      return block.isNull ? Json.emptyObject : block.toJson;
+    }
+    
+    /// POST /EntitySet (Entität erstellen)
+    Json createEntity(string entitySetName, Json payload) {
+      if (entitySetName != "ArchitectureBlocks") {
+        return Json.emptyObject;
+      }
+
+      auto block = _useCase.createBlock(payload);
+      return block.toJson;
+    }
+    
+    /// PATCH /EntitySet('1001') (Entität teilweise aktualisieren)
+    Json updateEntity(string entitySetName, string id, Json payload) {
+      if (entitySetName != "ArchitectureBlocks") {
+        return Json.emptyObject;
+      }
+
+      auto block = _useCase.updateBlock(payload.set("ID", id));
+      return block.isNull ? Json.emptyObject : block.toJson;
+    }
+    
+    /// DELETE /EntitySet('1001') (Entität löschen)
+    bool deleteEntity(string entitySetName, string id) {
+      if (entitySetName != "ArchitectureBlocks") {
+        return false;
+      }
+
+      _useCase.deleteBlock(id);
+      return true;
+    }
+    
+    /// GET /Entities (Alle Entitäten als JSON abrufen)
+    Json getEntitiesJson() {
+      auto blocks = _useCase.listBlocks();
+      return blocks.map!(block => block.toJson).array.toJson;
+    } 
+}

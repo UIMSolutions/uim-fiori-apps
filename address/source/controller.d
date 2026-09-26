@@ -9,6 +9,7 @@ import domain;
 @safe:
 class AddressController : ODataController {
     protected Json[string] store;
+
     // Collect related contacts for one address from the in-memory store.
     protected Json getContactsForAddress(string addressId) @trusted {
         writeln("AdressController:Fetching contacts for addressId: ", addressId);
@@ -29,6 +30,7 @@ class AddressController : ODataController {
         }
         return contacts;
     }
+
     this() {
         // Initialer In-Memory Speicher
         store["Addresses"] = Json.emptyArray;
@@ -52,8 +54,17 @@ class AddressController : ODataController {
         store["Addresses"] ~= addr1.toJson();
         store["Addresses"] ~= addr2.toJson();
     }
+
+    /**
+     * Fetches an entire entity set, optionally expanding related entities.
+     *
+     * Params:
+     *   entitySetName = The name of the entity set to fetch.
+     *   expand = The related entities to expand (e.g., "Contacts").
+     */
     override Json getEntitySet(string entitySetName, string expand = "") {
         writeln("AdressController:Fetching entity set: ", entitySetName, " with expand: ", expand);
+        
         Json res = Json.emptyObject;
         res["@odata.context"] = "/api/v4/$metadata#" ~ entitySetName;
         
@@ -75,6 +86,7 @@ class AddressController : ODataController {
         // assert(res["@odata.context"] == "$metadata#Addresses");
         // assert(res["value"].isArray);
     }
+
     override Json getEntity(string entitySetName, string id, string expand = "") {
         writeln("AdressController:Fetching entity: ", entitySetName, " with id: ", id, " and expand: ", expand);
         if (auto items = entitySetName in store) {

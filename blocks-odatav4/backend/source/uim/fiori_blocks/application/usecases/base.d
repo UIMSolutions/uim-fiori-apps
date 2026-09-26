@@ -11,18 +11,26 @@ class ManageBaseUseCase : ManageBlockUseCase!BaseBlock {
     super(repository);
   }
 
-  override void createBlock(Json data) {
+  override BaseBlock createBlock(Json data) {
     // Implementation for creating a block
+    auto block = new BaseBlock;
+    // block.updateFromJson(data);
+    // repository.save(block);
+    return BaseBlock.fromJson(data);
   }
 
-  override void updateBlock(Json data) {
+  override BaseBlock updateBlock(Json data) {
     // Implementation for updating a block
     if (!data.hasKey("ID"))
-      return;
+      return BaseBlock.init;
 
     auto block = repository.findById(data.getString("ID"));
     if (block.isNull)
-      return;
+      return BaseBlock.init;
+
+    // block.updateFromJson(data);
+    repository.save(block);
+    return block;
   }
 
 }

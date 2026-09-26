@@ -21,8 +21,12 @@ class ManageBlockUseCase(T) {
     this._repository = repository;
   }
 
-    void createBlock(Json data) {
+    T createBlock(Json data) {
       // Implementation for creating a block
+      // auto block = new T;
+      // block.updateFromJson(data);
+      // repository.save(block);
+      return T.init;
     }
 
     bool hasBlock(string id) {
@@ -65,12 +69,17 @@ class ManageBlockUseCase(T) {
       return repository.findAll();
     }
 
-    void updateBlock(Json data) {
+    T updateBlock(Json data) {
       // Implementation for updating a block
-      if (!data.hasKey("ID")) return;
+      // if (!data.hasKey("ID")) return T.init;
 
-      auto block = repository.findById(data.getString("ID"));
+      // auto block = repository.findById(data.getString("ID"));
+      // if (block.isNull) return T.init;
 
+      // // block.updateFromJson(data);
+      // repository.save(block);
+      // return block;
+      return T.init;
     }
 
     void updateBlocks(Json[] data) {

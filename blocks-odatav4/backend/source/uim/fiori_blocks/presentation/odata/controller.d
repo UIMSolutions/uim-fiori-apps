@@ -18,3 +18,4 @@ class OdataController {
     // router.delete_("/api/v1/configs/*", &handleDelete);
   }
 }
+
