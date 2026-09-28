@@ -1,0 +1,21 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    
+    <Button 
+        icon="sap-icon://home" 
+        press=".onNavHome" 
+        tooltip="Hauptmenü" />    
+    <Select 
+        change=".onLanguageChange" 
+        selectedKey="{viewModel>/currentLanguage}"
+        tooltip="Sprache wählen">
+        <core:Item key="en" text="English" />
+        <core:Item key="de" text="Deutsch" />
+    </Select>
+    <Button 
+        icon="sap-icon://log" 
+        press=".onLogout" 
+        tooltip="Abmelden" />
+
+</core:FragmentDefinition>

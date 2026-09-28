@@ -1,0 +1,40 @@
+<mvc:View controllerName="ea.architecture.manager.controller.BlockImport"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:u="sap.ui.unified"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">   
+
+    <Page title="Architektur-Bausteine Importieren">
+        <headerContent>
+            <core:Fragment 
+                fragmentName="ea.architecture.manager.view.fragment.HeaderContent" 
+                type="XML" />
+        </headerContent>
+        <content>
+            <VBox class="sapUiMediumMargin">
+                <f:SimpleForm editable="true" layout="ColumnLayout" title="Excel-Import Einstellungen">
+                    <f:content>
+                        <!-- Typ-Auswahl -->
+                        <Label text="Ziel-Entität auswählen" />
+                        <Select id="blockTypeSelect" selectedKey="BaseBlocks" width="100%">
+                            <items>
+                                <core:Item xmlns:core="sap.ui.core" key="ArchitectureBlocks" text="Architecture Blocks" />
+                                <core:Item xmlns:core="sap.ui.core" key="BaseBlocks" text="Base Blocks" />
+                                <core:Item xmlns:core="sap.ui.core" key="SolutionBlocks" text="Solution Blocks" />
+                                <core:Item xmlns:core="sap.ui.core" key="InterfaceBlocks" text="Interface Blocks" />
+                            </items>
+                        </Select>
+
+                        <!-- FileUploader -->
+                        <Label text="Excel-Datei (.xlsx)" />
+                        <u:FileUploader id="excelUploader" buttonOnly="false" buttonText="Datei wählen..." placeholder="Wähle eine .xlsx-Datei..." icon="sap-icon://excel-attachment" fileType="xlsx,xls" change=".onFileSelected" width="100%" />
+
+                        <Label text="Aktion" />
+                        <Button id="btnImport" text="Import starten" icon="sap-icon://upload" type="Emphasized" enabled="false" press=".onImportExcelPress" />
+                    </f:content>
+                </f:SimpleForm>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

@@ -7,9 +7,6 @@ sap.ui.define(
     "sap/ui/model/json/JSONModel",
     "sap/ui/export/Spreadsheet",
     "sap/ui/dom/includeScript",
-    "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator",
-    "sap/ui/core/Item",
   ],
   function (
     Controller,
@@ -19,9 +16,6 @@ sap.ui.define(
     JSONModel,
     Spreadsheet,
     includeScript,
-    Filter,
-    FilterOperator,
-    Item,
   ) {
     "use strict";
 
@@ -36,102 +30,6 @@ sap.ui.define(
             isEditMode: false,
           });
           this.getView().setModel(oUIModel, "ui");
-
-          this._sMasterQuery = "";
-          this._sResponsibleFilter = "";
-          this._bResponsibleFilterInitialized = false;
-
-          var oList = this.byId("masterList");
-          if (oList) {
-            oList.attachUpdateFinished(this._updateResponsibleFilterOptions, this);
-          }
-        },
-
-        onMasterListSearch: function (oEvent) {
-          var sQuery = oEvent.getParameter("newValue");
-          if (typeof sQuery !== "string") {
-            sQuery = oEvent.getParameter("query") || "";
-          }
-
-          this._sMasterQuery = sQuery.trim();
-          this._applyMasterListFilters();
-        },
-
-        onResponsibleFilterChange: function (oEvent) {
-          var oSelectedItem = oEvent.getParameter("selectedItem");
-          var sKey = oSelectedItem ? oSelectedItem.getKey() : "__ALL__";
-          this._sResponsibleFilter = sKey === "__ALL__" ? "" : sKey;
-          this._applyMasterListFilters();
-        },
-
-        _applyMasterListFilters: function () {
-          var oList = this.byId("masterList");
-          if (!oList) {
-            return;
-          }
-
-          var oBinding = oList.getBinding("items");
-          if (!oBinding) {
-            return;
-          }
-
-          var aFilters = [];
-          if (this._sMasterQuery) {
-            aFilters.push(new Filter({
-              filters: [
-                new Filter("ID", FilterOperator.Contains, this._sMasterQuery),
-                new Filter("Name", FilterOperator.Contains, this._sMasterQuery),
-                new Filter("Responsible", FilterOperator.Contains, this._sMasterQuery),
-              ],
-              and: false,
-            }));
-          }
-
-          if (this._sResponsibleFilter) {
-            aFilters.push(new Filter("Responsible", FilterOperator.EQ, this._sResponsibleFilter));
-          }
-
-          oBinding.filter(aFilters);
-        },
-
-        _updateResponsibleFilterOptions: function () {
-          if (this._bResponsibleFilterInitialized) {
-            return;
-          }
-
-          var oList = this.byId("masterList");
-          var oSelect = this.byId("responsibleFilter");
-
-          if (!oList || !oSelect) {
-            return;
-          }
-
-          var mResponsible = Object.create(null);
-          oList.getItems().forEach(function (oItem) {
-            var oContext = oItem.getBindingContext();
-            var sResponsible = oContext && oContext.getProperty("Responsible");
-            if (sResponsible) {
-              mResponsible[sResponsible] = true;
-            }
-          });
-
-          var aResponsible = Object.keys(mResponsible).sort(function (a, b) {
-            return a.localeCompare(b);
-          });
-
-          if (!aResponsible.length) {
-            return;
-          }
-
-          oSelect.removeAllItems();
-          oSelect.addItem(new Item({ key: "__ALL__", text: "Alle Verantwortlichen" }));
-          aResponsible.forEach(function (sResponsible) {
-            oSelect.addItem(new Item({ key: sResponsible, text: sResponsible }));
-          });
-          oSelect.setSelectedKey("__ALL__");
-
-          this._bResponsibleFilterInitialized = true;
-          oList.detachUpdateFinished(this._updateResponsibleFilterOptions, this);
         },
 
         onListItemPress: function (oEvent) {

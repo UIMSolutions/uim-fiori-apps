@@ -10,8 +10,6 @@
                 <Button text="Architekturbausteine" type="Transparent" press=".onScrollToGroup('groupArchitecture')" />
                 <Button text="Lösungsbausteine" type="Transparent" press=".onScrollToGroup('groupSolution')" />
                 <Button text="Schnittstellenbausteine" type="Transparent" press=".onScrollToGroup('groupInterface')" />
-                <Button text="Datenaustausch" type="Transparent" press=".onScrollToGroup('groupExchange')" />
-                <Button text="Administration" type="Transparent" press=".onScrollToGroup('groupAdmin')" />
             </OverflowToolbar>
         </subHeader>
         <content>
@@ -31,6 +29,12 @@
                             </GenericTile>
                             <GenericTile header="Bearbeiten" subheader="Pflege &amp; Zuordnung" frameType="OneByOne" press=".onNavigateTo('base', 'edit')">
                                 <tileContent><TileContent><ImageContent src="sap-icon://edit" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Importieren" subheader="Datei-Upload" frameType="OneByOne" press=".onNavigateTo('base', 'import')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://upload" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Exportieren" subheader="Datenexport" frameType="OneByOne" press=".onNavigateTo('base', 'export')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://download" /></TileContent></tileContent>
                             </GenericTile>
                             <GenericTile header="Analysieren" subheader="KPIs &amp; Reporting" frameType="OneByOne" press=".onNavigateTo('base', 'analyze')">
                                 <tileContent><TileContent><ImageContent src="sap-icon://business-objects-experience" /></TileContent></tileContent>
@@ -54,6 +58,12 @@
                             <GenericTile header="Bearbeiten" subheader="Pflege &amp; Zuordnung" frameType="OneByOne" press=".onNavigateTo('architecture', 'edit')">
                                 <tileContent><TileContent><ImageContent src="sap-icon://edit" /></TileContent></tileContent>
                             </GenericTile>
+                            <GenericTile header="Importieren" subheader="Datei-Upload" frameType="OneByOne" press=".onNavigateTo('architecture', 'import')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://upload" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Exportieren" subheader="Datenexport" frameType="OneByOne" press=".onNavigateTo('architecture', 'export')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://download" /></TileContent></tileContent>
+                            </GenericTile>
                             <GenericTile header="Analysieren" subheader="KPIs &amp; Reporting" frameType="OneByOne" press=".onNavigateTo('architecture', 'analyze')">
                                 <tileContent><TileContent><ImageContent src="sap-icon://business-objects-experience" /></TileContent></tileContent>
                             </GenericTile>
@@ -75,6 +85,12 @@
                             </GenericTile>
                             <GenericTile header="Bearbeiten" subheader="Pflege &amp; Zuordnung" frameType="OneByOne" press=".onNavigateTo('solution', 'edit')">
                                 <tileContent><TileContent><ImageContent src="sap-icon://edit" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Importieren" subheader="Datei-Upload" frameType="OneByOne" press=".onNavigateTo('solution', 'import')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://upload" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Exportieren" subheader="Datenexport" frameType="OneByOne" press=".onNavigateTo('solution', 'export')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://download" /></TileContent></tileContent>
                             </GenericTile>
                             <GenericTile header="Analysieren" subheader="KPIs &amp; Reporting" frameType="OneByOne" press=".onNavigateTo('solution', 'analyze')">
                                 <tileContent><TileContent><ImageContent src="sap-icon://business-objects-experience" /></TileContent></tileContent>
@@ -98,47 +114,14 @@
                             <GenericTile header="Bearbeiten" subheader="Pflege &amp; Zuordnung" frameType="OneByOne" press=".onNavigateTo('interface', 'edit')">
                                 <tileContent><TileContent><ImageContent src="sap-icon://edit" /></TileContent></tileContent>
                             </GenericTile>
-                            <GenericTile header="Analysieren" subheader="KPIs &amp; Reporting" frameType="OneByOne" press=".onNavigateTo('interface', 'analyze')">
-                                <tileContent><TileContent><ImageContent src="sap-icon://business-objects-experience" /></TileContent></tileContent>
-                            </GenericTile>
-                        </f:items>
-                    </f:GridContainer>
-                </VBox>
-
-                <VBox id="groupExchange" class="sapUiSmallMarginBottom">
-                    <Title text="Datenaustausch" level="H2" titleStyle="H3" class="sapUiTinyMarginBottom" />
-
-                    <f:GridContainer snapToRow="true">
-                        <f:layout>
-                            <f:GridContainerSettings rowSize="11rem" columnSize="11rem" gap="1rem" />
-                        </f:layout>
-                        <f:items>
-                            <GenericTile header="Importieren" subheader="Excel, CSV" frameType="OneByOne" press=".onNavigateTo('block', 'import')">
+                            <GenericTile header="Importieren" subheader="Datei-Upload" frameType="OneByOne" press=".onNavigateTo('interface', 'import')">
                                 <tileContent><TileContent><ImageContent src="sap-icon://upload" /></TileContent></tileContent>
                             </GenericTile>
-                            <GenericTile header="Exportieren" subheader="Excel, CSV" frameType="OneByOne" press=".onNavigateTo('block', 'export')">
+                            <GenericTile header="Exportieren" subheader="Datenexport" frameType="OneByOne" press=".onNavigateTo('interface', 'export')">
                                 <tileContent><TileContent><ImageContent src="sap-icon://download" /></TileContent></tileContent>
                             </GenericTile>
-                            <GenericTile header="Drucken" subheader="Mehrere Elemente als Word o. Pdf" frameType="OneByOne" press=".onNavigateTo('block', 'print')">
-                                <tileContent><TileContent><ImageContent src="sap-icon://print" /></TileContent></tileContent>
-                            </GenericTile>
-                        </f:items>
-                    </f:GridContainer>
-                </VBox>
-
-                <VBox id="groupAdmin" class="sapUiSmallMarginBottom">
-                    <Title text="Administration" level="H2" titleStyle="H3" class="sapUiTinyMarginBottom" />
-
-                    <f:GridContainer snapToRow="true">
-                        <f:layout>
-                            <f:GridContainerSettings rowSize="11rem" columnSize="11rem" gap="1rem" />
-                        </f:layout>
-                        <f:items>
-                            <GenericTile header="Datenpflege" subheader="Korrekturen" frameType="OneByOne" press=".onNavigateTo('admin', 'repair')">
-                                <tileContent><TileContent><ImageContent src="sap-icon://wrench" /></TileContent></tileContent>
-                            </GenericTile>
-                            <GenericTile header="Benutzer" subheader="Verwaltung" frameType="OneByOne" press=".onNavigateTo('admin', 'user')">
-                                <tileContent><TileContent><ImageContent src="sap-icon://user-settings" /></TileContent></tileContent>
+                            <GenericTile header="Analysieren" subheader="KPIs &amp; Reporting" frameType="OneByOne" press=".onNavigateTo('interface', 'analyze')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://business-objects-experience" /></TileContent></tileContent>
                             </GenericTile>
                         </f:items>
                     </f:GridContainer>

@@ -1,0 +1,25 @@
+<mvc:View controllerName="ea.architecture.manager.controller.ArchitectureExport"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+
+    <Page title="Architekturbausteine exportieren">
+        <headerContent>
+            <Button icon="sap-icon://home" press=".onNavHome" tooltip="Hauptmenü" />
+        </headerContent>
+        <subHeader>
+            <OverflowToolbar>
+                <Label text="Springe zu:" class="sapUiTinyMarginEnd" />
+                <Button text="Grundbausteine" type="Transparent" press=".onScrollToGroup('groupBase')" />
+                <Button text="Architekturbausteine" type="Transparent" press=".onScrollToGroup('groupArchitecture')" />
+                <Button text="Lösungsbausteine" type="Transparent" press=".onScrollToGroup('groupSolution')" />
+                <Button text="Schnittstellenbausteine" type="Transparent" press=".onScrollToGroup('groupInterface')" />
+            </OverflowToolbar>
+        </subHeader>
+        <content>
+        </content>
+    </Page>
+
+</mvc:View>

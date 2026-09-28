@@ -24,7 +24,8 @@
       "minUI5Version": "1.108.0",
       "libs": {
         "sap.m": {},
-        "sap.f": {}
+        "sap.f": {},
+        "sap.tnt": {}
       }
     },
     "models": {
@@ -50,7 +51,7 @@
         "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
         "viewPath": "ea.architecture.manager.view",
-        "controlId": "appControl",
+        "controlId": "app",
         "controlAggregation": "pages",
         "async": true
       },
@@ -78,7 +79,7 @@
         {
           "name": "base_export",
           "pattern": "base",
-          "target": "baseMasterDetail"
+          "target": "baseExport"
         },
         {
           "name": "base_analyze",
@@ -128,7 +129,7 @@
         {
           "name": "solution_export",
           "pattern": "solution",
-          "target": "solutionMasterDetail"
+          "target": "solutionExport"
         },
         {
           "name": "solution_analyze",
@@ -153,12 +154,22 @@
         {
           "name": "interface_export",
           "pattern": "interface",
-          "target": "interfaceMasterDetail"
+          "target": "interfaceExport"
         },
         {
           "name": "interface_analyze",
           "pattern": "interface",
           "target": "interfaceMasterDetail"
+        },
+        {
+          "name": "block_import",
+          "pattern": "import",
+          "target": "blockImport"
+        },
+        {
+          "name": "block_export",
+          "pattern": "export",
+          "target": "blockExport"
         }
       ],
       "targets": {
@@ -168,14 +179,32 @@
         "baseMasterDetail": {
           "viewName": "BaseMasterDetail"
         },
+        "baseExport": {
+          "viewName": "BaseExport"
+        },
         "architectureMasterDetail": {
           "viewName": "ArchitectureMasterDetail"
+        },
+        "architectureExport": {
+          "viewName": "ArchitectureExport"
         },
         "solutionMasterDetail": {
           "viewName": "SolutionMasterDetail"
         },
+        "solutionExport": {
+          "viewName": "SolutionExport"
+        },
         "interfaceMasterDetail": {
           "viewName": "InterfaceMasterDetail"
+        },
+        "interfaceExport": {
+          "viewName": "InterfaceExport"
+        },
+        "blockImport": {
+          "viewName": "BlockImport"
+        },
+        "blockExport": {
+          "viewName": "BlockExport"
         }
       }
     }

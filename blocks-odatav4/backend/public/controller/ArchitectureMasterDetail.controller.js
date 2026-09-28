@@ -1,12 +1,113 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/f/library"
-], function (Controller, fLibrary) {
+    "sap/f/library",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
+    "sap/ui/core/Item"
+], function (Controller, fLibrary, Filter, FilterOperator, Item) {
     "use strict";
 
     var LayoutType = fLibrary.LayoutType;
 
     return Controller.extend("ea.architecture.manager.controller.ArchitectureMasterDetail", {
+
+        onInit: function () {
+            this._sMasterQuery = "";
+            this._sModuleFilter = "";
+            this._bModuleFilterInitialized = false;
+
+            var oList = this.byId("masterList");
+            if (oList) {
+                oList.attachUpdateFinished(this._updateModuleFilterOptions, this);
+            }
+        },
+
+        onMasterListSearch: function (oEvent) {
+            var sQuery = oEvent.getParameter("newValue");
+            if (typeof sQuery !== "string") {
+                sQuery = oEvent.getParameter("query") || "";
+            }
+
+            this._sMasterQuery = sQuery.trim();
+            this._applyMasterListFilters();
+        },
+
+        onModuleFilterChange: function (oEvent) {
+            var sKey = oEvent.getParameter("selectedItem").getKey();
+            this._sModuleFilter = sKey === "__ALL__" ? "" : sKey;
+            this._applyMasterListFilters();
+        },
+
+        _applyMasterListFilters: function () {
+            var oList = this.byId("masterList");
+            if (!oList) {
+                return;
+            }
+
+            var oBinding = oList.getBinding("items");
+            if (!oBinding) {
+                return;
+            }
+
+            var aFilters = [];
+            if (this._sMasterQuery) {
+                aFilters.push(new Filter({
+                    filters: [
+                        new Filter("ID", FilterOperator.Contains, this._sMasterQuery),
+                        new Filter("Name", FilterOperator.Contains, this._sMasterQuery),
+                        new Filter("Modul", FilterOperator.Contains, this._sMasterQuery),
+                        new Filter("Responsible", FilterOperator.Contains, this._sMasterQuery)
+                    ],
+                    and: false
+                }));
+            }
+
+            if (this._sModuleFilter) {
+                aFilters.push(new Filter("Modul", FilterOperator.EQ, this._sModuleFilter));
+            }
+
+            oBinding.filter(aFilters);
+        },
+
+        _updateModuleFilterOptions: function () {
+            if (this._bModuleFilterInitialized) {
+                return;
+            }
+
+            var oList = this.byId("masterList");
+            var oSelect = this.byId("moduleFilter");
+
+            if (!oList || !oSelect) {
+                return;
+            }
+
+            var mModules = Object.create(null);
+            oList.getItems().forEach(function (oItem) {
+                var oContext = oItem.getBindingContext();
+                var sModule = oContext && oContext.getProperty("Modul");
+                if (sModule) {
+                    mModules[sModule] = true;
+                }
+            });
+
+            var aModules = Object.keys(mModules).sort(function (a, b) {
+                return a.localeCompare(b);
+            });
+
+            if (!aModules.length) {
+                return;
+            }
+
+            oSelect.removeAllItems();
+            oSelect.addItem(new Item({ key: "__ALL__", text: "Alle Module" }));
+            aModules.forEach(function (sModule) {
+                oSelect.addItem(new Item({ key: sModule, text: sModule }));
+            });
+            oSelect.setSelectedKey("__ALL__");
+
+            this._bModuleFilterInitialized = true;
+            oList.detachUpdateFinished(this._updateModuleFilterOptions, this);
+        },
 
         onListItemPress: function (oEvent) {
             var oListItem = oEvent.getParameter("listItem") || oEvent.getSource();

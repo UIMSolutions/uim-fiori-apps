@@ -1,4 +1,4 @@
-<mvc:View controllerName="ea.architecture.manager.controller.BaseMasterDetail"
+<mvc:View controllerName="ea.architecture.manager.controller.BaseExport"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:f="sap.f"
     xmlns:form="sap.ui.layout.form"
@@ -16,26 +16,6 @@
                     <Button icon="sap-icon://home" press=".onNavHome" tooltip="Hauptmenü" />
                 </headerContent>
                 <content>
-                    <HBox width="100%" class="sapUiSmallMarginBottom" renderType="Bare">
-                        <items>
-                            <SearchField
-                                id="masterListSearch"
-                                width="100%"
-                                placeholder="Suche nach ID, Name oder Verantwortlich"
-                                search=".onMasterListSearch"
-                                liveChange=".onMasterListSearch" />
-                            <Select
-                                id="responsibleFilter"
-                                width="14rem"
-                                class="sapUiTinyMarginBegin"
-                                selectedKey="__ALL__"
-                                change=".onResponsibleFilterChange">
-                                <items>
-                                    <core:Item key="__ALL__" text="Alle Verantwortlichen" />
-                                </items>
-                            </Select>
-                        </items>
-                    </HBox>
                     <List id="masterList" items="{/BaseBlocks}" mode="SingleSelectMaster" selectionChange=".onListItemPress">
                         <ObjectListItem title="{path: 'Name', targetType: 'string'}" number="v{path: 'Version', targetType: 'string'}">
                             <attributes>

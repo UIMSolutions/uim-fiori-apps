@@ -1,0 +1,11 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    
+    <ActionSheet title="Navigation">
+        <buttons>
+            <Button text="Sprache wechseln" icon="sap-icon://world" press=".onLanguageToggle" />
+            <Button text="Abmelden" icon="sap-icon://log" press=".onLogout" />
+        </buttons>
+    </ActionSheet>
+</core:FragmentDefinition>

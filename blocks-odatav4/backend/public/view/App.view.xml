@@ -1,9 +1,45 @@
+<!-- webapp/view/App.view.xml -->
 <mvc:View
     controllerName="ea.architecture.manager.controller.App"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:tnt="sap.tnt"
+    xmlns:core="sap.ui.core"
     displayBlock="true">
-    <Shell id="shell">
-        <App id="appControl" />
-    </Shell>
+
+    <tnt:ToolPage id="toolPage" sideExpanded="true">
+        <tnt:header>
+            <f:ShellBar
+                title="Architecture Manager"
+                homeIcon="sap-icon://home"
+                showNotifications="true"
+                showSearch="true"
+                showMenuButton="true"
+                menuButtonPressed=".onToggleSideNavigation"
+                navButtonPressed=".onNavHome">
+                <f:profile>
+                    <Avatar initials="AM" press=".onMenuPress" tooltip="Profil" />
+                </f:profile>
+            </f:ShellBar>
+        </tnt:header>
+
+        <tnt:sideContent>
+            <tnt:SideNavigation id="sideNavigation" itemSelect=".onSideNavigationSelect">
+                <tnt:NavigationList id="navigationList">
+                    <tnt:NavigationListItem key="home" text="Home" icon="sap-icon://home" />
+                    <tnt:NavigationListItem key="base_show" text="Grundbausteine" icon="sap-icon://building" />
+                    <tnt:NavigationListItem key="architecture_show" text="Architecture Blocks" icon="sap-icon://sitemap" />
+                    <tnt:NavigationListItem key="solution_show" text="Solution Blocks" icon="sap-icon://puzzle" />
+                    <tnt:NavigationListItem key="interface_show" text="Interface Blocks" icon="sap-icon://compare" />
+                    <tnt:NavigationListItem key="block_import" text="Excel Import" icon="sap-icon://upload" />
+                    <tnt:NavigationListItem key="block_export" text="Excel Export" icon="sap-icon://excel-attachment" />
+                </tnt:NavigationList>
+            </tnt:SideNavigation>
+        </tnt:sideContent>
+
+        <tnt:mainContents>
+            <App id="app" />
+        </tnt:mainContents>
+    </tnt:ToolPage>
 </mvc:View>
