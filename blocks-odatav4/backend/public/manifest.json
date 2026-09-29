@@ -198,6 +198,11 @@
           "name": "admin_user",
           "pattern": "admin/users",
           "target": "userManagement"
+        },
+        {
+          "name": "admin_history",
+          "pattern": "admin/history",
+          "target": "loggingHistory"
         }
       ],
       "targets": {
@@ -245,6 +250,9 @@
         },
         "userManagement": {
           "viewName": "UserManagement"
+        },
+        "loggingHistory": {
+          "viewName": "LoggingHistory"
         }
       }
     }

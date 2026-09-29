@@ -176,6 +176,9 @@
                             <GenericTile header="Benutzer" subheader="Verwaltung" frameType="OneByOne" press=".onNavigateTo('admin', 'user')">
                                 <tileContent><TileContent><ImageContent src="sap-icon://user-settings" /></TileContent></tileContent>
                             </GenericTile>
+                            <GenericTile header="Logging" subheader="Historie" frameType="OneByOne" press=".onNavigateTo('admin', 'history')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://history" /></TileContent></tileContent>
+                            </GenericTile>
                         </f:items>
                     </f:GridContainer>
                 </VBox>

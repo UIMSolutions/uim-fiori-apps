@@ -17,8 +17,12 @@ sap.ui.define([
             var oAppStateModel = new JSONModel({
                 showShell: true
             });
+            var oNotificationsModel = new JSONModel({
+                items: []
+            });
 
             this.getView().setModel(oAppStateModel, "appState");
+            this.getView().setModel(oNotificationsModel, "appNotifications");
 
             // Aktuelle Sprache des Systems im ViewModel hinterlegen
             var sCurrentLanguage = Configuration.getLanguage().substring(0, 2);
@@ -30,6 +34,28 @@ sap.ui.define([
             }
 
             oRouter.attachRouteMatched(this._onRouteMatched, this);
+        },
+
+        onNotificationsPress: function () {
+            var oView = this.getView();
+            var oShellBar = this.byId("shellBar");
+
+            if (!this._pNotificationPopover) {
+                this._pNotificationPopover = Fragment.load({
+                    id: oView.getId(),
+                    name: "ea.architecture.manager.view.fragment.NotificationPopover",
+                    controller: this
+                }).then(function (oPopover) {
+                    oView.addDependent(oPopover);
+                    return oPopover;
+                });
+            }
+
+            this._loadNotifications().finally(function () {
+                this._pNotificationPopover.then(function (oPopover) {
+                    oPopover.openBy(oShellBar);
+                });
+            }.bind(this));
         },
 
         onNavHome: function () {
@@ -167,6 +193,25 @@ sap.ui.define([
 
         _isAuthenticated: function () {
             return localStorage.getItem(AUTH_STORAGE_KEY) === "true" || sessionStorage.getItem(AUTH_STORAGE_KEY) === "true";
+        },
+
+        _loadNotifications: function () {
+            var oModel = this.getView().getModel("appNotifications");
+
+            return fetch("/api/notifications")
+                .then(function (oResponse) {
+                    if (!oResponse.ok) {
+                        throw new Error("HTTP " + oResponse.status);
+                    }
+                    return oResponse.json();
+                })
+                .then(function (oPayload) {
+                    oModel.setProperty("/items", oPayload.items || []);
+                })
+                .catch(function () {
+                    oModel.setProperty("/items", []);
+                    MessageToast.show("Benachrichtigungen konnten nicht geladen werden.");
+                });
         }
 
     });

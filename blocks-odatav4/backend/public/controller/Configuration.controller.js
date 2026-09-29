@@ -1,8 +1,9 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/m/MessageToast"
-], function (Controller, JSONModel, MessageToast) {
+    "sap/m/MessageToast",
+    "sap/m/MessageBox"
+], function (Controller, JSONModel, MessageToast, MessageBox) {
     "use strict";
 
     return Controller.extend("ea.architecture.manager.controller.Configuration", {
@@ -17,6 +18,22 @@ sap.ui.define([
         onReset: function () {
             this._setDefaultModel();
             MessageToast.show("Konfiguration zurueckgesetzt.");
+        },
+
+        onShowInfoNotification: function () {
+            MessageToast.show("Info: Hintergrundsynchronisation wird geprueft.");
+        },
+
+        onShowSuccessNotification: function () {
+            MessageToast.show("Erfolg: Einstellungen wurden erfolgreich uebernommen.");
+        },
+
+        onShowWarningNotification: function () {
+            MessageBox.warning("Warnung: Das Mail-Gateway antwortet verzoegert.");
+        },
+
+        onShowErrorNotification: function () {
+            MessageBox.error("Fehler: Verbindung zum Benachrichtigungsdienst fehlgeschlagen.");
         },
 
         _setDefaultModel: function () {

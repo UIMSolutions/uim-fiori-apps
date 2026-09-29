@@ -1,0 +1,53 @@
+<mvc:View controllerName="ea.architecture.manager.controller.LoggingHistory"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <Page title="Logging &amp; Historie">
+        <content>
+            <VBox class="sapUiMediumMargin" renderType="Bare">
+                <Toolbar class="sapUiSmallMarginBottom">
+                    <Title text="Systemprotokolle" level="H2" />
+                    <ToolbarSpacer />
+                    <SearchField width="16rem" placeholder="Suche in Meldung, Quelle, Benutzer" search=".onSearch" liveChange=".onSearch" class="sapUiTinyMarginEnd" />
+                    <DatePicker id="fromDate" placeholder="Von" valueFormat="yyyy-MM-dd" displayFormat="medium" change=".onDateChange" class="sapUiTinyMarginEnd" />
+                    <DatePicker id="toDate" placeholder="Bis" valueFormat="yyyy-MM-dd" displayFormat="medium" change=".onDateChange" class="sapUiTinyMarginEnd" />
+                    <Button text="Aktualisieren" icon="sap-icon://refresh" press=".onRefresh" />
+                </Toolbar>
+
+                <SegmentedButton selectedKey="all" selectionChange=".onFilterChange" class="sapUiSmallMarginBottom">
+                    <items>
+                        <SegmentedButtonItem key="all" text="Alle" />
+                        <SegmentedButtonItem key="Error" text="Fehler" />
+                        <SegmentedButtonItem key="Warning" text="Warnung" />
+                        <SegmentedButtonItem key="Success" text="Erfolg" />
+                    </items>
+                </SegmentedButton>
+
+                <List id="logList" items="{logs>/filtered}" noDataText="Keine Logeintraege gefunden.">
+                    <items>
+                        <ObjectListItem
+                            title="{logs>message}"
+                            number="{logs>timestamp}"
+                            numberUnit="{logs>source}"
+                            intro="{logs>user}"
+                            icon="sap-icon://activity-items"
+                            type="Inactive">
+                            <firstStatus>
+                                <ObjectStatus text="{logs>level}" state="{logs>level}" />
+                            </firstStatus>
+                        </ObjectListItem>
+                    </items>
+                </List>
+
+                <HBox renderType="Bare" justifyContent="Center" class="sapUiSmallMarginTop">
+                    <Button
+                        text="Mehr laden"
+                        icon="sap-icon://navigation-down-arrow"
+                        press=".onLoadMore"
+                        visible="{logs>/pagination/hasMore}"
+                        enabled="{= !${logs>/pagination/loading} }" />
+                </HBox>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

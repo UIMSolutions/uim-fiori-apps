@@ -1,0 +1,23 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <ResponsivePopover title="Benachrichtigungen" contentWidth="28rem" placement="Bottom">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <ObjectStatus text="{= ${appNotifications>/items}.length + ' Meldungen' }" state="Information" class="sapUiTinyMarginBottom" />
+                <List id="notificationList" items="{appNotifications>/items}" noDataText="Keine Benachrichtigungen vorhanden.">
+                    <items>
+                        <StandardListItem
+                            title="{appNotifications>title}"
+                            description="{appNotifications>description}"
+                            info="{appNotifications>timestamp}"
+                            infoState="{appNotifications>state}"
+                            icon="sap-icon://bell"
+                            type="Inactive" />
+                    </items>
+                </List>
+            </VBox>
+        </content>
+    </ResponsivePopover>
+</core:FragmentDefinition>

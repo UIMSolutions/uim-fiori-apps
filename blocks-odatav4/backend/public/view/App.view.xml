@@ -8,7 +8,7 @@
 
     <tnt:ToolPage id="toolPage" sideExpanded="true">
         <tnt:header>
-            <f:ShellBar title="Architecture Manager" homeIcon="sap-icon://home" showNotifications="true" showSearch="true" showMenuButton="{appState>/showShell}" visible="{appState>/showShell}" menuButtonPressed=".onToggleSideNavigation" navButtonPressed=".onNavHome">
+            <f:ShellBar id="shellBar" title="Architecture Manager" homeIcon="sap-icon://home" showNotifications="true" showSearch="true" showMenuButton="{appState>/showShell}" visible="{appState>/showShell}" menuButtonPressed=".onToggleSideNavigation" navButtonPressed=".onNavHome" notificationsPressed=".onNotificationsPress">
                 <f:profile>
                     <Avatar initials="AM" press=".onMenuPress" tooltip="Profil" />
                 </f:profile>
@@ -44,6 +44,7 @@
                         <tnt:items>
                             <tnt:NavigationListItem key="admin_repair" text="Konfiguration" icon="sap-icon://action-settings" />
                             <tnt:NavigationListItem key="admin_user" text="Benutzer" icon="sap-icon://group" />
+                            <tnt:NavigationListItem key="admin_history" text="Logging &amp; Historie" icon="sap-icon://history" />
                         </tnt:items>
                     </tnt:NavigationListItem>
                 </tnt:NavigationList>

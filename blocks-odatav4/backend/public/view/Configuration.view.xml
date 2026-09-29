@@ -31,6 +31,24 @@
                     </f:content>
                 </f:SimpleForm>
 
+                <Panel headerText="Benachrichtigungsbeispiele" class="sapUiSmallMarginTop" expandable="false">
+                    <content>
+                        <MessageStrip
+                            text="Dies ist eine persistente Info-Meldung als Beispiel."
+                            type="Information"
+                            showIcon="true"
+                            showCloseButton="true"
+                            class="sapUiSmallMarginBottom" />
+
+                        <HBox renderType="Bare" class="sapUiTinyMarginTop sapUiTinyMarginBottom">
+                            <Button text="Info Toast" icon="sap-icon://hint" press=".onShowInfoNotification" class="sapUiTinyMarginEnd" />
+                            <Button text="Erfolg" icon="sap-icon://message-success" type="Accept" press=".onShowSuccessNotification" class="sapUiTinyMarginEnd" />
+                            <Button text="Warnung" icon="sap-icon://message-warning" type="Attention" press=".onShowWarningNotification" class="sapUiTinyMarginEnd" />
+                            <Button text="Fehler" icon="sap-icon://message-error" type="Reject" press=".onShowErrorNotification" />
+                        </HBox>
+                    </content>
+                </Panel>
+
                 <Toolbar class="sapUiSmallMarginTop">
                     <ToolbarSpacer />
                     <Button text="Zuruecksetzen" type="Transparent" icon="sap-icon://reset" press=".onReset" />
