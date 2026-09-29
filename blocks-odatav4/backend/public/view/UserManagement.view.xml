@@ -1,0 +1,58 @@
+<mvc:View controllerName="ea.architecture.manager.controller.UserManagement"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Page title="Benutzerverwaltung">
+        <content>
+            <VBox class="sapUiMediumMargin" renderType="Bare">
+                <Toolbar class="sapUiSmallMarginBottom">
+                    <Title text="Benutzer" level="H2" />
+                    <ToolbarSpacer />
+                    <Button text="Neu" type="Emphasized" icon="sap-icon://add" press=".onAddUser" enabled="{vm>/canManageUsers}" />
+                    <Button text="Aktualisieren" icon="sap-icon://refresh" press=".onRefreshUsers" />
+                </Toolbar>
+
+                <MessageStrip text="Benutzer mit Rolle 'Administrator' koennen Benutzer anlegen, bearbeiten und deaktivieren." type="Information" showIcon="true" class="sapUiTinyMarginBottom" />
+
+                <Table id="userTable" items="{path: '/Users'}" mode="SingleSelectLeft" noDataText="Keine Benutzer vorhanden.">
+                    <columns>
+                        <Column>
+                            <Text text="ID" />
+                        </Column>
+                        <Column>
+                            <Text text="Name" />
+                        </Column>
+                        <Column>
+                            <Text text="E-Mail" />
+                        </Column>
+                        <Column>
+                            <Text text="Rolle" />
+                        </Column>
+                        <Column hAlign="Center">
+                            <Text text="Status" />
+                        </Column>
+                    </columns>
+
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{ID}" />
+                                <Text text="{Username}" />
+                                <Text text="{Email}" />
+                                <ObjectIdentifier title="{Role}" />
+                                <ObjectStatus text="{= ${Active} ? 'Aktiv' : 'Inaktiv' }" state="{= ${Active} ? 'Success' : 'Error' }" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+
+                <Toolbar class="sapUiTinyMarginTop">
+                    <ToolbarSpacer />
+                    <Button text="Bearbeiten" icon="sap-icon://edit" press=".onEditSelectedUser" enabled="{vm>/canManageUsers}" />
+                    <Button text="Deaktivieren" type="Reject" icon="sap-icon://decline" press=".onDeactivateSelectedUser" enabled="{vm>/canManageUsers}" />
+                </Toolbar>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

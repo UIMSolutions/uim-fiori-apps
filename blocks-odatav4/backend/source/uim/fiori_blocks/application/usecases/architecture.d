@@ -12,7 +12,7 @@ class ManageArchitectureUseCase : ManageBlockUseCase!ArchitectureBlock {
 
   override ArchitectureBlock createBlock(Json data) {
     auto block = ArchitectureBlock.fromJson(data);
-    block.ID = data.getString("ID", randomUUiD().toString);
+    block.ID = data.getString("ID", randomUUID().toString);
 
     block.DependsOn = data.getArray("DependsOn").map!(item => Dependency.fromJson(item)).array;
     return block;

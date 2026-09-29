@@ -10,8 +10,19 @@ sap.ui.define([
 
     return Controller.extend("ea.architecture.manager.controller.Login", {
         onAfterRendering: function () {
-            var sStoredUser = localStorage.getItem(USER_STORAGE_KEY) || sessionStorage.getItem(USER_STORAGE_KEY) || "";
+            var sStoredRaw = localStorage.getItem(USER_STORAGE_KEY) || sessionStorage.getItem(USER_STORAGE_KEY) || "";
+            var sStoredUser = "";
             var bPersistentAuth = localStorage.getItem(AUTH_STORAGE_KEY) === "true";
+
+            if (sStoredRaw) {
+                try {
+                    var oStored = JSON.parse(sStoredRaw);
+                    sStoredUser = oStored.username || "";
+                } catch (e) {
+                    // Backward compatibility for older plain-string storage.
+                    sStoredUser = sStoredRaw;
+                }
+            }
 
             if (sStoredUser) {
                 this.byId("loginUsername").setValue(sStoredUser);
@@ -77,12 +88,18 @@ sap.ui.define([
 
                 if (bRememberMe) {
                     localStorage.setItem(AUTH_STORAGE_KEY, "true");
-                    localStorage.setItem(USER_STORAGE_KEY, sUser);
+                    localStorage.setItem(USER_STORAGE_KEY, JSON.stringify({
+                        username: sUser,
+                        role: oPayload.role || "Viewer"
+                    }));
                     sessionStorage.removeItem(AUTH_STORAGE_KEY);
                     sessionStorage.removeItem(USER_STORAGE_KEY);
                 } else {
                     sessionStorage.setItem(AUTH_STORAGE_KEY, "true");
-                    sessionStorage.setItem(USER_STORAGE_KEY, sUser);
+                    sessionStorage.setItem(USER_STORAGE_KEY, JSON.stringify({
+                        username: sUser,
+                        role: oPayload.role || "Viewer"
+                    }));
                     localStorage.removeItem(AUTH_STORAGE_KEY);
                     localStorage.removeItem(USER_STORAGE_KEY);
                 }

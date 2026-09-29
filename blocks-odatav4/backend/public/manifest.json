@@ -3,9 +3,15 @@
   "sap.app": {
     "id": "ea.architecture.manager",
     "type": "application",
+    "i18n": {
+      "bundleUrl": "i18n/i18n.properties",
+      "supportedLocales": ["", "de", "en", "tr"]
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
     "dataSources": {
       "mainService": {
-        "uri": "http://127.0.0.1:8080/odata/v4/",
+        "uri": "/odata/v4/",
         "type": "OData",
         "settings": {
           "odataVersion": "4.0"
@@ -26,7 +32,8 @@
         "sap.m": {},
         "sap.f": {},
         "sap.tnt": {},
-        "sap.viz": {}
+        "sap.viz": {},
+        "sap.ui.core": {}
       }
     },
     "models": {
@@ -181,6 +188,16 @@
           "name": "block_search",
           "pattern": "reporting",
           "target": "reporting"
+        },
+        {
+          "name": "admin_repair",
+          "pattern": "admin/configuration",
+          "target": "configuration"
+        },
+        {
+          "name": "admin_user",
+          "pattern": "admin/users",
+          "target": "userManagement"
         }
       ],
       "targets": {
@@ -222,6 +239,12 @@
         },
         "reporting": {
           "viewName": "Reporting"
+        },
+        "configuration": {
+          "viewName": "Configuration"
+        },
+        "userManagement": {
+          "viewName": "UserManagement"
         }
       }
     }

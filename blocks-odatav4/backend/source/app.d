@@ -27,7 +27,7 @@ void postLogin(HTTPServerRequest req, HTTPServerResponse res) {
     return;
   }
 
-  auto isValid = username == "admin" && password == "Welcome1!";
+  auto isValid = (username == "admin" || username == "viewer") && password == "Welcome1!";
 
   if (!isValid) {
     res.statusCode = HTTPStatus.unauthorized;
@@ -42,8 +42,10 @@ void postLogin(HTTPServerRequest req, HTTPServerResponse res) {
   res.statusCode = HTTPStatus.ok;
   res.contentType = "application/json";
   auto successResponse = Json.emptyObject;
+  auto role = username == "admin" ? "Administrator" : "Viewer";
   successResponse["authenticated"] = Json(true);
   successResponse["username"] = Json(username);
+  successResponse["role"] = Json(role);
   res.writeJsonBody(successResponse);
 }
 
@@ -126,11 +128,23 @@ string getMetadata() {
         <Property Name="Status" Type="Edm.String" />
       </EntityType>
 
+      <EntityType Name="User">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="ID" Type="Edm.String" Nullable="false" />
+        <Property Name="Username" Type="Edm.String" />
+        <Property Name="Email" Type="Edm.String" />
+        <Property Name="Role" Type="Edm.String" />
+        <Property Name="Active" Type="Edm.Boolean" />
+      </EntityType>
+
       <EntityContainer Name="EAService">
         <EntitySet Name="BaseBlocks" EntityType="EAModel.BaseBlock" />
         <EntitySet Name="ArchitectureBlocks" EntityType="EAModel.ArchitectureBlock" />
         <EntitySet Name="SolutionBlocks" EntityType="EAModel.SolutionBlock" />
         <EntitySet Name="InterfaceBlocks" EntityType="EAModel.InterfaceBlock" />
+        <EntitySet Name="Users" EntityType="EAModel.User" />
       </EntityContainer>
     </Schema>
   </edmx:DataServices>
@@ -182,6 +196,9 @@ void main() {
 
     auto interfaceOData = new InterfaceODataController(new ManageInterfaceUseCase(new InterfaceRepository));
     odataRouter.registerController("InterfaceBlocks", interfaceOData);
+
+    auto userOData = new UserODataController();
+    odataRouter.registerController("Users", userOData);
 
     /// Activate CORS and OData routes
     router.any("*", &enableCORS);

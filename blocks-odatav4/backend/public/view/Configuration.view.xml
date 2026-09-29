@@ -1,0 +1,42 @@
+<mvc:View controllerName="ea.architecture.manager.controller.Configuration"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form">
+
+    <Page title="Konfiguration">
+        <content>
+            <VBox class="sapUiMediumMargin" renderType="Bare">
+                <Title text="Systemeinstellungen" level="H2" class="sapUiSmallMarginBottom" />
+                <Text text="Zentrale Einstellungen fuer Verhalten, Benachrichtigungen und Datenaustausch." class="sapUiTinyMarginBottom" />
+
+                <f:SimpleForm editable="true" layout="ResponsiveGridLayout" title="Allgemein" class="sapUiSmallMarginTop">
+                    <f:content>
+                        <Label text="Systemname" />
+                        <Input id="cfgSystemName" value="{config>/systemName}" placeholder="Architecture Manager" />
+
+                        <Label text="Standard-Sprache" />
+                        <Select id="cfgLanguage" selectedKey="{config>/defaultLanguage}">
+                            <items>
+                                <core:Item xmlns:core="sap.ui.core" key="de" text="Deutsch" />
+                                <core:Item xmlns:core="sap.ui.core" key="en" text="English" />
+                                <core:Item xmlns:core="sap.ui.core" key="tr" text="Turkce" />
+                            </items>
+                        </Select>
+
+                        <Label text="Mail-Benachrichtigungen" />
+                        <Switch id="cfgMailSwitch" state="{config>/mailNotifications}" customTextOn="An" customTextOff="Aus" />
+
+                        <Label text="Auto-Sync aktiv" />
+                        <Switch id="cfgSyncSwitch" state="{config>/autoSync}" customTextOn="An" customTextOff="Aus" />
+                    </f:content>
+                </f:SimpleForm>
+
+                <Toolbar class="sapUiSmallMarginTop">
+                    <ToolbarSpacer />
+                    <Button text="Zuruecksetzen" type="Transparent" icon="sap-icon://reset" press=".onReset" />
+                    <Button text="Speichern" type="Emphasized" icon="sap-icon://save" press=".onSave" />
+                </Toolbar>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

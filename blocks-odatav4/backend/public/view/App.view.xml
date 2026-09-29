@@ -42,8 +42,8 @@
                     </tnt:NavigationListItem>
                     <tnt:NavigationListItem text="Administration" icon="sap-icon://action-settings" selectable="false" expanded="true">
                         <tnt:items>
-                            <tnt:NavigationListItem key="block_import" text="Konfiguration" icon="sap-icon://upload" />
-                            <tnt:NavigationListItem key="block_export" text="Benutzer" icon="sap-icon://excel-attachment" />
+                            <tnt:NavigationListItem key="admin_repair" text="Konfiguration" icon="sap-icon://action-settings" />
+                            <tnt:NavigationListItem key="admin_user" text="Benutzer" icon="sap-icon://group" />
                         </tnt:items>
                     </tnt:NavigationListItem>
                 </tnt:NavigationList>
