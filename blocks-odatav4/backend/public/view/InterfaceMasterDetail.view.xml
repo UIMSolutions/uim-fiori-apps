@@ -1,43 +1,57 @@
 <mvc:View controllerName="ea.architecture.manager.controller.InterfaceMasterDetail"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:f="sap.f"
-    xmlns="sap.m">
-    <f:FlexibleColumnLayout id="fcl" layout="OneColumn">
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Page title="Schnittstellenbausteine" showHeader="true">
+        <f:FlexibleColumnLayout id="fcl" layout="OneColumn">
 
-        <!-- MASTER SPALTE -->
-        <f:beginColumnPages>
-            <Page title="Schnittstellenbausteine">
-                <headerContent>
+            <!-- MASTER SPALTE -->
+            <f:beginColumnPages>
+                <Page title="Schnittstellenbausteine" showHeader="false">
+
+                    <!-- headerContent>
                     <Button icon="sap-icon://home" press=".onNavHome" />
-                </headerContent>
-                <content>
-                    <!-- OData v4 Binding mit $filter -->
-                    <List id="masterList" items="{
+                </headerContent -->
+                    <content>
+                        <HBox width="100%" class="sapUiSmallMarginBottom" renderType="Bare">
+                            <items>
+                                <SearchField id="masterListSearch" width="100%" placeholder="Suche nach ID, Name, Modul oder Verantwortlich" search=".onMasterListSearch" liveChange=".onMasterListSearch" />
+                                <Select id="moduleFilter" width="13rem" class="sapUiTinyMarginBegin" selectedKey="__ALL__" change=".onModuleFilterChange">
+                                    <items>
+                                        <core:Item key="__ALL__" text="Alle Module" />
+                                    </items>
+                                </Select>
+                            </items>
+                        </HBox>
+                        <!-- OData v4 Binding mit $filter -->
+                        <List id="masterList" items="{
                             path: '/InterfaceBlocks',
                             parameters: {
                                 '$filter': 'Type eq \'Interface\''
                             }
                         }" mode="SingleSelectMaster" itemPress=".onListItemPress">
-                        <StandardListItem title="{Name}" description="{ID}" type="Navigation" />
-                    </List>
-                </content>
-            </Page>
-        </f:beginColumnPages>
+                            <StandardListItem title="{Name}" description="{ID}" type="Navigation" />
+                        </List>
+                    </content>
+                </Page>
+            </f:beginColumnPages>
 
-        <!-- DETAIL SPALTE -->
-        <f:midColumnPages>
-            <Page title="Schnittstellenbaustein Details" id="detailPage">
-                <content>
-                    <!-- OData v4 Context Binding in der Detailansicht -->
-                    <ObjectHeader title="{Name}" number="{ID}" numberUnit="Status: {Status}">
-                        <attributes>
-                            <ObjectAttribute title="Typ" text="{Type}" />
-                            <ObjectAttribute title="Beschreibung" text="{Description}" />
-                        </attributes>
-                    </ObjectHeader>
-                </content>
-            </Page>
-        </f:midColumnPages>
+            <!-- DETAIL SPALTE -->
+            <f:midColumnPages>
+                <Page title="Schnittstellenbaustein Details" id="detailPage">
+                    <content>
+                        <!-- OData v4 Context Binding in der Detailansicht -->
+                        <ObjectHeader title="{Name}" number="{ID}" numberUnit="Status: {Status}">
+                            <attributes>
+                                <ObjectAttribute title="Typ" text="{Type}" />
+                                <ObjectAttribute title="Beschreibung" text="{Description}" />
+                            </attributes>
+                        </ObjectHeader>
+                    </content>
+                </Page>
+            </f:midColumnPages>
 
-    </f:FlexibleColumnLayout>
+        </f:FlexibleColumnLayout>
+    </Page>
 </mvc:View>

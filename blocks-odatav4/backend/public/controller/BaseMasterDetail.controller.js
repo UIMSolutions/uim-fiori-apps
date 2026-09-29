@@ -41,7 +41,7 @@ sap.ui.define(
           this._sResponsibleFilter = "";
           this._bResponsibleFilterInitialized = false;
 
-          var oList = this.byId("masterList");
+          var oList = this.byId("baseMasterList");
           if (oList) {
             oList.attachUpdateFinished(this._updateResponsibleFilterOptions, this);
           }
@@ -65,7 +65,7 @@ sap.ui.define(
         },
 
         _applyMasterListFilters: function () {
-          var oList = this.byId("masterList");
+          var oList = this.byId("baseMasterList");
           if (!oList) {
             return;
           }
@@ -99,8 +99,8 @@ sap.ui.define(
             return;
           }
 
-          var oList = this.byId("masterList");
-          var oSelect = this.byId("responsibleFilter");
+          var oList = this.byId("baseMasterList");
+          var oSelect = this.byId("baseResponsibleFilter");
 
           if (!oList || !oSelect) {
             return;
@@ -144,8 +144,8 @@ sap.ui.define(
             return;
           }
 
-          var oFCL = this.byId("fcl");
-          var oDetailPage = this.byId("detailPage");
+          var oFCL = this.byId("baseFcl");
+          var oDetailPage = this.byId("baseDetailPage");
 
           if (oDetailPage && oFCL) {
             oDetailPage.setBindingContext(oContext);
@@ -181,7 +181,7 @@ sap.ui.define(
         },
 
         onCancelPress: function () {
-          var oDetailPage = this.byId("detailPage");
+          var oDetailPage = this.byId("baseDetailPage");
           var oContext = oDetailPage.getBindingContext();
 
           if (oContext && oContext.hasPendingChanges()) {
@@ -193,17 +193,17 @@ sap.ui.define(
 
         _setEditMode: function (bEdit) {
           this.getView().getModel("ui").setProperty("/isEditMode", bEdit);
-          this.byId("btnEdit").setVisible(!bEdit);
-          this.byId("btnSave").setVisible(bEdit);
-          this.byId("btnCancel").setVisible(bEdit);
-          this.byId("detailForm").setEditable(bEdit);
+          this.byId("baseBtnEdit").setVisible(!bEdit);
+          this.byId("baseBtnSave").setVisible(bEdit);
+          this.byId("baseBtnCancel").setVisible(bEdit);
+          this.byId("baseDetailForm").setEditable(bEdit);
         },
 
         /* =================================================== */
         /* DELETE LOGIK (OData v4 Context.delete)               */
         /* =================================================== */
         onDeletePress: function () {
-          var oDetailPage = this.byId("detailPage");
+          var oDetailPage = this.byId("baseDetailPage");
           var oContext = oDetailPage.getBindingContext();
 
           if (!oContext) {
@@ -232,7 +232,7 @@ sap.ui.define(
                     .then(function () {
                       MessageToast.show("Grundbaustein erfolgreich gelöscht.");
                       that._setEditMode(false);
-                      that.byId("fcl").setLayout(LayoutType.OneColumn);
+                      that.byId("baseFcl").setLayout(LayoutType.OneColumn);
                     })
                     .catch(function (oError) {
                       MessageBox.error(
@@ -249,7 +249,7 @@ sap.ui.define(
         /* PRINT LOGIK                                         */
         /* =================================================== */
         onPrintPress: function () {
-          var oDetailPage = this.byId("detailPage");
+          var oDetailPage = this.byId("baseDetailPage");
           var oDomRef = oDetailPage.getDomRef();
 
           if (!oDomRef) {
@@ -287,9 +287,9 @@ sap.ui.define(
           if (!sTargetId) return;
 
           var oModel = this.getView().getModel();
-          var oDetailPage = this.byId("detailPage");
-          var oFCL = this.byId("fcl");
-          var oMasterList = this.byId("masterList");
+          var oDetailPage = this.byId("baseDetailPage");
+          var oFCL = this.byId("baseFcl");
+          var oMasterList = this.byId("baseMasterList");
 
           var sPath = "/BaseBlocks('" + sTargetId + "')";
           var oTargetContext = oModel.bindContext(sPath).getBoundContext();
@@ -320,7 +320,7 @@ sap.ui.define(
         },
 
         onExportExcelPress: function () {
-          var oDetailPage = this.byId("detailPage");
+          var oDetailPage = this.byId("baseDetailPage");
           var oContext = oDetailPage.getBindingContext();
 
           if (!oContext) {
@@ -368,7 +368,7 @@ sap.ui.define(
         },
 
         onExportWordPress: function () {
-          var oDetailPage = this.byId("detailPage");
+          var oDetailPage = this.byId("baseDetailPage");
           var oContext = oDetailPage.getBindingContext();
 
           if (!oContext) {
@@ -424,7 +424,7 @@ sap.ui.define(
         /* DOCX EXPORT (mit korrigierter includeScript-Logik) */
         /* =================================================== */
         onExportDocxPress: function () {
-          var oDetailPage = this.byId("detailPage");
+          var oDetailPage = this.byId("baseDetailPage");
           var oContext = oDetailPage.getBindingContext();
 
           if (!oContext) {

@@ -13,9 +13,9 @@
             <!-- =================================================== -->
             <f:beginColumnPages>
                 <Page title="Übersicht" showHeader="false">
-                    <headerContent>
-                        <!-- <Button icon="sap-icon://home" press=".onNavHome" tooltip="Hauptmenü" /> -->
-                    </headerContent>
+                    <!-- headerContent>
+                        <Button icon="sap-icon://home" press=".onNavHome" tooltip="Hauptmenü" />
+                    </headerContent -->
                     <content>
                         <HBox width="100%" class="sapUiSmallMarginBottom" renderType="Bare">
                             <items>
@@ -43,18 +43,34 @@
             <!-- DETAIL SPALTE (Mid Column)                          -->
             <!-- =================================================== -->
             <f:midColumnPages>
-                <Page id="detailPage" showHeader="true">
-                    <headerContent>
-                        <!-- Aktions-Buttons -->
-                        <Button id="btnEdit" icon="sap-icon://edit" text="Bearbeiten"  visible="true" press=".onEditPress" />
-                        <Button id="btnSave" icon="sap-icon://save" text="Speichern"  visible="false" press=".onSavePress" />
-                        <Button id="btnCancel" icon="sap-icon://cancel" text="Abbrechen" visible="false" press=".onCancelPress" />
-                        <Button id="btnPrint" icon="sap-icon://print" tooltip="Drucken" press=".onPrintPress" />
-                        <Button id="btnExportExcel" icon="sap-icon://excel-attachment" tooltip="Export nach Excel" press=".onExportExcelPress" />
-                        <Button id="btnExportWord" icon="sap-icon://doc-attachment" tooltip="Export nach Word" press=".onExportWordPress" />
-                        <Button id="btnExportWordDocx" icon="sap-icon://document-text" tooltip="Export als echte DOCX" press=".onExportDocxPress" />
-                        <Button id="btnDelete" icon="sap-icon://delete" type="Reject" tooltip="Löschen" press=".onDeletePress" />
-                    </headerContent>
+                <Page id="detailPage">
+                    <customHeader>
+                        <OverflowToolbar>
+                            <!-- Haupt-Aktionen links/mitte -->
+                            <Button id="btnEdit" icon="sap-icon://edit" text="Bearbeiten" visible="true" press=".onEditPress" />
+                            <Button id="btnSave" icon="sap-icon://save" text="Speichern" visible="false" press=".onSavePress" type="Emphasized" />
+                            <Button id="btnCancel" icon="sap-icon://cancel" text="Abbrechen" visible="false" press=".onCancelPress" />
+
+                            <ToolbarSpacer />
+
+                            <!-- Export & Utility Buttons -->
+                            <MenuButton icon="sap-icon://download" text="Export">
+                                <menu>
+                                    <Menu>
+                                        <MenuItem id="btnExportExcel" icon="sap-icon://excel-attachment" text="Excel (.xlsx)" press=".onExportExcelPress" />
+                                        <MenuItem id="btnExportWord" icon="sap-icon://doc-attachment" text="Word (.doc)" press=".onExportWordPress" />
+                                        <MenuItem id="btnExportWordDocx" icon="sap-icon://document-text" text="Word (.docx)" press=".onExportDocxPress" />
+                                    </Menu>
+                                </menu>
+                            </MenuButton>
+
+                            <Button id="btnPrint" icon="sap-icon://print" tooltip="Drucken" press=".onPrintPress" />
+
+                            <ToolbarSeparator />
+
+                            <Button id="btnDelete" icon="sap-icon://delete" type="Reject" tooltip="Löschen" press=".onDeletePress" />
+                        </OverflowToolbar>
+                    </customHeader>
                     <content>
                         <!-- Header Übersicht -->
                         <ObjectHeader title="{Name}" number="Version {Version}" intro="{Modul}">

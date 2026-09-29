@@ -2,8 +2,8 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:f="sap.f">
-    <Page title="Enterprise Architecture Launchpad" class="sapUiContentPadding">
-        <subHeader>
+    <Page title="Enterprise Architecture Launchpad" class="sapUiContentPadding" showHeader="false">
+        <!--subHeader>
             <OverflowToolbar>
                 <Label text="Springe zu:" class="sapUiTinyMarginEnd" />
                 <Button text="Grundbausteine" type="Transparent" press=".onScrollToGroup('groupBase')" />
@@ -13,34 +13,49 @@
                 <Button text="Datenaustausch" type="Transparent" press=".onScrollToGroup('groupExchange')" />
                 <Button text="Administration" type="Transparent" press=".onScrollToGroup('groupAdmin')" />
             </OverflowToolbar>
-        </subHeader>
+        </subHeader -->
         <content>
             <VBox class="sapUiContentPadding">
 
                 <!-- Gruppe 1: Grundbausteine -->
                 <VBox id="groupBase" class="sapUiSmallMarginBottom">
-                    <Title text="Grundbausteine" level="H2" titleStyle="H3" class="sapUiTinyMarginBottom" />
+                    <Title text="Bausteine" level="H2" titleStyle="H3" class="sapUiTinyMarginBottom" />
 
                     <f:GridContainer snapToRow="true">
                         <f:layout>
                             <f:GridContainerSettings rowSize="11rem" columnSize="11rem" gap="1rem" />
                         </f:layout>
                         <f:items>
-                            <GenericTile header="Anzeigen" subheader="Übersicht" frameType="OneByOne" press=".onNavigateTo('base', 'show')">
+                            <GenericTile header="Grundbausteine" subheader="GBB" frameType="OneByOne" press=".onNavigateTo('base', 'show')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://course-book" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Architekturbausteine" subheader="ABB" frameType="OneByOne" press=".onNavigateTo('architecture', 'show')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://sap-box" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Lösungsbausteine" subheader="LBB" frameType="OneByOne" press=".onNavigateTo('solution', 'show')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://table-view" /></TileContent></tileContent>
+                            </GenericTile>
+                            <!-- <GenericTile header="Organisatorische Bausteine" subheader="Übersicht" frameType="OneByOne" press=".onNavigateTo('organizational', 'show')">
                                 <tileContent><TileContent><ImageContent src="sap-icon://display" /></TileContent></tileContent>
                             </GenericTile>
-                            <GenericTile header="Bearbeiten" subheader="Pflege &amp; Zuordnung" frameType="OneByOne" press=".onNavigateTo('base', 'edit')">
-                                <tileContent><TileContent><ImageContent src="sap-icon://edit" /></TileContent></tileContent>
+                            <GenericTile header="Technische Bausteine" subheader="Übersicht" frameType="OneByOne" press=".onNavigateTo('technical', 'show')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://display" /></TileContent></tileContent>
                             </GenericTile>
-                            <GenericTile header="Analysieren" subheader="KPIs &amp; Reporting" frameType="OneByOne" press=".onNavigateTo('base', 'analyze')">
-                                <tileContent><TileContent><ImageContent src="sap-icon://business-objects-experience" /></TileContent></tileContent>
+                            <GenericTile header="Datenbausteine" subheader="Übersicht" frameType="OneByOne" press=".onNavigateTo('data', 'show')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://display" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Anwendungsbausteine" subheader="Übersicht" frameType="OneByOne" press=".onNavigateTo('application', 'show')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://display" /></TileContent></tileContent>
+                            </GenericTile -->
+                            <GenericTile header="Schnittstellen" subheader="SBB" frameType="OneByOne" press=".onNavigateTo('interface', 'show')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://connected" /></TileContent></tileContent>
                             </GenericTile>
                         </f:items>
                     </f:GridContainer>
                 </VBox>
 
                 <!-- Gruppe 2: Architekturbausteine -->
-                <VBox id="groupArchitecture" class="sapUiSmallMarginBottom">
+                <!-- VBox id="groupArchitecture" class="sapUiSmallMarginBottom">
                     <Title text="Architekturbausteine" level="H2" titleStyle="H3" class="sapUiTinyMarginBottom" />
 
                     <f:GridContainer snapToRow="true">
@@ -59,10 +74,10 @@
                             </GenericTile>
                         </f:items>
                     </f:GridContainer>
-                </VBox>
+                </VBox -->
 
                 <!-- Gruppe 3: Lösungsbausteine -->
-                <VBox id="groupSolution" class="sapUiSmallMarginBottom">
+                <!--VBox id="groupSolution" class="sapUiSmallMarginBottom">
                     <Title text="Lösungsbausteine" level="H2" titleStyle="H3" class="sapUiTinyMarginBottom" />
 
                     <f:GridContainer snapToRow="true">
@@ -81,10 +96,10 @@
                             </GenericTile>
                         </f:items>
                     </f:GridContainer>
-                </VBox>
+                </VBox -->
 
                 <!-- Gruppe 4: Schnittstellenbausteine -->
-                <VBox id="groupInterface" class="sapUiSmallMarginBottom">
+                <!-- VBox id="groupInterface" class="sapUiSmallMarginBottom">
                     <Title text="Schnittstellenbausteine" level="H2" titleStyle="H3" class="sapUiTinyMarginBottom" />
 
                     <f:GridContainer snapToRow="true">
@@ -100,6 +115,27 @@
                             </GenericTile>
                             <GenericTile header="Analysieren" subheader="KPIs &amp; Reporting" frameType="OneByOne" press=".onNavigateTo('interface', 'analyze')">
                                 <tileContent><TileContent><ImageContent src="sap-icon://business-objects-experience" /></TileContent></tileContent>
+                            </GenericTile>
+                        </f:items>
+                    </f:GridContainer>
+                </VBox> -->
+
+                <VBox id="groupArchitecture" class="sapUiSmallMarginBottom">
+                    <Title text="Auswertung" level="H2" titleStyle="H3" class="sapUiTinyMarginBottom" />
+
+                    <f:GridContainer snapToRow="true">
+                        <f:layout>
+                            <f:GridContainerSettings rowSize="11rem" columnSize="11rem" gap="1rem" />
+                        </f:layout>
+                        <f:items>
+                            <GenericTile header="Statistik" subheader="Berichtswesen" frameType="OneByOne" press=".onNavigateTo('block', 'search')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://business-objects-experience" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Qualität" subheader="Datenoptimierung" frameType="OneByOne" press=".onNavigateTo('architecture', 'analyze')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://badge" /></TileContent></tileContent>
+                            </GenericTile>
+                            <GenericTile header="Fehler" subheader="Inhaltliche Suche" frameType="OneByOne" press=".onNavigateTo('architecture', 'show')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://vehicle-repair" /></TileContent></tileContent>
                             </GenericTile>
                         </f:items>
                     </f:GridContainer>
@@ -119,7 +155,7 @@
                             <GenericTile header="Exportieren" subheader="Excel, CSV" frameType="OneByOne" press=".onNavigateTo('block', 'export')">
                                 <tileContent><TileContent><ImageContent src="sap-icon://download" /></TileContent></tileContent>
                             </GenericTile>
-                            <GenericTile header="Drucken" subheader="Mehrere Elemente als Word o. Pdf" frameType="OneByOne" press=".onNavigateTo('block', 'print')">
+                            <GenericTile header="Drucken" subheader="Mehrere Elemente" frameType="OneByOne" press=".onNavigateTo('block', 'print')">
                                 <tileContent><TileContent><ImageContent src="sap-icon://print" /></TileContent></tileContent>
                             </GenericTile>
                         </f:items>
@@ -134,7 +170,7 @@
                             <f:GridContainerSettings rowSize="11rem" columnSize="11rem" gap="1rem" />
                         </f:layout>
                         <f:items>
-                            <GenericTile header="Datenpflege" subheader="Korrekturen" frameType="OneByOne" press=".onNavigateTo('admin', 'repair')">
+                            <GenericTile header="Konfiguration" subheader="Anpassungen" frameType="OneByOne" press=".onNavigateTo('admin', 'repair')">
                                 <tileContent><TileContent><ImageContent src="sap-icon://wrench" /></TileContent></tileContent>
                             </GenericTile>
                             <GenericTile header="Benutzer" subheader="Verwaltung" frameType="OneByOne" press=".onNavigateTo('admin', 'user')">

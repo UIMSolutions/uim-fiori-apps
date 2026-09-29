@@ -1,0 +1,38 @@
+<mvc:View
+    controllerName="ea.architecture.manager.controller.Login"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:layout="sap.ui.layout">
+    <Page showHeader="false" backgroundDesign="Transparent">
+        <content>
+            <layout:VerticalLayout width="100%" class="sapUiContentPadding">
+                <VBox width="100%" justifyContent="Center" alignItems="Center" renderType="Bare" height="100%">
+                    <Panel width="24rem" expandable="false" class="sapUiResponsiveMargin" backgroundDesign="Transparent">
+                        <headerToolbar>
+                            <OverflowToolbar>
+                                <Title text="Architecture Manager" level="H3" />
+                                <ToolbarSpacer />
+                                <ObjectStatus text="Fiori 3" state="Success" />
+                            </OverflowToolbar>
+                        </headerToolbar>
+                        <content>
+                            <VBox class="sapUiSmallMarginTop sapUiSmallMarginBottom" renderType="Bare">
+                                <Title text="Anmelden" level="H4" class="sapUiTinyMarginBottom" />
+                                <Text text="Melde dich mit deinem Unternehmens-Konto an." class="sapUiSmallMarginBottom" />
+
+                                <Label text="Benutzername" labelFor="loginUsername" required="true" />
+                                <Input id="loginUsername" type="Text" placeholder="z. B. max.mustermann" submit=".onSubmitLogin" class="sapUiTinyMarginBottom" />
+
+                                <Label text="Passwort" labelFor="loginPassword" required="true" />
+                                <Input id="loginPassword" type="Password" placeholder="Passwort" submit=".onSubmitLogin" class="sapUiTinyMarginBottom" />
+
+                                <CheckBox id="loginRememberMe" text="Angemeldet bleiben" class="sapUiSmallMarginTop sapUiSmallMarginBottom" />
+                                <Button id="loginButton" text="Anmelden" type="Emphasized" press=".onLoginPress" width="100%" />
+                            </VBox>
+                        </content>
+                    </Panel>
+                </VBox>
+            </layout:VerticalLayout>
+        </content>
+    </Page>
+</mvc:View>

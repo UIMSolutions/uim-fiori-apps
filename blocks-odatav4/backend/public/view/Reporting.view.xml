@@ -1,0 +1,60 @@
+<mvc:View controllerName="ea.architecture.manager.controller.Reporting"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
+
+    <Page title="Berichtswesen">
+        <content>
+            <VBox class="sapUiMediumMargin" renderType="Bare">
+                <Title text="Reporting" level="H2" class="sapUiSmallMarginBottom" />
+                <Text text="Hier findest du Auswertungen zu den Bausteinen und zur Datenqualitaet." class="sapUiSmallMarginBottom" />
+
+                <Panel headerText="Baustein-Statistik" expandable="false" class="sapUiSmallMarginBottom">
+                    <content>
+                        <viz:VizFrame id="blockTypeChart" vizType="donut" width="100%" height="320px" uiConfig="{applicationSet:'fiori'}"
+                            vizProperties='{"legend":{"visible":true},"plotArea":{"dataLabel":{"visible":true}},"title":{"visible":false}}'>
+                            <viz:dataset>
+                                <viz.data:FlattenedDataset data="{reporting>/blockTypeStats}">
+                                    <viz.data:dimensions>
+                                        <viz.data:DimensionDefinition name="Bausteintyp" value="{reporting>type}" />
+                                    </viz.data:dimensions>
+                                    <viz.data:measures>
+                                        <viz.data:MeasureDefinition name="Anzahl" value="{reporting>count}" />
+                                    </viz.data:measures>
+                                </viz.data:FlattenedDataset>
+                            </viz:dataset>
+                            <viz:feeds>
+                                <viz.feeds:FeedItem uid="size" type="Measure" values="Anzahl" />
+                                <viz.feeds:FeedItem uid="color" type="Dimension" values="Bausteintyp" />
+                            </viz:feeds>
+                        </viz:VizFrame>
+                    </content>
+                </Panel>
+
+                <Panel headerText="Qualitaetspruefung" expandable="false">
+                    <content>
+                        <viz:VizFrame id="qualityChart" vizType="column" width="100%" height="320px" uiConfig="{applicationSet:'fiori'}"
+                            vizProperties='{"legend":{"visible":false},"plotArea":{"dataLabel":{"visible":true}},"valueAxis":{"title":{"visible":false}},"categoryAxis":{"title":{"visible":false}},"title":{"visible":false}}'>
+                            <viz:dataset>
+                                <viz.data:FlattenedDataset data="{reporting>/qualityStats}">
+                                    <viz.data:dimensions>
+                                        <viz.data:DimensionDefinition name="Pruefregel" value="{reporting>rule}" />
+                                    </viz.data:dimensions>
+                                    <viz.data:measures>
+                                        <viz.data:MeasureDefinition name="Treffer" value="{reporting>hits}" />
+                                    </viz.data:measures>
+                                </viz.data:FlattenedDataset>
+                            </viz:dataset>
+                            <viz:feeds>
+                                <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Treffer" />
+                                <viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Pruefregel" />
+                            </viz:feeds>
+                        </viz:VizFrame>
+                    </content>
+                </Panel>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

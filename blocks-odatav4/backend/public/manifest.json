@@ -25,7 +25,8 @@
       "libs": {
         "sap.m": {},
         "sap.f": {},
-        "sap.tnt": {}
+        "sap.tnt": {},
+        "sap.viz": {}
       }
     },
     "models": {
@@ -57,8 +58,13 @@
       },
       "routes": [
         {
-          "name": "home",
+          "name": "login",
           "pattern": "",
+          "target": "login"
+        },
+        {
+          "name": "home",
+          "pattern": "home",
           "target": "launchpad"
         },
         {
@@ -170,9 +176,17 @@
           "name": "block_export",
           "pattern": "export",
           "target": "blockExport"
+        },
+        {
+          "name": "block_search",
+          "pattern": "reporting",
+          "target": "reporting"
         }
       ],
       "targets": {
+        "login": {
+          "viewName": "Login"
+        },
         "launchpad": {
           "viewName": "Home"
         },
@@ -205,6 +219,9 @@
         },
         "blockExport": {
           "viewName": "BlockExport"
+        },
+        "reporting": {
+          "viewName": "Reporting"
         }
       }
     }

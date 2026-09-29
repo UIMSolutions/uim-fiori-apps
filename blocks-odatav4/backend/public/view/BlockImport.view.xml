@@ -6,11 +6,11 @@
     xmlns:core="sap.ui.core">   
 
     <Page title="Architektur-Bausteine Importieren">
-        <headerContent>
+        <!-- headerContent>
             <core:Fragment 
                 fragmentName="ea.architecture.manager.view.fragment.HeaderContent" 
                 type="XML" />
-        </headerContent>
+        </headerContent -->
         <content>
             <VBox class="sapUiMediumMargin">
                 <f:SimpleForm editable="true" layout="ColumnLayout" title="Excel-Import Einstellungen">

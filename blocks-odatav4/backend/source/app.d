@@ -3,6 +3,50 @@ import uim.fiori_blocks;
 
 @safe:
 
+void postLogin(HTTPServerRequest req, HTTPServerResponse res) {
+  string username;
+  string password;
+
+  try {
+    auto payload = req.json;
+
+    if ("username" in payload) {
+      username = payload["username"].get!string;
+    }
+
+    if ("password" in payload) {
+      password = payload["password"].get!string;
+    }
+  } catch (Exception) {
+    res.statusCode = HTTPStatus.badRequest;
+    res.contentType = "application/json";
+    auto errorResponse = Json.emptyObject;
+    errorResponse["authenticated"] = Json(false);
+    errorResponse["message"] = Json("Ungueltiger Request-Body.");
+    res.writeJsonBody(errorResponse);
+    return;
+  }
+
+  auto isValid = username == "admin" && password == "Welcome1!";
+
+  if (!isValid) {
+    res.statusCode = HTTPStatus.unauthorized;
+    res.contentType = "application/json";
+    auto unauthorizedResponse = Json.emptyObject;
+    unauthorizedResponse["authenticated"] = Json(false);
+    unauthorizedResponse["message"] = Json("Benutzername oder Passwort ungueltig.");
+    res.writeJsonBody(unauthorizedResponse);
+    return;
+  }
+
+  res.statusCode = HTTPStatus.ok;
+  res.contentType = "application/json";
+  auto successResponse = Json.emptyObject;
+  successResponse["authenticated"] = Json(true);
+  successResponse["username"] = Json(username);
+  res.writeJsonBody(successResponse);
+}
+
 // OData v4 Response Wrapper
 struct ODataResponse(T) {
     T value;
@@ -141,6 +185,9 @@ void main() {
 
     /// Activate CORS and OData routes
     router.any("*", &enableCORS);
+
+    // Demo authentication endpoint used by the Login view.
+    router.post("/api/auth/login", &postLogin);
 
     // Register OData routes under /api/v4
     odataRouter.registerRoutes(router, "/odata/v4");

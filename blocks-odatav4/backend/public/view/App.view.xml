@@ -1,23 +1,14 @@
 <!-- webapp/view/App.view.xml -->
-<mvc:View
-    controllerName="ea.architecture.manager.controller.App"
+<mvc:View controllerName="ea.architecture.manager.controller.App"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:f="sap.f"
     xmlns:tnt="sap.tnt"
-    xmlns:core="sap.ui.core"
-    displayBlock="true">
+    xmlns:core="sap.ui.core" displayBlock="true">
 
     <tnt:ToolPage id="toolPage" sideExpanded="true">
         <tnt:header>
-            <f:ShellBar
-                title="Architecture Manager"
-                homeIcon="sap-icon://home"
-                showNotifications="true"
-                showSearch="true"
-                showMenuButton="true"
-                menuButtonPressed=".onToggleSideNavigation"
-                navButtonPressed=".onNavHome">
+            <f:ShellBar title="Architecture Manager" homeIcon="sap-icon://home" showNotifications="true" showSearch="true" showMenuButton="{appState>/showShell}" visible="{appState>/showShell}" menuButtonPressed=".onToggleSideNavigation" navButtonPressed=".onNavHome">
                 <f:profile>
                     <Avatar initials="AM" press=".onMenuPress" tooltip="Profil" />
                 </f:profile>
@@ -25,15 +16,36 @@
         </tnt:header>
 
         <tnt:sideContent>
-            <tnt:SideNavigation id="sideNavigation" itemSelect=".onSideNavigationSelect">
+            <tnt:SideNavigation id="sideNavigation" itemSelect=".onSideNavigationSelect" visible="{appState>/showShell}">
                 <tnt:NavigationList id="navigationList">
                     <tnt:NavigationListItem key="home" text="Home" icon="sap-icon://home" />
-                    <tnt:NavigationListItem key="base_show" text="Grundbausteine" icon="sap-icon://building" />
-                    <tnt:NavigationListItem key="architecture_show" text="Architecture Blocks" icon="sap-icon://sitemap" />
-                    <tnt:NavigationListItem key="solution_show" text="Solution Blocks" icon="sap-icon://puzzle" />
-                    <tnt:NavigationListItem key="interface_show" text="Interface Blocks" icon="sap-icon://compare" />
-                    <tnt:NavigationListItem key="block_import" text="Excel Import" icon="sap-icon://upload" />
-                    <tnt:NavigationListItem key="block_export" text="Excel Export" icon="sap-icon://excel-attachment" />
+                    <tnt:NavigationListItem text="Bausteine" icon="sap-icon://grid" selectable="false" expanded="true">
+                        <tnt:items>
+                            <tnt:NavigationListItem key="base_show" text="Grundbausteine" icon="sap-icon://building" />
+                            <tnt:NavigationListItem key="architecture_show" text="Architekturbausteine" icon="sap-icon://business-objects-mobile" />
+                            <tnt:NavigationListItem key="solution_show" text="Lösungsbausteine" icon="sap-icon://puzzle" />
+                            <tnt:NavigationListItem key="interface_show" text="Schnittstellenbausteine" icon="sap-icon://compare" />
+                            </tnt:items>
+                        </tnt:NavigationListItem>
+                    <tnt:NavigationListItem text="Auswertung" icon="sap-icon://business-objects-experience" selectable="false" expanded="true">
+                        <tnt:items>
+                            <tnt:NavigationListItem key="block_import" text="Statistik" icon="sap-icon://upload" />
+                            <tnt:NavigationListItem key="block_export" text="Qualitätsprüfung" icon="sap-icon://excel-attachment" />
+                            <tnt:NavigationListItem key="block_search" text="Fehlersuche" icon="sap-icon://search" />
+                        </tnt:items>
+                    </tnt:NavigationListItem>
+                    <tnt:NavigationListItem text="Datenaustausch" icon="sap-icon://direction-arrows" selectable="false" expanded="true">
+                        <tnt:items>
+                            <tnt:NavigationListItem key="block_import" text="Daten importieren" icon="sap-icon://upload" />
+                            <tnt:NavigationListItem key="block_export" text="Daten exportieren" icon="sap-icon://excel-attachment" />
+                        </tnt:items>
+                    </tnt:NavigationListItem>
+                    <tnt:NavigationListItem text="Administration" icon="sap-icon://action-settings" selectable="false" expanded="true">
+                        <tnt:items>
+                            <tnt:NavigationListItem key="block_import" text="Konfiguration" icon="sap-icon://upload" />
+                            <tnt:NavigationListItem key="block_export" text="Benutzer" icon="sap-icon://excel-attachment" />
+                        </tnt:items>
+                    </tnt:NavigationListItem>
                 </tnt:NavigationList>
             </tnt:SideNavigation>
         </tnt:sideContent>
