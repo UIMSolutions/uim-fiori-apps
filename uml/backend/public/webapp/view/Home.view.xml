@@ -1,0 +1,71 @@
+<mvc:View
+  controllerName="uml.controller.Home"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:layout="sap.ui.layout.cssgrid"
+>
+  <Page title="UML Home" class="umlHomePage">
+    <subHeader>
+      <Toolbar design="Solid">
+        <Title text="UML Studio" level="H4" />
+        <ToolbarSpacer />
+        <Button text="Workspace" type="Transparent" press="onNavWorkspace" />
+        <Button text="Library" type="Transparent" press="onNavLibrary" />
+        <Button text="Insights" type="Transparent" press="onNavInsights" />
+      </Toolbar>
+    </subHeader>
+
+    <content>
+      <VBox class="umlHero sapUiResponsiveContentPadding">
+        <Title text="Design Faster With Fiori 3" level="H1" class="umlHeroTitle" />
+        <Text text="Use card-based navigation to jump into modeling, review your artifacts, and monitor progress." class="umlHeroText" />
+      </VBox>
+
+      <layout:CSSGrid
+        class="umlCardGrid sapUiResponsiveContentPadding"
+        gridTemplateColumns="repeat(auto-fit, minmax(240px, 1fr))"
+        gridGap="1rem"
+      >
+        <GenericTile header="Open Workspace" subheader="Draw class, sequence, and actor diagrams" press="onNavWorkspace" class="umlCardTile">
+          <tileContent>
+            <TileContent unit="Build">
+              <content>
+                <NumericContent value="01" scale="Start" indicator="Up" />
+              </content>
+            </TileContent>
+          </tileContent>
+        </GenericTile>
+
+        <GenericTile header="Browse Library" subheader="Search diagrams by project and type" press="onNavLibrary" class="umlCardTile">
+          <tileContent>
+            <TileContent unit="Track">
+              <content>
+                <NumericContent value="02" scale="Index" indicator="None" />
+              </content>
+            </TileContent>
+          </tileContent>
+        </GenericTile>
+
+        <GenericTile header="View Insights" subheader="See totals and project distribution" press="onNavInsights" class="umlCardTile">
+          <tileContent>
+            <TileContent unit="Read">
+              <content>
+                <NumericContent value="03" scale="Stats" indicator="Down" />
+              </content>
+            </TileContent>
+          </tileContent>
+        </GenericTile>
+
+        <GenericTile header="Quick Create" subheader="Start a new canvas instantly" press="onQuickCreate" class="umlCardTile">
+          <tileContent>
+            <TileContent unit="Fast">
+              <content>
+                <NumericContent value="+" scale="New" indicator="None" />
+              </content>
+            </TileContent>
+          </tileContent>
+        </GenericTile>
+      </layout:CSSGrid>
+    </content>
+  </Page>
+</mvc:View>

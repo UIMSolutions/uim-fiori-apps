@@ -1,0 +1,68 @@
+<mvc:View
+  controllerName="uml.controller.Insights"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:layout="sap.ui.layout.cssgrid"
+>
+  <Page title="Insights" class="sapUiContentPadding">
+    <subHeader>
+      <Toolbar design="Solid">
+        <Title text="UML Studio" level="H4" />
+        <ToolbarSpacer />
+        <Button text="Home" type="Transparent" press="onNavHome" />
+        <Button text="Workspace" type="Transparent" press="onNavWorkspace" />
+        <Button text="Library" type="Transparent" press="onNavLibrary" />
+      </Toolbar>
+    </subHeader>
+
+    <content>
+      <layout:CSSGrid gridTemplateColumns="repeat(auto-fit, minmax(220px, 1fr))" gridGap="1rem">
+        <GenericTile header="Total Diagrams" subheader="All stored UML artifacts">
+          <tileContent>
+            <TileContent>
+              <content>
+                <NumericContent value="{insights>/totals/diagrams}" />
+              </content>
+            </TileContent>
+          </tileContent>
+        </GenericTile>
+
+        <GenericTile header="Projects" subheader="Active project buckets">
+          <tileContent>
+            <TileContent>
+              <content>
+                <NumericContent value="{insights>/totals/projects}" />
+              </content>
+            </TileContent>
+          </tileContent>
+        </GenericTile>
+
+        <GenericTile header="Last Change" subheader="Most recent update timestamp">
+          <tileContent>
+            <TileContent>
+              <content>
+                <NumericContent value="{insights>/totals/lastUpdated}" truncateValueTo="9" />
+              </content>
+            </TileContent>
+          </tileContent>
+        </GenericTile>
+      </layout:CSSGrid>
+
+      <List headerText="Projects" class="sapUiSmallMarginTop" items="{insights>/projects}">
+        <ObjectListItem title="{insights>Name}" number="{insights>DiagramCount}" numberUnit="diagrams">
+          <attributes>
+            <ObjectAttribute title="Owner" text="{insights>Owner}" />
+            <ObjectAttribute title="Updated" text="{insights>UpdatedAt}" />
+          </attributes>
+        </ObjectListItem>
+      </List>
+    </content>
+
+    <footer>
+      <Toolbar>
+        <Button icon="sap-icon://refresh" text="Refresh" press="onRefresh" />
+        <ToolbarSpacer />
+      </Toolbar>
+    </footer>
+  </Page>
+</mvc:View>

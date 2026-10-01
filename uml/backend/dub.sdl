@@ -1,0 +1,10 @@
+name "uml-manager"
+description "Fiori 3 UML manager with OData v4 vibe.d backend"
+authors "UIMSolutions"
+license "Apache-2.0"
+
+targetType "executable"
+targetName "project"
+sourcePaths "source"
+
+dependency "vibe-d" version="~>0.10.2"

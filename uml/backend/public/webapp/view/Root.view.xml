@@ -1,0 +1,7 @@
+<mvc:View
+  controllerName="uml.controller.Root"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+>
+  <App id="rootApp" />
+</mvc:View>

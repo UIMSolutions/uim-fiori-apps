@@ -1,0 +1,46 @@
+<mvc:View
+  controllerName="uml.controller.Library"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+>
+  <Page title="Diagram Library" class="sapUiContentPadding">
+    <subHeader>
+      <Toolbar design="Solid">
+        <Title text="UML Studio" level="H4" />
+        <ToolbarSpacer />
+        <Button text="Home" type="Transparent" press="onNavHome" />
+        <Button text="Workspace" type="Transparent" press="onNavWorkspace" />
+        <Button text="Insights" type="Transparent" press="onNavInsights" />
+      </Toolbar>
+    </subHeader>
+
+    <content>
+      <SearchField liveChange="onSearch" placeholder="Filter by name, project, type" />
+      <List
+        id="libraryList"
+        class="sapUiSmallMarginTop"
+        mode="SingleSelectMaster"
+        items="{ path: '/Diagrams', sorter: { path: 'UpdatedAt', descending: true } }"
+      >
+        <ObjectListItem
+          title="{Name}"
+          intro="{ID}"
+          number="{Project}"
+          numberUnit="{DiagramType}"
+        >
+          <attributes>
+            <ObjectAttribute title="Description" text="{Description}" />
+            <ObjectAttribute title="Updated" text="{UpdatedAt}" />
+          </attributes>
+        </ObjectListItem>
+      </List>
+    </content>
+
+    <footer>
+      <Toolbar>
+        <ToolbarSpacer />
+        <Button text="Open Workspace" type="Emphasized" press="onNavWorkspace" />
+      </Toolbar>
+    </footer>
+  </Page>
+</mvc:View>

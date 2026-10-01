@@ -1,0 +1,70 @@
+<mvc:View
+  controllerName="cad.controller.App"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:form="sap.ui.layout.form"
+>
+  <App>
+    <Page title="CAD Drawing Manager">
+      <content>
+        <VBox class="sapUiSmallMargin" fitContainer="true">
+          <Toolbar>
+            <Title text="Drawings" level="H3" />
+            <ToolbarSpacer />
+            <Button text="Create" type="Emphasized" press="onCreateDrawing" />
+            <Button text="Save" press="onSaveDrawing" />
+            <Button text="Delete" type="Negative" press="onDeleteDrawing" />
+          </Toolbar>
+
+          <HBox renderType="Bare" fitContainer="true">
+            <VBox width="32%" class="sapUiTinyMarginEnd">
+              <SearchField id="drawingSearch" liveChange="onSearch" placeholder="Search drawing name, type, project" />
+              <List id="drawingList" mode="SingleSelectMaster" growing="true" items="{ path: '/Drawings', sorter: { path: 'UpdatedAt', descending: true } }" selectionChange="onDrawingSelect">
+                <StandardListItem
+                  title="{Name}"
+                  description="{Project} • {DrawingType}"
+                  info="{ID}"
+                  infoState="Information"
+                />
+              </List>
+            </VBox>
+
+            <VBox width="68%">
+              <Toolbar>
+                <Label text="Tool" />
+                <Select id="toolSelect" selectedKey="pen" change="onToolChange">
+                  <core:Item key="pen" text="Pen" />
+                  <core:Item key="line" text="Line" />
+                  <core:Item key="rect" text="Rectangle" />
+                </Select>
+                <Label text="Color" class="sapUiTinyMarginBegin" />
+                <Input id="colorInput" value="#0B3D91" width="7rem" />
+                <Label text="Width" class="sapUiTinyMarginBegin" />
+                <Input id="widthInput" value="2" width="4rem" />
+                <ToolbarSpacer />
+                <Button text="Clear Canvas" press="onClearCanvas" />
+                <Button text="Display JSON" press="onDisplayJson" />
+              </Toolbar>
+
+              <form:SimpleForm editable="true" layout="ResponsiveGridLayout" columnsXL="2" columnsL="2" columnsM="1" class="sapUiTinyMarginTop">
+                <Label text="ID" />
+                <Input value="{vm>/current/id}" editable="false" />
+                <Label text="Name" />
+                <Input value="{vm>/current/name}" />
+                <Label text="Project" />
+                <Input value="{vm>/current/project}" placeholder="e.g. CAD-Project-A" />
+                <Label text="Type" />
+                <Input value="{vm>/current/drawingType}" placeholder="Architecture, Mechanical, Electrical" />
+                <Label text="Description" />
+                <TextArea value="{vm>/current/description}" rows="2" />
+              </form:SimpleForm>
+
+              <core:HTML id="canvasHtml" content='&lt;canvas id="cadCanvas" width="980" height="520" style="border:1px solid #d9d9d9;border-radius:4px;background:#ffffff;touch-action:none;"&gt;&lt;/canvas&gt;' />
+            </VBox>
+          </HBox>
+        </VBox>
+      </content>
+    </Page>
+  </App>
+</mvc:View>

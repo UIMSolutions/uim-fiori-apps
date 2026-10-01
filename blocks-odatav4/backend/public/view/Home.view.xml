@@ -50,7 +50,9 @@
                             <GenericTile header="Schnittstellen" subheader="SBB" frameType="OneByOne" press=".onNavigateTo('interface', 'show')">
                                 <tileContent><TileContent><ImageContent src="sap-icon://connected" /></TileContent></tileContent>
                             </GenericTile>
-                        </f:items>
+                            <GenericTile header="Gesamt" subheader="Referenzarchitektur" frameType="OneByOne" press=".onNavigateTo('interface', 'show')">
+                                <tileContent><TileContent><ImageContent src="sap-icon://connected" /></TileContent></tileContent>
+                            </GenericTile>                        </f:items>
                     </f:GridContainer>
                 </VBox>
 

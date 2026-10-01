@@ -1,0 +1,45 @@
+:root {
+  --uml-hero-start: #f6f8fb;
+  --uml-hero-end: #e7eef7;
+  --uml-card-shadow: 0 12px 28px rgba(17, 47, 79, 0.12);
+  --uml-card-hover: 0 16px 30px rgba(17, 47, 79, 0.2);
+}
+
+.umlHomePage .sapMPageBgStandard {
+  background: linear-gradient(120deg, var(--uml-hero-start) 0%, var(--uml-hero-end) 100%);
+}
+
+.umlHero {
+  padding-top: 1.75rem;
+  padding-bottom: 0.5rem;
+}
+
+.umlHeroTitle {
+  color: #1d2d3e;
+}
+
+.umlHeroText {
+  color: #3a4b5d;
+  max-width: 52rem;
+  margin-top: 0.5rem;
+}
+
+.umlCardGrid {
+  padding-bottom: 2rem;
+}
+
+.umlCardTile {
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: var(--uml-card-shadow);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.umlCardTile:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--uml-card-hover);
+}
+
+.umlWorkspacePage .sapMPageSubHeader {
+  border-bottom: 1px solid #d7dfe7;
+}

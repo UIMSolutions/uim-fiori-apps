@@ -1,0 +1,79 @@
+<mvc:View
+  controllerName="uml.controller.App"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:form="sap.ui.layout.form"
+>
+  <Page title="Diagram Workspace" class="umlWorkspacePage">
+    <subHeader>
+      <Toolbar design="Solid">
+        <Title text="UML Studio" level="H4" />
+        <ToolbarSpacer />
+        <Button text="Home" type="Transparent" press="onNavHome" />
+        <Button text="Library" type="Transparent" press="onNavLibrary" />
+        <Button text="Insights" type="Transparent" press="onNavInsights" />
+      </Toolbar>
+    </subHeader>
+    <content>
+      <VBox class="sapUiSmallMargin" fitContainer="true">
+        <Toolbar>
+          <Title text="Modeling Canvas" level="H3" />
+          <ToolbarSpacer />
+          <Button text="Create" type="Emphasized" press="onCreateDiagram" />
+          <Button text="Save" press="onSaveDiagram" />
+          <Button text="Delete" type="Negative" press="onDeleteDiagram" />
+        </Toolbar>
+
+        <HBox renderType="Bare" fitContainer="true">
+          <VBox width="32%" class="sapUiTinyMarginEnd">
+            <SearchField id="diagramSearch" liveChange="onSearch" placeholder="Search diagram name, type, project" />
+            <List id="diagramList" mode="SingleSelectMaster" growing="true" items="{ path: '/Diagrams', sorter: { path: 'UpdatedAt', descending: true } }" selectionChange="onDiagramSelect">
+              <StandardListItem
+                title="{Name}"
+                description="{Project} • {DiagramType}"
+                info="{ID}"
+                infoState="Information"
+              />
+            </List>
+          </VBox>
+
+          <VBox width="68%">
+            <Toolbar>
+              <Label text="Tool" />
+              <Select id="toolSelect" selectedKey="class" change="onToolChange">
+                <core:Item key="class" text="Class Box" />
+                <core:Item key="actor" text="Actor" />
+                <core:Item key="line" text="Association" />
+                <core:Item key="arrow" text="Inheritance" />
+                <core:Item key="note" text="Note" />
+              </Select>
+              <Label text="Color" class="sapUiTinyMarginBegin" />
+              <Input id="colorInput" value="#0A5A8F" width="7rem" />
+              <Label text="Width" class="sapUiTinyMarginBegin" />
+              <Input id="widthInput" value="2" width="4rem" />
+              <ToolbarSpacer />
+              <Button text="Clear Canvas" press="onClearCanvas" />
+              <Button text="Display JSON" press="onDisplayJson" />
+            </Toolbar>
+
+            <form:SimpleForm editable="true" layout="ResponsiveGridLayout" columnsXL="2" columnsL="2" columnsM="1" class="sapUiTinyMarginTop">
+              <Label text="ID" />
+              <Input value="{vm>/current/id}" editable="false" />
+              <Label text="Name" />
+              <Input value="{vm>/current/name}" />
+              <Label text="Project" />
+              <Input value="{vm>/current/project}" placeholder="e.g. Core-Platform" />
+              <Label text="Diagram Type" />
+              <Input value="{vm>/current/diagramType}" placeholder="Class, Sequence, Component" />
+              <Label text="Description" />
+              <TextArea value="{vm>/current/description}" rows="2" />
+            </form:SimpleForm>
+
+            <core:HTML id="canvasHtml" content='&lt;canvas id="umlCanvas" width="980" height="520" style="border:1px solid #d9d9d9;border-radius:4px;background:#ffffff;touch-action:none;"&gt;&lt;/canvas&gt;' />
+          </VBox>
+        </HBox>
+      </VBox>
+    </content>
+  </Page>
+</mvc:View>

@@ -1,0 +1,73 @@
+<mvc:View
+  controllerName="requirements.controller.App"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+>
+  <App>
+    <Page title="Requirements Management">
+      <content>
+        <VBox class="sapUiSmallMargin">
+          <Toolbar>
+            <Title text="Business and Solution Requirements" level="H3" />
+            <ToolbarSpacer />
+            <Button text="Create" type="Emphasized" press="onCreate" />
+            <Button text="Edit" press="onEdit" />
+            <Button text="Delete" type="Negative" press="onDelete" />
+            <Button text="Categorize" press="onCategorize" />
+            <Button text="Export CSV" press="onExport" />
+            <Button text="Print" press="onPrint" />
+          </Toolbar>
+
+          <Toolbar class="sapUiTinyMarginTop sapUiTinyMarginBottom">
+            <Label text="Project" labelFor="projectFilter" />
+            <Select id="projectFilter" width="14rem" change="onProjectFilterChange" selectedKey="">
+              <core:Item key="" text="All projects" />
+              <items>
+                <core:Item key="{ID}" text="{Name} ({ID})" />
+              </items>
+            </Select>
+            <ToolbarSpacer />
+            <SearchField width="20rem" liveChange="onSearch" placeholder="Search title, category, type" />
+          </Toolbar>
+
+          <Table
+            id="requirementsTable"
+            mode="SingleSelectLeft"
+            growing="true"
+            growingScrollToLoad="true"
+            items="{
+              path: '/Requirements',
+              sorter: { path: 'UpdatedAt', descending: true }
+            }"
+          >
+            <columns>
+              <Column width="10rem"><Text text="ID" /></Column>
+              <Column width="14rem"><Text text="Title" /></Column>
+              <Column width="10rem"><Text text="Type" /></Column>
+              <Column width="10rem"><Text text="Category" /></Column>
+              <Column width="10rem"><Text text="Project" /></Column>
+              <Column width="12rem"><Text text="Parent Business" /></Column>
+              <Column width="12rem"><Text text="Parent Solution" /></Column>
+              <Column width="12rem"><Text text="Updated" /></Column>
+            </columns>
+            <items>
+              <ColumnListItem type="Active" press="onEdit">
+                <cells>
+                  <ObjectIdentifier title="{ID}" />
+                  <Text text="{Title}" />
+                  <ObjectStatus text="{Type}" state="{= ${Type} === 'Business' ? 'Information' : 'Success' }" />
+                  <Text text="{Category}" />
+                  <Text text="{ProjectID}" />
+                  <Text text="{ParentBusinessRequirementID}" />
+                  <Text text="{ParentSolutionRequirementID}" />
+                  <Text text="{UpdatedAt}" />
+                </cells>
+              </ColumnListItem>
+            </items>
+          </Table>
+        </VBox>
+      </content>
+    </Page>
+  </App>
+</mvc:View>
