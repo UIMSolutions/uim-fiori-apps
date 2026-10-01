@@ -1,0 +1,43 @@
+<mvc:View
+  controllerName="requirements.controller.Projects"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+>
+  <Page title="Projekte" class="sapUiContentPadding">
+    <subHeader>
+      <Toolbar design="Solid">
+        <Title text="Requirement Shell" level="H4" />
+        <ToolbarSpacer />
+        <Button text="Home" press="onNavHome" />
+        <Button text="Geschäftsanforderungen" press="onNavBusiness" />
+        <Button text="Lösungsanforderungen" press="onNavSolution" />
+      </Toolbar>
+    </subHeader>
+
+    <content>
+      <Toolbar>
+        <Title text="Projektverwaltung" level="H3" />
+        <ToolbarSpacer />
+        <Button text="Neu" type="Emphasized" press="onCreate" />
+        <Button text="Löschen" type="Negative" press="onDelete" />
+      </Toolbar>
+
+      <Table id="projectsTable" class="sapUiSmallMarginTop" mode="SingleSelectLeft" items="{ path: '/Projects' }">
+        <columns>
+          <Column width="10rem"><Text text="ID" /></Column>
+          <Column width="16rem"><Text text="Name" /></Column>
+          <Column><Text text="Beschreibung" /></Column>
+        </columns>
+        <items>
+          <ColumnListItem>
+            <cells>
+              <ObjectIdentifier title="{ID}" />
+              <Text text="{Name}" />
+              <Text text="{Description}" />
+            </cells>
+          </ColumnListItem>
+        </items>
+      </Table>
+    </content>
+  </Page>
+</mvc:View>

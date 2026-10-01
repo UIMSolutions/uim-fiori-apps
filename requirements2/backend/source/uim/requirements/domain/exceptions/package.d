@@ -1,4 +1,4 @@
-module uim.myname.domain.exceptions;
+module uim.requirements.domain.exceptions;
 
 /// Domain exceptions for the application.
 /// Domain exceptions represent error conditions or exceptional situations that may occur within the domain.

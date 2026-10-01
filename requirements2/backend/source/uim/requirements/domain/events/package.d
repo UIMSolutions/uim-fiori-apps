@@ -1,4 +1,4 @@
-module uim.myname.domain.events;
+module uim.requirements.domain.events;
 
 /// Domain events for the application.
 /// Domain events represent significant occurrences or changes within the domain that other parts of the system may need to react to.

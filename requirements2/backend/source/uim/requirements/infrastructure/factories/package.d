@@ -1,4 +1,4 @@
-module uim.myname.infrastructure.factories;
+module uim.requirements.infrastructure.factories;
 
 /// Infrastructure factories are responsible for creating instances of various infrastructure components used by the application.
 /// They encapsulate the instantiation logic, allowing the application layer to obtain fully configured instances without worrying about the construction details.

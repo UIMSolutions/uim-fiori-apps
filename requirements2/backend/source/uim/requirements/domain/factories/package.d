@@ -1,4 +1,4 @@
-module uim.myname.domain.factories;
+module uim.requirements.domain.factories;
 /// Domain factories for the application.
 /// Domain factories are responsible for creating instances of domain entities and aggregates.
 /// They encapsulate the complex creation logic and ensure that the created objects are in a valid state.

@@ -1,4 +1,4 @@
-module uim.myname.domain.specifications;
+module uim.requirements.domain.specifications;
 
 /// Domain specifications for the application.
 /// Domain specifications represent business rules or constraints that must be satisfied by the domain entities.

@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.myname.ports.factories;
+module uim.requirements.ports.factories;
 
 /// Factory ports define the interfaces for creating instances of various components within the application.
 /// They abstract the instantiation logic, allowing the application to remain decoupled from specific implementations.

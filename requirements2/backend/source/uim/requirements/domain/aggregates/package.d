@@ -1,4 +1,4 @@
-module uim.myname.domain.aggregates;
+module uim.requirements.domain.aggregates;
 
 /// Domain aggregates for the application.
 /// Domain aggregates are clusters of related entities that are treated as a single unit for data changes.

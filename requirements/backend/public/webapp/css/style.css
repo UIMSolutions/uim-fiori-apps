@@ -1,0 +1,28 @@
+:root {
+  --rm-bg-start: #eef2f8;
+  --rm-bg-end: #dfe7f3;
+  --rm-card-shadow: 0 14px 30px rgba(16, 44, 72, 0.16);
+}
+
+.rmHomePage .sapMPageBgStandard {
+  background: linear-gradient(135deg, var(--rm-bg-start) 0%, var(--rm-bg-end) 100%);
+}
+
+.rmHero {
+  padding-top: 1.5rem;
+  padding-bottom: 0.75rem;
+}
+
+.rmGrid {
+  padding-bottom: 2rem;
+}
+
+.rmCard {
+  border-radius: 0.85rem;
+  box-shadow: var(--rm-card-shadow);
+  transition: transform 160ms ease;
+}
+
+.rmCard:hover {
+  transform: translateY(-3px);
+}

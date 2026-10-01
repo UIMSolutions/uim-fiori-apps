@@ -1,4 +1,4 @@
-module uim.myname.infrastructure.storages;
+module uim.requirements.infrastructure.storages;
 
 /// Infrastructure storages for the application.
 /// Infrastructure storages are responsible for managing the low-level data storage mechanisms used by the application.

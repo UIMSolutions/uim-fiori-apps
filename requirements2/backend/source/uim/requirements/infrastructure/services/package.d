@@ -1,4 +1,4 @@
-module uim.myname.infrastructure.services;
+module uim.requirements.infrastructure.services;
 
 /// Infrastructure services are responsible for implementing the business logic and operations related to the application's infrastructure.
 /// They act as intermediaries between the application layer and the underlying infrastructure components, such as storages and external services.

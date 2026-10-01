@@ -1,0 +1,46 @@
+<mvc:View
+  controllerName="requirements.controller.SolutionRequirements"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+>
+  <Page title="Lösungsanforderungen" class="sapUiContentPadding">
+    <subHeader>
+      <Toolbar design="Solid">
+        <Title text="Requirement Shell" level="H4" />
+        <ToolbarSpacer />
+        <Button text="Home" press="onNavHome" />
+        <Button text="Projekte" press="onNavProjects" />
+        <Button text="Geschäftsanforderungen" press="onNavBusiness" />
+      </Toolbar>
+    </subHeader>
+
+    <content>
+      <Toolbar>
+        <Title text="Solution Requirement Verwaltung" level="H3" />
+        <ToolbarSpacer />
+        <Button text="Neu" type="Emphasized" press="onCreate" />
+        <Button text="Löschen" type="Negative" press="onDelete" />
+      </Toolbar>
+      <Table id="solutionTable" class="sapUiSmallMarginTop" mode="SingleSelectLeft" items="{ path: '/SolutionRequirements' }">
+        <columns>
+          <Column width="10rem"><Text text="ID" /></Column>
+          <Column width="16rem"><Text text="Titel" /></Column>
+          <Column width="10rem"><Text text="Projekt" /></Column>
+          <Column width="12rem"><Text text="Parent Business" /></Column>
+          <Column><Text text="Kategorie" /></Column>
+        </columns>
+        <items>
+          <ColumnListItem>
+            <cells>
+              <ObjectIdentifier title="{ID}" />
+              <Text text="{Title}" />
+              <Text text="{ProjectID}" />
+              <Text text="{ParentBusinessRequirementID}" />
+              <Text text="{Category}" />
+            </cells>
+          </ColumnListItem>
+        </items>
+      </Table>
+    </content>
+  </Page>
+</mvc:View>

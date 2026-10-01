@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.myname.domain.valueobjects;
+module uim.requirements.domain.valueobjects;
 
 /// Value objects for the domain layer of the application.
 /// These value objects encapsulate domain-specific concepts and ensure the integrity and consistency of the data within the domain layer.

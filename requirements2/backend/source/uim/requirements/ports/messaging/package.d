@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.myname.ports.messaging;
+module uim.requirements.ports.messaging;
 
 /// Messaging ports define the interfaces for communication between different parts of the application or with external systems.
 /// They abstract the details of the messaging infrastructure, allowing the application to remain decoupled from specific implementations.

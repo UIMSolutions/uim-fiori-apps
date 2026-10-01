@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.myname.ports.usecases;
+module uim.requirements.ports.usecases;
  
 /// Use case ports define the interfaces for the application's core business logic.
 /// They abstract the implementation details, allowing the application to remain decoupled from specific use case implementations.

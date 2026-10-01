@@ -1,4 +1,4 @@
-module uim.myname.infrastructure.repositories;
+module uim.requirements.infrastructure.repositories;
 
 /// Infrastructure repositories for the application.
 /// Infrastructure repositories are responsible for managing the persistence and retrieval of domain entities from the underlying data storage.

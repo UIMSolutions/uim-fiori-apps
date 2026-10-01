@@ -1,4 +1,4 @@
-module uim.myname.application.adapters;
+module uim.requirements.application.adapters;
 /// Application adapters for the application.
 /// Application adapters act as intermediaries between the application layer and external systems or services.
 /// They encapsulate the communication logic, allowing the application layer to interact with external systems in a consistent and decoupled manner.

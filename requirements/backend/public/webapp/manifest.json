@@ -30,9 +30,9 @@
   },
   "sap.ui5": {
     "rootView": {
-      "viewName": "requirements.view.App",
+      "viewName": "requirements.view.Root",
       "type": "XML",
-      "id": "app"
+      "id": "root"
     },
     "dependencies": {
       "minUI5Version": "1.108.0",
@@ -55,6 +55,59 @@
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
           "bundleName": "requirements.i18n.i18n"
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "viewPath": "requirements.view",
+        "controlId": "rootApp",
+        "controlAggregation": "pages",
+        "async": true
+      },
+      "routes": [
+        {
+          "name": "home",
+          "pattern": "",
+          "target": "Home"
+        },
+        {
+          "name": "projects",
+          "pattern": "projects",
+          "target": "Projects"
+        },
+        {
+          "name": "business",
+          "pattern": "business-requirements",
+          "target": "BusinessRequirements"
+        },
+        {
+          "name": "solution",
+          "pattern": "solution-requirements",
+          "target": "SolutionRequirements"
+        }
+      ],
+      "targets": {
+        "Home": {
+          "viewName": "Home"
+        },
+        "Projects": {
+          "viewName": "Projects"
+        },
+        "BusinessRequirements": {
+          "viewName": "BusinessRequirements"
+        },
+        "SolutionRequirements": {
+          "viewName": "SolutionRequirements"
         }
       }
     }

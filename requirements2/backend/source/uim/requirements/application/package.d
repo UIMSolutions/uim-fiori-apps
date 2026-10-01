@@ -3,11 +3,11 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.myname.application;
+module uim.requirements.application;
 
 public:
-    import uim.myname.application.dtos;
-    import uim.myname.application.helpers;
-    import uim.myname.application.services;
-    import uim.myname.application.usecases;
-    import uim.myname.application.adapters;
+    import uim.requirements.application.dtos;
+    import uim.requirements.application.helpers;
+    import uim.requirements.application.services;
+    import uim.requirements.application.usecases;
+    import uim.requirements.application.adapters;

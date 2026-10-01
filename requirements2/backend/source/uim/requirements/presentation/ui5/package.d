@@ -3,8 +3,8 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.myname.presentation.ui5;
+module uim.requirements.presentation.ui5;
 
 public:
-    import uim.myname.presentation.ui5.controllers;
-    import uim.myname.presentation.ui5.views;
+    import uim.requirements.presentation.ui5.controllers;
+    import uim.requirements.presentation.ui5.views;

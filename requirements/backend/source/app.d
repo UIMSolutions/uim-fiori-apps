@@ -87,18 +87,29 @@ void seedData() {
     ),
     Requirement(
       "REQ-1003",
+      "Regulatory reporting requirement",
+      "Platform must provide traceable audit reports",
+      "Business",
+      "Business",
+      "P-200",
+      "",
+      now,
+      now
+    ),
+    Requirement(
+      "REQ-1004",
       "Audit event persistence",
       "Persist immutable audit records for every approval",
       "Solution",
       "Solution",
       "P-200",
-      "REQ-1002",
+      "REQ-1003",
       now,
       now
     )
   ];
 
-  g_reqCounter = 1004;
+  g_reqCounter = 1005;
 }
 
 void handleGet(HTTPServerRequest req, HTTPServerResponse res) {

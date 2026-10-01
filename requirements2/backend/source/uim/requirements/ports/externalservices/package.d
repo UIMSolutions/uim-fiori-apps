@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.myname.ports.externalservices;
+module uim.requirements.ports.externalservices;
 
 /// External service ports define the interfaces for interacting with third-party APIs and external systems.
 /// They abstract the details of the communication protocols, allowing the application to remain decoupled from specific implementations.

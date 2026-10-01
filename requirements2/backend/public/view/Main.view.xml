@@ -1,0 +1,83 @@
+<mvc:View
+    controllerName="reqmgmt.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:card="sap.f.cards"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    displayBlock="true">
+
+    <!-- Fiori 3 ShellBar -->
+    <f:ShellBar
+        title="Anforderungsmanagement"
+        secondTitle="Fiori 3 / vibe.d OData v4 App"
+        showNavButton="false">
+        <f:profile>
+            <Avatar src="sap-icon://customer" />
+        </f:profile>
+    </f:ShellBar>
+
+    <Page showHeader="false" class="sapUiContentPadding">
+        <content>
+            <!-- Flexible CSS Grid layout for Fiori Launchpad Cards -->
+            <grid:CSSGrid id="cardGrid">
+                <grid:customLayout>
+                    <grid:GridBoxLayout boxWidth="20rem" />
+                </grid:customLayout>
+
+                <!-- Kachel 1: Projekte -->
+                <f:Card class="sapUiTinyMargin" press=".onNavigateToProjects">
+                    <f:header>
+                        <card:Header
+                            title="Projekte"
+                            subtitle="Verwaltung &amp; Overview"
+                            iconSrc="sap-icon://product" />
+                    </f:header>
+                    <f:content>
+                        <NumericContent
+                            value="12"
+                            indicator="Up"
+                            scale="Aktiv"
+                            valueColor="Good"
+                            class="sapUiSmallMargin" />
+                    </f:content>
+                </f:Card>
+
+                <!-- Kachel 2: Geschäftsanforderungen -->
+                <f:Card class="sapUiTinyMargin" press=".onNavigateToBusinessReqs">
+                    <f:header>
+                        <card:Header
+                            title="Geschäftsanforderungen"
+                            subtitle="Business Requirements"
+                            iconSrc="sap-icon://business-by-design" />
+                    </f:header>
+                    <f:content>
+                        <NumericContent
+                            value="48"
+                            scale="Offen"
+                            valueColor="Critical"
+                            class="sapUiSmallMargin" />
+                    </f:content>
+                </f:Card>
+
+                <!-- Kachel 3: Lösungsanforderungen -->
+                <f:Card class="sapUiTinyMargin" press=".onNavigateToSolutionReqs">
+                    <f:header>
+                        <card:Header
+                            title="Lösungsanforderungen"
+                            subtitle="Solution &amp; Tech Specs"
+                            iconSrc="sap-icon://action-settings" />
+                    </f:header>
+                    <f:content>
+                        <NumericContent
+                            value="115"
+                            scale="In Arbeit"
+                            valueColor="Neutral"
+                            class="sapUiSmallMargin" />
+                    </f:content>
+                </f:Card>
+
+            </grid:CSSGrid>
+        </content>
+    </Page>
+</mvc:View>
