@@ -1,0 +1,10 @@
+<mvc:View
+    controllerName="reqmgmt.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true">
+    
+    <App id="app">
+        <!-- Der Router fügt hier dynamisch Main, Projects, BusinessRequirements oder SolutionRequirements ein -->
+    </App>
+</mvc:View>

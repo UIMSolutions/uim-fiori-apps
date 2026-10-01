@@ -1,5 +1,5 @@
 import vibe.d;
-import api.odata_v4;
+import uim.requirements.presentation.odata.service;
 
 void main()
 {

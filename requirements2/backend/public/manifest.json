@@ -1,79 +1,40 @@
 {
-  "_version": "1.32.0",
-  "sap.app": {
-    "id": "reqmgmt",
-    "type": "application",
-    "dataSources": {
-      "mainService": {
-        "uri": "/odata/v4/reqmgmt/",
-        "type": "OData",
-        "settings": {
-          "odataVersion": "4.0"
-        }
-      }
-    }
-  },
   "sap.ui5": {
     "dependencies": {
-      "minUI5Version": "1.108.0",
       "libs": {
         "sap.m": {},
         "sap.f": {},
         "sap.ui.layout": {}
       }
     },
-    "models": {
-      "": {
-        "dataSource": "mainService",
-        "type": "sap.ui.model.odata.v4.ODataModel",
-        "settings": {
-          "synchronizationMode": "None",
-          "operationMode": "Server"
-        }
-      }
-    },
     "routing": {
       "config": {
-        "routerClass": "sap.m.routing.Router",
+        "routerClass": "sap.f.routing.Router",
         "viewType": "XML",
         "viewPath": "reqmgmt.view",
-        "controlId": "app",
-        "controlAggregation": "pages"
+        "controlId": "fcl",
+        "transition": "slide"
       },
       "routes": [
         {
-          "name": "RouteMain",
-          "pattern": "",
-          "target": "TargetMain"
-        },
-        {
-          "name": "RouteProjects",
-          "pattern": "projects",
-          "target": "TargetProjects"
-        },
-        {
           "name": "RouteBusinessReqs",
           "pattern": "business-requirements",
-          "target": "TargetBusinessReqs"
+          "target": ["TargetBusinessReqList"]
         },
         {
-          "name": "RouteSolutionReqs",
-          "pattern": "solution-requirements",
-          "target": "TargetSolutionReqs"
+          "name": "RouteBusinessReqDetail",
+          "pattern": "business-requirements/{reqId}",
+          "target": ["TargetBusinessReqList", "TargetBusinessReqDetail"]
         }
       ],
       "targets": {
-        "TargetMain": {
-          "viewName": "Main"
+        "TargetBusinessReqList": {
+          "viewName": "BusinessReqList",
+          "controlAggregation": "beginColumnPages"
         },
-        "TargetProjects": {
-          "viewName": "Projects"
-        },
-        "TargetBusinessReqs": {
-          "viewName": "BusinessRequirements"
-        },
-        "TargetSolutionReqs": {
-          "viewName": "SolutionRequirements"
+        "TargetBusinessReqDetail": {
+          "viewName": "BusinessReqDetail",
+          "controlAggregation": "midColumnPages"
         }
       }
     }

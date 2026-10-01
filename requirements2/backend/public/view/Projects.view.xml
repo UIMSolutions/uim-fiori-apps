@@ -1,0 +1,25 @@
+<mvc:View
+    controllerName="reqmgmt.controller.Projects"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page title="Projektverwaltung" showNavButton="true" navButtonPress=".onNavBack">
+        <content>
+            <Table items="{/Projects}">
+                <columns>
+                    <Column><Text text="ID" /></Column>
+                    <Column><Text text="Projektname" /></Column>
+                    <Column><Text text="Beschreibung" /></Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <ObjectIdentifier title="{ID}" />
+                            <Text text="{Name}" />
+                            <Text text="{Description}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

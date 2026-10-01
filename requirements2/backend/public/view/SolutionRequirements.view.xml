@@ -1,0 +1,25 @@
+<mvc:View
+    controllerName="reqmgmt.controller.SolutionRequirements"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page title="Lösungsanforderungen" showNavButton="true" navButtonPress=".onNavBack">
+        <content>
+            <Table items="{/SolutionRequirements}">
+                <columns>
+                    <Column><Text text="ID" /></Column>
+                    <Column><Text text="Business Req ID" /></Column>
+                    <Column><Text text="Titel" /></Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <ObjectIdentifier title="{ID}" />
+                            <Text text="{BusinessRequirementID}" />
+                            <Text text="{Title}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

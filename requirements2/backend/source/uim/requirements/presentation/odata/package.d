@@ -8,3 +8,4 @@ module uim.requirements.presentation.odata;
 public:
     import uim.requirements.presentation.odata.controllers;
     import uim.requirements.presentation.odata.views;
+    import uim.requirements.presentation.odata.service;

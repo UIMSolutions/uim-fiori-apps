@@ -1,4 +1,4 @@
-module api.odata_v4;
+module uim.requirements.presentation.odata.service;
 
 import vibe.d;
 

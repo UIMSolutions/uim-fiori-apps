@@ -1,0 +1,2 @@
+sap.ui.define(["sap/ui/core/mvc/Controller"],function(e){"use strict";return e.extend("launchpad.frontend.controller.App",{onItemSelect:function(e){var t=e.getParameter("item").getKey();this.getOwnerComponent().getRouter().navTo(t)}})});
+//# sourceMappingURL=App.controller.js.map
