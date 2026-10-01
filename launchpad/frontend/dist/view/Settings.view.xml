@@ -1,0 +1,39 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:form="sap.ui.layout.form"
+    class="sapUiContentPadding">
+    <Page title="Settings" backgroundDesign="Solid">
+        <content>
+            <form:SimpleForm editable="true" layout="ResponsiveGridLayout" class="sapUiResponsiveMargin">
+                <form:content>
+                    <Title text="User Preferences"/>
+                    <Label text="Default Warehouse"/>
+                    <Select selectedKey="WH-01">
+                        <items>
+                            <core:Item xmlns:core="sap.ui.core" key="WH-01" text="WH-01 Berlin"/>
+                            <core:Item xmlns:core="sap.ui.core" key="WH-02" text="WH-02 Ankara"/>
+                            <core:Item xmlns:core="sap.ui.core" key="WH-03" text="WH-03 Munich"/>
+                        </items>
+                    </Select>
+                    <Label text="Notification Channel"/>
+                    <Select selectedKey="mail">
+                        <items>
+                            <core:Item xmlns:core="sap.ui.core" key="mail" text="Email"/>
+                            <core:Item xmlns:core="sap.ui.core" key="teams" text="Teams"/>
+                            <core:Item xmlns:core="sap.ui.core" key="none" text="None"/>
+                        </items>
+                    </Select>
+                    <Label text="Enable Critical Alerts"/>
+                    <Switch state="true"/>
+                </form:content>
+            </form:SimpleForm>
+        </content>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Button text="Save" type="Emphasized"/>
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

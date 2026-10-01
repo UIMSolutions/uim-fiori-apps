@@ -78,23 +78,82 @@ Json buildSapApp(ref const ManifestConfig cfg) {
 }
 /// Build the sap.ui segment (Icons, Device Types, Themes).
 Json buildSapUi(ref const ManifestConfig cfg) {
-    Json ui = Json.emptyObject
-        .set("technology", Json("UI5"));
+
     Json icons = Json.emptyObject.set("icon", Json(cfg.icon));
     if (!cfg.favIcon.strip.empty)
         icons.set("favIcon", Json(cfg.favIcon));
-    ui["icons"] = icons;
+    
     Json deviceTypes = Json.emptyObject
         .set("desktop", Json(cfg.desktopSupport))
         .set("tablet", Json(cfg.tabletSupport))
         .set("phone", Json(cfg.phoneSupport));
-    ui["deviceTypes"] = deviceTypes;
-    ui["supportedThemes"] = Json.emptyArray;
-        ui["supportedThemes"] ~= Json("sap_horizon");
-        ui["supportedThemes"] ~= Json("sap_horizon_dark");
-        ui["supportedThemes"] ~= Json("sap_fiori_3");
-    return ui;
+
+    return Json.emptyObject
+        .set("technology", "UI5")
+        .set("icons", icons.toJson)
+        .set("deviceTypes", deviceTypes)
+        .set("supportedThemes", ["sap_horizon", "sap_horizon_dark", "sap_fiori_3"]);
 }
+///
+unittest {
+    auto cfg = ManifestConfig();
+    cfg.appId = "my.app.id";
+    cfg.appVersion = "1.0.0";
+    cfg.icon = "icon.png";
+    cfg.favIcon = "favicon.ico";
+    cfg.desktopSupport = true;
+    cfg.tabletSupport = true;
+    cfg.phoneSupport = true;
+    // cfg.supportedThemes = ["sap_horizon", "sap_horizon_dark", "sap_fiori_3"];
+    cfg.rootViewName = "my.app.view.App";
+    cfg.rootViewType = "XML";
+    cfg.rootViewId = "app";
+    cfg.minUI5Version = "1.96.0";
+    cfg.extraLibs = [];
+    cfg.withOData = true;
+    cfg.odataModelName = "mainService";
+    cfg.odataUri = "/sap/odata/service";
+    cfg.flexibleColumnLayout = "";
+
+    // assert(cfg.appId == "my.app.id");
+    // assert(cfg.appVersion == "1.0.0");
+    // assert(cfg.icon == "icon.png");
+    // assert(cfg.favIcon == "favicon.ico");
+    // assert(cfg.desktopSupport);
+    // assert(cfg.tabletSupport);
+    // assert(cfg.phoneSupport);
+    // assert(cfg.supportedThemes == ["sap_horizon", "sap_horizon_dark", "sap_fiori_3"]);
+    // assert(cfg.rootViewName == "my.app.view.App");
+    // assert(cfg.rootViewType == "XML");
+    // assert(cfg.rootViewId == "app");
+    // assert(cfg.minUI5Version == "1.96.0");
+    // assert(cfg.extraLibs == []);
+    // assert(cfg.withOData);
+    // assert(cfg.odataModelName == "mainService");
+    // assert(cfg.odataUri == "/sap/odata/service");
+    // assert(cfg.flexibleColumnLayout == "");
+
+    auto ui = buildSapUi(cfg);
+    // assert(ui.get("icon") == cfg.icon);
+    // assert(ui.get("favIcon") == cfg.favIcon);
+    // assert(ui["desktopSupport"] == cfg.desktopSupport);
+    // assert(ui["tabletSupport"] == cfg.tabletSupport);
+    // assert(ui["phoneSupport"] == cfg.phoneSupport);
+    // assert(ui["supportedThemes"] == cfg.supportedThemes);
+    // assert(ui["rootView"]["viewName"] == cfg.rootViewName);
+    // assert(ui["rootView"]["type"] == cfg.rootViewType);
+    // assert(ui["rootView"]["id"] == cfg.rootViewId);
+    // assert(ui["dependencies"]["minUI5Version"] == cfg.minUI5Version);
+    // foreach (lib; cfg.extraLibs) {
+        // if (!lib.strip.empty)
+            // assert(ui["dependencies"]["libs"][lib.strip] == Json.emptyObject);
+    // }
+    // assert(ui["contentDensities"]["compact"] == true);
+    // assert(ui["contentDensities"]["cozy"] == true);
+
+    writeln(ui.toPrettyString);
+}
+
 /// Build the sap.ui5 segment: rootView, dependencies, models, routing.
 Json buildSapUi5(ref const ManifestConfig cfg) {
     Json ui5 = Json.emptyObject;

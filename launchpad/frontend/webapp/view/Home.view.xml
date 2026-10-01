@@ -1,0 +1,42 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    class="sapUiContentPadding">
+    <Page title="Overview" backgroundDesign="List">
+        <content>
+            <VBox class="launchpadBanner sapUiSmallMarginBottom">
+                <Title text="Operations Launchpad" level="H2"/>
+                <Text text="A Fiori 3 style entry point for your logistics and inventory workflows."/>
+            </VBox>
+            <FlexBox wrap="Wrap" renderType="Div" class="sapUiSmallMarginTop">
+                <GenericTile header="Materials" subheader="Master Data" frameType="TwoByOne" class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                    <tileContent>
+                        <TileContent>
+                            <content>
+                                <NumericContent value="6" indicator="Up" valueColor="Good"/>
+                            </content>
+                        </TileContent>
+                    </tileContent>
+                </GenericTile>
+                <GenericTile header="Low Stock" subheader="Critical" frameType="TwoByOne" class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                    <tileContent>
+                        <TileContent>
+                            <content>
+                                <NumericContent value="2" indicator="Down" valueColor="Error"/>
+                            </content>
+                        </TileContent>
+                    </tileContent>
+                </GenericTile>
+                <GenericTile header="Open Tasks" subheader="Warehouse" frameType="TwoByOne" class="sapUiSmallMarginBottom">
+                    <tileContent>
+                        <TileContent>
+                            <content>
+                                <NumericContent value="14" valueColor="Neutral"/>
+                            </content>
+                        </TileContent>
+                    </tileContent>
+                </GenericTile>
+            </FlexBox>
+        </content>
+    </Page>
+</mvc:View>

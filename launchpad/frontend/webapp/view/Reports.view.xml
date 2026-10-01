@@ -1,0 +1,26 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    class="sapUiContentPadding">
+    <Page title="Reports" backgroundDesign="List">
+        <content>
+            <Panel headerText="Operational Snapshot" class="sapUiResponsiveMargin">
+                <content>
+                    <VBox class="sapUiSmallMarginBottom">
+                        <Label text="Warehouse Fill Rate"/>
+                        <ProgressIndicator percentValue="76" displayValue="76%" state="Success"/>
+                    </VBox>
+                    <VBox class="sapUiSmallMarginBottom">
+                        <Label text="Procurement SLA"/>
+                        <ProgressIndicator percentValue="61" displayValue="61%" state="Warning"/>
+                    </VBox>
+                    <VBox>
+                        <Label text="Outbound Accuracy"/>
+                        <ProgressIndicator percentValue="93" displayValue="93%" state="Success"/>
+                    </VBox>
+                </content>
+            </Panel>
+            <MessageStrip text="This page is an example target for launchpad navigation and KPI-like widgets." type="Information" showIcon="true"/>
+        </content>
+    </Page>
+</mvc:View>

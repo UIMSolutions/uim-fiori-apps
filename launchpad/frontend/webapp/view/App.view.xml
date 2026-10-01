@@ -1,0 +1,29 @@
+<mvc:View
+    controllerName="launchpad.frontend.controller.App"
+    displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.tnt"
+    xmlns:m="sap.m">
+    <ToolPage id="toolPage">
+        <header>
+            <ToolHeader>
+                <m:Title text="Fiori 3 Launchpad Sample" level="H3"/>
+                <m:ToolbarSpacer/>
+                <m:Avatar displaySize="XS" initials="UI"/>
+            </ToolHeader>
+        </header>
+        <sideContent>
+            <SideNavigation>
+                <NavigationList itemSelect=".onItemSelect">
+                    <NavigationListItem text="Home" icon="sap-icon://home" key="home"/>
+                    <NavigationListItem text="Products" icon="sap-icon://product" key="products"/>
+                    <NavigationListItem text="Reports" icon="sap-icon://business-objects-experience" key="reports"/>
+                    <NavigationListItem text="Settings" icon="sap-icon://action-settings" key="settings"/>
+                </NavigationList>
+            </SideNavigation>
+        </sideContent>
+        <mainContents>
+            <m:NavContainer id="mainNavContainer"/>
+        </mainContents>
+    </ToolPage>
+</mvc:View>

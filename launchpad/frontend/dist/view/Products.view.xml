@@ -1,0 +1,36 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    class="sapUiContentPadding">
+    <Page title="Products" backgroundDesign="Solid">
+        <content>
+            <Table items="{ path: '/Products' }" growing="true" growingScrollToLoad="true">
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="Inventory Products"/>
+                        <ToolbarSpacer/>
+                        <Button text="Refresh" icon="sap-icon://refresh" type="Transparent"/>
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                    <Column><Text text="ID"/></Column>
+                    <Column><Text text="Name"/></Column>
+                    <Column><Text text="Category"/></Column>
+                    <Column hAlign="End"><Text text="Price"/></Column>
+                    <Column hAlign="End"><Text text="Stock"/></Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <ObjectIdentifier title="{ID}"/>
+                            <Text text="{Name}"/>
+                            <Text text="{Category}"/>
+                            <ObjectNumber number="{Price}" unit="{Currency}"/>
+                            <ObjectNumber number="{Stock}" state="Information"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

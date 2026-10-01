@@ -1,0 +1,6 @@
+.launchpadBanner {
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  color: #0f1f2e;
+  background: linear-gradient(120deg, #d8eff8 0%, #f7fbfd 55%, #e3f6e8 100%);
+}
