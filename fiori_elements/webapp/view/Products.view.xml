@@ -1,12 +1,23 @@
 <mvc:View controllerName="vibe.demo.controller.Products"
-	xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
+	xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core">
 	<Page showHeader="false">
-		<Table id="table" growing="true" growingThreshold="20" items="{path: '/Products', sorter: {path: 'Name'}}">
+		<Table id="table" mode="MultiSelect" growing="true" growingThreshold="20" items="{path: '/Products', sorter: {path: 'Name'}}">
 			<headerToolbar>
 				<OverflowToolbar>
 					<Title text="{i18n>productsTab}" />
 					<ToolbarSpacer />
 					<SearchField width="16rem" placeholder="{i18n>search}" search=".onSearch" />
+					<Select id="sortField" width="10rem" selectedKey="Name" change=".onSort" tooltip="{i18n>sortBy}">
+						<core:Item key="Name" text="{i18n>colName}" />
+						<core:Item key="Category" text="{i18n>colCategory}" />
+						<core:Item key="Price" text="{i18n>colPrice}" />
+						<core:Item key="Stock" text="{i18n>colStock}" />
+						<core:Item key="Rating" text="{i18n>colRating}" />
+					</Select>
+					<Button icon="sap-icon://excel-attachment" text="{i18n>export}" press=".onExport" tooltip="{i18n>exportTip}" />
+					<Button icon="sap-icon://print" text="{i18n>print}" press=".onPrint" tooltip="{i18n>exportTip}" />
+					<Button icon="sap-icon://add" text="{i18n>add}" type="Emphasized" press=".onAdd" />
+					<ToggleButton id="sortDir" icon="sap-icon://sort-ascending" tooltip="{i18n>sortDirection}" press=".onSort" />
 				</OverflowToolbar>
 			</headerToolbar>
 			<columns>
@@ -15,6 +26,7 @@
 				<Column hAlign="End"><Text text="{i18n>colPrice}" /></Column>
 				<Column hAlign="End"><Text text="{i18n>colStock}" /></Column>
 				<Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRating}" /></Column>
+				<Column width="6rem" hAlign="End"><Text text="" /></Column>
 			</columns>
 			<items>
 				<ColumnListItem>
@@ -23,6 +35,10 @@
 					<ObjectNumber number="{Price}" unit="{Currency}" />
 					<ObjectNumber number="{Stock}" state="{= ${Stock} === 0 ? 'Error' : ${Stock} &lt; 20 ? 'Warning' : 'Success'}" />
 					<RatingIndicator value="{Rating}" maxValue="5" editable="false" iconSize="1rem" />
+					<HBox justifyContent="End">
+						<Button icon="sap-icon://edit" type="Transparent" tooltip="{i18n>edit}" press=".onEdit" />
+						<Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>delete}" press=".onDelete" />
+					</HBox>
 				</ColumnListItem>
 			</items>
 		</Table>

@@ -28,13 +28,7 @@ Json handleRequest(string path, string[string] query)
 		key = path[p + 1 .. $ - 1];
 	}
 
-	Json[] rows;
-	switch (setName)
-	{
-	case "Products": rows = productRows; break;
-	case "Orders": rows = orderRows; break;
-	default: throw new ODataException(404, "Resource not found: " ~ setName);
-	}
+	auto rows = rowsOf(setName);
 	auto ctx = "$metadata#" ~ setName;
 	auto o = Json.emptyObject;
 
@@ -87,7 +81,117 @@ Json handleRequest(string path, string[string] query)
 	return o;
 }
 
+/// Creates an entity from a JSON body; the ID is assigned by the server.
+Json createEntity(string setName, Json body)
+{
+	auto row = sanitize(setName, body, true);
+	long next = 0;
+	foreach (r; rowsOf(setName))
+		next = r["ID"].to!long > next ? r["ID"].to!long : next;
+	row["ID"] = next + 1;
+	rowsRef(setName) ~= row;
+	auto e = row.clone;
+	e["@odata.context"] = "$metadata#" ~ setName ~ "/$entity";
+	return e;
+}
+
+/// Updates the supplied properties of "Set(key)" and returns the entity.
+Json updateEntity(string path, Json body)
+{
+	string setName, key;
+	splitPath(path, setName, key);
+	foreach (ref r; rowsRef(setName))
+		if (r["ID"].to!string == key)
+		{
+			auto patch = sanitize(setName, body, false);
+			foreach (string k, v; patch)
+				r[k] = v;
+			auto e = r.clone;
+			e["@odata.context"] = "$metadata#" ~ setName ~ "/$entity";
+			return e;
+		}
+	throw new ODataException(404, "Entity not found");
+}
+
+void deleteEntity(string path)
+{
+	string setName, key;
+	splitPath(path, setName, key);
+	auto rows = &rowsRef(setName);
+	foreach (i, r; *rows)
+		if (r["ID"].to!string == key)
+		{
+			*rows = (*rows)[0 .. i] ~ (*rows)[i + 1 .. $];
+			return;
+		}
+	throw new ODataException(404, "Entity not found");
+}
+
 private:
+
+void splitPath(string path, out string setName, out string key)
+{
+	auto p = path.indexOf('(');
+	if (p < 0 || path[$ - 1] != ')')
+		throw new ODataException(400, "Entity key required");
+	setName = path[0 .. p];
+	key = path[p + 1 .. $ - 1];
+}
+
+ref Json[] rowsRef(string setName)
+{
+	switch (setName)
+	{
+	case "Products": return productRows;
+	case "Orders": return orderRows;
+	default: throw new ODataException(404, "Resource not found: " ~ setName);
+	}
+}
+
+Json[] rowsOf(string setName) { return rowsRef(setName); }
+
+enum Kind { str, integer, number }
+
+Kind[string] fieldsOf(string setName)
+{
+	return setName == "Products"
+		? ["Name": Kind.str, "Category": Kind.str, "Currency": Kind.str,
+			"Price": Kind.number, "Stock": Kind.integer, "Rating": Kind.integer]
+		: ["Customer": Kind.str, "Currency": Kind.str, "Status": Kind.str, "OrderDate": Kind.str,
+			"ProductID": Kind.integer, "Quantity": Kind.integer, "Total": Kind.number];
+}
+
+/// Keeps only known properties, coerces them to their EDM types and checks required ones.
+Json sanitize(string setName, Json body, bool full)
+{
+	if (body.type != Json.Type.object)
+		throw new ODataException(400, "JSON object expected");
+	auto o = Json.emptyObject;
+	foreach (name, kind; fieldsOf(setName))
+	{
+		if (name !in body)
+			continue;
+		auto v = body[name];
+		try
+		{
+			if (v.type == Json.Type.null_)
+				o[name] = v;
+			else
+				final switch (kind)
+				{
+				case Kind.str: o[name] = v.to!string; break;
+				case Kind.integer: o[name] = v.to!string.to!long; break;
+				case Kind.number: o[name] = v.to!string.to!double; break;
+				}
+		}
+		catch (ConvException)
+			throw new ODataException(400, "Invalid value for " ~ name);
+	}
+	auto req = setName == "Products" ? "Name" : "Customer";
+	if ((full || req in o) && (req !in o || o[req].type != Json.Type.string || o[req].get!string.strip.length == 0))
+		throw new ODataException(400, req ~ " is required");
+	return o;
+}
 
 size_t parseCount(string s)
 {

@@ -1,21 +1,28 @@
 <mvc:View controllerName="vibe.demo.controller.App"
-	xmlns="sap.m" xmlns:f="sap.f" xmlns:mvc="sap.ui.core.mvc" height="100%">
-	<VBox height="100%" fitContainer="true">
-		<f:ShellBar title="{i18n>appTitle}" secondTitle="vibe.d OData V4" showNotifications="false"
-			homeIcon="sap-icon://home" homeIconPressed=".onNavHome">
-			<f:profile>
-				<f:Avatar initials="UI" />
-			</f:profile>
-		</f:ShellBar>
-		<IconTabHeader id="nav" selectedKey="home" select=".onTabSelect" mode="Inline">
-			<items>
-				<IconTabFilter key="home" text="{i18n>homeTab}" icon="sap-icon://home" />
-				<IconTabFilter key="products" text="{i18n>productsTab}" icon="sap-icon://product" />
-				<IconTabFilter key="orders" text="{i18n>ordersTab}" icon="sap-icon://sales-order" />
-			</items>
-		</IconTabHeader>
-		<NavContainer id="pages">
-			<layoutData><FlexItemData growFactor="1" minHeight="0" /></layoutData>
-		</NavContainer>
-	</VBox>
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+	xmlns:mvc="sap.ui.core.mvc" height="100%">
+	<Page enableScrolling="false" height="100%">
+		<customHeader>
+			<f:ShellBar title="{i18n>appTitle}" secondTitle="vibe.d OData V4" showNotifications="false" homeIcon="sap-icon://home" homeIconPressed=".onNavHome">
+				<f:profile>
+					<Avatar initials="UI" />
+				</f:profile>
+			</f:ShellBar>
+		</customHeader>
+		<subHeader>
+			<Toolbar style="Clear" class="sapUiNoContentPadding">
+				<IconTabHeader id="nav" selectedKey="home" select=".onTabSelect" mode="Inline">
+					<items>
+						<IconTabFilter key="home" text="{i18n>homeTab}" icon="sap-icon://home" />
+						<IconTabFilter key="products" text="{i18n>productsTab}" icon="sap-icon://product" />
+						<IconTabFilter key="orders" text="{i18n>ordersTab}" icon="sap-icon://sales-order" />
+					</items>
+				</IconTabHeader>
+			</Toolbar>
+		</subHeader>
+		<content>
+			<NavContainer id="pages" height="100%" />
+		</content>
+	</Page>
 </mvc:View>

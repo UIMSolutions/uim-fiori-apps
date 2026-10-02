@@ -122,6 +122,10 @@ enum BundleUrlRelativeTo {
     manifest
 }
 
-// string toString(BundleUrlRelativeTo value) {
-
-// }
+string toString(BundleUrlRelativeTo value) {
+    switch (value) {
+        case BundleUrlRelativeTo.component: return "component";
+        case BundleUrlRelativeTo.manifest: return "manifest";
+        default: return "component"; // or handle error appropriately
+    }
+}

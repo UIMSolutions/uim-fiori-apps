@@ -37,14 +37,34 @@ void main()
 		res.headers["OData-Version"] = "4.0";
 		res.writeBody(metadataXml, "application/xml");
 	});
-	router.get(servicePath ~ "/*", (HTTPServerRequest req, HTTPServerResponse res) {
+	router.any(servicePath ~ "/*", (HTTPServerRequest req, HTTPServerResponse res) {
 		res.headers["OData-Version"] = "4.0";
 		try
 		{
-			string[string] query;
-			foreach (k, v; req.query.byKeyValue)
-				query[k] = v;
-			res.writeJsonBody(handleRequest(req.path[servicePath.length + 1 .. $], query));
+			auto path = req.path[servicePath.length + 1 .. $];
+			switch (req.method)
+			{
+			case HTTPMethod.GET:
+				string[string] query;
+				foreach (k, v; req.query.byKeyValue)
+					query[k] = v;
+				res.writeJsonBody(handleRequest(path, query));
+				break;
+			case HTTPMethod.POST:
+				res.writeJsonBody(createEntity(path, req.json), 201);
+				break;
+			case HTTPMethod.PATCH:
+			case HTTPMethod.PUT:
+				res.writeJsonBody(updateEntity(path, req.json));
+				break;
+			case HTTPMethod.DELETE:
+				deleteEntity(path);
+				res.statusCode = 204;
+				res.writeVoidBody();
+				break;
+			default:
+				throw new ODataException(405, "Method not allowed");
+			}
 		}
 		catch (ODataException e)
 		{

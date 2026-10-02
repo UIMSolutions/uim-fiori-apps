@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<Dialog contentWidth="28rem">
+		<f:SimpleForm editable="true" layout="ResponsiveGridLayout">
+			<Label text="{i18n>colName}" required="true" />
+			<Input value="{form>/Name}" />
+			<Label text="{i18n>colCategory}" />
+			<Input value="{form>/Category}" />
+			<Label text="{i18n>colPrice}" />
+			<Input type="Number" value="{form>/Price}" />
+			<Label text="Currency" />
+			<Input value="{form>/Currency}" maxLength="3" />
+			<Label text="{i18n>colStock}" />
+			<Input type="Number" value="{form>/Stock}" />
+			<Label text="{i18n>colRating}" />
+			<RatingIndicator value="{form>/Rating}" maxValue="5" iconSize="1.25rem" />
+		</f:SimpleForm>
+		<beginButton><Button text="{i18n>save}" type="Emphasized" press=".onSave" /></beginButton>
+		<endButton><Button text="{i18n>cancel}" press=".onCancel" /></endButton>
+	</Dialog>
+</core:FragmentDefinition>

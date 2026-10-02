@@ -1,15 +1,15 @@
-sap.ui.define([
-	"sap/ui/core/mvc/Controller",
-	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
-], function (Controller, Filter, FilterOperator) {
+sap.ui.define(["vibe/demo/controller/CrudController"], function (CrudController) {
 	"use strict";
 
-	return Controller.extend("vibe.demo.controller.Products", {
-		onSearch: function (oEvent) {
-			var sQuery = oEvent.getParameter("query");
-			this.byId("table").getBinding("items")
-				.filter(sQuery ? new Filter("Name", FilterOperator.Contains, sQuery) : []);
-		}
+	return CrudController.extend("vibe.demo.controller.Products", {
+		exportName: "products",
+		titleKey: "productsTab",
+		exportColumns: [["ID", "colId"], ["Name", "colName"], ["Category", "colCategory"], ["Price", "colPrice"], ["Currency", "colCurrency"], ["Stock", "colStock"], ["Rating", "colRating"]],
+		fragmentName: "vibe.demo.view.ProductDialog",
+		searchField: "Name",
+		requiredField: "Name",
+		labelField: "Name",
+		numberFields: ["Price", "Stock", "Rating"],
+		defaults: { Name: "", Category: "", Price: 0, Currency: "EUR", Stock: 0, Rating: 3 }
 	});
 });

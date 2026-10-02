@@ -65,6 +65,31 @@
 					</List>
 				</f:content>
 			</f:Card>
+			<f:Card>
+				<f:layoutData><f:GridContainerItemLayoutData columns="6" minRows="4" /></f:layoutData>
+				<f:header><card:Header title="{i18n>chartRevenue}" subtitle="{i18n>chartRevenueSub}" iconSrc="sap-icon://vertical-bar-chart" /></f:header>
+				<f:content>
+					<VBox class="chartBox" width="100%" items="{stats>/revenueByStatus}">
+						<VBox class="sapUiTinyMarginBottom" width="100%">
+							<HBox width="100%" justifyContent="SpaceBetween"><Label text="{stats>label}" /><ObjectNumber number="{stats>value}" unit="EUR" /></HBox>
+							<ProgressIndicator width="100%" percentValue="{stats>percent}" showValue="false" state="{stats>state}" />
+						</VBox>
+					</VBox>
+				</f:content>
+			</f:Card>
+
+			<f:Card>
+				<f:layoutData><f:GridContainerItemLayoutData columns="6" minRows="4" /></f:layoutData>
+				<f:header><card:Header title="{i18n>chartStock}" subtitle="{i18n>chartStockSub}" iconSrc="sap-icon://pie-chart" /></f:header>
+				<f:content>
+					<VBox class="chartBox" width="100%" items="{stats>/stockByCategory}">
+						<VBox class="sapUiTinyMarginBottom" width="100%">
+							<HBox width="100%" justifyContent="SpaceBetween"><Label text="{stats>label}" /><ObjectNumber number="{stats>value}" /></HBox>
+							<ProgressIndicator width="100%" percentValue="{stats>percent}" showValue="false" state="{stats>state}" />
+						</VBox>
+					</VBox>
+				</f:content>
+			</f:Card>
 		</f:GridContainer>
 	</Page>
 </mvc:View>
