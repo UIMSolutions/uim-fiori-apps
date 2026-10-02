@@ -1,0 +1,30 @@
+<mvc:View controllerName="vibe.demo.controller.Products"
+	xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
+	<Page showHeader="false">
+		<Table id="table" growing="true" growingThreshold="20" items="{path: '/Products', sorter: {path: 'Name'}}">
+			<headerToolbar>
+				<OverflowToolbar>
+					<Title text="{i18n>productsTab}" />
+					<ToolbarSpacer />
+					<SearchField width="16rem" placeholder="{i18n>search}" search=".onSearch" />
+				</OverflowToolbar>
+			</headerToolbar>
+			<columns>
+				<Column><Text text="{i18n>colName}" /></Column>
+				<Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colCategory}" /></Column>
+				<Column hAlign="End"><Text text="{i18n>colPrice}" /></Column>
+				<Column hAlign="End"><Text text="{i18n>colStock}" /></Column>
+				<Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colRating}" /></Column>
+			</columns>
+			<items>
+				<ColumnListItem>
+					<Text text="{Name}" />
+					<Text text="{Category}" />
+					<ObjectNumber number="{Price}" unit="{Currency}" />
+					<ObjectNumber number="{Stock}" state="{= ${Stock} === 0 ? 'Error' : ${Stock} &lt; 20 ? 'Warning' : 'Success'}" />
+					<RatingIndicator value="{Rating}" maxValue="5" editable="false" iconSize="1rem" />
+				</ColumnListItem>
+			</items>
+		</Table>
+	</Page>
+</mvc:View>

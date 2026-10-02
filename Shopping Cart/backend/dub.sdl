@@ -1,0 +1,4 @@
+name "shopping-cart-backend"
+description "vibe.d OData V2 backend for the UI5 Shopping Cart demo"
+dependency "vibe-d" version="~>0.10.0"
+targetType "executable"

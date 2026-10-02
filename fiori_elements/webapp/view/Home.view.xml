@@ -1,0 +1,70 @@
+<mvc:View controllerName="vibe.demo.controller.Home"
+	xmlns="sap.m" xmlns:f="sap.f" xmlns:card="sap.f.cards" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core">
+	<Page showHeader="false" enableScrolling="true">
+		<f:GridContainer class="sapUiSmallMargin" snapToRow="true">
+			<f:layout><f:GridContainerSettings rowSize="84px" columnSize="84px" gap="12px" /></f:layout>
+			<f:layoutS><f:GridContainerSettings rowSize="70px" columnSize="70px" gap="8px" /></f:layoutS>
+
+			<f:Card>
+				<f:layoutData><f:GridContainerItemLayoutData columns="3" minRows="2" /></f:layoutData>
+				<f:header>
+					<card:Header title="{i18n>cardProducts}" subtitle="{i18n>cardProductsSub}"
+						iconSrc="sap-icon://product" press=".onGo('products')" />
+				</f:header>
+				<f:content>
+					<VBox class="sapUiSmallMargin"><Title level="H1" titleStyle="H1" text="{stats>/products}" /></VBox>
+				</f:content>
+			</f:Card>
+
+			<f:Card>
+				<f:layoutData><f:GridContainerItemLayoutData columns="3" minRows="2" /></f:layoutData>
+				<f:header>
+					<card:Header title="{i18n>cardOrders}" subtitle="{i18n>cardOrdersSub}"
+						iconSrc="sap-icon://sales-order" press=".onGo('orders')" />
+				</f:header>
+				<f:content>
+					<VBox class="sapUiSmallMargin"><Title level="H1" titleStyle="H1" text="{stats>/orders}" /></VBox>
+				</f:content>
+			</f:Card>
+
+			<f:Card>
+				<f:layoutData><f:GridContainerItemLayoutData columns="3" minRows="2" /></f:layoutData>
+				<f:header>
+					<card:Header title="{i18n>cardRevenue}" subtitle="{i18n>cardRevenueSub}"
+						iconSrc="sap-icon://money-bills" />
+				</f:header>
+				<f:content>
+					<VBox class="sapUiSmallMargin"><Title level="H1" titleStyle="H1" text="{stats>/revenue} EUR" /></VBox>
+				</f:content>
+			</f:Card>
+
+			<f:Card>
+				<f:layoutData><f:GridContainerItemLayoutData columns="5" minRows="4" /></f:layoutData>
+				<f:header>
+					<card:Header title="{i18n>cardLowStock}" subtitle="{i18n>cardLowStockSub}"
+						iconSrc="sap-icon://alert" press=".onGo('products')" />
+				</f:header>
+				<f:content>
+					<List items="{stats>/lowStock}" showSeparators="Inner">
+						<StandardListItem title="{stats>Name}" info="{stats>Stock}"
+							infoState="{= ${stats>Stock} === 0 ? 'Error' : 'Warning'}" />
+					</List>
+				</f:content>
+			</f:Card>
+
+			<f:Card>
+				<f:layoutData><f:GridContainerItemLayoutData columns="5" minRows="4" /></f:layoutData>
+				<f:header>
+					<card:Header title="{i18n>cardRecent}" subtitle="{i18n>cardRecentSub}"
+						iconSrc="sap-icon://order-status" press=".onGo('orders')" />
+				</f:header>
+				<f:content>
+					<List items="{stats>/recent}" showSeparators="Inner">
+						<StandardListItem title="{stats>Customer}" description="{stats>OrderDate}"
+							info="{stats>Total} {stats>Currency}" infoState="None" />
+					</List>
+				</f:content>
+			</f:Card>
+		</f:GridContainer>
+	</Page>
+</mvc:View>

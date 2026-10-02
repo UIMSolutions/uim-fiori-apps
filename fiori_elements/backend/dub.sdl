@@ -1,0 +1,4 @@
+name "fe-vibe-backend"
+description "vibe.d OData V4 backend for the SAP Fiori example"
+dependency "vibe-d" version="~>0.10.0"
+targetType "executable"

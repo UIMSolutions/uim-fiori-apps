@@ -1,0 +1,34 @@
+<mvc:View controllerName="vibe.demo.controller.Orders"
+	xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
+	<Page showHeader="false">
+		<Table id="table" growing="true" growingThreshold="20"
+			items="{path: '/Orders', sorter: {path: 'OrderDate', descending: true}}">
+			<headerToolbar>
+				<OverflowToolbar>
+					<Title text="{i18n>ordersTab}" />
+					<ToolbarSpacer />
+					<SearchField width="16rem" placeholder="{i18n>search}" search=".onSearch" />
+				</OverflowToolbar>
+			</headerToolbar>
+			<columns>
+				<Column><Text text="{i18n>colOrder}" /></Column>
+				<Column><Text text="{i18n>colCustomer}" /></Column>
+				<Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colDate}" /></Column>
+				<Column hAlign="End" minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colQuantity}" /></Column>
+				<Column hAlign="End"><Text text="{i18n>colTotal}" /></Column>
+				<Column><Text text="{i18n>colStatus}" /></Column>
+			</columns>
+			<items>
+				<ColumnListItem>
+					<ObjectIdentifier title="{ID}" />
+					<Text text="{Customer}" />
+					<Text text="{OrderDate}" />
+					<Text text="{Quantity}" />
+					<ObjectNumber number="{Total}" unit="{Currency}" />
+					<ObjectStatus text="{Status}"
+						state="{= ${Status} === 'Shipped' ? 'Success' : ${Status} === 'Cancelled' ? 'Error' : 'Warning'}" />
+				</ColumnListItem>
+			</items>
+		</Table>
+	</Page>
+</mvc:View>

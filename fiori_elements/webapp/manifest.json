@@ -1,0 +1,56 @@
+{
+	"_version": "1.60.0",
+	"sap.app": {
+		"id": "vibe.demo",
+		"type": "application",
+		"title": "{{appTitle}}",
+		"applicationVersion": { "version": "1.0.0" },
+		"i18n": "i18n/i18n.properties",
+		"dataSources": {
+			"mainService": {
+				"uri": "/odata/v4/shop/",
+				"type": "OData",
+				"settings": { "odataVersion": "4.0" }
+			}
+		}
+	},
+	"sap.ui": { "deviceTypes": { "desktop": true, "tablet": true, "phone": true } },
+	"sap.ui5": {
+		"rootView": { "viewName": "vibe.demo.view.App", "type": "XML", "id": "app", "async": true },
+		"dependencies": {
+			"minUI5Version": "1.120.0",
+			"libs": { "sap.m": {}, "sap.f": {}, "sap.ui.core": {} }
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": { "bundleName": "vibe.demo.i18n.i18n" }
+			},
+			"": {
+				"dataSource": "mainService",
+				"settings": { "operationMode": "Server", "groupId": "$direct", "autoExpandSelect": true }
+			}
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"type": "View",
+				"viewType": "XML",
+				"path": "vibe.demo.view",
+				"controlId": "pages",
+				"controlAggregation": "pages",
+				"async": true
+			},
+			"routes": [
+				{ "name": "home", "pattern": "", "target": "home" },
+				{ "name": "products", "pattern": "products", "target": "products" },
+				{ "name": "orders", "pattern": "orders", "target": "orders" }
+			],
+			"targets": {
+				"home": { "name": "Home" },
+				"products": { "name": "Products" },
+				"orders": { "name": "Orders" }
+			}
+		}
+	}
+}
