@@ -1,0 +1,142 @@
+_schema-version: "3.3"
+ID: launchpad-demo
+version: 1.0.0
+description: SAP Fiori 3 Launchpad sample with vibe.d OData V4 backend
+
+parameters:
+  deploy_mode: html5-repo
+
+modules:
+- name: launchpad-backend
+  type: custom
+  path: backend
+  parameters:
+    buildpack: binary_buildpack
+    command: ./launchpad-backend
+    memory: 256M
+    disk-quota: 256M
+  build-parameters:
+    builder: custom
+    commands:
+    - dub build
+  provides:
+  - name: launchpad-backend-api
+    properties:
+      url: ${default-url}
+  requires:
+  - name: launchpad-xsuaa
+
+- name: launchpad-frontend
+  type: html5
+  path: frontend
+  build-parameters:
+    builder: custom
+    commands:
+    - npm install
+    - npm run build
+    build-result: dist
+    supported-platforms: []
+
+- name: launchpad-ui-deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: launchpad-html5-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - name: launchpad-frontend
+      artifacts:
+      - launchpad-frontend.zip
+      target-path: resources/
+
+- name: launchpad-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: launchpad-destination
+    parameters:
+      content-target: true
+  - name: launchpad-xsuaa
+    parameters:
+      service-key:
+        name: launchpad-xsuaa-key
+  - name: launchpad-html5-host
+    parameters:
+      service-key:
+        name: launchpad-html5-host-key
+  - name: launchpad-backend-api
+  parameters:
+    content:
+      instance:
+        existing_destinations_policy: update
+        destinations:
+        - Name: launchpad_backend
+          URL: ~{launchpad-backend-api/url}
+          Type: HTTP
+          ProxyType: Internet
+          Authentication: NoAuthentication
+          HTML5.DynamicDestination: true
+          HTML5.ForwardAuthToken: true
+        - Name: launchpad_html5_repo_host
+          ServiceInstanceName: launchpad-html5-host
+          ServiceKeyName: launchpad-html5-host-key
+          sap.cloud.service: launchpad.demo
+        - Name: launchpad_xsuaa
+          ServiceInstanceName: launchpad-xsuaa
+          ServiceKeyName: launchpad-xsuaa-key
+          Authentication: OAuth2UserTokenExchange
+          sap.cloud.service: launchpad.demo
+  build-parameters:
+    no-source: true
+
+- name: launchpad-approuter
+  type: approuter.nodejs
+  path: approuter
+  parameters:
+    memory: 128M
+    disk-quota: 128M
+    keep-existing-routes: true
+  requires:
+  - name: launchpad-xsuaa
+  - name: launchpad-destination
+  - name: launchpad-html5-runtime
+  - name: launchpad-backend-api
+    group: destinations
+    properties:
+      name: launchpad_backend
+      url: ~{url}
+      forwardAuthToken: true
+
+resources:
+- name: launchpad-xsuaa
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: xsuaa
+    service-plan: application
+    service-name: launchpad-xsuaa
+    path: xs-security.json
+
+- name: launchpad-destination
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: destination
+    service-plan: lite
+    service-name: launchpad-destination
+    config:
+      HTML5Runtime_enabled: true
+
+- name: launchpad-html5-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+    service-name: launchpad-html5-host
+
+- name: launchpad-html5-runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+    service-name: launchpad-html5-runtime

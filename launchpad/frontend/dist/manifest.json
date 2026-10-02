@@ -25,6 +25,10 @@
 			}
 		}
 	},
+	"sap.cloud": {
+		"public": true,
+		"service": "launchpad.demo"
+	},
 	"sap.ui": {
 		"technology": "UI5",
 		"deviceTypes": {

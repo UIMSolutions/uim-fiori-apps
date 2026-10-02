@@ -1,4 +1,5 @@
 <mvc:View
+    controllerName="launchpad.frontend.controller.Home"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     class="sapUiContentPadding">
@@ -9,7 +10,7 @@
                 <Text text="A Fiori 3 style entry point for your logistics and inventory workflows."/>
             </VBox>
             <FlexBox wrap="Wrap" renderType="Div" class="sapUiSmallMarginTop">
-                <GenericTile header="Materials" subheader="Master Data" frameType="TwoByOne" class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                <GenericTile header="Materials" subheader="Master Data" frameType="TwoByOne" class="sapUiSmallMarginEnd sapUiSmallMarginBottom" press=".onProductsPress">
                     <tileContent>
                         <TileContent>
                             <content>
@@ -18,7 +19,7 @@
                         </TileContent>
                     </tileContent>
                 </GenericTile>
-                <GenericTile header="Low Stock" subheader="Critical" frameType="TwoByOne" class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                <GenericTile header="Low Stock" subheader="Critical" frameType="TwoByOne" class="sapUiSmallMarginEnd sapUiSmallMarginBottom" press=".onReportsPress">
                     <tileContent>
                         <TileContent>
                             <content>
@@ -27,7 +28,7 @@
                         </TileContent>
                     </tileContent>
                 </GenericTile>
-                <GenericTile header="Open Tasks" subheader="Warehouse" frameType="TwoByOne" class="sapUiSmallMarginBottom">
+                <GenericTile header="Open Tasks" subheader="Warehouse" frameType="TwoByOne" class="sapUiSmallMarginBottom" press=".onSettingsPress">
                     <tileContent>
                         <TileContent>
                             <content>

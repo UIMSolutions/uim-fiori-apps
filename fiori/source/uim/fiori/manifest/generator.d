@@ -36,7 +36,7 @@ string namespaceFromId(string id) {
 }
 /// Baut das sap.app-Segment.
 Json buildSapApp(ref const ManifestConfig cfg) {
-    string semObj = cfg.appId.split(".")[$ - 1];
+    string semObj = cfg.app.id.split(".")[$ - 1];
     Json inbounds = Json.emptyObject;
     Json inbound = [
         "signature": Json([
@@ -51,10 +51,10 @@ Json buildSapApp(ref const ManifestConfig cfg) {
     Json crossNav = Json.emptyObject;
     crossNav["inbounds"] = inbounds;
     Json app = Json.emptyObject
-        .set("id", Json(cfg.appId))
+        .set("id", Json(cfg.app.id))
         .set("type", Json("application"))
         .set("i18n", Json("i18n/i18n.properties"))
-        .set("applicationVersion", Json.emptyObject.set("version", Json(cfg.appVersion)))
+        // .set("applicationVersion", Json.emptyObject.set("version", Json(cfg.app.version_)))
         .set("title", Json("{{appTitle}}"))
         .set("description", Json("{{appDescription}}"));
     Json sourceTemplate = Json.emptyObject
@@ -91,14 +91,14 @@ Json buildSapUi(ref const ManifestConfig cfg) {
     return Json.emptyObject
         .set("technology", "UI5")
         .set("icons", icons.toJson)
-        .set("deviceTypes", deviceTypes)
-        .set("supportedThemes", ["sap_horizon", "sap_horizon_dark", "sap_fiori_3"]);
+        .set("deviceTypes", deviceTypes);
+        // .set("supportedThemes", ["sap_horizon", "sap_horizon_dark", "sap_fiori_3"]);
 }
 ///
 unittest {
     auto cfg = ManifestConfig();
-    cfg.appId = "my.app.id";
-    cfg.appVersion = "1.0.0";
+    cfg.app.id = "my.app.id";
+    // cfg.app.version_ = "1.0.0";
     cfg.icon = "icon.png";
     cfg.favIcon = "favicon.ico";
     cfg.desktopSupport = true;
@@ -115,8 +115,8 @@ unittest {
     cfg.odataUri = "/sap/odata/service";
     cfg.flexibleColumnLayout = "";
 
-    // assert(cfg.appId == "my.app.id");
-    // assert(cfg.appVersion == "1.0.0");
+    // assert(cfg.app.id == "my.app.id");
+    // assert(cfg.app.version_ == "1.0.0");
     // assert(cfg.icon == "icon.png");
     // assert(cfg.favIcon == "favicon.ico");
     // assert(cfg.desktopSupport);
@@ -158,7 +158,7 @@ unittest {
 Json buildSapUi5(ref const ManifestConfig cfg) {
     Json ui5 = Json.emptyObject;
     string rootViewName = cfg.rootViewName.strip.empty
-        ? namespaceFromId(cfg.appId) ~ ".view.App" : cfg.rootViewName;
+        ? namespaceFromId(cfg.app.id) ~ ".view.App" : cfg.rootViewName;
     /// Build the root view configuration.
     ui5["rootView"] = Json.emptyObject
         .set("viewName", Json(rootViewName))
@@ -185,7 +185,7 @@ Json buildSapUi5(ref const ManifestConfig cfg) {
     models["i18n"] = Json.emptyObject
         .set("type", Json("sap.ui.model.resource.ResourceModel"))
         .set("settings", Json.emptyObject
-            .set("bundleName", Json(namespaceFromId(cfg.appId) ~ ".i18n.i18n"))
+            .set("bundleName", Json(namespaceFromId(cfg.app.id) ~ ".i18n.i18n"))
         );
     if (cfg.withOData) {
         string modelName = cfg.odataModelName.strip.empty ? "" : cfg.odataModelName;
@@ -213,7 +213,7 @@ Json buildSapUi5(ref const ManifestConfig cfg) {
 }
 /// Simple standard routing configuration with an overview view.
 Json buildRouting(ref const ManifestConfig cfg) {
-    string ns = namespaceFromId(cfg.appId);
+    string ns = namespaceFromId(cfg.app.id);
     Json config = Json.emptyObject
         .set("routerClass", Json("sap.m.routing.Router"))
         .set("type", Json("View"))
@@ -239,7 +239,7 @@ Json buildRouting(ref const ManifestConfig cfg) {
 }
 /// Routing configuration with sap.f.FlexibleColumnLayout (List-Detail pattern).
 Json buildRoutingWithFCL(ref const ManifestConfig cfg) {
-    string ns = namespaceFromId(cfg.appId);
+    string ns = namespaceFromId(cfg.app.id);
     Json config = Json.emptyObject
         .set("routerClass", Json("sap.f.routing.Router"))
         .set("viewType", Json("XML"))
@@ -295,8 +295,8 @@ void writeI18nFile(ref const ManifestConfig cfg) {
     string i18nPath = buildPath(i18nDir, "i18n.properties");
     auto content = appender!string;
     content ~= "# i18n resource bundle - generiert von manifest_generator\n";
-    content ~= format("appTitle=%s\n", cfg.appTitle);
-    content ~= format("appDescription=%s\n", cfg.appDescription);
+    // content ~= format("appTitle=%s\n", cfg.appTitle);
+    // content ~= format("appDescription=%s\n", cfg.appDescription);
     std.file.write(i18nPath, content.data);
     stderr.writeln("i18n-Datei geschrieben nach: ", i18nPath);
 }
@@ -321,10 +321,10 @@ ManifestConfig runInteractive() {
         return line == "j" || line == "y" || line == "ja" || line == "yes";
     }
     writeln("=== SAP UI5 manifest.json Generator (interaktiv) ===");
-    cfg.appId = ask("App-ID (z.B. com.mycompany.myapp)", cfg.appId);
-    cfg.appTitle = ask("App-Titel", cfg.appTitle);
-    cfg.appDescription = ask("App-Beschreibung", cfg.appDescription);
-    cfg.appVersion = ask("App-Version", cfg.appVersion);
+    // cfg.app.id = ask("App-ID (z.B. com.mycompany.myapp)", cfg.app.id);
+    // cfg.appTitle = ask("App-Titel", cfg.appTitle);
+    // cfg.appDescription = ask("App-Beschreibung", cfg.app.description);
+    // cfg.app.version_ = ask("App-Version", cfg.app.version_);
     cfg.minUI5Version = ask("Minimale UI5-Version", cfg.minUI5Version);
     cfg.withOData = askBool("OData-Datenquelle einbinden?", cfg.withOData);
     if (cfg.withOData)
@@ -370,10 +370,10 @@ Optionen:
 //     } else {
 //         try {
 //             auto helpInfo = getopt(args,
-//                 "id", &cfg.appId,
+//                 "id", &cfg.app.id,
 //                 "title", &cfg.appTitle,
 //                 "desc", &cfg.appDescription,
-//                 "app-version", &cfg.appVersion,
+//                 "app-version", &cfg.app.version_,
 //                 "min-ui5", &cfg.minUI5Version,
 //                 "root-view", &cfg.rootViewName,
 //                 "root-view-id", &cfg.rootViewId,
@@ -401,7 +401,7 @@ Optionen:
 //             return 1;
 //         }
 //     }
-//     if (cfg.appId.strip.empty) {
+//     if (cfg.app.id.strip.empty) {
 //         stderr.writeln("Fehler: --id darf nicht leer sein.");
 //         return 1;
 //     }

@@ -1,0 +1,2 @@
+sap.ui.define(["sap/ui/core/mvc/Controller"],function(t){"use strict";return t.extend("launchpad.frontend.controller.Home",{onProductsPress:function(){this.getOwnerComponent().getRouter().navTo("products")},onReportsPress:function(){this.getOwnerComponent().getRouter().navTo("reports")},onSettingsPress:function(){this.getOwnerComponent().getRouter().navTo("settings")}})});
+//# sourceMappingURL=Home.controller.js.map

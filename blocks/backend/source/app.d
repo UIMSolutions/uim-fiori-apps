@@ -1,73 +1,91 @@
-import vibe.d;
+module app;
 
-@safe:
+import vibe.vibe;
 
-struct BuildingBlock {
-    string id;
-    string name;
-    string type; // Architecture, Solution, Interface
-    string description;
-    string status;
+struct ArchitectureBlock {
+    string ID;
+    string Name;
+    string Domain;
+    string EaLayer;
+    string Responsible;
+    string Status;
 }
 
-// 1. Interface-Kontrakt definieren
-interface IEnterpriseArchitectureService {
-    @path("/api/buildingblocks")
-    BuildingBlock[] getBlocks(string type = null);
+// In-Memory Speicher für Demo-Zwecke
+private ArchitectureBlock[] g_blocks;
 
-    @path("/api/buildingblocks/:id")
-    BuildingBlock getBlock(string _id);
-}
+shared static this() {
+    g_blocks = [
+        ArchitectureBlock("1", "Payment Service", "Finance", "Business", "Max Mustermann", "Active"),
+        ArchitectureBlock("2", "User Auth Gateway", "Security", "Infrastructure", "Erika Musterfrau", "Active"),
+        ArchitectureBlock("3", "Order Processing", "Logistics", "Application", "John Doe", "Draft")
+    ];
 
-class EnterpriseArchitectureService : IEnterpriseArchitectureService{
-    private BuildingBlock[string] _data;
-
-    this() {
-        // Beispiel-Daten
-        _data["AB-01"] = BuildingBlock("AB-01", "Domain Model Core", "Architecture", "Zentrales Domänenmodell", "Active");
-        _data["LB-01"] = BuildingBlock("LB-01", "SAP S/4HANA Finance", "Solution", "Haupt-ERP Finanzmodul", "Active");
-        _data["IF-01"] = BuildingBlock("IF-01", "REST API v1", "Interface", "Schnittstelle zwischen vibe.d und Fiori", "In Progress");
-    }
-
-    BuildingBlock[] getBlocks(string type = null) {
-        BuildingBlock[] result;
-        foreach (block; _data.byValue) {
-            if (type.length == 0 || block.type == type) {
-                result ~= block;
-            }
-        }
-        return result;
-    }
-
-    BuildingBlock getBlock(string _id) {
-        if (auto b = _id in _data) return *b;
-        throw new HTTPStatusException(HTTPStatus.notFound, "Entity nicht gefunden");
-    }
-}
-
-void main() {
     auto settings = new HTTPServerSettings;
     settings.port = 8080;
     settings.bindAddresses = ["::1", "127.0.0.1"];
 
     auto router = new URLRouter;
-    
-    // CORS Header für UI5 Dev-Server aktivieren
-    router.any("*", (req, res) {
-        res.headers["Access-Control-Allow-Origin"] = "*";
-        res.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS";
-        res.headers["Access-Control-Allow-Headers"] = "Content-Type";
-        if (req.method == HTTPMethod.OPTIONS) {
-            res.writeBody("");
-            return;
-        }
-    });
 
-    router.registerRestInterface(new EnterpriseArchitectureService);
-    
-    // Statische SAPUI5-Dateien aus /public ausliefern (falls nicht via UI5 Tooling betrieben)
-    router.get("*", serveStaticFiles("public/"));
+    // CORS Middleware für die Fiori UI5 Entwicklung
+    router.any("*", &handleCORS);
+
+    // OData v4 Endpunkte
+    router.get("/odata/v4/$metadata", &handleMetadata);
+    router.get("/odata/v4/ArchitectureBlocks", &handleGetBlocks);
 
     listenHTTP(settings, router);
-    runApplication();
+}
+
+void handleCORS(HTTPServerRequest req, HTTPServerResponse res) {
+    res.headers["Access-Control-Allow-Origin"] = "*";
+    res.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS";
+    res.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization, OData-Version, OData-MaxVersion";
+    
+    if (req.method == HTTPMethod.OPTIONS) {
+        res.writeVoid();
+    }
+}
+
+void handleMetadata(HTTPServerRequest req, HTTPServerResponse res) @safe {
+    res.contentType = "application/xml";
+    res.writeBody(`<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:DataServices>
+    <Schema Namespace="EAManager" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="ArchitectureBlock">
+        <Key><PropertyRef Name="ID"/></Key>
+        <Property Name="ID" Type="Edm.String" Nullable="false"/>
+        <Property Name="Name" Type="Edm.String"/>
+        <Property Name="Domain" Type="Edm.String"/>
+        <Property Name="EaLayer" Type="Edm.String"/>
+        <Property Name="Responsible" Type="Edm.String"/>
+        <Property Name="Status" Type="Edm.String"/>
+      </EntityType>
+      <EntityContainer Name="EAManagerService">
+        <EntitySet Name="ArchitectureBlocks" EntityType="EAManager.ArchitectureBlock"/>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>`);
+}
+
+void handleGetBlocks(HTTPServerRequest req, HTTPServerResponse res) @safe {
+    Json responseJson = Json.emptyObject;
+    responseJson["@odata.context"] = "$metadata#ArchitectureBlocks";
+    
+    Json valueArray = Json.emptyArray;
+    foreach (block; g_blocks) {
+        Json item = Json.emptyObject;
+        item["ID"] = block.ID;
+        item["Name"] = block.Name;
+        item["Domain"] = block.Domain;
+        item["EaLayer"] = block.EaLayer;
+        item["Responsible"] = block.Responsible;
+        item["Status"] = block.Status;
+        valueArray.appendJsonFragment(item);
+    }
+    responseJson["value"] = valueArray;
+
+    res.writeJsonBody(responseJson);
 }

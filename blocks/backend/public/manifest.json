@@ -1,70 +1,63 @@
 {
-  "_version": "1.32.0",
+  "_version": "1.12.0",
   "sap.app": {
     "id": "ea.architecture.manager",
     "type": "application",
+    "title": "Architecture Manager",
     "dataSources": {
-      "vibeApi": {
-        "uri": "http://localhost:8080/api/",
-        "type": "JSON"
+      "mainService": {
+        "uri": "http://localhost:8080/odata/v4/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
       }
     }
   },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": { "desktop": true, "tablet": true, "phone": true }
+  },
   "sap.ui5": {
-    "models": {
-      "": {
-        "dataSource": "vibeApi"
+    "theme": "sap_fiori_3",
+    "dependencies": {
+      "minUI5Version": "1.108.0",
+      "libs": {
+        "sap.m": {},
+        "sap.f": {},
+        "sap.tnt": {},
+        "sap.ui.core": {}
       }
     },
-    "rootView": {
-      "viewName": "ea.architecture.manager.view.App",
-      "type": "XML",
-      "async": true,
-      "id": "app"
+    "models": {
+      "": {
+        "dataSource": "mainService",
+        "type": "sap.ui.model.odata.v4.ODataModel",
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server"
+        }
+      }
     },
     "routing": {
       "config": {
         "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
         "viewPath": "ea.architecture.manager.view",
-        "controlId": "appControl",
+        "controlId": "appContainer",
         "controlAggregation": "pages",
         "async": true
       },
       "routes": [
         {
-          "name": "home",
+          "name": "RouteMain",
           "pattern": "",
-          "target": "launchpad"
-        },
-        {
-          "name": "architecture",
-          "pattern": "architecture",
-          "target": "architectureMasterDetail"
-        },
-        {
-          "name": "solution",
-          "pattern": "solution",
-          "target": "solutionMasterDetail"
-        },
-        {
-          "name": "interface",
-          "pattern": "interface",
-          "target": "interfaceMasterDetail"
+          "target": "TargetMain"
         }
       ],
       "targets": {
-        "launchpad": {
-          "viewName": "Home"
-        },
-        "architectureMasterDetail": {
-          "viewName": "ArchitectureMasterDetail"
-        },
-        "solutionMasterDetail": {
-          "viewName": "SolutionMasterDetail"
-        },
-        "interfaceMasterDetail": {
-          "viewName": "InterfaceMasterDetail"
+        "TargetMain": {
+          "viewName": "Main"
         }
       }
     }

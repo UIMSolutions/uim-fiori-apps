@@ -2,8 +2,54 @@
     controllerName="ea.architecture.manager.controller.App"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:tnt="sap.tnt"
     displayBlock="true">
-    <Shell id="shell">
-        <App id="appControl" />
-    </Shell>
+
+    <!-- Fiori 3 Shell Header Bar -->
+    <f:ShellBar
+        title="Architecture Manager"
+        showNavButton="false"
+        showSearch="true"
+        showNotifications="true"
+        showMenuButton="true"
+        menuButtonPressed=".onToggleSideNav">
+        <f:profile>
+            <Avatar initials="AM" tooltip="Benutzerprofil" />
+        </f:profile>
+        <f:additionalContent>
+            <Button icon="sap-icon://world" type="Transparent" press=".onLanguagePress" tooltip="Sprache" />
+            <Button icon="sap-icon://log-out" type="Transparent" press=".onLogout" tooltip="Abmelden" />
+        </f:additionalContent>
+    </f:ShellBar>
+
+    <!-- SideNavigation + App Container -->
+    <ToolPage id="toolPage">
+        <sideContent>
+            <tnt:SideNavigation id="sideNavigation" itemSelect=".onSideNavSelect">
+                <tnt:NavigationList>
+                    <tnt:NavigationListItem text="Home" icon="sap-icon://home" key="home" />
+                    
+                    <tnt:NavigationListItem text="BAUSTEINE" expanded="true">
+                        <tnt:items>
+                            <tnt:NavigationListItem text="Architecture Blocks" icon="sap-icon://sitemap" key="arch_blocks" />
+                            <tnt:NavigationListItem text="Base Blocks" icon="sap-icon://building" key="base_blocks" />
+                        </tnt:items>
+                    </tnt:NavigationListItem>
+
+                    <tnt:NavigationListItem text="WERKZEUGE" expanded="true">
+                        <tnt:items>
+                            <tnt:NavigationListItem text="Excel Import" icon="sap-icon://upload" key="import" />
+                            <tnt:NavigationListItem text="Excel Export" icon="sap-icon://excel-attachment" key="export" />
+                        </tnt:items>
+                    </tnt:NavigationListItem>
+                </tnt:NavigationList>
+            </tnt:SideNavigation>
+        </sideContent>
+
+        <mainContents>
+            <App id="appContainer" />
+        </mainContents>
+    </ToolPage>
+
 </mvc:View>

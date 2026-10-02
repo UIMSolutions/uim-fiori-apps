@@ -9,12 +9,11 @@ This project contains:
 
 - OData V4 service root: `/odata/v4/launchpad/`
 - OData V4 metadata: `/odata/v4/launchpad/$metadata`
-- Example entity set: `/odata/v4/launchpad/Products`
+- Example entity set with CRUD: `/odata/v4/launchpad/Products`
+- Entity by key: `/odata/v4/launchpad/Products('P-1000')`
 - Launchpad-style navigation views:
-  - Home
-  - Products
-  - Reports
-  - Settings
+- Home tile navigation to Products, Reports and Settings
+- SAP BTP CF deployment descriptors: `mta.yaml`, `xs-security.json`, `approuter/xs-app.json`
 
 ## Run backend
 
@@ -34,3 +33,10 @@ npm start
 ```
 
 UI5 proxy routes `/odata` to `http://localhost:8080`.
+
+## Cloud Foundry deployment
+
+```bash
+mbt build
+cf deploy mta_archives/launchpad-demo_1.0.0.mtar
+```

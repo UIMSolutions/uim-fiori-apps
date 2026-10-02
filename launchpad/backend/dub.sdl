@@ -1,0 +1,9 @@
+name "launchpad-backend"
+description "vibe.d OData V4 backend for Fiori 3 launchpad sample"
+authors "UIMSolutions"
+license "MIT"
+targetType "executable"
+sourcePaths "source"
+
+dependency "vibe-d" version="~>0.10.3"
+dependency "vibe-http" version="~>1.4.0"

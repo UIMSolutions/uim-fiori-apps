@@ -1,0 +1,78 @@
+<mvc:View
+    controllerName="ea.architecture.manager.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:card="sap.f.cards"
+    xmlns:layout="sap.ui.layout">
+
+    <f:DynamicPage headerExpanded="true">
+        <!-- Fiori 3 Dynamic Page Header -->
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="Enterprise Architecture Overview" />
+                </f:heading>
+                <f:expandedContent>
+                    <Label text="Verwaltung und Monitoring aller System-Bausteine" />
+                </f:expandedContent>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <layout:HorizontalLayout class="sapUiMediumMarginEnd">
+                    <GenericTag text="Status" status="Success">
+                        <ObjectNumber number="3" unit="Aktive Bausteine" />
+                    </GenericTag>
+                </layout:HorizontalLayout>
+            </f:DynamicPageHeader>
+        </f:header>
+
+        <!-- Fiori Page Content -->
+        <f:content>
+            <VBox class="sapUiResponsiveContentPadding">
+                <!-- Fiori 3 Card Component -->
+                <f:Card class="sapUiMediumMarginBottom" width="100%">
+                    <f:header>
+                        <card:Header title="System Status Summary" subtitle="Live-Anbindung via vibe.d" iconSrc="sap-icon://analytic-view" />
+                    </f:header>
+                    <f:content>
+                        <Text class="sapUiSmallMargin" text="Willkommen im Fiori 3 Architecture Manager. Alle Daten werden in Echtzeit über das vibe.d OData v4 Backend geladen." />
+                    </f:content>
+                </f:Card>
+
+                <!-- Responsive Table mit vibe.d OData Bindung -->
+                <Table items="{/ArchitectureBlocks}">
+                    <headerToolbar>
+                        <OverflowToolbar>
+                            <Title text="Architecture Blocks" level="H2" />
+                            <ToolbarSpacer />
+                            <Button icon="sap-icon://refresh" press=".onRefresh" tooltip="Aktualisieren" />
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column><Text text="ID" /></Column>
+                        <Column><Text text="Name" /></Column>
+                        <Column><Text text="Domain" /></Column>
+                        <Column><Text text="EA Layer" /></Column>
+                        <Column><Text text="Verantwortlich" /></Column>
+                        <Column><Text text="Status" /></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{ID}" />
+                                <ObjectIdentifier title="{Name}" />
+                                <Text text="{Domain}" />
+                                <Text text="{EaLayer}" />
+                                <Text text="{Responsible}" />
+                                <ObjectStatus text="{Status}" state="{= ${Status} === 'Active' ? 'Success' : 'Warning' }" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>
