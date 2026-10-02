@@ -1,0 +1,26 @@
+<mvc:View
+    controllerName="ea.architecture.manager.controller.Settings"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:form="sap.ui.layout.form">
+    
+    <Page 
+        title="System Einstellungen" 
+        showNavButton="true" 
+        navButtonPress="onNavBack">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <form:SimpleForm title="Backend Konfiguration" editable="true">
+                    <form:content>
+                        <Label text="vibe.d OData Service URL" />
+                        <Input value="/odata/v4/" />
+                        
+                        <Label text="Automatisches Neuladen (Sekunden)" />
+                        <StepInput value="30" min="5" max="300" />
+                    </form:content>
+                </form:SimpleForm>
+                <Button text="Einstellungen speichern" type="Emphasized" press="onSave" class="sapUiSmallMarginTop" />
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

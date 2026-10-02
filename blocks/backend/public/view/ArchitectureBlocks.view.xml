@@ -1,0 +1,68 @@
+<mvc:View
+    controllerName="ea.architecture.manager.controller.ArchitectureBlocks"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:w="sap.ui.integration.widgets">
+    
+    <Page 
+        title="Architecture Blocks" 
+        showNavButton="true" 
+        navButtonPress="onNavBack">
+        
+        <headerContent>
+            <!-- Switcher zwischen Grid/Cards und Listenansicht -->
+            <SegmentedButton id="viewSwitcher" selectedKey="cards" selectionChange="onViewChange">
+                <items>
+                    <SegmentedButtonItem key="cards" icon="sap-icon://grid" tooltip="Cards-Ansicht" />
+                    <SegmentedButtonItem key="table" icon="sap-icon://table-view" tooltip="Listen-Ansicht" />
+                </items>
+            </SegmentedButton>
+        </headerContent>
+
+        <content>
+            <VBox class="sapUiSmallMargin">
+
+                <!-- 1. CARDS / GRID ANSICHT (Standard) -->
+                <f:GridContainer id="cardsView" visible="true">
+                    <f:layout>
+                        <f:GridContainerSettings rowSize="84px" columnSize="320px" gap="16px" />
+                    </f:layout>
+                    <f:items>
+                        <!-- Einbindung des Card-Manifests -->
+                        <w:Card manifest="./cards/architectureSummary/manifest.json" width="100%">
+                            <w:layoutData>
+                                <f:GridContainerItemLayoutData columns="2" rows="4" />
+                            </w:layoutData>
+                        </w:Card>
+                    </f:items>
+                </f:GridContainer>
+
+                <!-- 2. LISTEN / TABELLEN ANSICHT -->
+                <Table id="tableView" visible="false" items="{/ArchitectureBlocks}">
+                    <columns>
+                        <Column><Text text="ID" /></Column>
+                        <Column><Text text="Name" /></Column>
+                        <Column><Text text="Domain" /></Column>
+                        <Column><Text text="EA Layer" /></Column>
+                        <Column><Text text="Verantwortlich" /></Column>
+                        <Column><Text text="Status" /></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{ID}" />
+                                <ObjectIdentifier title="{Name}" />
+                                <Text text="{Domain}" />
+                                <Text text="{EaLayer}" />
+                                <Text text="{Responsible}" />
+                                <ObjectStatus text="{Status}" state="{= ${Status} === 'Active' ? 'Success' : 'Warning' }" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

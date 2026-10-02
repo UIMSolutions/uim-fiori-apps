@@ -2,41 +2,33 @@
   "_version": "1.12.0",
   "sap.app": {
     "id": "ea.architecture.manager",
-    "type": "application",
-    "title": "Architecture Manager",
-    "dataSources": {
-      "mainService": {
-        "uri": "http://localhost:8080/odata/v4/",
-        "type": "OData",
-        "settings": {
-          "odataVersion": "4.0"
-        }
-      }
-    }
-  },
-  "sap.ui": {
-    "technology": "UI5",
-    "deviceTypes": { "desktop": true, "tablet": true, "phone": true }
+    "type": "application"
   },
   "sap.ui5": {
-    "theme": "sap_fiori_3",
+    "models": {
+      "notifications": {
+        "dataSource": "mainService",
+        "type": "sap.ui.model.odata.v4.ODataModel",
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "ea.architecture.manager.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "appRoot"
+    },
     "dependencies": {
       "minUI5Version": "1.108.0",
       "libs": {
         "sap.m": {},
+        "sap.ui.core": {},
         "sap.f": {},
-        "sap.tnt": {},
-        "sap.ui.core": {}
-      }
-    },
-    "models": {
-      "": {
-        "dataSource": "mainService",
-        "type": "sap.ui.model.odata.v4.ODataModel",
-        "settings": {
-          "synchronizationMode": "None",
-          "operationMode": "Server"
-        }
+        "sap.ui.integration": {},
+        "sap.tnt": {}
       }
     },
     "routing": {
@@ -44,20 +36,48 @@
         "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
         "viewPath": "ea.architecture.manager.view",
-        "controlId": "appContainer",
+        "controlId": "app",
         "controlAggregation": "pages",
         "async": true
       },
       "routes": [
         {
-          "name": "RouteMain",
+          "name": "Home",
           "pattern": "",
-          "target": "TargetMain"
+          "target": "Home"
+        },
+        {
+          "name": "ArchitectureBlocks",
+          "pattern": "blocks",
+          "target": "ArchitectureBlocks"
+        },
+        {
+          "name": "CardsOverview",
+          "pattern": "cards",
+          "target": "CardsOverview"
+        },
+        {
+          "name": "Settings",
+          "pattern": "settings",
+          "target": "Settings"
         }
       ],
       "targets": {
-        "TargetMain": {
-          "viewName": "Main"
+        "Home": {
+          "viewName": "Home",
+          "viewLevel": 1
+        },
+        "ArchitectureBlocks": {
+          "viewName": "ArchitectureBlocks",
+          "viewLevel": 2
+        },
+        "CardsOverview": {
+          "viewName": "CardsOverview",
+          "viewLevel": 2
+        },
+        "Settings": {
+          "viewName": "Settings",
+          "viewLevel": 2
         }
       }
     }

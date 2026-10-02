@@ -1,0 +1,35 @@
+{
+  "sap.app": {
+    "id": "ea.architecture.manager.cards.summary",
+    "type": "card"
+  },
+  "sap.card": {
+    "type": "List",
+    "header": {
+      "title": "Architecture Blocks",
+      "subTitle": "Klicken für Detailübersicht",
+      "status": { "text": "Aktiv" },
+      "actions": [
+        {
+          "type": "Navigation"
+        }
+      ]
+    },
+    "content": {
+      "data": {
+        "request": {
+          "url": "/odata/v4/ArchitectureBlocks"
+        }
+      },
+      "item": {
+        "title": "{name}",
+        "description": "{description}",
+        "actions": [
+          {
+            "type": "Navigation"
+          }
+        ]
+      }
+    }
+  }
+}

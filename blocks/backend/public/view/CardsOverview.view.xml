@@ -1,0 +1,25 @@
+<mvc:View
+    controllerName="ea.architecture.manager.controller.CardsOverview"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:w="sap.ui.integration.widgets"
+    xmlns:f="sap.f">
+    
+    <Page title="Architecture Dashboard Cards">
+        <content>
+            <f:GridContainer class="sapUiSmallMargin">
+                <f:layout>
+                    <f:GridContainerSettings rowSize="84px" columnSize="300px" gap="16px" />
+                </f:layout>
+                
+                <!-- Verweis auf die separate Manifest-Datei der Card -->
+                <w:Card manifest="./cards/architecture/manifest.json" width="100%">
+                    <w:layoutData>
+                        <f:GridContainerItemLayoutData columns="2" rows="4" />
+                    </w:layoutData>
+                </w:Card>
+
+            </f:GridContainer>
+        </content>
+    </Page>
+</mvc:View>

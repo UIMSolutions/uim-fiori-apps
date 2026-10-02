@@ -1,0 +1,37 @@
+<mvc:View
+    controllerName="ea.architecture.manager.controller.Home"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:w="sap.ui.integration.widgets"
+    xmlns:f="sap.f">
+    
+    <Page title="Enterprise Architecture Launchpad" titleAlignment="Start">
+        <headerContent>
+            <Button icon="sap-icon://grid" tooltip="Dashboard Cards" press="onNavToCards" />
+            <Button icon="sap-icon://table-view" tooltip="Architecture Blocks" press="onNavToBlocks" />
+            <Button icon="sap-icon://action-settings" tooltip="Einstellungen" press="onNavToSettings" />
+        </headerContent>
+        <content>
+            <f:GridContainer class="sapUiSmallMargin">
+                <f:layout>
+                    <f:GridContainerSettings rowSize="84px" columnSize="320px" gap="16px" />
+                </f:layout>
+                
+                <!-- Card 1 -->
+                <w:Card manifest="./cards/architectureSummary/manifest.json" action="onCardAction" width="100%">
+                    <w:layoutData>
+                        <f:GridContainerItemLayoutData columns="2" rows="4" />
+                    </w:layoutData>
+                </w:Card>
+
+                <!-- Card 2 -->
+                <w:Card manifest="./cards/quickNavigation/manifest.json" action="onCardAction" width="100%">
+                    <w:layoutData>
+                        <f:GridContainerItemLayoutData columns="2" rows="2" />
+                    </w:layoutData>
+                </w:Card>
+
+            </f:GridContainer>
+        </content>
+    </Page>
+</mvc:View>

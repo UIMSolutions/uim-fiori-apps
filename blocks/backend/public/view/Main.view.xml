@@ -7,7 +7,6 @@
     xmlns:layout="sap.ui.layout">
 
     <f:DynamicPage headerExpanded="true">
-        <!-- Fiori 3 Dynamic Page Header -->
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
@@ -29,21 +28,19 @@
             </f:DynamicPageHeader>
         </f:header>
 
-        <!-- Fiori Page Content -->
         <f:content>
             <VBox class="sapUiResponsiveContentPadding">
-                <!-- Fiori 3 Card Component -->
                 <f:Card class="sapUiMediumMarginBottom" width="100%">
                     <f:header>
                         <card:Header title="System Status Summary" subtitle="Live-Anbindung via vibe.d" iconSrc="sap-icon://analytic-view" />
                     </f:header>
                     <f:content>
-                        <Text class="sapUiSmallMargin" text="Willkommen im Fiori 3 Architecture Manager. Alle Daten werden in Echtzeit über das vibe.d OData v4 Backend geladen." />
+                        <Text class="sapUiSmallMargin" text="Willkommen im Fiori Architecture Manager. Alle Daten werden in Echtzeit geladen." />
                     </f:content>
                 </f:Card>
 
-                <!-- Responsive Table mit vibe.d OData Bindung -->
-                <Table items="{/ArchitectureBlocks}">
+                <!-- Table mit id versehen, damit onRefresh im Controller funktioniert -->
+                <Table id="idArchitectureBlocksTable" items="{/ArchitectureBlocks}">
                     <headerToolbar>
                         <OverflowToolbar>
                             <Title text="Architecture Blocks" level="H2" />
@@ -72,6 +69,8 @@
                         </ColumnListItem>
                     </items>
                 </Table>
+                
+                <Button text="Zu den Cards" press="onNavToCards" class="sapUiSmallMarginTop" />
             </VBox>
         </f:content>
     </f:DynamicPage>

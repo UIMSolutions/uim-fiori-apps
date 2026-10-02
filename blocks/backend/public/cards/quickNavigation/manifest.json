@@ -1,0 +1,35 @@
+{
+  "sap.app": {
+    "id": "ea.architecture.manager.cards.quickNavigation",
+    "type": "card"
+  },
+  "sap.card": {
+    "type": "List",
+    "header": {
+      "title": "Schnellzugriff",
+      "subTitle": "Direkte Aktionen",
+      "icon": {
+        "src": "sap-icon://navigation-right-arrow"
+      }
+    },
+    "content": {
+      "data": {
+        "json": [
+          {
+            "title": "Architecture Blocks anzeigen",
+            "description": "Zur Gesamtübersicht der Systembausteine"
+          }
+        ]
+      },
+      "item": {
+        "title": "{title}",
+        "description": "{description}",
+        "actions": [
+          {
+            "type": "Navigation"
+          }
+        ]
+      }
+    }
+  }
+}

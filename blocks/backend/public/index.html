@@ -10,7 +10,7 @@
         id="sap-ui-bootstrap"
         src="https://ui5.sap.com/resources/sap-ui-core.js"
         data-sap-ui-theme="sap_horizon"
-        data-sap-ui-libs="sap.m, sap.f"
+        data-sap-ui-libs="sap.m, sap.f, sap.tnt"
         data-sap-ui-compatVersion="edge"
         data-sap-ui-async="true"
         data-sap-ui-resourceroots='{
@@ -20,7 +20,6 @@
 
     <script>
         sap.ui.getCore().attachInit(function () {
-            // Instanziiere den ComponentContainer und binde die Component.js ein
             new sap.ui.core.ComponentContainer({
                 name: "ea.architecture.manager",
                 settings: {
