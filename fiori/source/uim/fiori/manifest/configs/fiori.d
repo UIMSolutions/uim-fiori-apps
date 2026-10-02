@@ -11,7 +11,7 @@ struct SapFioriConfig {
     // Optional attributes
     string version_; // Represents attributes format version.
     bool isAbstract; // Indicator that app is an abstract (generic) app which may not be used directly, but needs to be specialized in the SAP Fiori launchpad content
-    CloudDevAdaptationStatus cloudDevAdaptationStatus; // Represents the cloud development adaptation status of the application.
+    // CloudDevAdaptationStatus cloudDevAdaptationStatus; // Represents the cloud development adaptation status of the application.
 
     Json toJson() const {
         Json result = Json.emptyObject;
@@ -21,7 +21,7 @@ struct SapFioriConfig {
         // Optional attributes
         if (!version_.isEmpty) result["_version"] = version_;
         if (isAbstract) result["isAbstract"] = isAbstract;
-        if (cloudDevAdaptationStatus != CloudDevAdaptationStatus.released) result["cloudDevAdaptationStatus"] = cloudDevAdaptationStatus;
+        // if (cloudDevAdaptationStatus != CloudDevAdaptationStatus.released) result["cloudDevAdaptationStatus"] = cloudDevAdaptationStatus;
         return result;
     }
 }

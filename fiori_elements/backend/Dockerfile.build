@@ -1,0 +1,11 @@
+# Builds the backend against Ubuntu 22.04 (glibc/OpenSSL of the cflinuxfs4 stack)
+FROM ubuntu:22.04
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates curl xz-utils gcc libxml2 libssl-dev libz-dev \
+ && rm -rf /var/lib/apt/lists/*
+ARG LDC=1.38.0
+RUN curl -fsSL https://github.com/ldc-developers/ldc/releases/download/v$LDC/ldc2-$LDC-linux-x86_64.tar.xz | tar -xJ -C /opt
+ENV PATH=/opt/ldc2-$LDC-linux-x86_64/bin:$PATH
+WORKDIR /src
+COPY dub.sdl dub.selections.json* ./
+COPY source source
+RUN dub build --compiler=ldc2 -b release

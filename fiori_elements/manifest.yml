@@ -1,0 +1,10 @@
+applications:
+  - name: fe-vibe-shop
+    memory: 256M
+    instances: 1
+    buildpacks:
+      - binary_buildpack
+    command: ./fe-vibe-backend
+    health-check-type: port
+    env:
+      WEBAPP_DIR: webapp
