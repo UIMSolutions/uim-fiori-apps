@@ -1,0 +1,10 @@
+name "service02"
+description ""
+authors "UIMSolutions"
+license "Apache-2.0"
+
+targetType "executable"
+targetName "service02"
+sourcePaths "source"
+
+dependency "vibe-d" version="~>0.10.2"

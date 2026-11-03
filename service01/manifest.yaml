@@ -1,0 +1,8 @@
+applications:
+- name: service01
+  memory: 256M
+  instances: 1
+  command: ./service01
+  stack: cflinuxfs5
+  buildpacks:
+  - binary_buildpack

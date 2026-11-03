@@ -1,0 +1,8 @@
+applications:
+  - name: blocks-vibe
+    memory: 256M
+    instances: 1
+    buildpacks:
+      - binary_buildpack
+    command: ./project
+    health-check-type: port

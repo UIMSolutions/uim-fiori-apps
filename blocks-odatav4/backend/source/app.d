@@ -316,8 +316,9 @@ void postBatch(HTTPServerRequest req, HTTPServerResponse res) {
 
 void main() {
     auto settings = new HTTPServerSettings;
-    settings.port = 8080;
-    settings.bindAddresses = ["::1", "127.0.0.1"];
+    import std.process : environment;
+    settings.port = environment.get("PORT", "8080").to!ushort;
+    settings.bindAddresses = environment.get("PORT") is null ? ["::1", "127.0.0.1"] : ["0.0.0.0"];
 
     auto router = new URLRouter;
 

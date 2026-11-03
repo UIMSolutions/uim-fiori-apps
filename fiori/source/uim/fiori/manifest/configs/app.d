@@ -4,33 +4,35 @@ import uim.fiori;
 
 @safe:
 
+// Represents general application attributes
 struct SapAppConfig {
     string id; // Represents mandatory unique app identifier which must correspond to component 'id/namespace'
-    string type; // Represents type of an application and can be application or component or library or card
-    string i18n; /// The path to the i18n properties file.
-    string applicationVersion; /// The version of the application.
-    SourceTemplate sourceTemplate; /// The source template used to generate the application.
-    string embeds; /// The identifiers of the applications that this application embeds.
-    string embeddedBy; /// The identifier of the application that embeds this application.
-    string title; /// The title of the application.
-    string subtitle; /// The subtitle of the application.
-    string shortTitle; /// The short title of the application.
-    string info; /// Additional information about the application.
-    string description; /// The description of the application.
-    string[] tags; /// An array of keywords; either text or a language-dependent entry to be specified via {{…}} syntax, for example "keywords": ["{{keyWord1}}","{{keyWord2}}"].
-    string[] ach; /// Application component hierarchy (SAP's component names for bug reports); attribute is mandatory for SAP apps, but is not used so far for apps developed outside SAP.   
-    DataSource[string] dataSources; /// The data sources used by the application.
-    string[] cdsViews; /// The CDS views used by the application.
-    bool offline; /// Indicates whether the application supports offline mode.
-    string[] openSourceComponents; /// The open source components used by the application.
-    string provider; /// The provider of the application.
-    CrossNavigation[string] crossNavigations; /// The cross-navigation configuration of the application.
-    Resource[] resources; /// The resources used by the application.
+    AppType type; // Represents type of an application and can be application or component or library or card
+    string i18n; // The path to the i18n properties file.
+    string version_; // Application attributes format version
+    string applicationVersion;
+    AppSourceTemplate sourceTemplate; // The source template used to generate the application.
+    string[] embeds; // Represents array of relative paths to the nested manifest.json's (mandatory if it contains nested 'manifest.json').
+    string embeddedBy; // Represents relative path back to the manifest.json of an embedding component or library (mandatory for nested 'manifest.json')
+    string title; // Represents a title (mandatory); to make this property language dependent (recommended), use a key in double curly brackets '{{key}}'
+    string subtitle; // The subtitle of the application.
+    string shortTitle; // The short title of the application.
+    string info; // Additional information about the application.
+    string description; // The description of the application.
+    string[] tags; // An array of keywords; either text or a language-dependent entry to be specified via {{…}} syntax, for example "keywords": ["{{keyWord1}}","{{keyWord2}}"].
+    string[] ach; // Application component hierarchy (SAP's component names for bug reports); attribute is mandatory for SAP apps, but is not used so far for apps developed outside SAP.   
+    DataSource[string] dataSources; // The data sources used by the application.
+    string[] cdsViews; // The CDS views used by the application.
+    bool offline; // Indicates whether the application supports offline mode.
+    string[] openSourceComponents; // The open source components used by the application.
+    string provider; // The provider of the application.
+    CrossNavigation[string] crossNavigations; // The cross-navigation configuration of the application.
+    Resource[] resources; // The resources used by the application.
 
     Json toJson() const {
         auto result = Json.emptyObject
             .set("id", id)
-            .set("type", type)
+            .set("type", type.toString)
             .set("title", title)
             .set("applicationVersion", Json.emptyObject.set("version", applicationVersion));
 
@@ -40,9 +42,9 @@ struct SapAppConfig {
 
 /// Represents cross navigation for inbound and outbound targets
 struct CrossNavigation {
-    // Scope[string] scopes; /// The scopes of the cross navigation.
-    Inbound[string] inbounds; /// The inbounds used for cross-navigation.
-    Outbound[string] outbounds; /// The outbounds used for cross-navigation.
+    // Scope[string] scopes; // The scopes of the cross navigation.
+    Inbound[string] inbounds; // The inbounds used for cross-navigation.
+    Outbound[string] outbounds; // The outbounds used for cross-navigation.
 
     Json toJson() const {
         auto jsonInbounds = Json.emptyObject;
@@ -74,10 +76,10 @@ struct CrossNavigation {
 }
 
 struct Outbound {
-    string semanticObject; /// The semantic object of the outbound.
-    string action; /// The action of the outbound.
-    string title; /// The title of the outbound.
-    string description; /// The description of the outbound.
+    string semanticObject; // The semantic object of the outbound.
+    string action; // The action of the outbound.
+    string title; // The title of the outbound.
+    string description; // The description of the outbound.
 
     Json toJson() const {
         auto json = Json.emptyObject
@@ -103,17 +105,17 @@ struct Outbound {
 }
 
 // struct Inbound {
-    // string semanticObject; /// The semantic object of the inbound.
-    // string action; /// The action of the inbound.
-    // bool hideLauncher; /// Indicates to not expose this inbound as a tile or link.
-    // string icon; /// The icon of the inbound.
-    // string title; /// The title of the inbound.
-    // string subTitle; /// The subtitle of the inbound.
-    // string shortTitle; /// The shorter version of the title.
-    // string info; /// Additional information to the title.
-    // DisplayMode displayMode; /// The display mode of the inbound.
+    // string semanticObject; // The semantic object of the inbound.
+    // string action; // The action of the inbound.
+    // bool hideLauncher; // Indicates to not expose this inbound as a tile or link.
+    // string icon; // The icon of the inbound.
+    // string title; // The title of the inbound.
+    // string subTitle; // The subtitle of the inbound.
+    // string shortTitle; // The shorter version of the title.
+    // string info; // Additional information to the title.
+    // DisplayMode displayMode; // The display mode of the inbound.
 // }
-// IndicatorDataSource indicatorDataSource; /// The indicator data source of the inbound.
+// IndicatorDataSource indicatorDataSource; // The indicator data source of the inbound.
 //                         "indicatorDataSource": {
 //                             "description": "Represents data source",
 //                             "type": "object",
@@ -163,11 +165,11 @@ struct Outbound {
 // }
 
 struct Inbound {
-    string semanticObject; /// The semantic object of the inbound.
-    string action; /// The action of the inbound.
-    string title; /// The title of the inbound.
-    string description; /// The description of the inbound.
-    string signature; /// The signature of the inbound.
+    string semanticObject; // The semantic object of the inbound.
+    string action; // The action of the inbound.
+    string title; // The title of the inbound.
+    string description; // The description of the inbound.
+    string signature; // The signature of the inbound.
 
     Json toJson() const {
         auto json = Json.emptyObject;
@@ -200,7 +202,8 @@ struct Inbound {
     }
 }
 
-struct SourceTemplate {
+/// Represents the template from which the app was generated
+struct AppSourceTemplate {
     string id; // Represents id of the template from which the app was generated 
     string version_; // Represents the version of the template from which the app was generated
     string toolsId; // Represents an Id generated by SAP Fiori tools
@@ -209,13 +212,15 @@ struct SourceTemplate {
         auto result = Json.emptyObject
             .set("id", id)
             .set("version", version_);
+
         if (!toolsId.isEmpty)
             result["toolsId"] = toolsId;
+
         return result;
     }
 
-    static SourceTemplate fromJson(Json data) {
-        auto result = SourceTemplate();
+    static AppSourceTemplate fromJson(Json data) {
+        auto result = AppSourceTemplate();
         result.id = data.getString("id");
         result.version_ = data.getString("version");
         result.toolsId = data.getString("toolsId");
