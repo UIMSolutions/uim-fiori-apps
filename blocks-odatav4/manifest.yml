@@ -1,8 +1,14 @@
+# Direct deployment without approuter (./deploy-cf.sh). For the full setup use mta.yaml.
 applications:
   - name: blocks-vibe
     memory: 256M
     instances: 1
     buildpacks:
       - binary_buildpack
-    command: ./project
-    health-check-type: port
+    command: ./blocks-odatav4 serve
+    health-check-type: http
+    health-check-http-endpoint: /health
+    env:
+      BLOCKS_PUBLIC_DIR: public
+      BLOCKS_STORAGE: memory
+      BLOCKS_CORS: "false"

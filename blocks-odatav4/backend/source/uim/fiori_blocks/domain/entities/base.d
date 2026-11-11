@@ -1,48 +1,25 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.fiori_blocks.domain.entities.base;
 
-import uim.fiori_blocks;
+import uim.fiori_blocks.domain.entities.dependency;
 
 @safe:
 
+/// Generic enterprise building block.
 struct BaseBlock {
-    string ID;
-    string Name;
-    string Responsible;
-    string Version;
-    string Date;
-    string Description;
-    string[] AdditionalInformation;
+  enum entitySet = "BaseBlocks";
+  enum idPrefix = "BB";
 
-    Dependency[] DependsOn;
-
-    bool isNull() const {
-        return ID.length == 0;
-    }
-
-    Json toJson() const {
-        return Json.emptyObject
-        .set("ID", ID)
-        .set("Name", Name)
-        .set("Responsible", Responsible)
-        .set("Version", Version)
-        .set("Date", Date)
-        .set("Description", Description)
-        .set("AdditionalInformation", AdditionalInformation.map!(info => Json(info)).array.toJson)
-        .set("DependsOn", DependsOn.map!(d => d.toJson).array.toJson);
-    }
-
-    static BaseBlock fromJson(Json data) {
-        auto block = BaseBlock();
-        block.ID = data.getString("ID", "");
-        block.Name = data.getString("Name", "");
-        block.Responsible = data.getString("Responsible", "");
-        block.Version = data.getString("Version", "");
-        block.Date = data.getString("Date", "");
-        block.Description = data.getString("Description", "");
-
-        block.AdditionalInformation = data.getArray("AdditionalInformation").map!(info => info.getString).array;
-        block.DependsOn = data.getArray("DependsOn").map!(d => Dependency.fromJson(d)).array;
-
-        return block    ;
-    }
+  string ID;
+  string Name;
+  string Responsible;
+  string Version;
+  string Date;
+  string Description;
+  string[] AdditionalInformation;
+  Dependency[] DependsOn;
 }

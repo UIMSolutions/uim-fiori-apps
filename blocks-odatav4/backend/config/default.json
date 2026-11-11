@@ -1,0 +1,12 @@
+{
+  "port": 8080,
+  "bindAddresses": ["127.0.0.1", "::1"],
+  "publicDir": "../frontend",
+  "odataPath": "/odata/v4",
+  "odataNamespace": "EAModel",
+  "odataContainer": "EAService",
+  "storage": "file",
+  "dataDir": "data",
+  "logLevel": "info",
+  "cors": true
+}

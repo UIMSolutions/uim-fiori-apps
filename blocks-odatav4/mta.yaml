@@ -1,0 +1,63 @@
+_schema-version: "3.1"
+ID: blocks-odatav4
+version: 2.0.0
+description: EA building blocks manager - vibe.d OData v4 backend, SAP Fiori frontend, approuter
+
+parameters:
+  enable-parallel-deployments: true
+
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - ./deploy-cf.sh --build   # dub build (Docker, cflinuxfs4) + copy frontend -> cf-dist/
+
+modules:
+  # vibe.d backend (serves OData v4, /api and the static Fiori frontend)
+  - name: blocks-backend
+    type: application
+    path: cf-dist
+    build-parameters:
+      ignore: ["manifest.yml"]
+    parameters:
+      memory: 256M
+      buildpack: binary_buildpack
+      command: ./blocks-odatav4 serve
+      health-check-type: http
+      health-check-http-endpoint: /health
+    properties:
+      BLOCKS_PUBLIC_DIR: public
+      BLOCKS_STORAGE: memory
+      BLOCKS_CORS: "false"
+    provides:
+      - name: blocks-backend-api
+        properties:
+          url: ${default-url}
+    requires:
+      - name: blocks-xsuaa
+
+  # approuter: single entry point, XSUAA login, forwards the JWT to the backend
+  - name: blocks-approuter
+    type: approuter.nodejs
+    path: approuter
+    build-parameters:
+      ignore: ["default-env.json", "node_modules/"]
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+    requires:
+      - name: blocks-xsuaa
+      - name: blocks-backend-api
+        group: destinations
+        properties:
+          name: blocks-backend
+          url: ~{url}
+          forwardAuthToken: true
+
+resources:
+  - name: blocks-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./approuter/xs-security.json

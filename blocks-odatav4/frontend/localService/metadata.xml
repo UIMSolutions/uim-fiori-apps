@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:DataServices>
+    <Schema Namespace="EAModel" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <ComplexType Name="Dependency">
+        <Property Name="ID" Type="Edm.String" Nullable="false"/>
+        <Property Name="Name" Type="Edm.String"/>
+        <Property Name="Type" Type="Edm.String"/>
+        <Property Name="Criticality" Type="Edm.String"/>
+      </ComplexType>
+      <EntityType Name="BaseBlock">
+        <Key><PropertyRef Name="ID"/></Key>
+        <Property Name="ID" Type="Edm.String" Nullable="false"/>
+        <Property Name="Name" Type="Edm.String"/>
+        <Property Name="Responsible" Type="Edm.String"/>
+        <Property Name="Version" Type="Edm.String"/>
+        <Property Name="Date" Type="Edm.String"/>
+        <Property Name="Description" Type="Edm.String"/>
+        <Property Name="AdditionalInformation" Type="Collection(Edm.String)" Nullable="false"/>
+        <Property Name="DependsOn" Type="Collection(EAModel.Dependency)" Nullable="false"/>
+      </EntityType>
+      <EntityType Name="ArchitectureBlock">
+        <Key><PropertyRef Name="ID"/></Key>
+        <Property Name="ID" Type="Edm.String" Nullable="false"/>
+        <Property Name="Name" Type="Edm.String"/>
+        <Property Name="Responsible" Type="Edm.String"/>
+        <Property Name="Version" Type="Edm.String"/>
+        <Property Name="Modul" Type="Edm.String"/>
+        <Property Name="Service" Type="Edm.String"/>
+        <Property Name="Product" Type="Edm.String"/>
+        <Property Name="Date" Type="Edm.String"/>
+        <Property Name="Description" Type="Edm.String"/>
+        <Property Name="AdditionalInfo" Type="Edm.String"/>
+        <Property Name="DependsOn" Type="Collection(EAModel.Dependency)" Nullable="false"/>
+      </EntityType>
+      <EntityType Name="SolutionBlock">
+        <Key><PropertyRef Name="ID"/></Key>
+        <Property Name="ID" Type="Edm.String" Nullable="false"/>
+        <Property Name="Name" Type="Edm.String"/>
+        <Property Name="Title" Type="Edm.String"/>
+        <Property Name="Description" Type="Edm.String"/>
+        <Property Name="ValidFrom" Type="Edm.String"/>
+        <Property Name="ValidUntil" Type="Edm.String"/>
+        <Property Name="Version" Type="Edm.String"/>
+        <Property Name="Date" Type="Edm.String"/>
+        <Property Name="AdditionalInfo" Type="Edm.String"/>
+        <Property Name="Responsibles" Type="Edm.String"/>
+        <Property Name="DependsOnSolutionBlocks" Type="Collection(EAModel.Dependency)" Nullable="false"/>
+      </EntityType>
+      <EntityType Name="InterfaceBlock">
+        <Key><PropertyRef Name="ID"/></Key>
+        <Property Name="ID" Type="Edm.String" Nullable="false"/>
+        <Property Name="Name" Type="Edm.String"/>
+        <Property Name="Type" Type="Edm.String"/>
+        <Property Name="Description" Type="Edm.String"/>
+        <Property Name="Status" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="User">
+        <Key><PropertyRef Name="ID"/></Key>
+        <Property Name="ID" Type="Edm.String" Nullable="false"/>
+        <Property Name="Username" Type="Edm.String"/>
+        <Property Name="Email" Type="Edm.String"/>
+        <Property Name="Role" Type="Edm.String"/>
+        <Property Name="Active" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityContainer Name="EAService">
+        <EntitySet Name="BaseBlocks" EntityType="EAModel.BaseBlock"/>
+        <EntitySet Name="ArchitectureBlocks" EntityType="EAModel.ArchitectureBlock"/>
+        <EntitySet Name="SolutionBlocks" EntityType="EAModel.SolutionBlock"/>
+        <EntitySet Name="InterfaceBlocks" EntityType="EAModel.InterfaceBlock"/>
+        <EntitySet Name="Users" EntityType="EAModel.User"/>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

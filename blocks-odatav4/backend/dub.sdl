@@ -1,9 +1,33 @@
-name "myname"
-description "OData V4 material service with hexagonal architecture"
+name "blocks-odatav4"
+description "EA building blocks manager: OData v4 service, CLI and GtkD desktop client (hexagonal architecture)"
 authors "UIMSolutions"
+copyright "Copyright © 2018-2026, Ozan Nurettin Süel"
 license "Apache-2.0"
-// Targets
+
 targetType "executable"
-targetName "project"
+targetName "blocks-odatav4"
 sourcePaths "source"
-dependency "uim-fioriapps:fiori" path="../.."
+importPaths "source"
+mainSourceFile "source/app.d"
+
+dependency "vibe-d" version="~>0.10.3"
+// the CLI adapter owns the command line
+versions "VibeDisableCommandLineParsing"
+
+// Server + CLI (default, used for Cloud Foundry: no GTK libraries required)
+configuration "server" {
+	targetType "executable"
+}
+
+// Server + CLI + GtkD desktop client (`blocks-odatav4-desktop gui`)
+configuration "desktop" {
+	targetType "executable"
+	targetName "blocks-odatav4-desktop"
+	dependency "gtk-d:gtkd" version="~>3.11.0"
+	versions "WithGui"
+}
+
+buildType "release" {
+	dflags "-O3" "-release" platform="ldc"
+	dflags "-O" "-release" "-inline" platform="dmd"
+}
